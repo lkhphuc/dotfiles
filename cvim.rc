@@ -1,0 +1,6 @@
+set smoothscroll
+set defaultnewtabpage
+set completeonopen
+
+let mapleader = ","
+let defaultengine = "duckduckgo"
