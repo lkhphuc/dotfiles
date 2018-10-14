@@ -29,7 +29,7 @@
 	" NERDTree mapping to C-n
 	map <C-n> :NERDTreeToggle<CR>
 	" Fzf.vim
-	nnoremap <leader>p :History<CR>
+	nnoremap <leader>r :History<CR>
 	nnoremap <leader>b :Buffers<CR>
 	nnoremap <leader>t :Files<CR>
 	" Folding
@@ -39,14 +39,12 @@
 	nnoremap n nzzzv
 	nnoremap N Nzzzv
 	nnoremap <leader>z zMzvzz
-	" Copy to X11 clipboard
+	" Copy
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
-	" Python
-	inoremap <leader>ipdb <esc>Oimport ipdb;ipdb.set_trace()<esc>j<tab>
-	nnoremap <leader>ipdb <esc>Oimport ipdb;ipdb.set_trace()<esc>j<tab>
+	nnoremap <leader>p "+p
+	vnoremap <leader>p "+p
 
-	nnoremap vv 0v$
 	nnoremap <CR> :nohl<CR><C-l>:echo "Search Cleared"<CR>
 
 	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
@@ -66,7 +64,6 @@
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'zchee/deoplete-jedi'
 	Plug 'w0rp/ale'
-	Plug 'szymonmaszke/vimpyter'
 	Plug 'julienr/vim-cellmode'
 
 	Plug 'Shougo/echodoc.vim'
@@ -96,6 +93,7 @@
 	let g:ale_fix_on_save = 0
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
 	\ 					'python': ['isort', 'yapf']}
+	let g:cellmode_tmux_panenumber='2'
 	let g:comfortable_motion_scroll_down_key = "j"
 	let g:comfortable_motion_scroll_up_key = "k"
 	let g:indentLine_enabled = 1
