@@ -90,9 +90,9 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-printf "source '$HOME/dotfiles1/zshrc.sh'" > $HOME/.zshrc
-printf "source-file $HOME/dotfiles1/tmux.conf" > $HOME/.tmux.conf
-printf "source $HOME/dotfiles1/nvim.vim" > $HOME/.config/nvim/init.vim
+printf "source '$HOME/dotfiles1/zsh/zshrc.sh'" > $HOME/.zshrc
+printf "source-file $HOME/dotfiles1//tmux/tmux.conf" > $HOME/.tmux.conf
+printf "source $HOME/dotfiles1/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

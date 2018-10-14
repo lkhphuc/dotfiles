@@ -67,7 +67,7 @@
 	Plug 'zchee/deoplete-jedi'
 	Plug 'w0rp/ale'
 	Plug 'szymonmaszke/vimpyter'
-	Plug 'Vigemus/iron.nvim'
+	Plug 'julienr/vim-cellmode'
 
 	Plug 'Shougo/echodoc.vim'
 	Plug 'ervandew/supertab'
@@ -82,6 +82,8 @@
 	Plug 'sheerun/vim-polyglot'
 	Plug 'tmhedberg/SimpylFold'
 	Plug 'yuttie/comfortable-motion.vim'
+	" Tmux 
+	Plug 'tmux-plugins/vim-tmux'
 	call plug#end()
 
 " Plugins config
