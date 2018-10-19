@@ -65,6 +65,8 @@
 	Plug 'zchee/deoplete-jedi'
 	Plug 'w0rp/ale'
 	Plug 'julienr/vim-cellmode'
+	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
 
 	Plug 'Shougo/echodoc.vim'
 	Plug 'ervandew/supertab'
@@ -76,6 +78,7 @@
 	Plug 'christoomey/vim-tmux-navigator'
 	" Visual
 	Plug 'flazz/vim-colorschemes'
+	Plug 'arcticicestudio/nord-vim'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'tmhedberg/SimpylFold'
 	Plug 'yuttie/comfortable-motion.vim'
@@ -90,12 +93,14 @@
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#sources#jedi#show_docstring = 1
 	let g:SimpylFold_docstring_preview = 1
+	let g:ale_linters = {'python': ['pylint', 'pyls']}
 	let g:ale_fix_on_save = 0
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
 	\ 					'python': ['isort', 'yapf']}
+	let g:ale_completion_enabled = 1
 	let g:cellmode_tmux_panenumber='2'
 	let g:comfortable_motion_scroll_down_key = "j"
 	let g:comfortable_motion_scroll_up_key = "k"
 	let g:indentLine_enabled = 1
-	let g:indentLine_setColors = 0
-	colo gruvbox
+	let g:indentLine_setColors = 1
+	colo dracula 
