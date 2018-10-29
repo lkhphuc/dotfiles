@@ -16,6 +16,7 @@
 	set cursorline
 	set sidescroll=1
 	set noshowmode 
+	set conceallevel=0
 	set colorcolumn=100
 	" Indents word-wrapped lines as much as the 'parent' line
 	set breakindent
@@ -78,7 +79,6 @@
 	Plug 'christoomey/vim-tmux-navigator'
 	" Visual
 	Plug 'flazz/vim-colorschemes'
-	Plug 'arcticicestudio/nord-vim'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'tmhedberg/SimpylFold'
 	Plug 'yuttie/comfortable-motion.vim'
