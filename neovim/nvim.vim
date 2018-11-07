@@ -17,7 +17,7 @@
 	set sidescroll=1
 	set noshowmode 
 	set conceallevel=0
-	set colorcolumn=100
+	set colorcolumn=80
 	" Indents word-wrapped lines as much as the 'parent' line
 	set breakindent
 	set breakindentopt=shift:4,sbr
@@ -98,6 +98,7 @@
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
 	\ 					'python': ['isort', 'yapf']}
 	let g:ale_completion_enabled = 1
+	let g:ale_set_highlights = 0
 	let g:cellmode_tmux_panenumber='2'
 	let g:comfortable_motion_scroll_down_key = "j"
 	let g:comfortable_motion_scroll_up_key = "k"
