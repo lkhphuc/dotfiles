@@ -23,6 +23,10 @@ alias nv="nvim"
 alias fzf="$HOME/.fzf/bin/fzf-tmux"
 alias ls="ls -GFp"
 
+function cs () {
+	cd "$@" && ls
+}
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
