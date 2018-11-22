@@ -67,7 +67,7 @@
 
 " Plugins
 	call plug#begin('~/.local/share/nvim/plugged')
-	Plug 'tpop/vim-sensible'
+	Plug 'tpope/vim-sensible'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-commentary'
 	Plug 'mhinz/vim-signify'
