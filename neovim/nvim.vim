@@ -98,9 +98,9 @@
 
 	" Visual
 	Plug 'yggdroot/indentline'
-	Plug 'flazz/vim-colorschemes'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'yuttie/comfortable-motion.vim'
+	Plug 'dracula/vim', {'as': 'dracula'}
 
 	call plug#end()
 
