@@ -24,7 +24,6 @@
 	" Ensures word-wrap does not split words
 	set formatoptions+=l
 	set lbr
-	set background=dark
 
 " Mapping
 	autocmd FileType python setlocal completeopt-=preview
@@ -136,3 +135,5 @@
 	let g:indentLine_enabled = 1
 	let g:indentLine_setColors = 1
 	colo dracula 
+	set background=dark
+	hi Normal guibg=NONE ctermbg=NONE
