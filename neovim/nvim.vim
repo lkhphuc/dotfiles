@@ -44,6 +44,8 @@
 	Plug 'sirver/ultisnips'
 	Plug 'honza/vim-snippets'
 	Plug 'raimondi/delimitmate'
+	
+	Plug 'gabrielelana/vim-markdown'
 
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
@@ -86,7 +88,7 @@
 		let g:deoplete#sources#jedi#show_docstring = 0
 		let g:jedi#completions_enabled = 0
 		let g:jedi#use_split_not_buffers = "bottom"
-		let g:jedi#show_call_signatures = 1
+		" let g:jedi#show_call_signatures = 1
 		let g:echodoc#enable_at_startup = 1
 
 	" ALE
@@ -120,15 +122,20 @@
 	" Lightline
 		let g:lightline = {
 			\ 'component': {
-			\   'lineinfo': ' %3l:%-2v',
+			\ },
+			\ 'active': {
+			\   'right': [ [ 'lineinfo' ],
+			\              [ 'percent' ],
+			\              [ 'fileformat', 'fileencoding', 'filetype', 'fugitive' ] ]
 			\ },
 			\ 'component_function': {
 			\   'readonly': 'LightlineReadonly',
-			\   'fugitive': 'LightlineFugitive'
+			\   'fugitive': 'LightlineFugitive',
+			\ 	'filename': 'LightlineFilename',
 			\ },
 			\ 'separator': { 'left': '', 'right': '' },
-			\ 'subseparator': { 'left': '', 'right': '' }
-			\ }
+			\ 'subseparator': { 'left': '', 'right': '' },
+			\}
 
 		function! LightlineReadonly()
 			return &readonly ? '' : ''
@@ -139,6 +146,23 @@
 				return branch !=# '' ? ''.branch : ''
 			endif
 			return ''
+		endfunction
+		function! LightlineFilename()
+			let name = ""
+			let subs = split(expand('%'), "/") 
+			let i = 1
+			for s in subs
+				let parent = name
+				if  i == len(subs)
+					let name = parent . '/' . s
+				elseif i == 1
+					let name = s
+				else
+					let name = parent . '/' . strpart(s, 0, 2)
+				endif
+				let i += 1
+			endfor
+		  return name
 		endfunction
 
 	" Indent Line
