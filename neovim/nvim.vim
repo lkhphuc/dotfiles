@@ -25,8 +25,7 @@
 	set formatoptions+=l
 	set lbr
 
-" Plugins
-	call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tpope/vim-sensible'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-commentary'
@@ -65,129 +64,131 @@
 	Plug 'yggdroot/indentline'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'dracula/vim', {'as': 'dracula'}
+call plug#end()
 
-	call plug#end()
+" Fzf.vim
+	nnoremap <leader>h :History<CR>
+	nnoremap <leader>b :Buffers<CR>
+	nnoremap <leader>t :Files<CR>
+	nnoremap <leader>a :Ag<CR>
 
-" Plugins config
-	" Fzf.vim
-		nnoremap <leader>r :History<CR>
-		nnoremap <leader>b :Buffers<CR>
-		nnoremap <leader>t :Files<CR>
+map <C-n> :NERDTreeToggle<CR>
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
-	map <C-n> :NERDTreeToggle<CR>
-	let g:SuperTabDefaultCompletionType = "<c-n>"
+" Comfortable motion
+	let g:comfortable_motion_scroll_down_key = "j"
+	let g:comfortable_motion_scroll_up_key = "k"
+	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+	noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
-	" Comfortable motion
-		let g:comfortable_motion_scroll_down_key = "j"
-		let g:comfortable_motion_scroll_up_key = "k"
-		noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-		noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+" Completion
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#sources#jedi#show_docstring = 0
+	" to not block semshi
+	let g:deoplete#auto_complete_delay = 100
+	let g:echodoc#enable_at_startup = 1
 
-	" Completion
-		let g:deoplete#enable_at_startup = 1
-		let g:deoplete#sources#jedi#show_docstring = 0
-		let g:jedi#completions_enabled = 0
-		let g:jedi#use_split_not_buffers = "bottom"
-		" let g:jedi#show_call_signatures = 1
-		let g:echodoc#enable_at_startup = 1
+	let g:jedi#completions_enabled = 0
+	let g:jedi#use_split_not_buffers = "bottom"
 
-	" ALE
-		let g:ale_linters = {'python': ['pylint', 'pyls']}
-		let g:ale_set_highlights = 0
-		let g:ale_fix_on_save = 0
-		let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['isort', 'yapf']}
+" ALE
+	let g:ale_linters = {'python': ['pylint', 'pyls']}
+	let g:ale_set_highlights = 0
+	let g:ale_fix_on_save = 0
+	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['isort', 'yapf']}
 
-	" Python
-		let g:cellmode_tmux_panenumber='1'
-		let g:SimpylFold_docstring_preview = 1
-		nmap <silent> <leader>c :Semshi goto class next<CR>
-		nmap <silent> <leader>C :Semshi goto class prev<CR>
-		nmap <silent> <leader>f :Semshi goto function next<CR>
-		nmap <silent> <leader>F :Semshi goto function prev<CR>
-		nmap <silent> <leader>ee :Semshi error<CR>
-		nmap <silent> <leader>ge :Semshi goto error<CR>
+" Python
+	let g:cellmode_tmux_panenumber='1'
+	let g:SimpylFold_docstring_preview = 1
+	nmap <silent> <leader>sr :Semshi rename<CR>
+	nmap <silent> <Tab> :Semshi goto name next<CR>
+	nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+	nmap <silent> <leader>c :Semshi goto class next<CR>
+	nmap <silent> <leader>C :Semshi goto class prev<CR>
+	nmap <silent> <leader>f :Semshi goto function next<CR> zv
+	nmap <silent> <leader>F :Semshi goto function prev<CR> zv
+	nmap <silent> <leader>ee :Semshi error<CR>
+	nmap <silent> <leader>ge :Semshi goto error<CR>
 
-	" Signify - Git sign bar
-		let g:signify_vcs_list = ['git']
-		let g:signify_update_on_focusgained = 1
-		let g:signify_cursorhold_insert     = 500
-		let g:signify_cursorhold_normal     = 500
-		nnoremap <leader>gt :SignifyToggle<CR>
-		nnoremap <leader>gh :SignifyToggleHighlight<CR>
-		nnoremap <leader>gr :SignifyRefresh<CR>
-		nnoremap <leader>gd :SignifyDebug<CR>
-		nmap <leader>gj <plug>(signify-next-hunk)
-		nmap <leader>gk <plug>(signify-prev-hunk)
+" Signify - Git sign bar
+	let g:signify_vcs_list = ['git']
+	nnoremap <leader>gt :SignifyToggle<CR>
+	nnoremap <leader>gh :SignifyToggleHighlight<CR>
+	nnoremap <leader>gr :SignifyRefresh<CR>
+	nnoremap <leader>gd :SignifyDebug<CR>
+	nmap <leader>gj <plug>(signify-next-hunk)
+	nmap <leader>gk <plug>(signify-prev-hunk)
 
-	" Lightline
-		let g:lightline = {
-			\ 'component': {
-			\ },
-			\ 'active': {
-			\   'right': [ [ 'lineinfo' ],
-			\              [ 'percent' ],
-			\              [ 'fileformat', 'fileencoding', 'filetype', 'fugitive' ] ]
-			\ },
-			\ 'component_function': {
-			\   'readonly': 'LightlineReadonly',
-			\   'fugitive': 'LightlineFugitive',
-			\ 	'filename': 'LightlineFilename',
-			\ },
-			\ 'separator': { 'left': '', 'right': '' },
-			\ 'subseparator': { 'left': '', 'right': '' },
-			\}
+" Lightline
+	let g:lightline = {
+		\ 'component': {
+		\ },
+		\ 'active': {
+		\   'right': [ [ 'lineinfo' ],
+		\              [ 'percent' ],
+		\              [ 'fileformat', 'fileencoding', 'filetype', 'fugitive' ] ]
+		\ },
+		\ 'component_function': {
+		\   'readonly': 'LightlineReadonly',
+		\   'fugitive': 'LightlineFugitive',
+		\ 	'filename': 'LightlineFilename',
+		\ },
+		\ 'separator': { 'left': '', 'right': '' },
+		\ 'subseparator': { 'left': '', 'right': '' },
+		\}
 
-		function! LightlineReadonly()
-			return &readonly ? '' : ''
-		endfunction
-		function! LightlineFugitive()
-			if exists('*fugitive#head')
-				let branch = fugitive#head()
-				return branch !=# '' ? ''.branch : ''
+	function! LightlineReadonly()
+		return &readonly ? '' : ''
+	endfunction
+	function! LightlineFugitive()
+		if exists('*fugitive#head')
+			let branch = fugitive#head()
+			return branch !=# '' ? ''.branch : ''
+		endif
+		return ''
+	endfunction
+	function! LightlineFilename()
+		let name = ""
+		let subs = split(expand('%'), "/") 
+		let i = 1
+		for s in subs
+			let parent = name
+			if  i == len(subs)
+				let name = parent . '/' . s
+			elseif i == 1
+				let name = s
+			else
+				let name = parent . '/' . strpart(s, 0, 2)
 			endif
-			return ''
-		endfunction
-		function! LightlineFilename()
-			let name = ""
-			let subs = split(expand('%'), "/") 
-			let i = 1
-			for s in subs
-				let parent = name
-				if  i == len(subs)
-					let name = parent . '/' . s
-				elseif i == 1
-					let name = s
-				else
-					let name = parent . '/' . strpart(s, 0, 2)
-				endif
-				let i += 1
-			endfor
-		  return name
-		endfunction
+			let i += 1
+		endfor
+	  return name
+	endfunction
 
-	" Indent Line
-		let g:indentLine_enabled = 1
-		let g:indentLine_setColors = 1
-		let g:indentLine_setConceal = 0
+" Indent Line
+	let g:indentLine_enabled = 1
+	let g:indentLine_setColors = 1
+	let g:indentLine_setConceal = 0
 
-	" Theme
-		colo dracula 
-		set background=dark
-		hi Normal guibg=NONE ctermbg=NONE
+" Theme
+	colo dracula 
+	set background=dark
+	hi Normal guibg=NONE ctermbg=NONE
 
-	" Mapping
-	autocmd FileType python setlocal completeopt-=preview
-	" Folding
+" Mapping
+" autocmd FileType python setlocal completeopt-=preview
+
+" Folding and cursors
 	nnoremap <space> za
 	vnoremap <space> zf
 	nnoremap <leader>z zMzvzz
-	" Center cursor
 	nnoremap n nzzzv
 	nnoremap N Nzzzv
-	" Copy
+
+" Copy
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
 
-	nnoremap <esc> :noh<return><esc>
+nnoremap <esc> :noh<return><esc>
