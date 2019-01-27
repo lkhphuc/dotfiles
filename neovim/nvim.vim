@@ -100,6 +100,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " Python
 	let g:cellmode_tmux_panenumber='1'
 	let g:SimpylFold_docstring_preview = 1
+	let g:semshi#excluded_hl_groups	= ['local', 'unresolved']
 	nmap <silent> <leader>sr :Semshi rename<CR>
 	nmap <silent> <Tab> :Semshi goto name next<CR>
 	nmap <silent> <S-Tab> :Semshi goto name prev<CR>
