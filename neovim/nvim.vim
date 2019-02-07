@@ -41,6 +41,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-abolish'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-repeat'
 
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
@@ -138,10 +141,11 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 	let g:jedi#use_split_not_buffers = "bottom"
 
 " ALE
-	let g:ale_linters = {'python': ['mypy', 'pyls']}
+    " let g:loaded_python_provider = 1
+    let g:ale_python_auto_pipenv = 1
+	let g:ale_linters = {'python': ['pycodestyle', 'mypy']}
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
                 \       'python': ['isort', 'yapf']}
-	let g:ale_fix_on_save = 0
     nmap <silent> <leader>ek <Plug>(ale_previous_wrap)
     nmap <silent> <leader>ej <Plug>(ale_next_wrap)
 
