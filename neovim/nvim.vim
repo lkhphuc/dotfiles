@@ -52,6 +52,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'easymotion/vim-easymotion'
     Plug 'haya14busa/incsearch.vim'
     Plug 'haya14busa/incsearch-fuzzy.vim'
+    Plug 'michaeljsmith/vim-indent-object'
 
 	Plug 'ervandew/supertab'
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -61,7 +62,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'honza/vim-snippets'
 	Plug 'raimondi/delimitmate'
 	
-	" Plug 'gabrielelana/vim-markdown'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+    Plug 'rhysd/vim-grammarous'
 
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
@@ -177,7 +179,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 		\ 'active': {
 		\   'right': [ [ 'lineinfo' ],
 		\              [ 'percent' ],
-		\              [ 'fileformat', 'fileencoding', 'filetype', 'fugitive' ] ]
+		 \             [ 'fileencoding', 'filetype', 'fugitive' ] ]
 		\ },
 		\ 'component_function': {
 		\   'readonly': 'LightlineReadonly',
@@ -227,7 +229,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 	hi Normal guibg=NONE ctermbg=NONE
 
 " Mapping
-autocmd FileType python setlocal completeopt-=preview
+" autocmd FileType python setlocal completeopt-=preview
 
 " Folding and cursors
 	nnoremap <space> za
