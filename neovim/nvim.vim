@@ -145,9 +145,9 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " ALE
     " let g:loaded_python_provider = 1
     let g:ale_python_auto_pipenv = 1
-	let g:ale_linters = {'python': ['pycodestyle', 'mypy']}
+	let g:ale_linters = {'python': ['flake8', 'mypy']}
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
-                \       'python': ['isort', 'yapf']}
+                \       'python': ['isort', 'black']}
     nmap <silent> <leader>ek <Plug>(ale_previous_wrap)
     nmap <silent> <leader>ej <Plug>(ale_next_wrap)
 
