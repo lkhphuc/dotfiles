@@ -6,6 +6,7 @@
 	endif
 
 " General nvim settings
+    lang en_US.UTF-8
 	let mapleader=","
 	set hidden
 	set noshowmode 
@@ -21,10 +22,10 @@
 	set cursorline
 	set sidescroll=1
 	set conceallevel=0
-	set colorcolumn=80
+	set colorcolumn=88
 	" Indents word-wrapped lines as much as the 'parent' line
 	set breakindent
-	set breakindentopt=shift:4,sbr
+	set breakindentopt=shift:0,sbr
 	" Ensures word-wrap does not split words
 	set formatoptions+=l
 	set lbr
@@ -47,11 +48,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
+    " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'easymotion/vim-easymotion'
-    Plug 'haya14busa/incsearch.vim'
-    Plug 'haya14busa/incsearch-fuzzy.vim'
+    " Plug 'justinmk/vim-sneak'
     Plug 'michaeljsmith/vim-indent-object'
 
 	Plug 'ervandew/supertab'
@@ -77,6 +78,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tmhedberg/SimpylFold'
 
 	" Visual
+    Plug 'Konfekt/FastFold'
 	Plug 'itchyny/lightline.vim'
 	Plug 'maximbaz/lightline-ale'
 	Plug 'mhinz/vim-signify'
@@ -103,8 +105,8 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " EasyMotion
     let g:EasyMotion_do_mapping = 0
-    map <Leader> <Plug>(easymotion-prefix)
-    nmap f <Plug>(easymotion-overwin-f2)
+    " map <Leader> <Plug>(easymotion-prefix)
+    nmap <Leader>f <Plug>(easymotion-overwin-f2)
     let g:EasyMotion_smartcase = 1
     let g:EasyMotion_use_smartsign_us = 1 " US layout
     let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
@@ -112,24 +114,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
     map <Leader>h <Plug>(easymotion-linebackward)
-
-" Incsearch + Fuzzy
-    map /  <Plug>(incsearch-forward)
-    map ?  <Plug>(incsearch-backward)
-    map g/ <Plug>(incsearch-stay)
-    " :h g:incsearch#auto_nohlsearch
-    set hlsearch
-    let g:incsearch#auto_nohlsearch = 1
-    map n  <Plug>(incsearch-nohl-n) zv
-    map N  <Plug>(incsearch-nohl-N) zv
-    map *  <Plug>(incsearch-nohl-*) zv
-    map #  <Plug>(incsearch-nohl-#) zv
-    map g* <Plug>(incsearch-nohl-g*) zv
-    map g# <Plug>(incsearch-nohl-g#) zv
-    " Fuzzy
-    map z/ <Plug>(incsearch-fuzzyspell-/)
-    map z? <Plug>(incsearch-fuzzyspell-?)
-    map zg/ <Plug>(incsearch-fuzzyspell-stay)
 
 " Completion
 	let g:deoplete#enable_at_startup = 1
@@ -145,9 +129,10 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " ALE
     " let g:loaded_python_provider = 1
     let g:ale_python_auto_pipenv = 1
+    let g:ale_python_flake8_options = '--max-line-length=88 --ignore=E203,W503,E722'
 	let g:ale_linters = {'python': ['flake8', 'mypy']}
 	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
-                \       'python': ['isort', 'black']}
+                \       'python': ['isort', 'black', 'trim_whitespace', 'remove_trailing_lines']}
     nmap <silent> <leader>ek <Plug>(ale_previous_wrap)
     nmap <silent> <leader>ej <Plug>(ale_next_wrap)
 
