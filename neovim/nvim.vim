@@ -94,8 +94,14 @@ call plug#end()
 	nnoremap <leader>t :Files<CR>
 	nnoremap <leader>a :Ag<CR>
 
-map <C-n> :NERDTreeToggle<CR>
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" NERDTree
+    map <C-n> :NERDTreeToggle<CR>
+    let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
+    let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+    " Disable arrow icons at the left side of folders for NERDTree.
+    let g:NERDTreeDirArrowExpandable = "\u00a0"
+    let g:NERDTreeDirArrowCollapsible = "\u00a0"
+    highlight! link NERDTreeFlags NERDTreeDir
 
 " Comfortable motion
 	let g:comfortable_motion_scroll_down_key = "j"
@@ -116,6 +122,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
     map <Leader>h <Plug>(easymotion-linebackward)
 
 " Completion
+    let g:SuperTabDefaultCompletionType = "<c-n>"
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#sources#jedi#show_docstring = 0
 	" to not block semshi
