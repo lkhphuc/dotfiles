@@ -25,7 +25,7 @@
 	set colorcolumn=88
 	" Indents word-wrapped lines as much as the 'parent' line
 	set breakindent
-	set breakindentopt=shift:0,sbr
+	set breakindentopt=shift:2,sbr
 	" Ensures word-wrap does not split words
 	set formatoptions+=l
 	set lbr
