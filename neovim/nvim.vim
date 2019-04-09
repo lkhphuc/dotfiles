@@ -145,6 +145,8 @@ call plug#end()
 
 " Python
 	let g:cellmode_tmux_panenumber='1'
+    let g:cellmode_default_mappings='0'
+    vmap <silent> <C-c> :call RunTmuxPythonChunk()<CR>
 	let g:SimpylFold_docstring_preview = 1
 	autocmd FileType python nmap <silent> <leader>sr :Semshi rename<CR>
 	autocmd FileType python nmap <silent> <leader>ss :Semshi goto name next<CR>
