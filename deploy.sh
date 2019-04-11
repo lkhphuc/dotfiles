@@ -93,6 +93,7 @@ fi
 printf "source '$HOME/dotfiles/zsh/zshrc.sh'" > $HOME/.zshrc
 printf "source-file $HOME/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
 printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
+ln -s $HOME/dotfiles/neovim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

@@ -1,0 +1,4 @@
+{
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "python.linting.enabled": true,
+}
