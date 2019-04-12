@@ -47,7 +47,7 @@ check_default_shell() {
 }
 
 echo "We're going to do the following:"
-echo "1. Check to make sure you have zsh, nvim, and tmux installed"
+echo "1. Check to make sure you have zsh, neovim, and tmux installed"
 echo "2. We'll help you install them if you don't"
 echo "3. We're going to check to see if your default shell is zsh"
 echo "4. We'll try to change it if it's not" 
@@ -69,7 +69,7 @@ check_for_software zsh
 echo 
 check_for_software tmux
 echo
-check_for_software nvim
+check_for_software neovim
 echo
 check_for_software thefuck 
 echo
