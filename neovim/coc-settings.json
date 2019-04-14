@@ -1,4 +1,7 @@
 {
-    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "suggest.triggerAfterInsertEnter": true,
+    "suggest.noselect": false,
+    "suggest.acceptSuggestionOnCommitCharacter": true,
+
     "python.linting.enabled": true,
 }

@@ -23,15 +23,13 @@
 	set sidescroll=1
 	set conceallevel=0
 	set colorcolumn=88
-	" Indents word-wrapped lines as much as the 'parent' line
 	set breakindent
 	set breakindentopt=shift:2,sbr
-	" Ensures word-wrap does not split words
-	set formatoptions+=l
-	set lbr
+	set lbr formatoptions+=l " Ensures word-wrap does not split words
 	" Search config
 	set ignorecase smartcase
-
+    set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
+    set shortmess+=c " don't give |ins-completion-menu| messages.
     " Show trailing whitepace and spaces before a tab:
     :highlight ExtraWhitespace ctermbg=red guibg=red
     :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
@@ -48,18 +46,13 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
-    " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'easymotion/vim-easymotion'
     " Plug 'justinmk/vim-sneak'
     Plug 'michaeljsmith/vim-indent-object'
 
-	Plug 'ervandew/supertab'
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'wellle/tmux-complete.vim'
-	Plug 'Shougo/echodoc.vim'
-	Plug 'sirver/ultisnips'
 	Plug 'honza/vim-snippets'
 	Plug 'raimondi/delimitmate'
 	
@@ -70,9 +63,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tmux-plugins/vim-tmux'
 
 	" Python 
-	Plug 'davidhalter/jedi-vim'
-	Plug 'zchee/deoplete-jedi'
-	Plug 'w0rp/ale'
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 	Plug 'julienr/vim-cellmode'
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 	Plug 'tmhedberg/SimpylFold'
@@ -80,7 +71,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 	" Visual
     Plug 'Konfekt/FastFold'
 	Plug 'itchyny/lightline.vim'
-	Plug 'maximbaz/lightline-ale'
 	Plug 'mhinz/vim-signify'
 	Plug 'yggdroot/indentline'
 	Plug 'sheerun/vim-polyglot'
@@ -122,26 +112,30 @@ call plug#end()
     map <Leader>h <Plug>(easymotion-linebackward)
 
 " Completion
-    let g:SuperTabDefaultCompletionType = "<c-n>"
-	let g:deoplete#enable_at_startup = 1
-	let g:deoplete#sources#jedi#show_docstring = 0
-	" to not block semshi
-	let g:deoplete#auto_complete_delay = 100
-	let g:echodoc#enable_at_startup = 1
+    let g:coc_global_extensions = ["coc-python", "coc-snippets"]
+    " Coc K to show documentation
+        function! s:show_documentation()
+          if &filetype == 'vim'
+            execute 'h '.expand('<cword>')
+          else
+            call CocAction('doHover')
+          endif
+        endfunction
+        nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " Use tab for trigger completion with characters ahead and navigate.
+        inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+        inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        function! s:check_back_space() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+    " Use <C-l> for trigger snippet expand.
+        imap <C-l> <Plug>(coc-snippets-expand)
 
-	let g:jedi#completions_enabled = 0
-	let g:jedi#show_call_signatures = "1"
-	let g:jedi#use_split_not_buffers = "bottom"
-
-" ALE
-    " let g:loaded_python_provider = 1
-    let g:ale_python_auto_pipenv = 1
-    let g:ale_python_flake8_options = '--max-line-length=88 --ignore=E203,W503,E722'
-	let g:ale_linters = {'python': ['flake8', 'mypy']}
-	let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
-                \       'python': ['isort', 'black', 'trim_whitespace', 'remove_trailing_lines']}
-    nmap <silent> <leader>ek <Plug>(ale_previous_wrap)
-    nmap <silent> <leader>ej <Plug>(ale_next_wrap)
 
 " Python
 	let g:cellmode_tmux_panenumber='1'
@@ -171,14 +165,17 @@ call plug#end()
 		\ 'component': {
 		\ },
 		\ 'active': {
-		\   'right': [ [ 'lineinfo' ],
-		\              [ 'percent' ],
-		 \             [ 'fileencoding', 'filetype', 'fugitive' ] ]
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ 'readonly', 'filename', 'modified'] ],
+		\   'right': [ [ 'percent' ,'lineinfo' ],
+		\              [ 'fileencoding', 'filetype', 'fugitive' ],
+        \              [ 'cocstatus' ] ]
 		\ },
 		\ 'component_function': {
+        \   'cocstatus': 'coc#status',
 		\   'readonly': 'LightlineReadonly',
 		\   'fugitive': 'LightlineFugitive',
-		\ 	'filename': 'LightlineFilename',
+        \   'filename': 'LightlineFilename',
 		\ },
 		\ 'separator': { 'left': '', 'right': '' },
 		\ 'subseparator': { 'left': '', 'right': '' },
@@ -223,19 +220,16 @@ call plug#end()
 	hi Normal guibg=NONE ctermbg=NONE
 
 " Mapping
-" autocmd FileType python setlocal completeopt-=preview
-
-" Folding and cursors
+    " Folding and cursors
 	nnoremap <space> za
 	vnoremap <space> zf
 	nnoremap <leader>z zMzvzz
 	nnoremap n nzzzv
 	nnoremap N Nzzzv
-
-" Copy
+    " Copy
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
-
-nnoremap <esc> :noh<return><esc>
+    nnoremap <esc> :noh<return><esc>
+    :tnoremap <Esc> <C-\><C-n>
