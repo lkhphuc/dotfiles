@@ -19,6 +19,7 @@
 	set foldmethod=indent
 
 	set relativenumber number
+    set signcolumn=yes
 	set cursorline
 	set sidescroll=1
 	set conceallevel=0
@@ -62,8 +63,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
 
-	" Python 
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    Plug 'ludovicchabant/vim-gutentags'
+
+	" Python 
 	Plug 'julienr/vim-cellmode'
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 	Plug 'tmhedberg/SimpylFold'
@@ -112,30 +115,72 @@ call plug#end()
     map <Leader>h <Plug>(easymotion-linebackward)
 
 " Completion
-    let g:coc_global_extensions = ["coc-python", "coc-snippets"]
-    " Coc K to show documentation
-        function! s:show_documentation()
-          if &filetype == 'vim'
-            execute 'h '.expand('<cword>')
-          else
-            call CocAction('doHover')
-          endif
-        endfunction
-        nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " Use tab for trigger completion with characters ahead and navigate.
-        inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-        inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-        function! s:check_back_space() abort
-          let col = col('.') - 1
-          return !col || getline('.')[col - 1]  =~# '\s'
-        endfunction
-    " Use <C-l> for trigger snippet expand.
-        imap <C-l> <Plug>(coc-snippets-expand)
+    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json"]
 
+    " Use `[c` and `]c` for navigate diagnostics
+    nmap <silent> [c <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+    " Remap keys for gotos
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    "
+    " Remap for rename current word
+    nmap <leader>rn <Plug>(coc-rename)
+
+    " Remap for format selected region
+    vmap <leader>f  <Plug>(coc-format-selected)
+    nmap <leader>f  <Plug>(coc-format-selected)
+
+    augroup mygroup
+      autocmd!
+      " Setup formatexpr specified filetype(s).
+      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+      " Update signature help on jump placeholder
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
+
+    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    vmap <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+    " Remap for do codeAction of current line
+    nmap <leader>ac  <Plug>(coc-codeaction)
+    " Fix autofix problem of current line
+    nmap <leader>qf  <Plug>(coc-fix-current)
+
+    " Use `:Format` for format current buffer
+    command! -nargs=0 Format :call CocAction('format')
+
+    " Use `:Fold` for fold current buffer
+    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+    " Coc K to show documentation
+    function! s:show_documentation()
+      if &filetype == 'vim'
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " Use tab for trigger completion with characters ahead and navigate.
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+    inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+    inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    imap <C-l> <Plug>(coc-snippets-expand)
 
 " Python
 	let g:cellmode_tmux_panenumber='1'
