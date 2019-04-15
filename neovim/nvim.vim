@@ -114,8 +114,8 @@ call plug#end()
     map <Leader>k <Plug>(easymotion-k)
     map <Leader>h <Plug>(easymotion-linebackward)
 
-" Completion
-    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json"]
+" Coc
+    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls"]
 
     " Use `[c` and `]c` for navigate diagnostics
     nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -129,13 +129,14 @@ call plug#end()
 
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
-    "
+    autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
+    
     " Remap for rename current word
     nmap <leader>rn <Plug>(coc-rename)
 
     " Remap for format selected region
-    vmap <leader>f  <Plug>(coc-format-selected)
-    nmap <leader>f  <Plug>(coc-format-selected)
+    vmap <leader>cf  <Plug>(coc-format-selected)
+    nmap <leader>cf  <Plug>(coc-format-selected)
 
     augroup mygroup
       autocmd!
@@ -146,19 +147,16 @@ call plug#end()
     augroup end
 
     " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-    vmap <leader>a  <Plug>(coc-codeaction-selected)
-    nmap <leader>a  <Plug>(coc-codeaction-selected)
+    vmap <leader>ca  <Plug>(coc-codeaction-selected)
+    nmap <leader>ca  <Plug>(coc-codeaction-selected)
 
     " Remap for do codeAction of current line
-    nmap <leader>ac  <Plug>(coc-codeaction)
+    nmap <leader>caa  <Plug>(coc-codeaction)
     " Fix autofix problem of current line
-    nmap <leader>qf  <Plug>(coc-fix-current)
+    nmap <leader>cqf  <Plug>(coc-fix-current)
 
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
-
-    " Use `:Fold` for fold current buffer
-    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
     " Coc K to show documentation
     function! s:show_documentation()

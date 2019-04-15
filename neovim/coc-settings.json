@@ -1,12 +1,14 @@
 {
     "suggest.triggerAfterInsertEnter": true,
-    "suggest.noselect": false,
+    "suggest.noselect": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
+    "diagnostic.checkCurrentLine": true,
 
+    "python.jediEnabled": true,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["'--max-line-length=88", "--ignore=E203,W503,E722"],
+    "python.linting.flake8Args": ["--max-line-length=88", "--ignore=E203,W503,E722,E302"],
     "python.linting.mypyEnabled": true,
     "python.linting.mypyArgs": [
         "--ignore-missing-imports",
@@ -14,4 +16,19 @@
         "--show-column-numbers"
     ],
     "python.formatting.provider": "black",
+
+    "ccls.completion.enableSnippetInsertion": true,
+
+    "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+         "cache": {
+           "directory": "/tmp/ccls"
+         }
+       }
+    }
+  }
 }
