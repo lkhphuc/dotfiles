@@ -82,7 +82,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 
 " Fzf.vim
-	nnoremap <leader>h :History<CR>
+	nnoremap <leader>H :History<CR>
 	nnoremap <leader>b :Buffers<CR>
 	nnoremap <leader>t :Files<CR>
 	nnoremap <leader>a :Ag<CR>
@@ -180,6 +180,13 @@ call plug#end()
     inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     imap <C-l> <Plug>(coc-snippets-expand)
 
+" Gutentags
+    augroup MyGutentagsStatusLineRefresher
+        autocmd!
+        autocmd User GutentagsUpdating call lightline#update()
+        autocmd User GutentagsUpdated call lightline#update()
+    augroup END
+
 " Python
 	let g:cellmode_tmux_panenumber='1'
     let g:cellmode_default_mappings='0'
@@ -212,9 +219,10 @@ call plug#end()
         \             [ 'readonly', 'filename', 'modified'] ],
 		\   'right': [ [ 'percent' ,'lineinfo' ],
 		\              [ 'fileencoding', 'filetype', 'fugitive' ],
-        \              [ 'cocstatus' ] ]
+        \              [ 'cocstatus', 'gutentags' ] ]
 		\ },
 		\ 'component_function': {
+        \   'gutentags': 'gutentags#statusline',
         \   'cocstatus': 'coc#status',
 		\   'readonly': 'LightlineReadonly',
 		\   'fugitive': 'LightlineFugitive',
@@ -275,4 +283,4 @@ call plug#end()
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
     nnoremap <esc> :noh<return><esc>
-    :tnoremap <Esc> <C-\><C-n>
+    tnoremap <Esc> <C-\><C-n>:q!<CR>
