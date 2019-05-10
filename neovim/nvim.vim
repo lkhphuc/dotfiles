@@ -13,8 +13,7 @@
 	set mouse=a
 	set dir='/tmp/,~/tmp,/var/tmp,.'
 	" Tab and indent
-	set expandtab
-	set tabstop=4
+	set expandtab tabstop=4
 	set shiftwidth=4
 	set foldmethod=indent
 
@@ -44,13 +43,13 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-eunuch'
 
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'yuttie/comfortable-motion.vim'
-    Plug 'easymotion/vim-easymotion'
-    " Plug 'justinmk/vim-sneak'
+    Plug 'justinmk/vim-sneak'
     Plug 'michaeljsmith/vim-indent-object'
 
 	Plug 'wellle/tmux-complete.vim'
@@ -82,7 +81,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 
 " Fzf.vim
-	nnoremap <leader>H :History<CR>
+	nnoremap <leader>h :History<CR>
 	nnoremap <leader>b :Buffers<CR>
 	nnoremap <leader>t :Files<CR>
 	nnoremap <leader>a :Ag<CR>
@@ -102,17 +101,11 @@ call plug#end()
 	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
 	noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 
-" EasyMotion
-    let g:EasyMotion_do_mapping = 0
-    " map <Leader> <Plug>(easymotion-prefix)
-    nmap <Leader>f <Plug>(easymotion-overwin-f2)
-    let g:EasyMotion_smartcase = 1
-    let g:EasyMotion_use_smartsign_us = 1 " US layout
-    let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-    map <Leader>l <Plug>(easymotion-lineforward)
-    map <Leader>j <Plug>(easymotion-j)
-    map <Leader>k <Plug>(easymotion-k)
-    map <Leader>h <Plug>(easymotion-linebackward)
+" Sneak
+    map f <Plug>Sneak_f
+    map F <Plug>Sneak_F
+    map t <Plug>Sneak_t
+    map T <Plug>Sneak_T
 
 " Coc
     let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls"]
