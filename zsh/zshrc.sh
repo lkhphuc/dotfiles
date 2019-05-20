@@ -23,8 +23,9 @@ alias nv="nvim"
 alias fzf="$HOME/.fzf/bin/fzf-tmux"
 alias ls="ls -GFp"
 
-function cs () {
-	cd "$@" && ls
+function chpwd() {
+    emulate -L zsh
+    ls
 }
 
 bindkey '^[[A' history-substring-search-up
