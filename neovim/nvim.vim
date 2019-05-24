@@ -217,7 +217,7 @@ call plug#end()
 		\ },
 		\ 'component_function': {
         \   'gutentags': 'gutentags#statusline',
-        \   'cocstatus': 'coc#status',
+        \   'cocstatus': 'LightlineCocStatus',
 		\   'readonly': 'LightlineReadonly',
 		\   'fugitive': 'LightlineFugitive',
         \   'filename': 'LightlineFilename',
@@ -253,6 +253,11 @@ call plug#end()
 		endfor
 	  return name
 	endfunction
+    function! LightlineCocStatus()
+        let status = coc#status()
+        let env = matchstr(status, "(\'.*\':")[2:-3]
+        return winwidth(0) > 120 ? status : env
+    endfunction
 
 " Indent Line
 	let g:indentLine_enabled = 1
