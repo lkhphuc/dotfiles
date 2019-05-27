@@ -71,6 +71,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tmhedberg/SimpylFold'
 
 	" Visual
+    Plug 'szw/vim-maximizer'
     Plug 'Konfekt/FastFold'
 	Plug 'itchyny/lightline.vim'
 	Plug 'mhinz/vim-signify'
