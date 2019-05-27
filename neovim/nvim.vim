@@ -47,7 +47,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
-	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+    Plug 'justinmk/vim-dirvish'
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'justinmk/vim-sneak'
     Plug 'michaeljsmith/vim-indent-object'
@@ -88,14 +88,11 @@ call plug#end()
     nnoremap <leader>l :Lines<CR>
 	nnoremap <leader>a :Ag<CR>
 
-" NERDTree
-    map <C-n> :NERDTreeToggle<CR>
-    let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
-    let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
-    " Disable arrow icons at the left side of folders for NERDTree.
-    let g:NERDTreeDirArrowExpandable = "\u00a0"
-    let g:NERDTreeDirArrowCollapsible = "\u00a0"
-    highlight! link NERDTreeFlags NERDTreeDir
+" Dirvish
+    let g:loaded_netrwPlugin = 1
+    command! -nargs=? -complete=dir Explore Dirvish <args>
+    command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+    command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
 " Comfortable motion
 	let g:comfortable_motion_scroll_down_key = "j"
