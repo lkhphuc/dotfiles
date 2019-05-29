@@ -272,6 +272,9 @@ call plug#end()
 	hi Normal guibg=NONE ctermbg=NONE
 
 " Mapping
+    nnoremap <silent><C-w>m :MaximizerToggle<CR>
+    vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
+    inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
     " Folding and cursors
 	nnoremap <space> za
 	vnoremap <space> zf
