@@ -85,6 +85,7 @@ call plug#end()
 	nnoremap <leader>h :History<CR>
 	nnoremap <leader>b :Buffers<CR>
 	nnoremap <leader>t :Files<CR>
+    nnoremap <leader>l :Lines<CR>
 	nnoremap <leader>a :Ag<CR>
 
 " NERDTree

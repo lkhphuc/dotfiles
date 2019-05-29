@@ -21,10 +21,10 @@ alias v="vim -p"
 alias docker="sudo docker"
 alias nv="nvim"
 alias fzf="$HOME/.fzf/bin/fzf-tmux"
-alias ls="ls -GFp --color --group-directories-first"
-
 if [ "$OSTYPE"  != linux-gnu ]; then # Is this the MacOS system
-    alias ls=gls
+    alias ls="gls -GFp --color --group-directories-first"
+else
+    alias ls="ls -GFp --color --group-directories-first"
 fi
 
 function chpwd() {
