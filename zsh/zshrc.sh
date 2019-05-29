@@ -21,7 +21,7 @@ alias v="vim -p"
 alias docker="sudo docker"
 alias nv="nvim"
 alias fzf="$HOME/.fzf/bin/fzf-tmux"
-alias ls="ls -GFp"
+alias ls="ls -GFp --color=auto"
 
 function chpwd() {
     emulate -L zsh
