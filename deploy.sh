@@ -71,6 +71,8 @@ check_for_software tmux
 echo
 check_for_software neovim
 echo
+check_for_software ripgrep
+echo
 check_for_software thefuck 
 echo
 

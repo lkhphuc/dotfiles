@@ -88,6 +88,7 @@ call plug#end()
     nnoremap <leader>gf :GitFiles<CR>
     nnoremap <leader>l :Lines<CR>
 	nnoremap <leader>a :Ag<CR>
+    nnoremap <leader>rg :Rg<CR>
 
 " NERDTree
     map <C-n> :NERDTreeToggle<CR>
