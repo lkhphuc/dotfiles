@@ -64,6 +64,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
     Plug 'ludovicchabant/vim-gutentags'
+    Plug 'majutsushi/tagbar'
 
 	" Python 
 	Plug 'julienr/vim-cellmode'
@@ -178,7 +179,8 @@ call plug#end()
     inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     imap <C-l> <Plug>(coc-snippets-expand)
 
-" Gutentags
+" tags
+    nmap <F8> :TagbarToggle<CR>
     augroup MyGutentagsStatusLineRefresher
         autocmd!
         autocmd User GutentagsUpdating call lightline#update()
