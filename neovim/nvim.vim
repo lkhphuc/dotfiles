@@ -54,15 +54,14 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 	Plug 'wellle/tmux-complete.vim'
 	Plug 'honza/vim-snippets'
-	Plug 'raimondi/delimitmate'
+	" Plug 'raimondi/delimitmate'  # TODO remove
 	
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
     Plug 'rhysd/vim-grammarous'
 
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
 
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'majutsushi/tagbar'
 
@@ -113,7 +112,7 @@ call plug#end()
     map T <Plug>Sneak_T
 
 " Coc
-    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls"]
+    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls", "coc-tabnine"]
 
     " Use `[c` and `]c` for navigate diagnostics
     nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -166,7 +165,9 @@ call plug#end()
       endif
     endfunction
     nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " Use tab for trigger completion with characters ahead and navigate.
+
+    " Use tab for trigger completion, completion confirm, snippets expand and
+    " jump
     function! s:check_back_space() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
@@ -177,7 +178,7 @@ call plug#end()
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
     inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    imap <C-l> <Plug>(coc-snippets-expand)
+    imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " tags
     nmap <F8> :TagbarToggle<CR>

@@ -1,6 +1,5 @@
 {
     "suggest.triggerAfterInsertEnter": true,
-    "suggest.noselect": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
     "diagnostic.checkCurrentLine": true,
 
