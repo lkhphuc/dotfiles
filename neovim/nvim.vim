@@ -9,7 +9,7 @@
     lang en_US.UTF-8
 	let mapleader=","
 	set hidden
-	set noshowmode 
+	set noshowmode
 	set mouse=a
 	set dir='/tmp/,~/tmp,/var/tmp,.'
 	" Tab and indent
@@ -33,7 +33,7 @@
     " Show trailing whitepace and spaces before a tab:
     :highlight ExtraWhitespace ctermbg=red guibg=red
     :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-	
+
 
 call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tpope/vim-sensible'
@@ -44,38 +44,31 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-eunuch'
-
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
+    Plug 'vimwiki/vimwiki'
+    Plug 'junegunn/goyo.vim'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'yuttie/comfortable-motion.vim'
-    Plug 'justinmk/vim-sneak'
     Plug 'michaeljsmith/vim-indent-object'
-
-	Plug 'wellle/tmux-complete.vim'
-	Plug 'honza/vim-snippets'
-	" Plug 'raimondi/delimitmate'  # TODO remove
-	
-    Plug 'rhysd/vim-grammarous'
-
+    Plug 'metakirby5/codi.vim'
+    " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
-
     Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+	Plug 'honza/vim-snippets'
+	Plug 'wellle/tmux-complete.vim'
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'majutsushi/tagbar'
-
-	" Python 
-	Plug 'julienr/vim-cellmode'
+	" Python
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-	Plug 'tmhedberg/SimpylFold'
-
+    " Swift
+    Plug 'jph00/swift-apple'
 	" Visual
     Plug 'szw/vim-maximizer'
-    Plug 'Konfekt/FastFold'
+    " Plug 'pseewald/vim-anyfold'
 	Plug 'itchyny/lightline.vim'
 	Plug 'mhinz/vim-signify'
-	Plug 'yggdroot/indentline'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'dracula/vim', {'as': 'dracula'}
 	Plug 'ryanoasis/vim-devicons'
@@ -89,7 +82,6 @@ call plug#end()
     nnoremap <leader>l :Lines<CR>
 	nnoremap <leader>a :Ag<CR>
     nnoremap <leader>rg :Rg<CR>
-
 " NERDTree
     map <C-n> :NERDTreeToggle<CR>
     let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
@@ -104,38 +96,25 @@ call plug#end()
 	let g:comfortable_motion_scroll_up_key = "k"
 	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
 	noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
-
-" Sneak
-    map f <Plug>Sneak_f
-    map F <Plug>Sneak_F
-    map t <Plug>Sneak_t
-    map T <Plug>Sneak_T
-
 " Coc
-    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls", "coc-tabnine"]
-
+    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls", "coc-tabnine", "coc-tag", "coc-syntax", "coc-emoji"]
     " Use `[c` and `]c` for navigate diagnostics
     nmap <silent> [c <Plug>(coc-diagnostic-prev)
     nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
     " Remap keys for gotos
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> g[ <Plug>(coc-declaration)
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
-
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
-    
     " Remap for rename current word
     nmap <leader>rn <Plug>(coc-rename)
-
     " Remap for format selected region
     vmap <leader>cf  <Plug>(coc-format-selected)
     nmap <leader>cf  <Plug>(coc-format-selected)
-
     augroup mygroup
       autocmd!
       " Setup formatexpr specified filetype(s).
@@ -143,19 +122,15 @@ call plug#end()
       " Update signature help on jump placeholder
       autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     augroup end
-
     " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
     vmap <leader>ca  <Plug>(coc-codeaction-selected)
     nmap <leader>ca  <Plug>(coc-codeaction-selected)
-
     " Remap for do codeAction of current line
     nmap <leader>caa  <Plug>(coc-codeaction)
     " Fix autofix problem of current line
     nmap <leader>cqf  <Plug>(coc-fix-current)
-
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
-
     " Coc K to show documentation
     function! s:show_documentation()
       if &filetype == 'vim'
@@ -165,12 +140,10 @@ call plug#end()
       endif
     endfunction
     nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    " Use tab for trigger completion, completion confirm, snippets expand and
-    " jump
+    " Use tab for trigger completion, completion confirm, snippets expand and jump
     function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
     inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -179,7 +152,6 @@ call plug#end()
       \ coc#refresh()
     inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
     imap <C-j> <Plug>(coc-snippets-expand-jump)
-
 " tags
     nmap <F8> :TagbarToggle<CR>
     augroup MyGutentagsStatusLineRefresher
@@ -192,25 +164,14 @@ call plug#end()
 	let g:cellmode_tmux_panenumber='1'
     let g:cellmode_default_mappings='0'
     vmap <silent> <C-c> :call RunTmuxPythonChunk()<CR>
-	let g:SimpylFold_docstring_preview = 1
 	autocmd FileType python nmap <silent> <leader>sr :Semshi rename<CR>
-	autocmd FileType python nmap <silent> <leader>ss :Semshi goto name next<CR>
-	autocmd FileType python nmap <silent> <leader>sS :Semshi goto name prev<CR>
-	autocmd FileType python nmap <silent> <leader>sc :Semshi goto class next<CR>
-	autocmd FileType python nmap <silent> <leader>sC :Semshi goto class prev<CR>
-	autocmd FileType python nmap <silent> <leader>sf :Semshi goto function next<CR> zv
-	autocmd FileType python nmap <silent> <leader>sF :Semshi goto function prev<CR> zv
-	autocmd FileType python nmap <silent> <leader>se :Semshi goto error<CR>
-
 " Signify - Git sign bar
 	let g:signify_vcs_list = ['git']
 	nnoremap <leader>gt :SignifyToggle<CR>
 	nnoremap <leader>gh :SignifyToggleHighlight<CR>
 	nnoremap <leader>gr :SignifyRefresh<CR>
-	nnoremap <leader>gd :SignifyDebug<CR>
 	nmap <leader>gj <plug>(signify-next-hunk)
 	nmap <leader>gk <plug>(signify-prev-hunk)
-
 " Lightline
 	let g:lightline = {
 		\ 'component': {
@@ -245,7 +206,7 @@ call plug#end()
 	endfunction
 	function! LightlineFilename()
 		let name = ""
-		let subs = split(expand('%'), "/") 
+		let subs = split(expand('%'), "/")
 		let i = 1
 		for s in subs
 			let parent = name
@@ -265,14 +226,8 @@ call plug#end()
         let env = matchstr(status, "(\'.*\':")[2:-3]
         return winwidth(0) > 120 ? status : env
     endfunction
-
-" Indent Line
-	let g:indentLine_enabled = 1
-	let g:indentLine_setColors = 1
-	let g:indentLine_setConceal = 0
-
 " Theme
-	colo dracula 
+	colo dracula
 	set background=dark
 	hi Normal guibg=NONE ctermbg=NONE
 

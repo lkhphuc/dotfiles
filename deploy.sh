@@ -15,8 +15,8 @@ prompt_install() {
 			sudo pacman -S $1
 
 		else
-			echo "Package manager not detected! Please install $1 on your own and run this deploy script again. Feel free to make a pull request at https://github.com/lkhphuc/dotfiles :)" 
-		fi 
+			echo "Package manager not detected! Please install $1 on your own and run this deploy script again. Feel free to make a pull request at https://github.com/lkhphuc/dotfiles :)"
+		fi
 	fi
 }
 
@@ -50,7 +50,7 @@ echo "We're going to do the following:"
 echo "1. Check to make sure you have zsh, neovim, and tmux installed"
 echo "2. We'll help you install them if you don't"
 echo "3. We're going to check to see if your default shell is zsh"
-echo "4. We'll try to change it if it's not" 
+echo "4. We'll try to change it if it's not"
 
 echo "Let's get started? (y/n)"
 old_stty_cfg=$(stty -g)
@@ -58,7 +58,7 @@ stty raw -echo
 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
 stty $old_stty_cfg
 if echo "$answer" | grep -iq "^y" ;then
-	echo 
+	echo
 else
 	echo "Quitting, nothing was changed."
 	exit 0
@@ -66,14 +66,14 @@ fi
 
 
 check_for_software zsh
-echo 
+echo
 check_for_software tmux
 echo
 check_for_software neovim
 echo
 check_for_software ripgrep
 echo
-check_for_software thefuck 
+check_for_software thefuck
 echo
 
 check_default_shell
@@ -92,8 +92,8 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-printf "source '$HOME/dotfiles/zsh/zshrc.sh'" > $HOME/.zshrc
-printf "source-file $HOME/dotfiles/tmux/tmux.conf" > $HOME/.tmux.conf
+printf "source '$HOME/dotfiles/zshrc.sh'" > $HOME/.zshrc
+printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
 printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
 ln -s $HOME/dotfiles/neovim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
