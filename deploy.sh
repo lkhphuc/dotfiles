@@ -65,7 +65,7 @@ else
 fi
 
 
-check_for_software zsh
+check_for_software zsh 
 echo
 check_for_software tmux
 echo
@@ -75,6 +75,7 @@ check_for_software ripgrep
 echo
 check_for_software thefuck
 echo
+check_for_software fd
 
 check_default_shell
 

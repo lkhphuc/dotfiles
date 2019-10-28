@@ -55,6 +55,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tmux-plugins/vim-tmux'
+    Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 	Plug 'honza/vim-snippets'
 	Plug 'wellle/tmux-complete.vim'
@@ -70,7 +71,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'itchyny/lightline.vim'
 	Plug 'mhinz/vim-signify'
 	Plug 'sheerun/vim-polyglot'
-	Plug 'dracula/vim', {'as': 'dracula'}
+	Plug 'arcticicestudio/nord-vim'
+    Plug 'junegunn/seoul256.vim'
 	Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
@@ -174,6 +176,7 @@ call plug#end()
 	nmap <leader>gk <plug>(signify-prev-hunk)
 " Lightline
 	let g:lightline = {
+        \ 'colorscheme': 'nord',
 		\ 'component': {
 		\ },
 		\ 'active': {
@@ -227,9 +230,9 @@ call plug#end()
         return winwidth(0) > 120 ? status : env
     endfunction
 " Theme
-	colo dracula
+    set t_Co=256
 	set background=dark
-	hi Normal guibg=NONE ctermbg=NONE
+	colorscheme nord
 
 " Mapping
     nnoremap <silent><C-w>m :MaximizerToggle<CR>
