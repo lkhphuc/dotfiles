@@ -1,6 +1,12 @@
+# Use neovim for vim if present.
+command -v nvim >/dev/null && export EDITOR='nvim' \
+    && alias v=$EDITOR vim="nvim" vimdiff="nvim -d"
+
 if [ ! -d "$HOME/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
 fi
+
+# zplugin self-update
 ### Added by Zplugin's installer
 source "$HOME/.zplugin/bin/zplugin.zsh"
 autoload -Uz _zplugin
@@ -45,26 +51,52 @@ zplugin light denysdovhan/spaceship-prompt
     export SPACESHIP_EXIT_CODE_SHOW=true
     export SPACESHIP_TIME_SHOW=true
 
-zplugin ice wait lucid
 zplugin light softmoth/zsh-vim-mode
 MODE_CURSOR_VICMD="block"
 MODE_CURSOR_VIINS="blinking bar"
 MODE_CURSOR_SEARCH="steady underline"
 
+zplugin snippet OMZ::plugins/git/git.plugin.zsh
+zplugin ice wait as"program" pick"bin/git-dsf" lucid
+zplugin load zdharma/zsh-diff-so-fancy
+
+# On OSX, you might need to install coreutils from homebrew and use the
+# g-prefix – gsed, gdircolors
+zplugin ice \
+    atclone"local PFX=${${(M)OSTYPE:#*darwin*}:+g}
+            git reset --hard; \${PFX}sed -i \
+            '/DIR/c\DIR                   38;5;63;1' LS_COLORS; \
+            \${PFX}dircolors -b LS_COLORS > c.zsh" \
+            atpull'%atclone' pick"c.zsh" nocompile'!' \
+            atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zplugin load trapd00r/LS_COLORS
+if [ "$OSTYPE"  != linux-gnu ]; then # Is this the MacOS system
+    alias ls="gls -hNFp --color --group-directories-first"
+else
+    alias ls="ls -hNFp --color --group-directories-first"
+fi
+
+
+zplugin load hlissner/zsh-autopair
+
 zplugin ice wait lucid
-zplugin snippet OMZ::plugins/tmux.plugins.zsh
+zplugin snippet OMZ::plugins/tmux/tmux.plugin.zsh
+
 zplugin ice wait lucid
 zplugin snippet OMZ::lib/directories.zsh
+
 zplugin ice wait lucid
 zplugin snippet OMZ::lib/history.zsh
-zplugin ice wait lucid
-zplugin snippet OMZ::plugins/osx/osx.zsh
+
 zplugin ice wait lucid
 zplugin load rupa/z
+
 zplugin ice wait lucid
 zplugin load changyuheng/fz
+
 zplugin ice wait lucid
 zplugin load zsh-users/zsh-history-substring-search
+
 zplugin ice wait lucid
 zplugin load MichaelAquilina/zsh-you-should-use
 
@@ -81,7 +113,9 @@ export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 
 # 10ms for key sequences
 KEYTIMEOUT=1
+
 eval $(thefuck --alias)
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files'
-source "$HOME/.aliasrc"
+# export FZF_DEFAULT_COMMAND='rg --files'
+vf() { fzf | xargs -r -I % $EDITOR % ;}
