@@ -16,7 +16,7 @@ autoload -Uz _zplugin
 # Spaceship Prompt
 zplugin light denysdovhan/spaceship-prompt
     SPACESHIP_PROMPT_ORDER=(
-      time          # Time stamps section
+      vi_mode       # Vi-mode indicator
       user          # Username section
       dir           # Current directory section
       host          # Hostname section
@@ -44,10 +44,11 @@ zplugin light denysdovhan/spaceship-prompt
       exec_time     # Execution time
       git           # Git section (git_branch + git_status)
       battery       # Battery level and status
-      vi_mode       # Vi-mode indicator
+      time          # Time stamps section
       )
     export SPACESHIP_PROMPT_ADD_NEWLINE=false
     export SPACESHIP_PROMPT_PREFIXES_SHOW=false
+    # export SPACESHIP_PROMPT_SUFFIXES_SHOW=false
     export SPACESHIP_EXIT_CODE_SHOW=true
     export SPACESHIP_TIME_SHOW=true
 
@@ -76,11 +77,11 @@ else
     alias ls="ls -hNFp --color --group-directories-first"
 fi
 
-
-zplugin load hlissner/zsh-autopair
+zplugin ice wait lucid
+zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 zplugin ice wait lucid
-zplugin snippet OMZ::plugins/tmux/tmux.plugin.zsh
+zplugin load hlissner/zsh-autopair
 
 zplugin ice wait lucid
 zplugin snippet OMZ::lib/directories.zsh
@@ -119,3 +120,19 @@ eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # export FZF_DEFAULT_COMMAND='rg --files'
 vf() { fzf | xargs -r -I % $EDITOR % ;}
+
+
+# Fuzzy search pdfs in Zotero
+pdf () {
+    local open
+    open=open   # on OSX, "open" opens a pdf in preview
+    fd ".pdf$" "$HOME/Drive/phuc.lkh/Zotero/" \
+    | fast-p \
+    | fzf --read0 --reverse -e -d $'\t'  \
+        --preview-window down:80% --preview '
+            v=$(echo {q} | gtr " " "|"); 
+            echo -e {1}"\n"{2} | ggrep -E "^|$v" -i --color=always;
+        ' \
+    | gcut -z -f 1 -d $'\t' | gtr -d '\n' | gxargs -r --null $open > /dev/null 2> /dev/null
+}
+

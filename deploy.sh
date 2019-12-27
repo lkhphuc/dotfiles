@@ -93,6 +93,7 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
+mkdir $HOME/.config/nvim/ 2&> /dev/null
 printf "source '$HOME/dotfiles/zshrc.sh'" > $HOME/.zshrc
 printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
 printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
