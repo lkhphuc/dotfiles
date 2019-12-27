@@ -12,6 +12,7 @@
 	set noshowmode
 	set mouse=a
 	set dir='/tmp/,~/tmp,/var/tmp,.'
+    set path+=**
 	" Tab and indent
 	set expandtab tabstop=4
 	set shiftwidth=4
@@ -31,13 +32,15 @@
     " Show trailing whitepace and spaces before a tab:
     :highlight ExtraWhitespace ctermbg=red guibg=red
     :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+    " Enable persistent undo so that undo history persists across vim sessions
+    set undofile
+    set undodir=~/.vim/undo
 
 call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tpope/vim-sensible'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-abolish'
-    Plug 'tpope/vim-surround'
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-eunuch'
@@ -45,11 +48,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'junegunn/fzf.vim'
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/vim-easy-align'
-	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+    Plug 'machakann/vim-sandwich'
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'metakirby5/codi.vim'
     Plug 'romainl/vim-cool'  "Handle highlight search automatically
+    Plug 'simnalamburt/vim-mundo'
     " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
     Plug 'tmux-plugins/vim-tmux-focus-events'
@@ -58,16 +62,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 	Plug 'honza/vim-snippets'
     Plug 'liuchengxu/vista.vim'
-	" Python
-	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-    " Swift
+    Plug 'jpalardy/vim-slime'
     Plug 'jph00/swift-apple'
-    " Latex
     Plug 'lervag/vimtex'
 	" Visual
+	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    Plug 'Yggdroot/indentLine'
     Plug 'szw/vim-maximizer'
 	Plug 'itchyny/lightline.vim'
-	Plug 'mhinz/vim-signify'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'arcticicestudio/nord-vim'
@@ -83,14 +85,6 @@ call plug#end()
     nnoremap <leader>l :Lines<CR>
 	nnoremap <leader>a :Ag<CR>
     nnoremap <leader>rg :Rg<CR>
-" NERDTree
-    map <C-n> :NERDTreeToggle<CR>
-    let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
-    let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
-    " Disable arrow icons at the left side of folders for NERDTree.
-    let g:NERDTreeDirArrowExpandable = "\u00a0"
-    let g:NERDTreeDirArrowCollapsible = "\u00a0"
-    highlight! link NERDTreeFlags NERDTreeDir
 " Comfortable motion
 	let g:comfortable_motion_scroll_down_key = "j"
 	let g:comfortable_motion_scroll_up_key = "k"
@@ -99,8 +93,12 @@ call plug#end()
 " Coc
     let g:coc_global_extensions = [
                 \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex", 
-                \ "coc-tabnine", "coc-tag", "coc-syntax", "coc-snippets", "coc-emoji",
-                \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer", "coc-marketplace"]
+                \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
+                \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer",
+                \ "coc-marketplace"]
+    nmap <leader>CC :CocCommand<CR>
+    nmap <leader>CL :CocList<CR>
+    nmap <leader>CF :CocConfig<CR>
     nmap <silent> [c <Plug>(coc-diagnostic-prev)
     nmap <silent> ]c <Plug>(coc-diagnostic-next)
     " Remap keys for gotos
@@ -109,6 +107,7 @@ call plug#end()
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
+    nmap <silent> ge :CocCommand explorer<CR>
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
@@ -165,20 +164,21 @@ call plug#end()
           autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
           autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
         augroup end
-" Python
-	let g:cellmode_tmux_panenumber='1'
-    let g:cellmode_default_mappings='0'
-    vmap <silent> <C-c> :call RunTmuxPythonChunk()<CR>
-	autocmd FileType python nmap <silent> <leader>sr :Semshi rename<CR>
+    "Git
+        nmap [g <plug>(coc-git-prevchunk)
+        nmap ]g <plug>(coc-git-nextchunk)
+        nmap gs <plug>(coc-git-chunkinfo)
+        nmap gC <plug>(coc-git-commit)
+        " create text object for git chunks
+        omap ig <Plug>(coc-git-chunk-inner)
+        xmap ig <Plug>(coc-git-chunk-inner)
+        omap ag <Plug>(coc-git-chunk-outer)
+        xmap ag <Plug>(coc-git-chunk-outer)
+" Vim Slime
+    let g:slime_target = 'tmux'
+    let g:slime_python_ipython = 1
 " Tex
-let g:vimtex_compiler_progname = 'nvr'
-" Signify - Git sign bar
-	let g:signify_vcs_list = ['git']
-	nnoremap <leader>gt :SignifyToggle<CR>
-	nnoremap <leader>gh :SignifyToggleHighlight<CR>
-	nnoremap <leader>gr :SignifyRefresh<CR>
-	nmap gj <plug>(signify-next-hunk)
-	nmap gk <plug>(signify-prev-hunk)
+    let g:vimtex_compiler_progname = 'nvr'
 " Lightline
 	let g:lightline = {
         \ 'colorscheme': 'nord',
@@ -189,10 +189,9 @@ let g:vimtex_compiler_progname = 'nvr'
         \             [ 'readonly', 'filename', 'modified'] ],
 		\   'right': [ [ 'percent' ,'lineinfo' ],
 		\              [ 'fileencoding', 'filetype', 'fugitive' ],
-        \              [ 'cocstatus', 'gutentags' ] ]
+        \              [ 'cocstatus'] ]
 		\ },
 		\ 'component_function': {
-        \   'gutentags': 'gutentags#statusline',
         \   'cocstatus': 'LightlineCocStatus',
 		\   'readonly': 'LightlineReadonly',
 		\   'fugitive': 'LightlineFugitive',
@@ -238,7 +237,12 @@ let g:vimtex_compiler_progname = 'nvr'
 	set background=dark
 	colorscheme nord
     highlight Comment cterm=italic
+" Mundo
+    let g:mundo_right = 1
 " Mapping
+    noremap <F9> :CocCommand explorer<CR>
+    noremap <F8> :Vista!!<CR>
+    noremap <F7> :MundoToggle<CR>
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
     nnoremap <silent><C-w>m :MaximizerToggle<CR>
@@ -250,4 +254,4 @@ let g:vimtex_compiler_progname = 'nvr'
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
-    tnoremap <Esc> <C-\><C-n>:q!<CR>
+    tnoremap <Esc> <C-\><C-n>

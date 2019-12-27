@@ -3,16 +3,13 @@
     "suggest.acceptSuggestionOnCommitCharacter": true,
     "diagnostic.checkCurrentLine": true,
 
-    "python.jediEnabled": true,
+    "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--max-line-length=88", "--ignore=E203,W503,E722,E302"],
-    "python.linting.mypyEnabled": true,
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent",
-        "--show-column-numbers"
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--ignore=E203,W503,E722,E302,E501"
     ],
     "python.formatting.provider": "black",
 
@@ -29,5 +26,16 @@
                }
            }
         }
-    }
+    },
+    
+    "git.removedSign.hlGroup": "CocErrorSign",
+    "git.addedSign.hlGroup": "CocInfoSign",
+    "git.changedSign.hlGroup": "CocWarningSign",
+    "git.topRemovedSign.hlGroup": "CocErrorSign",
+    "git.changeRemovedSign.hlGroup":"CocWarningSign",
+
+    "explorer.width": 30,
+    "explorer.position": "right",
+    "explorer.icon.enableNerdfont": true,
+    "explorer.icon.enableVimDevions": true,
 }
