@@ -7,7 +7,7 @@
 
 " General nvim settings
     lang en_US.UTF-8
-	let mapleader=","
+	let mapleader=" "
 	set hidden
 	set noshowmode
 	set mouse=a
@@ -16,7 +16,6 @@
 	set expandtab tabstop=4
 	set shiftwidth=4
 	set foldmethod=indent
-
 	set relativenumber number
     set signcolumn=yes
 	set cursorline
@@ -26,14 +25,12 @@
 	set breakindent
 	set breakindentopt=shift:2,sbr
 	set lbr formatoptions+=l " Ensures word-wrap does not split words
-	" Search config
 	set ignorecase smartcase
     set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
     set shortmess+=c " don't give |ins-completion-menu| messages.
     " Show trailing whitepace and spaces before a tab:
     :highlight ExtraWhitespace ctermbg=red guibg=red
     :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-
 
 call plug#begin('~/.local/share/nvim/plugged')
 	Plug 'tpope/vim-sensible'
@@ -46,34 +43,36 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-eunuch'
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
-    Plug 'vimwiki/vimwiki'
     Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/vim-easy-align'
 	Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'metakirby5/codi.vim'
+    Plug 'romainl/vim-cool'  "Handle highlight search automatically
     " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
-	Plug 'tmux-plugins/vim-tmux'
     Plug 'tmux-plugins/vim-tmux-focus-events'
+	Plug 'wellle/tmux-complete.vim'  "Completion suggest from adjacent tmux-panes
+    " Completion
     Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 	Plug 'honza/vim-snippets'
-	Plug 'wellle/tmux-complete.vim'
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'majutsushi/tagbar'
+    Plug 'liuchengxu/vista.vim'
 	" Python
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     " Swift
     Plug 'jph00/swift-apple'
+    " Latex
+    Plug 'lervag/vimtex'
 	" Visual
     Plug 'szw/vim-maximizer'
-    " Plug 'pseewald/vim-anyfold'
 	Plug 'itchyny/lightline.vim'
 	Plug 'mhinz/vim-signify'
 	Plug 'sheerun/vim-polyglot'
+	Plug 'ryanoasis/vim-devicons'
 	Plug 'arcticicestudio/nord-vim'
     Plug 'junegunn/seoul256.vim'
-	Plug 'ryanoasis/vim-devicons'
+    Plug 'dracula/vim', {'name':'dracula'}
 call plug#end()
 
 " Fzf.vim
@@ -92,15 +91,16 @@ call plug#end()
     let g:NERDTreeDirArrowExpandable = "\u00a0"
     let g:NERDTreeDirArrowCollapsible = "\u00a0"
     highlight! link NERDTreeFlags NERDTreeDir
-
 " Comfortable motion
 	let g:comfortable_motion_scroll_down_key = "j"
 	let g:comfortable_motion_scroll_up_key = "k"
 	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
 	noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 " Coc
-    let g:coc_global_extensions = ["coc-python", "coc-snippets", "coc-json", "coc-ccls", "coc-tabnine", "coc-tag", "coc-syntax", "coc-emoji"]
-    " Use `[c` and `]c` for navigate diagnostics
+    let g:coc_global_extensions = [
+                \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex", 
+                \ "coc-tabnine", "coc-tag", "coc-syntax", "coc-snippets", "coc-emoji",
+                \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer", "coc-marketplace"]
     nmap <silent> [c <Plug>(coc-diagnostic-prev)
     nmap <silent> ]c <Plug>(coc-diagnostic-next)
     " Remap keys for gotos
@@ -134,46 +134,51 @@ call plug#end()
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
     " Coc K to show documentation
-    function! s:show_documentation()
-      if &filetype == 'vim'
-        execute 'h '.expand('<cword>')
-      else
-        call CocAction('doHover')
-      endif
-    endfunction
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
+        function! s:show_documentation()
+          if &filetype == 'vim'
+            execute 'h '.expand('<cword>')
+          else
+            call CocAction('doHover')
+          endif
+        endfunction
+        nnoremap <silent> K :call <SID>show_documentation()<CR>
     " Use tab for trigger completion, completion confirm, snippets expand and jump
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-    inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-    inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    imap <C-j> <Plug>(coc-snippets-expand-jump)
-" tags
-    nmap <F8> :TagbarToggle<CR>
-    augroup MyGutentagsStatusLineRefresher
-        autocmd!
-        autocmd User GutentagsUpdating call lightline#update()
-        autocmd User GutentagsUpdated call lightline#update()
-    augroup END
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+        inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+        inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        let g:coc_snippet_next = '<tab>'
+        " imap <C-j> <Plug>(coc-snippets-expand-jump)
+    " Smart f, press <esc> to cancel.
+        nmap f <Plug>(coc-smartf-forward)
+        nmap F <Plug>(coc-smartf-backward)
+        nmap ; <Plug>(coc-smartf-repeat)
+        nmap , <Plug>(coc-smartf-repeat-opposite)
 
+        augroup Smartf
+          autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
+          autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
+        augroup end
 " Python
 	let g:cellmode_tmux_panenumber='1'
     let g:cellmode_default_mappings='0'
     vmap <silent> <C-c> :call RunTmuxPythonChunk()<CR>
 	autocmd FileType python nmap <silent> <leader>sr :Semshi rename<CR>
+" Tex
+let g:vimtex_compiler_progname = 'nvr'
 " Signify - Git sign bar
 	let g:signify_vcs_list = ['git']
 	nnoremap <leader>gt :SignifyToggle<CR>
 	nnoremap <leader>gh :SignifyToggleHighlight<CR>
 	nnoremap <leader>gr :SignifyRefresh<CR>
-	nmap <leader>gj <plug>(signify-next-hunk)
-	nmap <leader>gk <plug>(signify-prev-hunk)
+	nmap gj <plug>(signify-next-hunk)
+	nmap gk <plug>(signify-prev-hunk)
 " Lightline
 	let g:lightline = {
         \ 'colorscheme': 'nord',
@@ -230,24 +235,19 @@ call plug#end()
         return winwidth(0) > 120 ? status : env
     endfunction
 " Theme
-    set t_Co=256
 	set background=dark
 	colorscheme nord
-
+    highlight Comment cterm=italic
 " Mapping
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
     nnoremap <silent><C-w>m :MaximizerToggle<CR>
     vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
     inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
-    " Folding and cursors
-	nnoremap <space> za
-	vnoremap <space> zf
-	nnoremap <leader>z zMzvzz
-	nnoremap n nzzzv
-	nnoremap N Nzzzv
+	nnoremap <leader>z za
     " Copy
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
-    nnoremap <esc> :noh<return><esc>
     tnoremap <Esc> <C-\><C-n>:q!<CR>
