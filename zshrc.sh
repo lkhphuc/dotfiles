@@ -2,6 +2,12 @@
 command -v nvim >/dev/null && export EDITOR='nvim' \
     && alias v=$EDITOR vim="nvim" vimdiff="nvim -d"
 
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then 
+    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'" 
+else 
+    export EDITOR='nvim' 
+fi 
+
 if [ ! -d "$HOME/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
 fi
