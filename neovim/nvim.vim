@@ -27,6 +27,7 @@
 	set breakindentopt=shift:2,sbr
 	set lbr formatoptions+=l " Ensures word-wrap does not split words
 	set ignorecase smartcase
+    set inccommand=nosplit
     set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
     set shortmess+=c " don't give |ins-completion-menu| messages.
     " Show trailing whitepace and spaces before a tab:
@@ -46,14 +47,15 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-eunuch'
 	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
 	Plug 'junegunn/fzf.vim'
-    Plug 'junegunn/goyo.vim'
     Plug 'junegunn/vim-easy-align'
     Plug 'machakann/vim-sandwich'
 	Plug 'yuttie/comfortable-motion.vim'
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'metakirby5/codi.vim'
-    Plug 'romainl/vim-cool'  "Handle highlight search automatically
-    Plug 'simnalamburt/vim-mundo'
+    Plug 'szw/vim-maximizer'
+    Plug 'kassio/neoterm'  "TODO Config shortcut
+    Plug 'jpalardy/vim-slime'  "Send to tmux"
+    Plug 'janko/vim-test'
     " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
     Plug 'tmux-plugins/vim-tmux-focus-events'
@@ -62,13 +64,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 	Plug 'honza/vim-snippets'
     Plug 'liuchengxu/vista.vim'
-    Plug 'jpalardy/vim-slime'
+    Plug 'simnalamburt/vim-mundo'
     Plug 'jph00/swift-apple'
     Plug 'lervag/vimtex'
 	" Visual
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     Plug 'Yggdroot/indentLine'
-    Plug 'szw/vim-maximizer'
+    Plug 'machakann/vim-highlightedyank'
+    Plug 'romainl/vim-cool'  "Handle highlight search automatically
 	Plug 'itchyny/lightline.vim'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'ryanoasis/vim-devicons'
@@ -78,18 +81,32 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 
 " Fzf.vim
-	nnoremap <leader>h :History<CR>
-	nnoremap <leader>b :Buffers<CR>
-	nnoremap <leader>t :Files<CR>
-    nnoremap <leader>gf :GitFiles<CR>
-    nnoremap <leader>l :Lines<CR>
-	nnoremap <leader>a :Ag<CR>
-    nnoremap <leader>rg :Rg<CR>
-" Comfortable motion
-	let g:comfortable_motion_scroll_down_key = "j"
-	let g:comfortable_motion_scroll_up_key = "k"
-	noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-	noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+    " Using floating windows of Neovim to start fzf
+    if has('nvim')
+      let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+
+      function! FloatingFZF()
+        let width = float2nr(&columns * 0.9)
+        let height = float2nr(&lines * 0.6)
+        let opts = { 'relative': 'editor',
+                   \ 'row': (&lines - height) / 2,
+                   \ 'col': (&columns - width) / 2,
+                   \ 'width': width,
+                   \ 'height': height }
+
+        let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+        call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+      endfunction
+
+      let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+    endif
+	nnoremap <leader>fh :History<CR>
+	nnoremap <leader>fb :Buffers<CR>
+	nnoremap <leader>ff :Files<CR>
+    nnoremap <leader>fg :GitFiles<CR>
+    nnoremap <leader>fl :Lines<CR>
+	" nnoremap <leader>fa :Ag<CR>
+    nnoremap <leader>fa :Rg<CR>
 " Coc
     let g:coc_global_extensions = [
                 \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex", 
@@ -254,4 +271,17 @@ call plug#end()
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
-    tnoremap <Esc> <C-\><C-n>
+    " Terminal mode
+    tnoremap <leader><Esc> <C-\><C-n>
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <leader><Tab> <C-\><C-n><C-^>
+    nnoremap <leader><Tab> <C-^>
+    " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+    nmap <silent> t<C-n> :TestNearest<CR>
+    nmap <silent> t<C-f> :TestFile<CR>
+    nmap <silent> t<C-s> :TestSuite<CR>
+    nmap <silent> t<C-l> :TestLast<CR>
+    nmap <silent> t<C-g> :TestVisit<CR>
