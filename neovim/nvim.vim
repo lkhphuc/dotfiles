@@ -84,7 +84,15 @@ Plug 'junegunn/fzf.vim'
     nnoremap <leader>fc :Commits<CR>
     nnoremap <leader>fa :Ag<CR>
     nnoremap <leader>fr :Rg<CR>
-    let g:fzf_commits_log_options = '--graph --color=always --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+    let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+    " with preview window
+    command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+    command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+    \   fzf#vim#with_preview(), <bang>0)
 
 Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
@@ -130,41 +138,25 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
                 \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
                 \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer",
                 \ "coc-marketplace"]
-    nmap <leader>CC :CocCommand<CR>
-    nmap <leader>CL :CocList<CR>
-    nmap <leader>CF :CocConfig<CR>
-    nmap <silent> [c <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]c <Plug>(coc-diagnostic-next)
-    " Remap keys for gotos
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> g[ <Plug>(coc-declaration)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
-    " Highlight symbol under cursor on CursorHold
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-    autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
-    " Remap for rename current word
-    nmap <leader>rn <Plug>(coc-rename)
-    " Remap for format selected region
-    vmap <leader>cf  <Plug>(coc-format-selected)
-    nmap <leader>cf  <Plug>(coc-format-selected)
-    augroup mygroup
-      autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    augroup end
-    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-    vmap <leader>ca  <Plug>(coc-codeaction-selected)
-    nmap <leader>ca  <Plug>(coc-codeaction-selected)
-    " Remap for do codeAction of current line
-    nmap <leader>caa  <Plug>(coc-codeaction)
-    " Fix autofix problem of current line
-    nmap <leader>cqf  <Plug>(coc-fix-current)
-    " Use `:Format` for format current buffer
-    command! -nargs=0 Format :call CocAction('format')
+    nmap <leader>cc :CocCommand<CR>
+    nmap <leader>CC :CocConfig<CR>
+    nmap <leader>CR :CocRestart<CR>
+    nmap <leader>cl :CocList<CR>
+    nmap <leader>cm :CocList<CR>
+  " Use tab for trigger completion, completion confirm
+        function! s:check_back_space() abort
+            let col = col('.') - 1
+            return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+
+        inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+        inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+        " Confirm completeion
+		inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+        imap <C-j> <Plug>(coc-snippets-expand-jump)
     " Coc K to show documentation
         function! s:show_documentation()
           if &filetype == 'vim'
@@ -174,39 +166,71 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
           endif
         endfunction
         nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " Use tab for trigger completion, completion confirm
-        function! s:check_back_space() abort
-            let col = col('.') - 1
-            return !col || getline('.')[col - 1]  =~# '\s'
-        endfunction
-        inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-        inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-        imap <C-j> <Plug>(coc-snippets-expand-jump)
+    " Remap keys for gotos
+	nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+    nmap <silent> g[ <Plug>(coc-declaration)
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+    " Remap for rename current word
+    nmap <leader>crn <Plug>(coc-rename)
+    " Remap for format selected region
+    vmap <leader>cf  <Plug>(coc-format-selected)
+    nmap <leader>cf  <Plug>(coc-format-selected)
+        augroup mygroup
+          autocmd!
+          " Setup formatexpr specified filetype(s).
+          autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+          " Update signature help on jump placeholder
+          autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+        augroup end
+    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    vmap <leader>ca  <Plug>(coc-codeaction-selected)
+    nmap <leader>ca  <Plug>(coc-codeaction-selected)
+    " Remap for do codeAction of current line
+    nmap <leader>caa  <Plug>(coc-codeaction)
+    " Fix autofix problem of current line
+    nmap <leader>cqf  <Plug>(coc-fix-current)
+	" Create mappings for function text object, requires document symbols feature of languageserver.
+    xmap if <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap if <Plug>(coc-funcobj-i)
+    omap af <Plug>(coc-funcobj-a)
+    " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+    nmap <silent> <TAB> <Plug>(coc-range-select)
+    xmap <silent> <TAB> <Plug>(coc-range-select)
+    " Use `:Format` for format current buffer
+    command! -nargs=0 Format :call CocAction('format')
     " Smart f, press <esc> to cancel.
-        nmap f <Plug>(coc-smartf-forward)
-        nmap F <Plug>(coc-smartf-backward)
-        nmap ; <Plug>(coc-smartf-repeat)
-        nmap , <Plug>(coc-smartf-repeat-opposite)
+    nmap f <Plug>(coc-smartf-forward)
+    nmap F <Plug>(coc-smartf-backward)
+    nmap ; <Plug>(coc-smartf-repeat)
+    nmap , <Plug>(coc-smartf-repeat-opposite)
         augroup Smartf
           autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
           autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
         augroup end
+    " Use `:Fold` to fold current buffer
+    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+    " use `:OR` for organize import of current buffer
+    command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
     "Git
-        nmap [g <plug>(coc-git-prevchunk)
-        nmap ]g <plug>(coc-git-nextchunk)
-        nmap gs <plug>(coc-git-chunkinfo)
-        nmap gC <plug>(coc-git-commit)
-        " create text object for git chunks
-        omap ig <Plug>(coc-git-chunk-inner)
-        xmap ig <Plug>(coc-git-chunk-inner)
-        omap ag <Plug>(coc-git-chunk-outer)
-        xmap ag <Plug>(coc-git-chunk-outer)
+    nmap [g <plug>(coc-git-prevchunk)
+    nmap ]g <plug>(coc-git-nextchunk)
+    nmap gs <plug>(coc-git-chunkinfo)
+    nmap gC <plug>(coc-git-commit)
+    " create text object for git chunks
+    omap ig <Plug>(coc-git-chunk-inner)
+    xmap ig <Plug>(coc-git-chunk-inner)
+    omap ag <Plug>(coc-git-chunk-outer)
+    xmap ag <Plug>(coc-git-chunk-outer)
     noremap <F9> :CocCommand explorer<CR>
 
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'liuchengxu/vista.vim'
@@ -237,9 +261,10 @@ Plug 'itchyny/lightline.vim'
         \             [ 'readonly', 'filename', 'modified'] ],
         \   'right': [ [ 'percent' ,'lineinfo' ],
         \              [ 'fileencoding', 'filetype', 'fugitive' ],
-        \              [ 'cocstatus'] ]
+        \              [ 'cocstatus', 'gutentags'] ]
         \ },
         \ 'component_function': {
+        \   'gutentags': 'gutentags#statusline',
         \   'cocstatus': 'LightlineCocStatus',
         \   'readonly': 'LightlineReadonly',
         \   'fugitive': 'LightlineFugitive',
@@ -290,6 +315,5 @@ Plug 'dracula/vim', {'name':'dracula'}
 call plug#end()
 
 " Theme
-    set background=dark
     colorscheme nord
     highlight Comment cterm=italic

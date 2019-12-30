@@ -76,6 +76,8 @@ echo
 check_for_software thefuck
 echo
 check_for_software fd
+echo
+check_for_software bat
 
 check_default_shell
 
