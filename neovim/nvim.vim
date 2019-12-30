@@ -36,56 +36,28 @@
     " Enable persistent undo so that undo history persists across vim sessions
     set undofile
     set undodir=~/.vim/undo
+" Mapping
+	nnoremap <leader>z za
+    nnoremap <leader><Tab> <C-^>
+	nnoremap <leader>y "+y
+	vnoremap <leader>y "+y
+	nnoremap <leader>p "+p
+	vnoremap <leader>p "+p
 
 call plug#begin('~/.local/share/nvim/plugged')
-	Plug 'tpope/vim-sensible'
-	Plug 'tpope/vim-fugitive'
-	Plug 'tpope/vim-commentary'
-	Plug 'tpope/vim-abolish'
-    Plug 'tpope/vim-unimpaired'
-    Plug 'tpope/vim-repeat'
-    Plug 'tpope/vim-eunuch'
-	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install --all'}
-	Plug 'junegunn/fzf.vim'
-    Plug 'junegunn/vim-easy-align'
-    Plug 'machakann/vim-sandwich'
-	Plug 'yuttie/comfortable-motion.vim'
-    Plug 'michaeljsmith/vim-indent-object'
-    Plug 'metakirby5/codi.vim'
-    Plug 'szw/vim-maximizer'
-    Plug 'kassio/neoterm'  "TODO Config shortcut
-    Plug 'jpalardy/vim-slime'  "Send to tmux
-    Plug 'janko/vim-test'
-    " Tmux
-	Plug 'christoomey/vim-tmux-navigator'
-    Plug 'tmux-plugins/vim-tmux-focus-events'
-	Plug 'wellle/tmux-complete.vim'  "Completion suggest from adjacent tmux-panes
-    " Completion
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'honza/vim-snippets'
-    Plug 'SirVer/ultisnips'
-    Plug 'liuchengxu/vista.vim'
-    Plug 'simnalamburt/vim-mundo'
-    Plug 'jph00/swift-apple'
-    Plug 'lervag/vimtex'
-	" Visual
-	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-    Plug 'Yggdroot/indentLine'
-    Plug 'machakann/vim-highlightedyank'
-    Plug 'romainl/vim-cool'  "Handle highlight search automatically
-	Plug 'itchyny/lightline.vim'
-	Plug 'sheerun/vim-polyglot'
-	Plug 'ryanoasis/vim-devicons'
-	Plug 'arcticicestudio/nord-vim'
-    Plug 'junegunn/seoul256.vim'
-    Plug 'dracula/vim', {'name':'dracula'}
-call plug#end()
 
-" Fzf.vim
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-eunuch'
+
+Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
     " Using floating windows of Neovim to start fzf
     if has('nvim')
-      let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
-
       function! FloatingFZF()
         let width = float2nr(&columns * 0.9)
         let height = float2nr(&lines * 0.6)
@@ -98,22 +70,61 @@ call plug#end()
         let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
         call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
       endfunction
-
+      let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
       let g:fzf_layout = { 'window': 'call FloatingFZF()' }
     endif
-	nnoremap <leader>fh :History<CR>
-	nnoremap <leader>fb :Buffers<CR>
-	nnoremap <leader>ff :Files<CR>
+    nnoremap <leader>fh :History<CR>
+    nnoremap <leader>fb :Buffers<CR>
+    nnoremap <leader>ff :Files<CR>
     nnoremap <leader>fg :GitFiles?<CR>
     nnoremap <leader>fl :Lines<CR>
     nnoremap <leader>ft :Tags<CR>
     nnoremap <leader>fm :Marks<CR>
     nnoremap <leader>fw :Windows<CR>
     nnoremap <leader>fc :Commits<CR>
-	nnoremap <leader>fa :Ag<CR>
+    nnoremap <leader>fa :Ag<CR>
     nnoremap <leader>fr :Rg<CR>
-    let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-" Coc
+    let g:fzf_commits_log_options = '--graph --color=always --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+Plug 'junegunn/vim-easy-align'
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
+
+Plug 'machakann/vim-sandwich'
+Plug 'yuttie/comfortable-motion.vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'metakirby5/codi.vim'
+Plug 'szw/vim-maximizer'
+    nnoremap <silent><C-w>m :MaximizerToggle<CR>
+    vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
+    inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
+
+Plug 'kassio/neoterm'  "TODO Config shortcut
+    " Terminal mode
+    tnoremap <leader><Esc> <C-\><C-n>
+    tnoremap <C-w>h <C-\><C-n><C-w>h
+    tnoremap <C-w>j <C-\><C-n><C-w>j
+    tnoremap <C-w>k <C-\><C-n><C-w>k
+    tnoremap <C-w>l <C-\><C-n><C-w>l
+    tnoremap <leader><Tab> <C-\><C-n><C-^>
+
+Plug 'jpalardy/vim-slime'  "Send to tmux
+    let g:slime_target = 'tmux'
+    let g:slime_python_ipython = 1
+
+Plug 'janko/vim-test'
+    " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+    nmap <silent> t<C-n> :TestNearest<CR>
+    nmap <silent> t<C-f> :TestFile<CR>
+    nmap <silent> t<C-s> :TestSuite<CR>
+    nmap <silent> t<C-l> :TestLast<CR>
+    nmap <silent> t<C-g> :TestVisit<CR>
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'wellle/tmux-complete.vim'  "Completion suggest from adjacent tmux-panes
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_global_extensions = [
                 \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex", 
                 \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
@@ -163,7 +174,7 @@ call plug#end()
           endif
         endfunction
         nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " Use tab for trigger completion, completion confirm, snippets expand and jump
+    " Use tab for trigger completion, completion confirm
         function! s:check_back_space() abort
             let col = col('.') - 1
             return !col || getline('.')[col - 1]  =~# '\s'
@@ -180,7 +191,6 @@ call plug#end()
         nmap F <Plug>(coc-smartf-backward)
         nmap ; <Plug>(coc-smartf-repeat)
         nmap , <Plug>(coc-smartf-repeat-opposite)
-
         augroup Smartf
           autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
           autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
@@ -195,97 +205,91 @@ call plug#end()
         xmap ig <Plug>(coc-git-chunk-inner)
         omap ag <Plug>(coc-git-chunk-outer)
         xmap ag <Plug>(coc-git-chunk-outer)
-" Vim Slime
-    let g:slime_target = 'tmux'
-    let g:slime_python_ipython = 1
-" Tex
+    noremap <F9> :CocCommand explorer<CR>
+
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'liuchengxu/vista.vim'
+    noremap <F8> :Vista!!<CR>
+
+Plug 'simnalamburt/vim-mundo'
+    let g:mundo_right = 1
+    noremap <F7> :MundoToggle<CR>
+
+Plug 'jph00/swift-apple'
+
+Plug 'lervag/vimtex'
     let g:vimtex_compiler_progname = 'nvr'
-" Lightline
-	let g:lightline = {
+
+" Visual
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'Yggdroot/indentLine'
+Plug 'machakann/vim-highlightedyank'
+Plug 'romainl/vim-cool'  "Handle highlight search automatically
+
+Plug 'itchyny/lightline.vim'
+    let g:lightline = {
         \ 'colorscheme': 'nord',
-		\ 'component': {
-		\ },
-		\ 'active': {
+        \ 'component': {
+        \ },
+        \ 'active': {
         \   'left': [ [ 'mode', 'paste' ],
         \             [ 'readonly', 'filename', 'modified'] ],
-		\   'right': [ [ 'percent' ,'lineinfo' ],
-		\              [ 'fileencoding', 'filetype', 'fugitive' ],
+        \   'right': [ [ 'percent' ,'lineinfo' ],
+        \              [ 'fileencoding', 'filetype', 'fugitive' ],
         \              [ 'cocstatus'] ]
-		\ },
-		\ 'component_function': {
+        \ },
+        \ 'component_function': {
         \   'cocstatus': 'LightlineCocStatus',
-		\   'readonly': 'LightlineReadonly',
-		\   'fugitive': 'LightlineFugitive',
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive',
         \   'filename': 'LightlineFilename',
-		\ },
-		\ 'separator': { 'left': '', 'right': '' },
-		\ 'subseparator': { 'left': '', 'right': '' },
-		\}
-
-	function! LightlineReadonly()
-		return &readonly ? '' : ''
-	endfunction
-	function! LightlineFugitive()
-		if exists('*fugitive#head')
-			let branch = fugitive#head()
-			return branch !=# '' ? ''.branch : ''
-		endif
-		return ''
-	endfunction
-	function! LightlineFilename()
-		let name = ""
-		let subs = split(expand('%'), "/")
-		let i = 1
-		for s in subs
-			let parent = name
-			if  i == len(subs)
-				let name = parent . '/' . s
-			elseif i == 1
-				let name = s
-			else
-				let name = parent . '/' . strpart(s, 0, 2)
-			endif
-			let i += 1
-		endfor
-	  return name
-	endfunction
+        \ },
+        \ 'separator': { 'left': '', 'right': '' },
+        \ 'subseparator': { 'left': '', 'right': '' },
+        \}
+    function! LightlineReadonly()
+        return &readonly ? '' : ''
+    endfunction
+    function! LightlineFugitive()
+        if exists('*fugitive#head')
+            let branch = fugitive#head()
+            return branch !=# '' ? ''.branch : ''
+        endif
+        return ''
+    endfunction
+    function! LightlineFilename()
+        let name = ""
+        let subs = split(expand('%'), "/")
+        let i = 1
+        for s in subs
+            let parent = name
+            if  i == len(subs)
+                let name = parent . '/' . s
+            elseif i == 1
+                let name = s
+            else
+                let name = parent . '/' . strpart(s, 0, 2)
+            endif
+            let i += 1
+        endfor
+      return name
+    endfunction
     function! LightlineCocStatus()
         let status = coc#status()
         let env = matchstr(status, "(\'.*\':")[2:-3]
         return winwidth(0) > 120 ? status : env
     endfunction
+
+Plug 'sheerun/vim-polyglot'
+Plug 'ryanoasis/vim-devicons'
+Plug 'arcticicestudio/nord-vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'dracula/vim', {'name':'dracula'}
+
+call plug#end()
+
 " Theme
-	set background=dark
-	colorscheme nord
+    set background=dark
+    colorscheme nord
     highlight Comment cterm=italic
-" Mundo
-    let g:mundo_right = 1
-" Mapping
-    noremap <F9> :CocCommand explorer<CR>
-    noremap <F8> :Vista!!<CR>
-    noremap <F7> :MundoToggle<CR>
-    xmap ga <Plug>(EasyAlign)
-    nmap ga <Plug>(EasyAlign)
-    nnoremap <silent><C-w>m :MaximizerToggle<CR>
-    vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
-    inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
-	nnoremap <leader>z za
-    " Copy
-	nnoremap <leader>y "+y
-	vnoremap <leader>y "+y
-	nnoremap <leader>p "+p
-	vnoremap <leader>p "+p
-    " Terminal mode
-    tnoremap <leader><Esc> <C-\><C-n>
-    tnoremap <C-w>h <C-\><C-n><C-w>h
-    tnoremap <C-w>j <C-\><C-n><C-w>j
-    tnoremap <C-w>k <C-\><C-n><C-w>k
-    tnoremap <C-w>l <C-\><C-n><C-w>l
-    tnoremap <leader><Tab> <C-\><C-n><C-^>
-    nnoremap <leader><Tab> <C-^>
-    " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-    nmap <silent> t<C-n> :TestNearest<CR>
-    nmap <silent> t<C-f> :TestFile<CR>
-    nmap <silent> t<C-s> :TestSuite<CR>
-    nmap <silent> t<C-l> :TestLast<CR>
-    nmap <silent> t<C-g> :TestVisit<CR>
