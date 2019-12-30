@@ -1,4 +1,4 @@
-" Automatically install Vim Plug
+"Automatically install Vim Plug
 	if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 	  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -45,7 +45,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-unimpaired'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-eunuch'
-	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install -all'}
+	Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install --all'}
 	Plug 'junegunn/fzf.vim'
     Plug 'junegunn/vim-easy-align'
     Plug 'machakann/vim-sandwich'
@@ -54,15 +54,16 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'metakirby5/codi.vim'
     Plug 'szw/vim-maximizer'
     Plug 'kassio/neoterm'  "TODO Config shortcut
-    Plug 'jpalardy/vim-slime'  "Send to tmux"
+    Plug 'jpalardy/vim-slime'  "Send to tmux
     Plug 'janko/vim-test'
     " Tmux
 	Plug 'christoomey/vim-tmux-navigator'
     Plug 'tmux-plugins/vim-tmux-focus-events'
 	Plug 'wellle/tmux-complete.vim'  "Completion suggest from adjacent tmux-panes
     " Completion
-    Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'
     Plug 'liuchengxu/vista.vim'
     Plug 'simnalamburt/vim-mundo'
     Plug 'jph00/swift-apple'
@@ -103,10 +104,15 @@ call plug#end()
 	nnoremap <leader>fh :History<CR>
 	nnoremap <leader>fb :Buffers<CR>
 	nnoremap <leader>ff :Files<CR>
-    nnoremap <leader>fg :GitFiles<CR>
+    nnoremap <leader>fg :GitFiles?<CR>
     nnoremap <leader>fl :Lines<CR>
-	" nnoremap <leader>fa :Ag<CR>
-    nnoremap <leader>fa :Rg<CR>
+    nnoremap <leader>ft :Tags<CR>
+    nnoremap <leader>fm :Marks<CR>
+    nnoremap <leader>fw :Windows<CR>
+    nnoremap <leader>fc :Commits<CR>
+	nnoremap <leader>fa :Ag<CR>
+    nnoremap <leader>fr :Rg<CR>
+    let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 " Coc
     let g:coc_global_extensions = [
                 \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex", 
@@ -124,7 +130,6 @@ call plug#end()
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
-    nmap <silent> ge :CocCommand explorer<CR>
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
     autocmd CursorHoldI * silent call CocActionAsync('showSignatureHelp')
@@ -169,8 +174,7 @@ call plug#end()
           \ <SID>check_back_space() ? "\<TAB>" :
           \ coc#refresh()
         inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-        let g:coc_snippet_next = '<tab>'
-        " imap <C-j> <Plug>(coc-snippets-expand-jump)
+        imap <C-j> <Plug>(coc-snippets-expand-jump)
     " Smart f, press <esc> to cancel.
         nmap f <Plug>(coc-smartf-forward)
         nmap F <Plug>(coc-smartf-backward)
@@ -273,10 +277,10 @@ call plug#end()
 	vnoremap <leader>p "+p
     " Terminal mode
     tnoremap <leader><Esc> <C-\><C-n>
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <C-w>h <C-\><C-n><C-w>h
+    tnoremap <C-w>j <C-\><C-n><C-w>j
+    tnoremap <C-w>k <C-\><C-n><C-w>k
+    tnoremap <C-w>l <C-\><C-n><C-w>l
     tnoremap <leader><Tab> <C-\><C-n><C-^>
     nnoremap <leader><Tab> <C-^>
     " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
