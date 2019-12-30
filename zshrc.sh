@@ -52,9 +52,9 @@ zplugin light denysdovhan/spaceship-prompt
       battery       # Battery level and status
       time          # Time stamps section
       )
+    export SPACESHIP_VI_MODE_SHOW=false
     export SPACESHIP_PROMPT_ADD_NEWLINE=false
     export SPACESHIP_PROMPT_PREFIXES_SHOW=false
-    # export SPACESHIP_PROMPT_SUFFIXES_SHOW=false
     export SPACESHIP_EXIT_CODE_SHOW=true
     export SPACESHIP_TIME_SHOW=true
 
