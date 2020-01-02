@@ -17,12 +17,9 @@
 	set expandtab tabstop=4
 	set shiftwidth=4
 	set foldmethod=indent
-	set relativenumber number
-    set signcolumn=yes
-	set cursorline
 	set sidescroll=1
 	set conceallevel=0
-	set colorcolumn=88
+	set colorcolumn=80
 	set breakindent
 	set breakindentopt=shift:2,sbr
 	set lbr formatoptions+=l " Ensures word-wrap does not split words
@@ -30,19 +27,42 @@
     set inccommand=nosplit
     set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
     set shortmess+=c " don't give |ins-completion-menu| messages.
-    " Show trailing whitepace and spaces before a tab:
-    :highlight ExtraWhitespace ctermbg=red guibg=red
-    :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
     " Enable persistent undo so that undo history persists across vim sessions
     set undofile
     set undodir=~/.vim/undo
+    " Theme
+	set relativenumber number
+    set signcolumn=yes
+	set cursorline
+    highlight Comment cterm=italic
+    highlight Folded ctermbg=None guibg=None
+    " Show trailing whitepace and spaces before a tab:
+    :highlight ExtraWhitespace ctermbg=DarkGrey guibg=DarkGrey
+    :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+    autocmd BufNewFile,BufRead *.gin set syntax=toml
 " Mapping
-	nnoremap <leader>z za
-    nnoremap <leader><Tab> <C-^>
+	nnoremap <leader><space> za
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
+    nnoremap <leader>w <C-W>w
+    nnoremap <leader>b <C-^>
+    if !exists('g:lasttab')
+      let g:lasttab = 1
+    endif
+    nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
+    au TabLeave * let g:lasttab = tabpagenr()
+    " Terminal mode
+    tnoremap <leader><Esc> <C-\><C-n>
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+    tnoremap <C-w><C-w> <C-\><C-n><C-w>w
+    tnoremap <C-w>w <C-\><C-n><C-w>w
+    tnoremap <leader><Tab> <C-\><C-n> :exe "tabn ".g:lasttab<CR>
+    tnoremap <leader>b <C-\><C-n><C-^>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -76,12 +96,14 @@ Plug 'junegunn/fzf.vim'
     nnoremap <leader>fh :History<CR>
     nnoremap <leader>fb :Buffers<CR>
     nnoremap <leader>ff :Files<CR>
-    nnoremap <leader>fg :GitFiles?<CR>
+    nnoremap <leader>fgf :GitFiles?<CR>
+    nnoremap <leader>fgs :GitFiles?<CR>
     nnoremap <leader>fl :Lines<CR>
     nnoremap <leader>ft :Tags<CR>
     nnoremap <leader>fm :Marks<CR>
     nnoremap <leader>fw :Windows<CR>
     nnoremap <leader>fc :Commits<CR>
+    nnoremap <leader>fcb :BCommits<CR>
     nnoremap <leader>fa :Ag<CR>
     nnoremap <leader>fr :Rg<CR>
     let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -108,16 +130,16 @@ Plug 'szw/vim-maximizer'
     inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
 
 Plug 'kassio/neoterm'  "TODO Config shortcut
-    " Terminal mode
-    tnoremap <leader><Esc> <C-\><C-n>
-    tnoremap <C-w>h <C-\><C-n><C-w>h
-    tnoremap <C-w>j <C-\><C-n><C-w>j
-    tnoremap <C-w>k <C-\><C-n><C-w>k
-    tnoremap <C-w>l <C-\><C-n><C-w>l
-    tnoremap <leader><Tab> <C-\><C-n><C-^>
+Plug 'voldikss/vim-floaterm'
+    let g:floaterm_keymap_next   = '<F3>'
+    let g:floaterm_keymap_prev   = '<F4>'
+    let g:floaterm_keymap_toggle = '<F5>'
+    let g:floaterm_keymap_new    = '<F6>'
+    let g:floaterm_position = 'center'
+
 
 Plug 'jpalardy/vim-slime'  "Send to tmux
-    let g:slime_target = 'tmux'
+    let g:slime_target = 'neovim'
     let g:slime_python_ipython = 1
 
 Plug 'janko/vim-test'
@@ -201,8 +223,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     omap if <Plug>(coc-funcobj-i)
     omap af <Plug>(coc-funcobj-a)
     " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-    nmap <silent> <TAB> <Plug>(coc-range-select)
-    xmap <silent> <TAB> <Plug>(coc-range-select)
+    " nmap <silent> <TAB> <Plug>(coc-range-select)
+    " xmap <silent> <TAB> <Plug>(coc-range-select)
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
     " Smart f, press <esc> to cancel.
@@ -219,8 +241,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " use `:OR` for organize import of current buffer
     command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
     "Git
-    nmap [g <plug>(coc-git-prevchunk)
-    nmap ]g <plug>(coc-git-nextchunk)
+    nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
+    nmap <silent> <expr> ]c &diff ? ']c' : '<Plug>(coc-git-nextchunk)'
     nmap gs <plug>(coc-git-chunkinfo)
     nmap gC <plug>(coc-git-commit)
     " create text object for git chunks
@@ -233,8 +255,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger = "<nop>"
 Plug 'liuchengxu/vista.vim'
     noremap <F8> :Vista!!<CR>
+    let g:vista_echo_cursor_strategy = 'floating_win'
+    let g:vista_fzf_preview = 1
+    let g:vista_executive_for = {
+    \ 'py': 'coc',
+    \ 'cpp': 'coc',
+    \ 'json': 'coc',
+    \ 'tex': 'coc',
+    \ 'markdown': 'toc',
+    \ }
 
 Plug 'simnalamburt/vim-mundo'
     let g:mundo_right = 1
@@ -314,6 +346,4 @@ Plug 'dracula/vim', {'name':'dracula'}
 
 call plug#end()
 
-" Theme
-    colorscheme nord
-    highlight Comment cterm=italic
+colorscheme nord
