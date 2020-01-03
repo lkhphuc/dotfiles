@@ -13,7 +13,11 @@
 	set mouse=a
 	set dir='/tmp/,~/tmp,/var/tmp,.'
     set path+=**
-	" Tab and indent
+	" Visual
+	set relativenumber number
+    set signcolumn=yes
+	set cursorline
+    set termguicolors
 	set expandtab tabstop=4
 	set shiftwidth=4
 	set foldmethod=indent
@@ -30,24 +34,14 @@
     " Enable persistent undo so that undo history persists across vim sessions
     set undofile
     set undodir=~/.vim/undo
-    " Theme
-	set relativenumber number
-    set signcolumn=yes
-	set cursorline
-    highlight Comment cterm=italic
-    highlight Folded ctermbg=None guibg=None
-    " Show trailing whitepace and spaces before a tab:
-    :highlight ExtraWhitespace ctermbg=DarkGrey guibg=DarkGrey
-    :autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-    autocmd BufNewFile,BufRead *.gin set syntax=toml
 " Mapping
 	nnoremap <leader><space> za
 	nnoremap <leader>y "+y
 	vnoremap <leader>y "+y
 	nnoremap <leader>p "+p
 	vnoremap <leader>p "+p
-    nnoremap <leader>w <C-W>w
-    nnoremap <leader>b <C-^>
+    nnoremap <leader>ww <C-W>w
+    nnoremap <leader>bb <C-^>
     if !exists('g:lasttab')
       let g:lasttab = 1
     endif
@@ -115,7 +109,6 @@ Plug 'junegunn/fzf.vim'
     \ call fzf#vim#grep(
     \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
     \   fzf#vim#with_preview(), <bang>0)
-
 Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
@@ -136,7 +129,6 @@ Plug 'voldikss/vim-floaterm'
     let g:floaterm_keymap_toggle = '<F5>'
     let g:floaterm_keymap_new    = '<F6>'
     let g:floaterm_position = 'center'
-
 
 Plug 'jpalardy/vim-slime'  "Send to tmux
     let g:slime_target = 'neovim'
@@ -273,7 +265,6 @@ Plug 'simnalamburt/vim-mundo'
     noremap <F7> :MundoToggle<CR>
 
 Plug 'jph00/swift-apple'
-
 Plug 'lervag/vimtex'
     let g:vimtex_compiler_progname = 'nvr'
 
@@ -285,7 +276,7 @@ Plug 'romainl/vim-cool'  "Handle highlight search automatically
 
 Plug 'itchyny/lightline.vim'
     let g:lightline = {
-        \ 'colorscheme': 'nord',
+        \ 'colorscheme': 'one',
         \ 'component': {
         \ },
         \ 'active': {
@@ -343,7 +334,17 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', {'name':'dracula'}
+Plug 'rakr/vim-one'
 
 call plug#end()
 
-colorscheme nord
+" Theme
+let g:one_allow_italics = 1
+colorscheme one
+autocmd BufNewFile,BufRead *.gin set syntax=toml
+highlight Comment cterm=italic
+highlight Folded ctermbg=None guibg=None
+:highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
+:au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+:au InsertLeave * match ExtraWhitespace /\s\+$/
+
