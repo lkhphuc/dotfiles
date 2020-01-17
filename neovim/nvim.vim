@@ -1,33 +1,34 @@
-"Automatically install Vim Plug
-	if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-	  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-	endif
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  "Automatically install Vim Plug
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+  \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " General nvim settings
-    lang en_US.UTF-8
-	let mapleader=" "
-	set hidden
-	set noshowmode
-	set mouse=a
-	set dir='/tmp/,~/tmp,/var/tmp,.'
-    set path+=**
-	" Visual
-	set relativenumber number
-    set signcolumn=yes
-	set cursorline
-    set termguicolors
-	set expandtab tabstop=4
-	set shiftwidth=4
-	set foldmethod=indent
-	set sidescroll=1
-	set conceallevel=0
-	set colorcolumn=80
-	set breakindent
-	set breakindentopt=shift:2,sbr
-	set lbr formatoptions+=l " Ensures word-wrap does not split words
-	set ignorecase smartcase
+  lang en_US.UTF-8
+  let mapleader=" "
+  set hidden
+  set noshowmode
+  set mouse=a
+  set dir='/tmp/,~/tmp,/var/tmp,.'
+  set path+=**
+  " Visual
+  set relativenumber number
+  set signcolumn=yes
+  set cursorline
+  set termguicolors
+  " set expandtab
+  " set tabstop=2
+  " set shiftwidth=2
+  set foldmethod=indent
+  set sidescroll=1
+  set conceallevel=0
+  set colorcolumn=80
+  set breakindent
+  set breakindentopt=shift:4,sbr
+  set lbr formatoptions+=l " Ensures word-wrap does not split words
+  set ignorecase smartcase
     set inccommand=nosplit
     set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
     set shortmess+=c " don't give |ins-completion-menu| messages.
@@ -35,28 +36,40 @@
     set undofile
     set undodir=~/.vim/undo
 " Mapping
-	nnoremap <leader><space> za
-	nnoremap <leader>y "+y
-	vnoremap <leader>y "+y
-	nnoremap <leader>p "+p
-	vnoremap <leader>p "+p
+  nnoremap <leader><space> za
+  nnoremap <leader>y "+y
+  vnoremap <leader>y "+y
+  nnoremap <leader>p "+p
+  vnoremap <leader>p "+p
+    " Windows
     nnoremap <leader>ww <C-W>w
-    nnoremap <leader>bb <C-^>
-    if !exists('g:lasttab')
-      let g:lasttab = 1
-    endif
-    nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
-    au TabLeave * let g:lasttab = tabpagenr()
-    " Terminal mode
-    tnoremap <leader><Esc> <C-\><C-n>
+    nnoremap <leader>wq <C-W>q
+    nnoremap <leader>ws <C-W>s
+    nnoremap <leader>wv <C-W>v
+    tnoremap <leader>ww <C-\><C-n><C-w>w
+    tnoremap <leader>wq <C-\><C-n><C-w>q
     tnoremap <C-h> <C-\><C-n><C-w>h
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k
     tnoremap <C-l> <C-\><C-n><C-w>l
     tnoremap <C-w><C-w> <C-\><C-n><C-w>w
-    tnoremap <C-w>w <C-\><C-n><C-w>w
+    " Buffers
+    tnoremap <leader>bb <C-\><C-n><C-^>
+    nnoremap <leader>bb <C-^>
+    nnoremap <leader>bn :bnext<CR>
+    nnoremap <leader>bp :bprevious<CR>
+    nnoremap <leader>bd :bdelete<CR>
+    " Tabs
+    if !exists('g:lasttab')
+      let g:lasttab = 1
+    endif
+    au TabLeave * let g:lasttab = tabpagenr()
     tnoremap <leader><Tab> <C-\><C-n> :exe "tabn ".g:lasttab<CR>
-    tnoremap <leader>b <C-\><C-n><C-^>
+    nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
+    " Terminal mode
+    tnoremap <leader><Esc> <C-\><C-n>
+    tnoremap jk <C-\><C-n>
+    tnoremap kj <C-\><C-n>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -67,6 +80,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
 
 Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
@@ -102,6 +116,8 @@ Plug 'junegunn/fzf.vim'
     nnoremap <leader>fr :Rg<CR>
     let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
+    command! -bang -nargs=* History
+      \ call fzf#vim#history(fzf#vim#with_preview({'options': '--no-sort'}))
     " with preview window
     command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -251,7 +267,9 @@ Plug 'SirVer/ultisnips'
 Plug 'liuchengxu/vista.vim'
     noremap <F8> :Vista!!<CR>
     let g:vista_echo_cursor_strategy = 'floating_win'
-    let g:vista_fzf_preview = 1
+    let g:vista_update_on_text_changed = 1
+    let g:vista_close_on_jump = 1
+    " let g:vista_fzf_preview = ['right:50%']
     let g:vista_executive_for = {
     \ 'py': 'coc',
     \ 'cpp': 'coc',
@@ -259,6 +277,8 @@ Plug 'liuchengxu/vista.vim'
     \ 'tex': 'coc',
     \ 'markdown': 'toc',
     \ }
+  autocmd FileType vista,vista_kind nnoremap <buffer> <silent>
+        \ / :<c-u>call vista#finder#fzf#Run()<CR>
 
 Plug 'simnalamburt/vim-mundo'
     let g:mundo_right = 1
@@ -270,6 +290,7 @@ Plug 'lervag/vimtex'
 
 " Visual
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
@@ -347,4 +368,3 @@ highlight Folded ctermbg=None guibg=None
 :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
 :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 :au InsertLeave * match ExtraWhitespace /\s\+$/
-
