@@ -2,11 +2,12 @@
 command -v nvim >/dev/null && export EDITOR='nvim' \
     && alias v=$EDITOR vim="nvim" vimdiff="nvim -d"
 
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then 
-    export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'" 
-else 
-    export EDITOR='nvim' 
-fi 
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    export EDITOR="nvr -cc split --remote +'set bufhidden=wipe' --remote-send \<F5\>\<F5\>"
+    alias v="$EDITOR"
+else
+    export EDITOR='nvim'
+fi
 
 if [ ! -d "$HOME/.zplugin" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
@@ -22,7 +23,6 @@ autoload -Uz _zplugin
 # Spaceship Prompt
 zplugin light denysdovhan/spaceship-prompt
     SPACESHIP_PROMPT_ORDER=(
-      vi_mode       # Vi-mode indicator
       user          # Username section
       dir           # Current directory section
       host          # Hostname section
@@ -46,13 +46,15 @@ zplugin light denysdovhan/spaceship-prompt
       char          # Prompt character
       )
     export SPACESHIP_RPROMPT_ORDER=(
+      vi_mode       # Vi-mode indicator
       exit_code     # Exit code section
       exec_time     # Execution time
       git           # Git section (git_branch + git_status)
       battery       # Battery level and status
       time          # Time stamps section
       )
-    export SPACESHIP_VI_MODE_SHOW=false
+    export SPACESHIP_VI_MODE_INSERT=''
+    export SPACESHIP_VI_MODE_NORMAL='<<'
     export SPACESHIP_PROMPT_ADD_NEWLINE=false
     export SPACESHIP_PROMPT_PREFIXES_SHOW=false
     export SPACESHIP_EXIT_CODE_SHOW=true
