@@ -13,63 +13,60 @@ endif
   set mouse=a
   set dir='/tmp/,~/tmp,/var/tmp,.'
   set path+=**
+  set wildmode=longest:full,full
   " Visual
   set relativenumber number
   set signcolumn=yes
   set cursorline
   set termguicolors
-  " set expandtab
-  " set tabstop=2
-  " set shiftwidth=2
   set foldmethod=indent
-  set sidescroll=1
+  set sidescroll=1 scrolloff=50
   set conceallevel=0
   set colorcolumn=80
-  set breakindent
-  set breakindentopt=shift:4,sbr
+  set breakindent breakindentopt=shift:4,sbr
   set lbr formatoptions+=l " Ensures word-wrap does not split words
   set ignorecase smartcase
-    set inccommand=nosplit
-    set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
-    set shortmess+=c " don't give |ins-completion-menu| messages.
-    " Enable persistent undo so that undo history persists across vim sessions
-    set undofile
-    set undodir=~/.vim/undo
+  set inccommand=nosplit
+  set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
+  set shortmess+=c " don't give |ins-completion-menu| messages.
+  " Enable persistent undo so that undo history persists across vim sessions
+  set undofile
+  set undodir=~/.vim/undo
 " Mapping
   nnoremap <leader><space> za
   nnoremap <leader>y "+y
   vnoremap <leader>y "+y
   nnoremap <leader>p "+p
   vnoremap <leader>p "+p
-    " Windows
-    nnoremap <leader>ww <C-W>w
-    nnoremap <leader>wq <C-W>q
-    nnoremap <leader>ws <C-W>s
-    nnoremap <leader>wv <C-W>v
-    tnoremap <leader>ww <C-\><C-n><C-w>w
-    tnoremap <leader>wq <C-\><C-n><C-w>q
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
-    tnoremap <C-w><C-w> <C-\><C-n><C-w>w
-    " Buffers
-    tnoremap <leader>bb <C-\><C-n><C-^>
-    nnoremap <leader>bb <C-^>
-    nnoremap <leader>bn :bnext<CR>
-    nnoremap <leader>bp :bprevious<CR>
-    nnoremap <leader>bd :bdelete<CR>
-    " Tabs
-    if !exists('g:lasttab')
-      let g:lasttab = 1
-    endif
-    au TabLeave * let g:lasttab = tabpagenr()
-    tnoremap <leader><Tab> <C-\><C-n> :exe "tabn ".g:lasttab<CR>
-    nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
-    " Terminal mode
-    tnoremap <leader><Esc> <C-\><C-n>
-    tnoremap jk <C-\><C-n>
-    tnoremap kj <C-\><C-n>
+  " Windows
+  nnoremap <leader>ww <C-W>w
+  nnoremap <leader>wq <C-W>q
+  nnoremap <leader>ws <C-W>s
+  nnoremap <leader>wv <C-W>v
+  tnoremap <leader>ww <C-\><C-n><C-w>w
+  tnoremap <leader>wq <C-\><C-n><C-w>q
+  tnoremap <C-h> <C-\><C-n><C-w>h
+  tnoremap <C-j> <C-\><C-n><C-w>j
+  tnoremap <C-k> <C-\><C-n><C-w>k
+  tnoremap <C-l> <C-\><C-n><C-w>l
+  tnoremap <C-w><C-w> <C-\><C-n><C-w>w
+  " Buffers
+  tnoremap <leader>bb <C-\><C-n><C-^>
+  nnoremap <leader>bb <C-^>
+  nnoremap <leader>bn :bnext<CR>
+  nnoremap <leader>bp :bprevious<CR>
+  nnoremap <leader>bd :bdelete<CR>
+  " Tabs
+  if !exists('g:lasttab')
+    let g:lasttab = 1
+  endif
+  au TabLeave * let g:lasttab = tabpagenr()
+  tnoremap <leader><Tab> <C-\><C-n> :exe "tabn ".g:lasttab<CR>
+  nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
+  " Terminal mode
+  tnoremap <leader><Esc> <C-\><C-n>
+  tnoremap jk <C-\><C-n>
+  tnoremap kj <C-\><C-n>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -104,8 +101,8 @@ Plug 'junegunn/fzf.vim'
     nnoremap <leader>fh :History<CR>
     nnoremap <leader>fb :Buffers<CR>
     nnoremap <leader>ff :Files<CR>
-    nnoremap <leader>fgf :GitFiles?<CR>
-    nnoremap <leader>fgs :GitFiles?<CR>
+    nnoremap <leader>fg :GitFiles<R>
+    nnoremap <leader>fs :GitFiles?<CR>
     nnoremap <leader>fl :Lines<CR>
     nnoremap <leader>ft :Tags<CR>
     nnoremap <leader>fm :Marks<CR>
@@ -146,9 +143,12 @@ Plug 'voldikss/vim-floaterm'
     let g:floaterm_keymap_new    = '<F6>'
     let g:floaterm_position = 'center'
 
-Plug 'jpalardy/vim-slime'  "Send to tmux
+Plug 'jpalardy/vim-slime'  "Send text elsewhere
     let g:slime_target = 'neovim'
     let g:slime_python_ipython = 1
+    let g:slime_no_mappings = 1
+    xmap <S-CR> <Plug>SlimeRegionSend
+    nmap <S-CR> <Plug>SlimeParagraphSend
 
 Plug 'janko/vim-test'
     " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
@@ -185,7 +185,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
           \ coc#refresh()
         inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
         " Confirm completeion
-		inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+	inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
         imap <C-j> <Plug>(coc-snippets-expand-jump)
     " Coc K to show documentation
         function! s:show_documentation()
@@ -193,9 +193,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
             execute 'h '.expand('<cword>')
           else
             call CocAction('doHover')
+            call CocActionAsync('showSignatureHelp')
           endif
         endfunction
         nnoremap <silent> K :call <SID>show_documentation()<CR>
+        inoremap <silent> <F2> <C-o>:call<SID>show_documentation()<CR>
     " Remap keys for gotos
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -236,8 +238,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " Use `:Format` for format current buffer
     command! -nargs=0 Format :call CocAction('format')
     " Smart f, press <esc> to cancel.
-    nmap f <Plug>(coc-smartf-forward)
-    nmap F <Plug>(coc-smartf-backward)
+    nmap <leader>f <Plug>(coc-smartf-forward)
+    nmap <leader>F <Plug>(coc-smartf-backward)
     nmap ; <Plug>(coc-smartf-repeat)
     nmap , <Plug>(coc-smartf-repeat-opposite)
         augroup Smartf
