@@ -79,6 +79,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
 
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+  let g:clap_insert_mode_only = v:true
+  nnoremap <leader>l :Clap<CR>
 Plug 'junegunn/fzf', {'dir': '~/.fzf/', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
     " Using floating windows of Neovim to start fzf
