@@ -65,7 +65,7 @@ else
 fi
 
 
-check_for_software zsh 
+check_for_software zsh
 echo
 check_for_software tmux
 echo
@@ -96,7 +96,7 @@ else
 fi
 
 mkdir $HOME/.config/nvim/ 2&> /dev/null
-printf "source '$HOME/dotfiles/zshrc.sh'" > $HOME/.zshrc
+printf "source '$HOME/dotfiles/rc.zsh'" > $HOME/.zshrc
 printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
 printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
 ln -s $HOME/dotfiles/neovim/coc-settings.json $HOME/.config/nvim/coc-settings.json
