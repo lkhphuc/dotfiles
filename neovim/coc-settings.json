@@ -1,7 +1,8 @@
 {
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+
     "suggest.triggerAfterInsertEnter": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
-    "diagnostic.checkCurrentLine": true,
 
     "languageserver": {
         "ccls": {
@@ -15,16 +16,11 @@
            }
         }
     },
-    
+
 
     "python.jediEnabled": false,
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        "--max-line-length=88",
-        "--ignore=E203,W503,E722,E302,E501"
-    ],
+    "python.linting.mypyEnabled": true,
     "python.formatting.provider": "black",
 
     "ccls.completion.enableSnippetInsertion": true,
@@ -39,5 +35,4 @@
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.enableVimDevions": true,
-
 }

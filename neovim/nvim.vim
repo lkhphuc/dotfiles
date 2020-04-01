@@ -151,7 +151,7 @@ Plug 'jpalardy/vim-slime'  "Send text elsewhere
     let g:slime_python_ipython = 1
     let g:slime_no_mappings = 1
     xmap <S-CR> <Plug>SlimeRegionSend
-    nmap <S-CR> <Plug>SlimeParagraphSend
+    nmap <S-CR> <Plug>SlimeParagraphSend}j
 
 Plug 'janko/vim-test'
     " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
@@ -202,7 +202,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
         nnoremap <silent> K :call <SID>show_documentation()<CR>
         inoremap <silent> <F2> <C-o>:call<SID>show_documentation()<CR>
     " Remap keys for gotos
-	nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
     nmap <silent> ]g <Plug>(coc-diagnostic-next)
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gy <Plug>(coc-type-definition)
@@ -264,6 +264,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     omap ag <Plug>(coc-git-chunk-outer)
     xmap ag <Plug>(coc-git-chunk-outer)
     noremap <F9> :CocCommand explorer<CR>
+Plug 'antoinemadec/coc-fzf'
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
@@ -284,18 +285,24 @@ Plug 'liuchengxu/vista.vim'
     \ }
   autocmd FileType vista,vista_kind nnoremap <buffer> <silent>
         \ / :<c-u>call vista#finder#fzf#Run()<CR>
+Plug 'pechorin/any-jump.vim'
 
 Plug 'simnalamburt/vim-mundo'
     let g:mundo_right = 1
     noremap <F7> :MundoToggle<CR>
 
+Plug 'goerz/jupytext.vim'
+    let g:jupytext_fmt = 'py'
+Plug 'hanschen/vim-ipython-cell'
+    let g:ipython_cell_delimit_cells_by = 'tags'
+    let g:ipython_cell_tag = '# %%'
 Plug 'jph00/swift-apple'
 Plug 'lervag/vimtex'
     let g:vimtex_compiler_progname = 'nvr'
 
 " Visual
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-  let g:semshi#mark_selected_nodes = 0
+    let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
