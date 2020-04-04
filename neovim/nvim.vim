@@ -20,7 +20,8 @@ endif
   set cursorline
   set termguicolors
   set foldmethod=indent
-  set sidescroll=1 scrolloff=50
+  au TermEnter * setlocal sidescrolloff=0 scrolloff=0
+  au TermLeave * setlocal sidescroll=1 scrolloff=50
   set conceallevel=0
   set colorcolumn=80
   set breakindent breakindentopt=shift:4,sbr
