@@ -20,9 +20,9 @@ endif
   set cursorline
   set termguicolors
   set foldmethod=indent
-  au TermEnter * setlocal sidescrolloff=0 scrolloff=0
-  au TermLeave * setlocal sidescroll=1 scrolloff=50
-  set conceallevel=0
+  " au TermEnter * setlocal sidescrolloff=0 scrolloff=0
+  " au TermLeave * setlocal sidescroll=1 scrolloff=50
+  set concealcursor=c
   set colorcolumn=80
   set breakindent breakindentopt=shift:4,sbr
   set lbr formatoptions+=l " Ensures word-wrap does not split words
