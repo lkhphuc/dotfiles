@@ -124,12 +124,15 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'machakann/vim-sandwich'
 Plug 'yuttie/comfortable-motion.vim'
+Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'metakirby5/codi.vim'
 Plug 'szw/vim-maximizer'
   nnoremap <silent><C-w>m :MaximizerToggle<CR>
   vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
   inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
+Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'}  "Sane buffer/windows close
+  nnoremap <C-w>c :Sayonara<CR>
+  tnoremap <C-w>c <C-\><C-n>:Sayonara<CR>
 
 Plug 'kassio/neoterm'  "TODO Config shortcut
 Plug 'voldikss/vim-floaterm'
@@ -156,11 +159,12 @@ Plug 'janko/vim-test'
   nmap <silent> t<C-s> :TestSuite<CR>
   nmap <silent> t<C-l> :TestLast<CR>
   nmap <silent> t<C-g> :TestVisit<CR>
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
 
 Plug 'antoinemadec/coc-fzf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
-        \ "coc-python", "coc-ccls", "coc-json", "coc-vimtex",
+        \ "coc-python", "coc-json", "coc-vimtex",
         \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
         \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer",
         \ "coc-marketplace"]

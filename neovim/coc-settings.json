@@ -4,26 +4,12 @@
     "suggest.triggerAfterInsertEnter": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
 
-    "languageserver": {
-        "ccls": {
-           "command": "ccls",
-           "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-           "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-           "initializationOptions": {
-               "cache": {
-                   "directory": "/tmp/ccls"
-               }
-           }
-        }
-    },
-
 
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.mypyEnabled": true,
     "python.formatting.provider": "black",
 
-    "ccls.completion.enableSnippetInsertion": true,
 
     "git.removedSign.hlGroup": "CocErrorSign",
     "git.addedSign.hlGroup": "CocInfoSign",
@@ -34,5 +20,5 @@
     "explorer.width": 30,
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,
-    "explorer.icon.enableVimDevions": true,
+    "explorer.icon.enableVimDevicons": true
 }
