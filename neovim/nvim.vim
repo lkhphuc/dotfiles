@@ -40,13 +40,7 @@ endif
   nnoremap <leader>p "+p
   vnoremap <leader>p "+p
   " Windows
-  nnoremap <leader>ww <C-W>w
-  tnoremap <leader>ww <C-\><C-n><C-w>w
   tnoremap <C-w><C-w> <C-\><C-n><C-w>w
-  nnoremap <leader>wq <C-W>q
-  tnoremap <leader>wq <C-\><C-n><C-w>q
-  nnoremap <leader>ws <C-W>s
-  nnoremap <leader>wv <C-W>v
   nnoremap <C-h> <C-W>h
   tnoremap <C-h> <C-\><C-n><C-w>h
   nnoremap <C-j> <C-W>j
@@ -55,12 +49,8 @@ endif
   tnoremap <C-k> <C-\><C-n><C-w>k
   nnoremap <C-l> <C-W>l
   tnoremap <C-l> <C-\><C-n><C-w>l
-  " Buffers
-  tnoremap <leader>bb <C-\><C-n><C-^>
-  nnoremap <leader>bb <C-^>
-  nnoremap <leader>bn :bnext<CR>
-  nnoremap <leader>bp :bprevious<CR>
-  nnoremap <leader>bd :bdelete<CR>
+  tnoremap <C-w>v <C-\><C-n><C-w>v
+  tnoremap <C-w>s <C-\><C-n><C-w>s
   " Tabs
   if !exists('g:lasttab')
     let g:lasttab = 1
@@ -68,7 +58,9 @@ endif
   au TabLeave * let g:lasttab = tabpagenr()
   nmap <Leader>t :exe "tabn ".g:lasttab<CR>
   " Terminal mode
-  tnoremap <leader><Esc> <C-\><C-n>
+  tnoremap <C-v> <C-\><C-n>
+  autocmd BufWinEnter,WinEnter term://* startinsert
+  autocmd BufLeave term://* stopinsert
 
 call plug#begin('~/.local/share/nvim/plugged')
 
