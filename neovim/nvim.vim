@@ -63,15 +63,12 @@ endif
   nnoremap <leader>bd :bdelete<CR>
   " Tabs
   if !exists('g:lasttab')
-  let g:lasttab = 1
+    let g:lasttab = 1
   endif
   au TabLeave * let g:lasttab = tabpagenr()
-  tnoremap <leader><Tab> <C-\><C-n> :exe "tabn ".g:lasttab<CR>
-  nmap <Leader><TAB> :exe "tabn ".g:lasttab<CR>
+  nmap <Leader>t :exe "tabn ".g:lasttab<CR>
   " Terminal mode
   tnoremap <leader><Esc> <C-\><C-n>
-  tnoremap jk <C-\><C-n>
-  tnoremap kj <C-\><C-n>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
