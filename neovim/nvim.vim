@@ -31,8 +31,7 @@ endif
   set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
   set shortmess+=c " don't give |ins-completion-menu| messages.
   " Enable persistent undo so that undo history persists across vim sessions
-  set undofile
-  set undodir=~/.vim/undo
+  set undofile undodir=~/.vim/undo
 " Mapping
   nnoremap <leader><space> za
   nnoremap <leader>y "+y
@@ -281,7 +280,7 @@ Plug 'pechorin/any-jump.vim'
 
 Plug 'simnalamburt/vim-mundo'
   let g:mundo_right = 1
-  noremap <F7> :MundoToggle<CR>
+  noremap <leader>u :MundoToggle<CR>
 
 Plug 'goerz/jupytext.vim'
   let g:jupytext_fmt = 'py'
