@@ -54,6 +54,9 @@ endif
   tnoremap <C-v> <C-\><C-n>
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
+  tnoremap ]b <C-\><C-n>:bnext<CR>
+  tnoremap [b <C-\><C-n>:bprev<CR>
+  tnoremap <C-^> <C-\><C-n><C-^>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -168,15 +171,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     \ "coc-highlight", "coc-pairs", "coc-explorer",
     \ "coc-marketplace"
     \ ]
-  nmap <leader>cl :CocFzfList<CR>
-  nmap <leader>cr :CocFzfListResume<CR>
-  nmap <leader>ca :CocFzfList actions<CR>
-  nmap <leader>cc :CocFzfList commands<CR>
-  nmap <leader>cd :CocFzfList diagnostics<CR>
-  nmap <leader>co :CocFzfList outline<CR>
-  nmap <leader>cs :CocFzfList symbols<CR>
-  nmap <leader>CC :CocConfig<CR>
-  nmap <leader>CR :CocRestart<CR>
+  nnoremap <leader>cl :CocFzfList<CR>
+  nnoremap <leader>cr :CocFzfListResume<CR>
+  nnoremap <leader>ca :CocFzfList actions<CR>
+  nnoremap <leader>cc :CocFzfList commands<CR>
+  nnoremap <leader>cd :CocFzfList diagnostics<CR>
+  nnoremap <leader>co :CocFzfList outline<CR>
+  nnoremap <leader>cs :CocFzfList symbols<CR>
+  nnoremap <leader>ce :CocCommand explorer<CR>
+  nnoremap <leader>CC :CocConfig<CR>
+  nnoremap <leader>CR :CocRestart<CR>
   " <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
     function! s:check_back_space() abort
       let col = col('.') - 1
@@ -255,14 +259,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   xmap ig <Plug>(coc-git-chunk-inner)
   omap ag <Plug>(coc-git-chunk-outer)
   xmap ag <Plug>(coc-git-chunk-outer)
-  noremap <F9> :CocCommand explorer<CR>
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
   let g:UltiSnipsExpandTrigger = "<nop>"
 Plug 'liuchengxu/vista.vim'
-  noremap <F8> :Vista!!<CR>
+  noremap <leader>v :Vista!!<CR>
   let g:vista_echo_cursor_strategy = 'floating_win'
   let g:vista_update_on_text_changed = 1
   let g:vista_close_on_jump = 1
