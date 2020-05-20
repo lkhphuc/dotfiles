@@ -51,12 +51,6 @@ endif
   tnoremap <C-l> <C-\><C-n><C-w>l
   tnoremap <C-w>v <C-\><C-n><C-w>v
   tnoremap <C-w>s <C-\><C-n><C-w>s
-  " Tabs
-  if !exists('g:lasttab')
-    let g:lasttab = 1
-  endif
-  au TabLeave * let g:lasttab = tabpagenr()
-  nmap <Leader>t :exe "tabn ".g:lasttab<CR>
   " Terminal mode
   tnoremap <C-v> <C-\><C-n>
   autocmd BufWinEnter,WinEnter term://* startinsert
@@ -70,6 +64,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
 
@@ -111,15 +106,30 @@ Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
 
-Plug 'machakann/vim-sandwich'
+Plug 'justinmk/vim-sneak'
+  let g:sneak#use_ic_scs = 1
+  let g:sneak#label = 1
+  map f <Plug>Sneak_f
+  map F <Plug>Sneak_F
+  map t <Plug>Sneak_t
+  map T <Plug>Sneak_T
 Plug 'yuttie/comfortable-motion.vim'
-Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
+Plug 'terryma/vim-expand-region'
+" Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
+Plug 'wellle/targets.vim' "Text objects
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'bkad/CamelCaseMotion'
+  let g:camelcasemotion_key = '<leader>'
+
+
 Plug 'szw/vim-maximizer'
   nnoremap <silent><C-w>m :MaximizerToggle<CR>
   vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
   inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
-Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'}  "Sane buffer/windows close
+Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
   nnoremap <C-w>c :Sayonara<CR>
   tnoremap <C-w>c <C-\><C-n>:Sayonara<CR>
 
@@ -148,44 +158,48 @@ Plug 'janko/vim-test'
   nmap <silent> t<C-s> :TestSuite<CR>
   nmap <silent> t<C-l> :TestLast<CR>
   nmap <silent> t<C-g> :TestVisit<CR>
-Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
 
 Plug 'antoinemadec/coc-fzf'
+  let g:coc_fzf_preview = 'right:60%'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
-        \ "coc-python", "coc-json", "coc-vimtex",
-        \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
-        \ "coc-highlight", "coc-pairs", "coc-smartf", "coc-explorer",
-        \ "coc-marketplace"]
-  nmap <leader>cc :CocCommand<CR>
+    \ "coc-python", "coc-json", "coc-vimtex",
+    \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
+    \ "coc-highlight", "coc-pairs", "coc-explorer",
+    \ "coc-marketplace"
+    \ ]
+  nmap <leader>cl :CocFzfList<CR>
+  nmap <leader>cr :CocFzfListResume<CR>
+  nmap <leader>ca :CocFzfList actions<CR>
+  nmap <leader>cc :CocFzfList commands<CR>
+  nmap <leader>cd :CocFzfList diagnostics<CR>
+  nmap <leader>co :CocFzfList outline<CR>
+  nmap <leader>cs :CocFzfList symbols<CR>
   nmap <leader>CC :CocConfig<CR>
   nmap <leader>CR :CocRestart<CR>
-  nmap <leader>cl :CocFzfList<CR>
-  " Use tab for trigger completion, completion confirm
+  " <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
     function! s:check_back_space() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
     endfunction
-
     inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-    inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    " Confirm completeion
-	inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-    imap <C-j> <Plug>(coc-snippets-expand-jump)
-  " Coc K to show documentation
+    let g:coc_snippet_next = '<tab>'
+  " Coc K, shift-tab to show documentation
     function! s:show_documentation()
       if &filetype == 'vim'
-      execute 'h '.expand('<cword>')
+        execute 'h '.expand('<cword>')
       else
-      call CocAction('doHover')
-      call CocActionAsync('showSignatureHelp')
+        call CocAction('doHover')
+        call CocActionAsync('showSignatureHelp')
       endif
     endfunction
     nnoremap <silent> K :call <SID>show_documentation()<CR>
-    inoremap <silent> <F2> <C-o>:call<SID>show_documentation()<CR>
+    inoremap <silent> <S-Tab> <C-o>:call<SID>show_documentation()<CR>
   " Remap keys for gotos
   nmap <silent> [g <Plug>(coc-diagnostic-prev)
   nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -196,8 +210,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   nmap <silent> g[ <Plug>(coc-declaration)
   " Highlight symbol under cursor on CursorHold
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  " Remap for rename current word
-  nmap <leader>crn <Plug>(coc-rename)
+  nmap <leader>rn <Plug>(coc-rename)
   " Remap for format selected region
   vmap <leader>cf  <Plug>(coc-format-selected)
   nmap <leader>cf  <Plug>(coc-format-selected)
@@ -215,25 +228,20 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   nmap <leader>caa  <Plug>(coc-codeaction)
   " Fix autofix problem of current line
   nmap <leader>cqf  <Plug>(coc-fix-current)
-	" Create mappings for function text object, requires document symbols feature of languageserver.
+  " Map function and class text objects. LS requires 'textDocument.documentSymbol'
   xmap if <Plug>(coc-funcobj-i)
-  xmap af <Plug>(coc-funcobj-a)
   omap if <Plug>(coc-funcobj-i)
+  xmap af <Plug>(coc-funcobj-a)
   omap af <Plug>(coc-funcobj-a)
-  " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-  " nmap <silent> <TAB> <Plug>(coc-range-select)
-  " xmap <silent> <TAB> <Plug>(coc-range-select)
+  xmap ic <Plug>(coc-classobj-i)
+  omap ic <Plug>(coc-classobj-i)
+  xmap ac <Plug>(coc-classobj-a)
+  omap ac <Plug>(coc-classobj-a)
+  "CTRL-S for selections ranges. LS requires 'textDocument/selectionRange'
+  nmap <silent> <C-s> <Plug>(coc-range-select)
+  xmap <silent> <C-s> <Plug>(coc-range-select)
   " Use `:Format` for format current buffer
   command! -nargs=0 Format :call CocAction('format')
-  " Smart f, press <esc> to cancel.
-  nmap <leader>f <Plug>(coc-smartf-forward)
-  nmap <leader>F <Plug>(coc-smartf-backward)
-  nmap ; <Plug>(coc-smartf-repeat)
-  nmap , <Plug>(coc-smartf-repeat-opposite)
-    augroup Smartf
-      autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
-      autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
-    augroup end
   " Use `:Fold` to fold current buffer
   command! -nargs=? Fold :call     CocAction('fold', <f-args>)
   " use `:OR` for organize import of current buffer
@@ -277,9 +285,7 @@ Plug 'simnalamburt/vim-mundo'
 
 Plug 'goerz/jupytext.vim'
   let g:jupytext_fmt = 'py'
-Plug 'hanschen/vim-ipython-cell'
-  let g:ipython_cell_delimit_cells_by = 'tags'
-  let g:ipython_cell_tag = '# %%'
+Plug 'hanschen/vim-ipython-cell', {'for': 'python'}  "TODO: config shortcuts
 Plug 'jph00/swift-apple'
 Plug 'lervag/vimtex'
   let g:vimtex_compiler_progname = 'nvr'
