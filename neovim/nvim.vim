@@ -52,6 +52,8 @@ endif
   tnoremap <C-w>s <C-\><C-n><C-w>s
   " Terminal mode
   tnoremap <C-v> <C-\><C-n>
+  tnoremap <C-u> <C-\><C-n>
+  tnoremap <C-d> <C-\><C-n>
   tnoremap ]b <C-\><C-n>:bnext<CR>
   tnoremap [b <C-\><C-n>:bprev<CR>
   tnoremap <C-^> <C-\><C-n><C-^>
