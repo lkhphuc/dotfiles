@@ -104,6 +104,7 @@ Plug 'junegunn/fzf.vim'
   let g:fzf_preview_window = 'right:60%'
   let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -111,6 +112,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
   let g:sneak#use_ic_scs = 1
   let g:sneak#label = 1
+  let g:sneak#s_next = 1
   map f <Plug>Sneak_f
   map F <Plug>Sneak_F
   map t <Plug>Sneak_t
