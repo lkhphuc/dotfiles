@@ -22,7 +22,6 @@ endif
   set foldmethod=indent
   " au TermEnter * setlocal sidescrolloff=0 scrolloff=0
   " au TermLeave * setlocal sidescroll=1 scrolloff=50
-  set concealcursor=c
   set colorcolumn=80
   set breakindent breakindentopt=shift:4,sbr
   set lbr formatoptions+=l " Ensures word-wrap does not split words
@@ -163,8 +162,6 @@ Plug 'janko/vim-test'
   nmap <silent> t<C-g> :TestVisit<CR>
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
 
-Plug 'antoinemadec/coc-fzf'
-  let g:coc_fzf_preview = 'right:60%'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
     \ "coc-python", "coc-json", "coc-vimtex",
@@ -260,6 +257,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   xmap ig <Plug>(coc-git-chunk-inner)
   omap ag <Plug>(coc-git-chunk-outer)
   xmap ag <Plug>(coc-git-chunk-outer)
+Plug 'antoinemadec/coc-fzf'
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
@@ -297,6 +295,7 @@ Plug 'lervag/vimtex'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
   let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
+  let g:indentLine_concealcursor = 'nc'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
 
@@ -365,11 +364,11 @@ Plug 'rakr/vim-one'
 call plug#end()
 
 " Theme
-let g:one_allow_italics = 1
-colorscheme one
-autocmd BufNewFile,BufRead *.gin set syntax=toml
-highlight Comment cterm=italic
-highlight Folded ctermbg=None guibg=None
-:highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
-:au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-:au InsertLeave * match ExtraWhitespace /\s\+$/
+  let g:one_allow_italics = 1
+  colorscheme one
+  autocmd BufNewFile,BufRead *.gin set syntax=toml
+  highlight Comment cterm=italic
+  highlight Folded ctermbg=None guibg=None
+  :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
+  :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  :au InsertLeave * match ExtraWhitespace /\s\+$/
