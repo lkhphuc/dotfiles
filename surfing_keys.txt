@@ -3,5 +3,4 @@ map("K", "R");
 map("J", "E");
 map("H", "S");
 map("L", "D");
-map("zz", "zr");
-map("p", "<Alt-i>");
+settings.tabsThreshold = 0;
