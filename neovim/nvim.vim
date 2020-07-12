@@ -295,9 +295,11 @@ Plug 'lervag/vimtex'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
   let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
-  let g:indentLine_concealcursor = 'nc'
+  let g:indentLine_concealcursor = 'c'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+  let g:tex_conceal='abdmg'
 
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
@@ -369,6 +371,6 @@ call plug#end()
   autocmd BufNewFile,BufRead *.gin set syntax=toml
   highlight Comment cterm=italic
   highlight Folded ctermbg=None guibg=None
-  :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
-  :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  :au InsertLeave * match ExtraWhitespace /\s\+$/
+  " :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
+  " :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  " :au InsertLeave * match ExtraWhitespace /\s\+$/

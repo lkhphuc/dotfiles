@@ -4,6 +4,7 @@
     "suggest.triggerAfterInsertEnter": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
 
+    "snippets.enableStatusItem": true,
 
     "python.jediEnabled": false,
     "python.linting.enabled": true,
