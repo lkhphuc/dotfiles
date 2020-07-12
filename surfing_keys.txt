@@ -1,6 +1,44 @@
-map("F", "C");
-map("K", "R");
-map("J", "E");
-map("H", "S");
-map("L", "D");
+map("F", "C"); // Capital F open link in new tab, normal f open link in current tab
+map("<Space>", 'd');
+map("<Shift-Space>", 'e');
 settings.tabsThreshold = 0;
+
+// Disable emoji popup. I can see it being potentially useful, but most of the time it's annoying and I already have this via Alfred
+iunmap(":");
+
+//Roam stuff
+settings.clickableSelector = "*.roam-block, *.rm-block-ref, *.rm-title-display";
+
+map('j', 'J', /roamresearch\.com/i);
+map('k', 'K', /roamresearch\.com/i);
+map('l', 'L', /roamresearch\.com/i);
+map('h', 'H', /roamresearch\.com/i);
+
+unmapAllExcept([
+    'f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', 'Ctrl-i',
+    'E', 'R', 'cs', 'cS', ';fs', '<Space>', '<Shift-Space>',
+], /roamresearch\.com/i);
+
+const simulateMouseEvent = function(element, eventNames, { x, y } = {}, shiftKey = false) {
+  if (typeof eventNames === 'string') eventNames = [eventNames];
+  eventNames.forEach(eventName => {
+    element.dispatchEvent(
+      // synchronous
+      new MouseEvent(eventName, {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientX: x,
+        clientY: y,
+        button: 0,
+        shiftKey
+      })
+    );
+  });
+};
+
+mapkey('<Ctrl-f>', 'Roamclick', function () {
+    Hints.create("", function (element, event) {
+        simulateMouseEvent(element, ['mousedown', 'mouseup', 'click'], {x:0,y:0}, true);
+    });
+}, {domain: /roamresearch\.com/i});
