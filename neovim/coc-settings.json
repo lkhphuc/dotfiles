@@ -9,6 +9,7 @@
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--ignore=E501"],
     "python.linting.mypyEnabled": true,
     "python.formatting.provider": "black",
 
@@ -22,5 +23,6 @@
     "explorer.width": 30,
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,
-    "explorer.icon.enableVimDevicons": true
+    "explorer.icon.enableVimDevicons": true,
+    "coc.preferences.extensionUpdateCheck": "daily"
 }

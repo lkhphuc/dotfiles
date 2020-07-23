@@ -11,7 +11,7 @@ map("<Space>", 'd', /roamresearch\.com/i);
 map("<Shift-Space>", 'e', /roamresearch\.com/i);
 
 unmapAllExcept([
-    'f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', 'Ctrl-i',
+    'f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', '<Ctrl-i>',
     'E', 'R', 'cs', 'cS', ';fs', '<Space>', '<Shift-Space>',
 ], /roamresearch\.com/i);
 

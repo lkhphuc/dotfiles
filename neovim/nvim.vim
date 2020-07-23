@@ -8,6 +8,7 @@ endif
 " General nvim settings
   lang en_US.UTF-8
   let mapleader=" "
+  let maplocalleader=" "
   set hidden
   set noshowmode
   set mouse=a
@@ -116,6 +117,8 @@ Plug 'justinmk/vim-sneak'
   map t <Plug>Sneak_t
   map T <Plug>Sneak_T
 Plug 'yuttie/comfortable-motion.vim'
+  noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+  noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
 Plug 'terryma/vim-expand-region'
 " Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
 Plug 'wellle/targets.vim' "Text objects
@@ -137,10 +140,10 @@ Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
 
 Plug 'kassio/neoterm'  "TODO Config shortcut
 Plug 'voldikss/vim-floaterm'
-  let g:floaterm_keymap_next   = '<F3>'
-  let g:floaterm_keymap_prev   = '<F4>'
-  let g:floaterm_keymap_toggle = '<F5>'
-  let g:floaterm_keymap_new    = '<F6>'
+  let g:floaterm_keymap_next   = '<Leader>tn'
+  let g:floaterm_keymap_prev   = '<Leader>tp'
+  let g:floaterm_keymap_toggle = '<C-b>'
+  let g:floaterm_keymap_new    = '<Leader>tc'
   let g:floaterm_position = 'center'
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
@@ -176,7 +179,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   nnoremap <leader>cd :CocFzfList diagnostics<CR>
   nnoremap <leader>co :CocFzfList outline<CR>
   nnoremap <leader>cs :CocFzfList symbols<CR>
-  nnoremap <leader>ce :CocCommand explorer<CR>
+  nnoremap <leader>e :CocCommand explorer<CR>
   nnoremap <leader>CC :CocConfig<CR>
   nnoremap <leader>CR :CocRestart<CR>
   " <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
@@ -290,6 +293,9 @@ Plug 'hanschen/vim-ipython-cell', {'for': 'python'}  "TODO: config shortcuts
 Plug 'jph00/swift-apple'
 Plug 'lervag/vimtex'
   let g:vimtex_compiler_progname = 'nvr'
+  let g:vimtex_fold_enabled = 1
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Visual
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
