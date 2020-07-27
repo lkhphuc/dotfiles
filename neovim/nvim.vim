@@ -51,8 +51,8 @@ endif
   tnoremap <C-w>v <C-\><C-n><C-w>v
   tnoremap <C-w>s <C-\><C-n><C-w>s
   " Terminal mode
-  tnoremap <C-v> <C-\><C-n>
-  tnoremap <C-u> <C-\><C-n>
+  tnoremap <C-b> <C-\><C-n>
+  tnoremap <PageUp> <C-\><C-n>
   tnoremap ]b <C-\><C-n>:bnext<CR>
   tnoremap [b <C-\><C-n>:bprev<CR>
   tnoremap <C-^> <C-\><C-n><C-^>
@@ -74,8 +74,8 @@ Plug 'junegunn/fzf.vim'
   " Using floating windows of Neovim to start fzf
   if has('nvim')
     function! FloatingFZF()
-    let width = float2nr(&columns * 0.9)
-    let height = float2nr(&lines * 0.6)
+    let width = float2nr(&columns * 0.8)
+    let height = float2nr(&lines * 0.8)
     let opts = { 'relative': 'editor',
            \ 'row': (&lines - height) / 2,
            \ 'col': (&columns - width) / 2,
@@ -84,7 +84,6 @@ Plug 'junegunn/fzf.vim'
     let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
     call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
     endfunction
-    let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
     let g:fzf_layout = { 'window': 'call FloatingFZF()' }
   endif
   nnoremap <leader>fh :History<CR>
@@ -146,6 +145,8 @@ Plug 'voldikss/vim-floaterm'
   let g:floaterm_keymap_toggle = '<Home>'   "Hyper+b
   let g:floaterm_position = 'center'
   nnoremap <leader>lf :FloatermNew lf<CR>
+  let g:floaterm_width = 0.8
+  let g:floaterm_height = 0.8
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'
@@ -173,13 +174,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     \ "coc-highlight", "coc-pairs", "coc-explorer",
     \ "coc-marketplace"
     \ ]
-  nnoremap <leader>cl :CocFzfList<CR>
-  nnoremap <leader>cr :CocFzfListResume<CR>
-  nnoremap <leader>ca :CocFzfList actions<CR>
-  nnoremap <leader>cc :CocFzfList commands<CR>
-  nnoremap <leader>cd :CocFzfList diagnostics<CR>
-  nnoremap <leader>co :CocFzfList outline<CR>
-  nnoremap <leader>cs :CocFzfList symbols<CR>
   nnoremap <leader>e :CocCommand explorer<CR>
   nnoremap <leader>CC :CocConfig<CR>
   nnoremap <leader>CR :CocRestart<CR>
@@ -262,6 +256,15 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   omap ag <Plug>(coc-git-chunk-outer)
   xmap ag <Plug>(coc-git-chunk-outer)
 Plug 'antoinemadec/coc-fzf'
+  let g:coc_fzf_preview = ''
+  let g:coc_fzf_opts = []
+  nnoremap <leader>cl :CocFzfList<CR>
+  nnoremap <leader>cr :CocFzfListResume<CR>
+  nnoremap <leader>ca :CocFzfList actions<CR>
+  nnoremap <leader>cc :CocFzfList commands<CR>
+  nnoremap <leader>cd :CocFzfList diagnostics<CR>
+  nnoremap <leader>co :CocFzfList outline<CR>
+  nnoremap <leader>cs :CocFzfList symbols<CR>
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
