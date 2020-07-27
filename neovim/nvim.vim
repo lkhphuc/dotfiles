@@ -7,8 +7,8 @@ endif
 
 " General nvim settings
   lang en_US.UTF-8
-  let mapleader=" "
-  let maplocalleader=" "
+  let mapleader="\<Space>"
+  let maplocalleader="\<Space>"
   set hidden
   set noshowmode
   set mouse=a
@@ -140,11 +140,12 @@ Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
 
 Plug 'kassio/neoterm'  "TODO Config shortcut
 Plug 'voldikss/vim-floaterm'
-  let g:floaterm_keymap_next   = '<Leader>tn'
-  let g:floaterm_keymap_prev   = '<Leader>tp'
-  let g:floaterm_keymap_toggle = '<C-b>'
-  let g:floaterm_keymap_new    = '<Leader>tc'
+  let g:floaterm_keymap_next   = '<End>'   "Hyper+o
+  let g:floaterm_keymap_prev   = '<S-End>' "Hyper+Command+o
+  let g:floaterm_keymap_new    = '<S-Home>' "Hyper+Command+i
+  let g:floaterm_keymap_toggle = '<Home>'   "Hyper+b
   let g:floaterm_position = 'center'
+  nnoremap <leader>lf :FloatermNew lf<CR>
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'

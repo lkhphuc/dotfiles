@@ -78,6 +78,8 @@ echo
 check_for_software fd
 echo
 check_for_software bat
+echo
+check_for_software lf
 
 check_default_shell
 
