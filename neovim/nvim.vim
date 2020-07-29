@@ -51,7 +51,7 @@ endif
   tnoremap <C-w>v <C-\><C-n><C-w>v
   tnoremap <C-w>s <C-\><C-n><C-w>s
   " Terminal mode
-  tnoremap <C-b> <C-\><C-n>
+  tnoremap <C-v> <C-\><C-n>
   tnoremap <PageUp> <C-\><C-n>
   tnoremap ]b <C-\><C-n>:bnext<CR>
   tnoremap [b <C-\><C-n>:bprev<CR>
@@ -68,6 +68,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
+Plug 'tpope/vim-rsi'  "Readline keybinding in insert model
 
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -131,8 +132,6 @@ Plug 'bkad/CamelCaseMotion'
 
 Plug 'szw/vim-maximizer'
   nnoremap <silent><C-w>m :MaximizerToggle<CR>
-  vnoremap <silent><C-w>m :MaximizerToggle<CR>gv
-  inoremap <silent><C-w>m <C-o>:MaximizerToggle<CR>
 Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
   nnoremap <C-w>c :Sayonara<CR>
   tnoremap <C-w>c <C-\><C-n>:Sayonara<CR>
@@ -298,6 +297,9 @@ Plug 'jph00/swift-apple'
 Plug 'lervag/vimtex'
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_fold_enabled = 1
+  let g:tex_flavor='latex'
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+  let g:tex_conceal='abdgm'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
@@ -308,8 +310,6 @@ Plug 'Yggdroot/indentLine'
   let g:indentLine_concealcursor = 'c'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
-  let g:tex_conceal='abdmg'
 
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
