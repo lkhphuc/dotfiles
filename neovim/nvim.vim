@@ -173,7 +173,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     \ "coc-highlight", "coc-pairs", "coc-explorer",
     \ "coc-marketplace"
     \ ]
-  nnoremap <leader>e :CocCommand explorer<CR>
+  nnoremap <leader>ce :CocCommand explorer<CR>
   nnoremap <leader>CC :CocConfig<CR>
   nnoremap <leader>CR :CocRestart<CR>
   " <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.

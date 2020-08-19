@@ -1,13 +1,11 @@
 # Use neovim for vim if present.
-command -v nvim >/dev/null && export EDITOR='nvim' \
-    && alias v=$EDITOR vim="nvim" vimdiff="nvim -d"
-
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    export EDITOR="nvr -cc split --remote +'set bufhidden=wipe' --remote-send \<F5\>\<F5\>"
-    alias v="$EDITOR"
-else
-    export EDITOR='nvim'
+    export EDITOR="floaterm"
+elif type "nvim" > /dev/null; then
+    export EDITOR="nvim"
 fi
+
+alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
 
 if [ ! -d "$HOME/.zinit" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
@@ -40,9 +38,6 @@ if [ "$OSTYPE"  != linux-gnu ]; then # Is this the MacOS system
 else
     alias ls="ls -hNFp --color --group-directories-first"
 fi
-
-zinit ice wait lucid
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 zinit ice wait lucid
 zinit load hlissner/zsh-autopair
@@ -81,28 +76,29 @@ KEYTIMEOUT=1
 
 # eval $(thefuck --alias)
 
-export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
 # ftpane - switch pane (@george-b)
-ftpane() {
-  local panes current_window current_pane target target_window target_pane
-  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
-  current_pane=$(tmux display-message -p '#I:#P')
-  current_window=$(tmux display-message -p '#I')
+# ftpane() {
+#   local panes current_window current_pane target target_window target_pane
+#   panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+#   current_pane=$(tmux display-message -p '#I:#P')
+#   current_window=$(tmux display-message -p '#I')
 
-  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+#   target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
 
-  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+#   target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+#   target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
 
-  if [[ $current_window -eq $target_window ]]; then
-    tmux select-pane -t ${target_window}.${target_pane}
-  else
-    tmux select-pane -t ${target_window}.${target_pane} &&
-    tmux select-window -t $target_window
-  fi
-}
-vf() { fzf | xargs -r -I % $EDITOR % ;}
+#   if [[ $current_window -eq $target_window ]]; then
+#     tmux select-pane -t ${target_window}.${target_pane}
+#   else
+#     tmux select-pane -t ${target_window}.${target_pane} &&
+#     tmux select-window -t $target_window
+#   fi
+# }
+# vf() { fzf | xargs -r -I % $EDITOR % ;}
 
 
 # Fuzzy search pdfs in Zotero
@@ -119,3 +115,5 @@ pdf () {
     | gcut -z -f 1 -d $'\t' | gtr -d '\n' | gxargs -r --null $open > /dev/null 2> /dev/null
 }
 
+export PAGER="bat --color=always"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
