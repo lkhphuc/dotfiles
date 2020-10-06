@@ -119,6 +119,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'yuttie/comfortable-motion.vim'
   noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
   noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+  noremap <silent> <PageUp> :call comfortable_motion#flick(-100)<CR>
 Plug 'terryma/vim-expand-region'
 " Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
 Plug 'wellle/targets.vim' "Text objects
