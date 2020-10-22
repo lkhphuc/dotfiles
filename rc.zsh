@@ -73,7 +73,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
 
-export KEYTIMEOUT=10
+export KEYTIMEOUT=1
 
 export PAGER="bat --color=always"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
