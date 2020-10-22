@@ -9,7 +9,7 @@
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--ignore=E501,E302"],
+    "python.linting.flake8Args": ["--max-line-length=88, --extend-ignore=E203"],
     "python.linting.mypyEnabled": true,
     "python.formatting.provider": "black",
 

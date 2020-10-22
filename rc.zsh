@@ -48,12 +48,6 @@ zinit snippet OMZ::lib/directories.zsh
 zinit ice wait lucid
 zinit snippet OMZ::lib/history.zsh
 
-# zinit ice wait lucid
-# zinit load rupa/z
-
-# zinit ice wait lucid
-# zinit load changyuheng/fz
-
 zinit ice wait lucid
 zinit load zsh-users/zsh-history-substring-search
 
@@ -70,37 +64,20 @@ zinit ice wait atload"_zsh_autosuggest_start" lucid
 zinit light zsh-users/zsh-autosuggestions
 export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 
-
-# 10ms for key sequences
-KEYTIMEOUT=1
+zinit ice svn as"program" pick'it2copy'
+zinit snippet https://github.com/gnachman/iterm2-website/trunk/source/utilities
 
 # eval $(thefuck --alias)
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
-# ftpane - switch pane (@george-b)
-# ftpane() {
-#   local panes current_window current_pane target target_window target_pane
-#   panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
-#   current_pane=$(tmux display-message -p '#I:#P')
-#   current_window=$(tmux display-message -p '#I')
 
-#   target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+export KEYTIMEOUT=10
 
-#   target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-#   target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
-
-#   if [[ $current_window -eq $target_window ]]; then
-#     tmux select-pane -t ${target_window}.${target_pane}
-#   else
-#     tmux select-pane -t ${target_window}.${target_pane} &&
-#     tmux select-window -t $target_window
-#   fi
-# }
-# vf() { fzf | xargs -r -I % $EDITOR % ;}
-
-
+export PAGER="bat --color=always"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+#
 # Fuzzy search pdfs in Zotero
 pdf () {
     local open
@@ -115,5 +92,3 @@ pdf () {
     | gcut -z -f 1 -d $'\t' | gtr -d '\n' | gxargs -r --null $open > /dev/null 2> /dev/null
 }
 
-export PAGER="bat --color=always"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"

@@ -38,6 +38,7 @@ endif
   vnoremap <leader>y "+y
   nnoremap <leader>p "+p
   vnoremap <leader>p "+p
+  map <C-a> <Esc>ggVG<CR>
   " Windows
   tnoremap <C-w><C-w> <C-\><C-n><C-w>w
   nnoremap <C-h> <C-W>h
@@ -100,7 +101,7 @@ Plug 'junegunn/fzf.vim'
   nnoremap <leader>fcb :BCommits<CR>
   nnoremap <leader>fa :Ag<CR>
   nnoremap <leader>fr :Rg<CR>
-  let g:fzf_preview_window = 'right:60%'
+  " let g:fzf_preview_window = 'right:60%'
   let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 Plug 'junegunn/goyo.vim'
@@ -153,7 +154,7 @@ Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_python_ipython = 1
   let g:slime_no_mappings = 1
   let g:slime_dont_ask_default = 1
-  let g:slime_preserve_curpos = 0
+  let g:slime_preserve_curpos = 1
   let g:slime_cell_delimiter = "#%%"
   nmap <S-CR> <Plug>SlimeSendCell
   xmap <S-CR> <Plug>SlimeRegionSend
