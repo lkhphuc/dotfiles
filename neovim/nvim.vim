@@ -73,21 +73,6 @@ Plug 'tpope/vim-rsi'  "Readline keybinding in insert model
 
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-  " Using floating windows of Neovim to start fzf
-  if has('nvim')
-    function! FloatingFZF()
-    let width = float2nr(&columns * 0.8)
-    let height = float2nr(&lines * 0.8)
-    let opts = { 'relative': 'editor',
-           \ 'row': (&lines - height) / 2,
-           \ 'col': (&columns - width) / 2,
-           \ 'width': width,
-           \ 'height': height }
-    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
-    endfunction
-    let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-  endif
   nnoremap <leader>fh :History<CR>
   nnoremap <leader>fb :Buffers<CR>
   nnoremap <leader>ff :Files<CR>
