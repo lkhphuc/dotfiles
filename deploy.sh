@@ -23,10 +23,11 @@ prompt_install() {
 check_for_software() {
 	echo "Checking to see if $1 is installed"
 	if ! [ -x "$(command -v $1)" ]; then
-		prompt_install $1
+		prompt_install $2
 	else
 		echo "$1 is installed."
 	fi
+	echo
 }
 
 check_default_shell() {
@@ -66,20 +67,14 @@ fi
 
 
 check_for_software zsh
-echo
-check_for_software tmux
-echo
-check_for_software neovim
-echo
-check_for_software ripgrep
-echo
-check_for_software thefuck
-echo
-check_for_software fd
-echo
-check_for_software bat
-echo
-check_for_software lf
+# check_for_software tmux
+check_for_software nvim neovim
+check_for_software rg ripgrep
+check_for_software thefuck thefuck
+check_for_software fd fd
+check_for_software bat bat
+check_for_software lf lf
+check_for_software ctags ctags
 
 check_default_shell
 
