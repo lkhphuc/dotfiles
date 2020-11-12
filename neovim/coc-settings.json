@@ -13,6 +13,7 @@
     "python.linting.mypyEnabled": true,
     "python.condaPath": "~/miniconda3",
 
+    "tabnine.priority": 90,
 
     "git.removedSign.hlGroup": "CocErrorSign",
     "git.addedSign.hlGroup": "CocInfoSign",
