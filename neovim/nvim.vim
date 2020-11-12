@@ -155,7 +155,7 @@ Plug 'janko/vim-test'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
-    \ "coc-python", "coc-json", "coc-vimtex",
+    \ "coc-pyright", "coc-json", "coc-vimtex",
     \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
     \ "coc-highlight", "coc-pairs", "coc-explorer",
     \ "coc-marketplace"

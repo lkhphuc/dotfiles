@@ -1,17 +1,17 @@
 {
+    "coc.preferences.extensionUpdateCheck": "daily",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
 
+    "suggest.enablePreview": true,
     "suggest.triggerAfterInsertEnter": true,
     "suggest.acceptSuggestionOnCommitCharacter": true,
 
     "snippets.enableStatusItem": true,
 
-    "python.jediEnabled": false,
-    "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.flake8Args": ["--max-line-length=88, --extend-ignore=E203"],
     "python.linting.mypyEnabled": true,
-    "python.formatting.provider": "black",
+    "python.condaPath": "~/miniconda3",
 
 
     "git.removedSign.hlGroup": "CocErrorSign",
@@ -23,6 +23,5 @@
     "explorer.width": 30,
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,
-    "explorer.icon.enableVimDevicons": true,
-    "coc.preferences.extensionUpdateCheck": "daily"
+    "explorer.icon.enableVimDevicons": true
 }
