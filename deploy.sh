@@ -92,13 +92,18 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-mkdir -p $HOME/.config/nvim
 printf "source '$HOME/dotfiles/rc.zsh'" > $HOME/.zshrc
 printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
+
+mkdir -p $HOME/.config/nvim
 printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
 ln -s $HOME/dotfiles/neovim/coc-settings.json $HOME/.config/nvim/coc-settings.json
+
 mkdir -p $HOME/.ipython
 ln -s $HOME/dotfiles/ipython_config.py $HOME/.ipython/ipython_config.py
+
+mkdir -p $HOME/.config/karabiner
+ln -s $HOME/dotfiles/karabiner.json $HOME/.config/karabiner/karabiner.json
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

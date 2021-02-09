@@ -138,8 +138,7 @@ Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'
   let g:slime_python_ipython = 1
   let g:slime_no_mappings = 1
-  let g:slime_dont_ask_default = 1
-  let g:slime_preserve_curpos = 1
+  " let g:slime_dont_ask_default = 1
   let g:slime_cell_delimiter = "#%%"
   nmap <S-CR> <Plug>SlimeSendCell
   xmap <S-CR> <Plug>SlimeRegionSend
@@ -253,6 +252,7 @@ Plug 'antoinemadec/coc-fzf'
   nnoremap <leader>cs :CocFzfList symbols<CR>
 
 Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_ctags_tagfile = '.tags'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
   let g:UltiSnipsExpandTrigger = "<nop>"

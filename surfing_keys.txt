@@ -1,20 +1,24 @@
 map("F", "C"); // Capital F open link in new tab, normal f open link in current tab
 settings.tabsThreshold = 0;
 
-// Disable emoji popup. I can see it being potentially useful, but most of the time it's annoying and I already have this via Alfred
+// Disable emoji popup. 
 iunmap(":");
 
-//Roam stuff
-settings.clickableSelector = "*.roam-block, *.rm-block-ref, *.rm-title-display";
+//
+settings.blacklistPattern = /.*\.ipynb$/i;
 
+// Roam stuff
 map("<Space>", 'd', /roamresearch\.com/i);
 map("<Shift-Space>", 'e', /roamresearch\.com/i);
 
+settings.clickableSelector = "*.roam-block, *.rm-block-ref, *.rm-title-display";
+
 unmapAllExcept([
     'f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', '<Ctrl-i>',
-    'E', 'R', 'cs', 'cS', ';fs', '<Space>', '<Shift-Space>',
+    'E', 'R', 'cs', 'cS', ';fs', '<Space>', '<Shift-Space>', 'F',
 ], /roamresearch\.com/i);
 
+/// Shift-f to open link in sidebar
 const simulateMouseEvent = function(element, eventNames, { x, y } = {}, shiftKey = false) {
   if (typeof eventNames === 'string') eventNames = [eventNames];
   eventNames.forEach(eventName => {
@@ -32,8 +36,7 @@ const simulateMouseEvent = function(element, eventNames, { x, y } = {}, shiftKey
     );
   });
 };
-
-mapkey('<Ctrl-f>', 'Roamclick', function () {
+mapkey('F', 'Roamclick', function () {
     Hints.create("", function (element, event) {
         simulateMouseEvent(element, ['mousedown', 'mouseup', 'click'], {x:0,y:0}, true);
     });
