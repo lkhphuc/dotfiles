@@ -86,7 +86,6 @@ Plug 'junegunn/fzf.vim'
   nnoremap <leader>fcb :BCommits<CR>
   nnoremap <leader>fa :Ag<CR>
   nnoremap <leader>fr :Rg<CR>
-  " let g:fzf_preview_window = 'right:60%'
   let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 Plug 'junegunn/goyo.vim'
@@ -106,15 +105,14 @@ Plug 'yuttie/comfortable-motion.vim'
   noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
   noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
   noremap <silent> <PageUp> :call comfortable_motion#flick(-100)<CR>
-Plug 'terryma/vim-expand-region'
-" Plug 'gcmt/wildfire.vim' "Smart selection of the closest text object
+Plug 'terryma/vim-expand-region' "Auto adjust selection with + or _
 Plug 'wellle/targets.vim' "Text objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/CamelCaseMotion'
-  let g:camelcasemotion_key = '<leader>'
+  " let g:camelcasemotion_key = '<leader>'
 
 
 Plug 'szw/vim-maximizer'
@@ -151,6 +149,7 @@ Plug 'janko/vim-test'
   nmap <silent> t<C-l> :TestLast<CR>
   nmap <silent> t<C-g> :TestVisit<CR>
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
+" Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
@@ -367,7 +366,7 @@ call plug#end()
   colorscheme one
   autocmd BufNewFile,BufRead *.gin set syntax=toml
   highlight Comment cterm=italic
-  highlight Folded ctermbg=None guibg=None
+  highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey
   " :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
   " :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
   " :au InsertLeave * match ExtraWhitespace /\s\+$/
