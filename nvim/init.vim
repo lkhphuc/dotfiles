@@ -114,7 +114,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/CamelCaseMotion'
   " let g:camelcasemotion_key = '<leader>'
 
-
+Plug 'ojroques/vim-oscyank'
 Plug 'szw/vim-maximizer'
   nnoremap <silent><C-w>m :MaximizerToggle<CR>
 Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
