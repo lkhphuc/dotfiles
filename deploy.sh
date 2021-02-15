@@ -95,9 +95,9 @@ fi
 printf "source '$HOME/dotfiles/rc.zsh'" > $HOME/.zshrc
 printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
 
-mkdir -p $HOME/.config/nvim
-printf "source $HOME/dotfiles/neovim/nvim.vim" > $HOME/.config/nvim/init.vim
-ln -s $HOME/dotfiles/neovim/coc-settings.json $HOME/.config/nvim/coc-settings.json
+ln -s $HOME/dotfiles/nvim $HOME/.config/nvim
+
+ln -s $HOME/dotfiles/kitty $HOME/.config/kitty
 
 mkdir -p $HOME/.ipython
 ln -s $HOME/dotfiles/ipython_config.py $HOME/.ipython/ipython_config.py

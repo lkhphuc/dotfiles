@@ -299,7 +299,7 @@ Plug 'romainl/vim-cool'  "Handle highlight search automatically
 
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
-    \ 'colorscheme': 'one',
+    \ 'colorscheme': 'onehalfdark',
     \ 'component': {
     \ },
     \ 'active': {
@@ -357,13 +357,14 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', {'name':'dracula'}
-Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'sonph/onehalf', { 'rtp': 'vim'}
 
 call plug#end()
 
 " Theme
-  let g:one_allow_italics = 1
-  colorscheme one
+  colorscheme onehalfdark
   autocmd BufNewFile,BufRead *.gin set syntax=toml
   highlight Comment cterm=italic
   highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey

@@ -75,8 +75,8 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
 
 export KEYTIMEOUT=1
 
-export PAGER="bat --color=always"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export PAGER="bat --color=always --paging=never"
+export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=never'"
 #
 # Fuzzy search pdfs in Zotero
 pdf () {
