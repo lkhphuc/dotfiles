@@ -115,6 +115,7 @@ Plug 'bkad/CamelCaseMotion'
   " let g:camelcasemotion_key = '<leader>'
 
 Plug 'ojroques/vim-oscyank'
+  autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif
 Plug 'szw/vim-maximizer'
   nnoremap <silent><C-w>m :MaximizerToggle<CR>
 Plug 'mhinz/vim-sayonara', {'on': 'Sayonara'} "Sane buffer/windows close
