@@ -366,8 +366,6 @@ call plug#end()
 " Theme
   colorscheme onehalfdark
   autocmd BufNewFile,BufRead *.gin set syntax=toml
-  highlight Comment cterm=italic
+  highlight Comment cterm=italic gui=italic
   highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey
-  " :highlight ExtraWhitespace ctermbg=Yellow guibg=Yellow
-  " :au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  " :au InsertLeave * match ExtraWhitespace /\s\+$/
+  highlight FloatermBorder guibg=None
