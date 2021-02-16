@@ -6,6 +6,7 @@ elif type "nvim" > /dev/null; then
 fi
 
 alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
+alias lg="lazygit"
 
 if [ ! -d "$HOME/.zinit" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"

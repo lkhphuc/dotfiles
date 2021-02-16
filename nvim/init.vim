@@ -131,6 +131,7 @@ Plug 'voldikss/vim-floaterm'
   let g:floaterm_keymap_toggle = '<Home>'   "Hyper+b
   let g:floaterm_position = 'center'
   nnoremap <leader>lf :FloatermNew lf<CR>
+  nnoremap <leader>lg :FloatermNew lazygit<CR>
   let g:floaterm_width = 0.8
   let g:floaterm_height = 0.8
 
@@ -252,6 +253,10 @@ Plug 'antoinemadec/coc-fzf'
   nnoremap <leader>co :CocFzfList outline<CR>
   nnoremap <leader>cs :CocFzfList symbols<CR>
 
+Plug 'rhysd/git-messenger.vim'
+Plug 'f-person/git-blame.nvim'
+  nnoremap <leader>gb :GitBlameToggle<CR>
+
 Plug 'ludovicchabant/vim-gutentags'
   let g:gutentags_ctags_tagfile = '.tags'
 Plug 'honza/vim-snippets'
@@ -361,13 +366,15 @@ Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim', {'name':'dracula'}
 Plug 'joshdick/onedark.vim'
 Plug 'ghifarit53/tokyonight-vim'
-Plug 'sonph/onehalf', { 'rtp': 'vim'}
+" Plug 'sonph/onehalf', { 'rtp': 'vim'}
+Plug 'lkhphuc/onehalf', { 'rtp': 'vim'}
 
 call plug#end()
 
 " Theme
   colorscheme onehalfdark
   autocmd BufNewFile,BufRead *.gin set syntax=toml
-  highlight Comment cterm=italic gui=italic
-  highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey
+  " highlight Comment cterm=italic gui=italic
+  " highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey
+  " highlight Folded guifg=#5c6370
   highlight FloatermBorder guibg=None
