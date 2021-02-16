@@ -105,6 +105,7 @@ Plug 'yuttie/comfortable-motion.vim'
   noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
   noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
   noremap <silent> <PageUp> :call comfortable_motion#flick(-100)<CR>
+  noremap <silent> <PageDown> :call comfortable_motion#flick(100)<CR>
 Plug 'terryma/vim-expand-region' "Auto adjust selection with + or _
 Plug 'wellle/targets.vim' "Text objects
 Plug 'kana/vim-textobj-user'

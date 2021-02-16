@@ -64,9 +64,6 @@ zinit ice wait atload"_zsh_autosuggest_start" lucid
 zinit light zsh-users/zsh-autosuggestions
 export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 
-zinit ice svn as"program" pick'it2copy'
-zinit snippet https://github.com/gnachman/iterm2-website/trunk/source/utilities
-
 # eval $(thefuck --alias)
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
@@ -77,18 +74,4 @@ export KEYTIMEOUT=1
 
 export PAGER="bat --color=always --paging=never"
 export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=never'"
-#
-# Fuzzy search pdfs in Zotero
-pdf () {
-    local open
-    open=open   # on OSX, "open" opens a pdf in preview
-    fd ".pdf$" \
-    | fast-p \
-    | fzf --read0 --reverse -e -d $'\t'  \
-        --preview-window down:80% --preview '
-            v=$(echo {q} | gtr " " "|"); 
-            echo -e {1}"\n"{2} | ggrep -E "^|$v" -i --color=always;
-        ' \
-    | gcut -z -f 1 -d $'\t' | gtr -d '\n' | gxargs -r --null $open > /dev/null 2> /dev/null
-}
 
