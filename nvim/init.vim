@@ -132,8 +132,8 @@ Plug 'voldikss/vim-floaterm'
   let g:floaterm_position = 'center'
   nnoremap <leader>lf :FloatermNew lf<CR>
   nnoremap <leader>lg :FloatermNew lazygit<CR>
-  let g:floaterm_width = 0.8
-  let g:floaterm_height = 0.8
+  let g:floaterm_width = 0.9
+  let g:floaterm_height = 0.9
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'

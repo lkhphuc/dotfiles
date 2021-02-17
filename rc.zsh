@@ -1,13 +1,3 @@
-# Use neovim for vim if present.
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    export EDITOR="floaterm"
-elif type "nvim" > /dev/null; then
-    export EDITOR="nvim"
-fi
-
-alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
-alias lg="lazygit"
-
 if [ ! -d "$HOME/.zinit" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 fi
@@ -22,8 +12,6 @@ MODE_CURSOR_VIINS="blinking bar"
 MODE_CURSOR_SEARCH="steady underline"
 
 zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit ice wait as"program" pick"bin/git-dsf" lucid
-zinit load zdharma/zsh-diff-so-fancy
 
 # On OSX, you might need to install coreutils from homebrew and use the
 # g-prefix – gsed, gdircolors
@@ -66,6 +54,10 @@ zinit light zsh-users/zsh-autosuggestions
 export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 
 # eval $(thefuck --alias)
+
+alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
+alias lg="lazygit"
+
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
