@@ -55,9 +55,13 @@ export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 
 # eval $(thefuck --alias)
 
+# Use neovim for vim if present.
+if [ -z $EDITOR ]; then
+    export EDITOR="nvim"
+fi
+
 alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
 alias lg="lazygit"
-
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
