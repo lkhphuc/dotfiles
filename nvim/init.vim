@@ -130,10 +130,12 @@ Plug 'voldikss/vim-floaterm'
   let g:floaterm_keymap_new    = '<S-Home>' "Hyper+Command+i
   let g:floaterm_keymap_toggle = '<Home>'   "Hyper+b
   let g:floaterm_position = 'center'
-  nnoremap <leader>lf :FloatermNew lf<CR>
-  nnoremap <leader>lg :FloatermNew lazygit<CR>
   let g:floaterm_width = 0.9
   let g:floaterm_height = 0.9
+  nnoremap <leader>lg :FloatermNew lazygit<CR>
+Plug 'ptzz/lf.vim'
+  let g:lf_map_keys=0
+  map <leader>lf :Lf<CR>
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'

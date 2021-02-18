@@ -10,6 +10,7 @@ zinit light softmoth/zsh-vim-mode
 MODE_CURSOR_VICMD="block"
 MODE_CURSOR_VIINS="blinking bar"
 MODE_CURSOR_SEARCH="steady underline"
+KEYTIMEOUT=1
 
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
@@ -56,10 +57,6 @@ export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 # eval $(thefuck --alias)
 
 # Use neovim for vim if present.
-if [ -z $EDITOR ]; then
-    export EDITOR="nvim"
-fi
-
 alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
 alias lg="lazygit"
 
@@ -67,8 +64,5 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
 
-export KEYTIMEOUT=1
-
 export PAGER="bat --color=always --paging=never"
 export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=never'"
-
