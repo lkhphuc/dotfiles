@@ -75,6 +75,8 @@ check_for_software fd fd
 check_for_software bat bat
 check_for_software lf lf
 check_for_software ctags ctags
+check_for_software exa exa
+check_for_software direnv direnv
 
 check_default_shell
 
