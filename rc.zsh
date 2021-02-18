@@ -32,8 +32,8 @@ znap source rupa/z
 # znap source marlonrichert/zsh-autocomplete
 
 znap clone trapd00r/LS_COLORS
-
-znap eval LS_COLORS 'gdircolors -b ~[LS_COLORS]/LS_COLORS'
+command -v gdircolors >/dev/null 2>&1 && { alias dircolors=gdircolors }
+znap eval LS_COLORS 'dircolors -b ~[LS_COLORS]/LS_COLORS'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 znap eval direnv 'direnv hook zsh'
 znap eval fuck 'thefuck --alias'
