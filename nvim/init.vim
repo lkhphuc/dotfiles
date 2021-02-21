@@ -1,3 +1,4 @@
+" vim:foldmethod=indent
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   "Automatically install Vim Plug
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -20,7 +21,8 @@ endif
   set signcolumn=yes
   set cursorline
   set termguicolors
-  set foldmethod=indent
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
   " au TermEnter * setlocal sidescrolloff=0 scrolloff=0
   " au TermLeave * setlocal sidescroll=1 scrolloff=50
   set colorcolumn=80
@@ -34,6 +36,7 @@ endif
   set undofile undodir=~/.vim/undo
 " Mapping
   nnoremap <leader><space> za
+  nnoremap <C-s> :w<CR>
   nnoremap <leader>y "+y
   vnoremap <leader>y "+y
   nnoremap <leader>p "+p
@@ -93,6 +96,7 @@ Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
 
+Plug 'cohama/lexima.vim' "Auto close parentheses with repeat
 Plug 'justinmk/vim-sneak'
   let g:sneak#use_ic_scs = 1
   let g:sneak#label = 1
@@ -108,12 +112,9 @@ Plug 'yuttie/comfortable-motion.vim'
   noremap <silent> <PageDown> :call comfortable_motion#flick(100)<CR>
 Plug 'terryma/vim-expand-region' "Auto adjust selection with + or _
 Plug 'wellle/targets.vim' "Text objects
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-entire'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/CamelCaseMotion'
-  " let g:camelcasemotion_key = '<leader>'
+  let g:camelcasemotion_key = '<leader>'
 
 Plug 'ojroques/vim-oscyank'
   autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif
@@ -136,6 +137,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'ptzz/lf.vim'
   let g:lf_map_keys=0
   map <leader>lf :Lf<CR>
+  let g:lf_replace_netrw = 1
 
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'
@@ -159,9 +161,8 @@ Plug 'janko/vim-test'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
     \ "coc-pyright", "coc-json", "coc-vimtex",
-    \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets", "coc-emoji",
-    \ "coc-highlight", "coc-pairs", "coc-explorer",
-    \ "coc-marketplace"
+    \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets",
+    \ "coc-explorer", "coc-marketplace"
     \ ]
   nnoremap <leader>ce :CocCommand explorer<CR>
   nnoremap <leader>CC :CocConfig<CR>
@@ -196,8 +197,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
   nmap <silent> g[ <Plug>(coc-declaration)
-  " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
   nmap <leader>rn <Plug>(coc-rename)
   " Remap for format selected region
   vmap <leader>cf  <Plug>(coc-format-selected)
@@ -225,9 +224,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   omap ic <Plug>(coc-classobj-i)
   xmap ac <Plug>(coc-classobj-a)
   omap ac <Plug>(coc-classobj-a)
-  "CTRL-S for selections ranges. LS requires 'textDocument/selectionRange'
-  nmap <silent> <C-s> <Plug>(coc-range-select)
-  xmap <silent> <C-s> <Plug>(coc-range-select)
+  " selections ranges. LS requires 'textDocument/selectionRange'
+  nmap <silent> <leader>crs <Plug>(coc-range-select)
+  xmap <silent> <leader>crs <Plug>(coc-range-select)
   " Use `:Format` for format current buffer
   command! -nargs=0 Format :call CocAction('format')
   " Use `:Fold` to fold current buffer
@@ -299,30 +298,31 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Visual
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'romgrk/nvim-treesitter-context'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-  let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
-  let g:indentLine_concealcursor = 'c'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
-
+Plug 'dstein64/nvim-scrollview'
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
-    \ 'colorscheme': 'onehalfdark',
+    \ 'colorscheme': 'one',
     \ 'component': {
     \ },
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'readonly', 'filename', 'modified'] ],
     \   'right': [ [ 'percent' ,'lineinfo' ],
-    \              [ 'fileencoding', 'filetype', 'fugitive' ],
+    \              [ 'fileencoding', 'filetype' ],
     \              [ 'cocstatus', 'gutentags'] ]
     \ },
     \ 'component_function': {
     \   'gutentags': 'gutentags#statusline',
     \   'cocstatus': 'LightlineCocStatus',
     \   'readonly': 'LightlineReadonly',
-    \   'fugitive': 'LightlineFugitive',
     \   'filename': 'LightlineFilename',
     \ },
     \ 'separator': { 'left': '', 'right': '' },
@@ -330,13 +330,6 @@ Plug 'itchyny/lightline.vim'
     \}
   function! LightlineReadonly()
     return &readonly ? '' : ''
-  endfunction
-  function! LightlineFugitive()
-    if exists('*fugitive#head')
-      let branch = fugitive#head()
-      return branch !=# '' ? ''.branch : ''
-    endif
-    return ''
   endfunction
   function! LightlineFilename()
     let name = ""
@@ -360,23 +353,63 @@ Plug 'itchyny/lightline.vim'
     let env = matchstr(status, "(\'.*\':")[2:-3]
     return winwidth(0) > 120 ? status : env
   endfunction
-
 Plug 'sheerun/vim-polyglot'
 Plug 'ryanoasis/vim-devicons'
-Plug 'arcticicestudio/nord-vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'dracula/vim', {'name':'dracula'}
-Plug 'joshdick/onedark.vim'
-Plug 'ghifarit53/tokyonight-vim'
-" Plug 'sonph/onehalf', { 'rtp': 'vim'}
-Plug 'lkhphuc/onehalf', { 'rtp': 'vim'}
+Plug 'sainnhe/sonokai'
+  let g:sonokai_style = 'atlantis'
+Plug 'bluz71/vim-nightfly-guicolors'
+  let g:nightflyCursorColor = 1
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 call plug#end()
 
 " Theme
-  colorscheme onehalfdark
+  colorscheme snazzy
   autocmd BufNewFile,BufRead *.gin set syntax=toml
-  " highlight Comment cterm=italic gui=italic
-  " highlight Folded ctermbg=None guibg=None ctermfg=grey guifg=grey
-  " highlight Folded guifg=#5c6370
-  highlight FloatermBorder guibg=None
+  highlight FloatermBorder ctermbg=None guibg=None
+  highlight Folded ctermbg=None guibg=None
+  highlight Comment cterm=italic gui=italic
+  highlight TSKeyword cterm=italic gui=italic
+  highlight TSType cterm=italic gui=italic
+  highlight TSConditional cterm=italic gui=italic
+  highlight TSException cterm=italic gui=italic
+  highlight TSInclude cterm=italic gui=italic
+  
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = { enable = true, },
+
+  incremental_selection = { enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+
+  indent = { enable = false },
+
+  refactor = {
+    highlight_definitions = { enable = true },
+    highlight_current_scope = { enable = false },
+    smart_rename = { enable = true,
+      keymaps = {
+        smart_rename = "grr",
+      },
+    },
+    navigation = { enable = true,
+      keymaps = {
+        goto_definition = "gnd",
+        list_definitions = "gnD",
+        list_definitions_toc = "gO",
+        goto_next_usage = "<a-*>",
+        goto_previous_usage = "<a-#>",
+      },
+    },
+  },
+
+  rainbow = { enable = true },
+}
+EOF
