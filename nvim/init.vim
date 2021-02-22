@@ -365,15 +365,14 @@ call plug#end()
 
 " Theme
   colorscheme snazzy
-  autocmd BufNewFile,BufRead *.gin set syntax=toml
   highlight FloatermBorder ctermbg=None guibg=None
-  highlight Folded ctermbg=None guibg=None
-  highlight Comment cterm=italic gui=italic
-  highlight TSKeyword cterm=italic gui=italic
-  highlight TSType cterm=italic gui=italic
+  highlight Folded          ctermbg=None guibg=None
+  highlight Comment       cterm=italic gui=italic
+  highlight TSKeyword     cterm=italic gui=italic
+  highlight TSType        cterm=italic gui=italic
   highlight TSConditional cterm=italic gui=italic
-  highlight TSException cterm=italic gui=italic
-  highlight TSInclude cterm=italic gui=italic
+  highlight TSException   cterm=italic gui=italic
+  highlight TSInclude     cterm=italic gui=italic
   
 
 lua <<EOF
