@@ -18,6 +18,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   set title titlestring=%<%F%=%l/%L-%P titlelen=70
   set hidden
   set noshowmode
+  set completeopt=menuone,noselect
   set mouse=a
   set dir='/tmp/,~/tmp,/var/tmp,.'
   set path+=**
@@ -159,91 +160,15 @@ Plug 'janko/vim-test'
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python'}
 " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = [
-    \ "coc-pyright", "coc-json", "coc-vimtex",
-    \ "coc-tabnine", "coc-syntax", "coc-snippets",
-    \ "coc-explorer", "coc-marketplace"
-    \ ]
-  nnoremap <leader>ce :CocCommand explorer<CR>
-  nnoremap <leader>CC :CocConfig<CR>
-  nnoremap <leader>CR :CocRestart<CR>
-  " <tab> used for trigger completion, completion confirm, snippet expand and jump like VSCode.
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-    inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-    let g:coc_snippet_next = '<tab>'
-  " Coc K, shift-tab to show documentation
-    function! s:show_documentation()
-      if &filetype == 'vim'
-        execute 'h '.expand('<cword>')
-      else
-        call CocAction('doHover')
-        call CocActionAsync('showSignatureHelp')
-      endif
-    endfunction
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-    inoremap <silent> <S-Tab> <C-o>:call<SID>show_documentation()<CR>
-  " Remap keys for gotos
-  nmap <silent> [g <Plug>(coc-diagnostic-prev)
-  nmap <silent> ]g <Plug>(coc-diagnostic-next)
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-  nmap <silent> g[ <Plug>(coc-declaration)
-  nmap <leader>rn <Plug>(coc-rename)
-  " Remap for format selected region
-  vmap <leader>cf  <Plug>(coc-format-selected)
-  nmap <leader>cf  <Plug>(coc-format-selected)
-    augroup mygroup
-      autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    augroup end
-  " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-  vmap <leader>ca  <Plug>(coc-codeaction-selected)
-  nmap <leader>ca  <Plug>(coc-codeaction-selected)
-  " Remap for do codeAction of current line
-  nmap <leader>caa  <Plug>(coc-codeaction)
-  " Fix autofix problem of current line
-  nmap <leader>cqf  <Plug>(coc-fix-current)
-  " Map function and class text objects. LS requires 'textDocument.documentSymbol'
-  xmap if <Plug>(coc-funcobj-i)
-  omap if <Plug>(coc-funcobj-i)
-  xmap af <Plug>(coc-funcobj-a)
-  omap af <Plug>(coc-funcobj-a)
-  xmap ic <Plug>(coc-classobj-i)
-  omap ic <Plug>(coc-classobj-i)
-  xmap ac <Plug>(coc-classobj-a)
-  omap ac <Plug>(coc-classobj-a)
-  " selections ranges. LS requires 'textDocument/selectionRange'
-  nmap <silent> <leader>crs <Plug>(coc-range-select)
-  xmap <silent> <leader>crs <Plug>(coc-range-select)
-  " Use `:Format` for format current buffer
-  command! -nargs=0 Format :call CocAction('format')
-  " Use `:Fold` to fold current buffer
-  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-  " use `:OR` for organize import of current buffer
-  command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-Plug 'antoinemadec/coc-fzf'
-  let g:coc_fzf_preview = ''
-  let g:coc_fzf_opts = []
-  nnoremap <leader>cl :CocFzfList<CR>
-  nnoremap <leader>cr :CocFzfListResume<CR>
-  nnoremap <leader>ca :CocFzfList actions<CR>
-  nnoremap <leader>cc :CocFzfList commands<CR>
-  nnoremap <leader>cd :CocFzfList diagnostics<CR>
-  nnoremap <leader>co :CocFzfList outline<CR>
-  nnoremap <leader>cs :CocFzfList symbols<CR>
+Plug 'neovim/nvim-lspconfig'
+Plug 'alexaandru/nvim-lspupdate'
+Plug 'hrsh7th/nvim-compe'
+  inoremap <silent><expr> <C-Space> compe#complete()
+  inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+  inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+  inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+  inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 }) 
+" Plug 'tzachar/compe-tabnine', { 'do': './install.sh' }
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
@@ -254,19 +179,20 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
   let g:UltiSnipsExpandTrigger = "<nop>"
+Plug 'hrsh7th/vim-vsnip'
 Plug 'liuchengxu/vista.vim'
   noremap <leader>v :Vista!!<CR>
   let g:vista_echo_cursor_strategy = 'floating_win'
   let g:vista_update_on_text_changed = 1
   let g:vista_close_on_jump = 1
   " let g:vista_fzf_preview = ['right:50%']
-  let g:vista_executive_for = {
-  \ 'py': 'coc',
-  \ 'cpp': 'coc',
-  \ 'json': 'coc',
-  \ 'tex': 'coc',
-  \ 'markdown': 'toc',
-  \ }
+  " let g:vista_executive_for = {
+  " \ 'py': 'coc',
+  " \ 'cpp': 'coc',
+  " \ 'json': 'coc',
+  " \ 'tex': 'coc',
+  " \ 'markdown': 'toc',
+  " \ }
   autocmd FileType vista,vista_kind nnoremap <buffer> <silent>
     \ / :<c-u>call vista#finder#fzf#Run()<CR>
 Plug 'pechorin/any-jump.vim'
@@ -332,7 +258,6 @@ call plug#end()
   highlight TSException    cterm=italic gui=italic
   highlight TSInclude      cterm=italic gui=italic
   
-
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = { enable = true, },
@@ -386,6 +311,116 @@ require'bufferline'.setup{
     diagnostic = "nvim_lsp",
     mappings = true,
   }
+
+local nvim_lsp = require('lspconfig')
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+
+  -- Set some keybinds conditional on server capabilities
+  if client.resolved_capabilities.document_formatting then
+    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  elseif client.resolved_capabilities.document_range_formatting then
+    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+  end
+
+end
+
+-- Use a loop to conveniently both setup defined servers 
+-- and map buffer local keybindings when the language server attaches
+local servers = { "pyright", "rust_analyzer", "tsserver", "sumneko_lua" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+
+require'compe'.setup {
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    vsnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = true;
+    treesitter = true;
+    tabnine = {
+      max_line = 1000;
+      max_num_results = 6;
+      priority = 5000;
+    };
+  };
+}
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+-- LSP Snippet
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.rust_analyzer.setup {
+  capabilities = capabilities,
 }
 
 EOF
+
