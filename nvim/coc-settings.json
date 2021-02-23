@@ -15,12 +15,6 @@
 
     "tabnine.priority": 90,
 
-    "git.removedSign.hlGroup": "CocErrorSign",
-    "git.addedSign.hlGroup": "CocInfoSign",
-    "git.changedSign.hlGroup": "CocWarningSign",
-    "git.topRemovedSign.hlGroup": "CocErrorSign",
-    "git.changeRemovedSign.hlGroup":"CocWarningSign",
-
     "explorer.width": 30,
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,

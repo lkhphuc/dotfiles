@@ -85,8 +85,8 @@ Plug 'junegunn/fzf.vim'
   nnoremap <leader>ft :Tags<CR>
   nnoremap <leader>fm :Marks<CR>
   nnoremap <leader>fw :Windows<CR>
-  nnoremap <leader>fc :Commits<CR>
-  nnoremap <leader>fcb :BCommits<CR>
+  nnoremap <leader>fC :Commits<CR>
+  nnoremap <leader>fc :BCommits<CR>
   nnoremap <leader>fa :Ag<CR>
   nnoremap <leader>fr :Rg<CR>
   let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -143,12 +143,10 @@ Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'
   let g:slime_python_ipython = 1
   let g:slime_no_mappings = 1
-  " let g:slime_dont_ask_default = 1
   let g:slime_cell_delimiter = "#%%"
   nmap <S-CR> <Plug>SlimeSendCell
   xmap <S-CR> <Plug>SlimeRegionSend
   nmap <leader>s <Plug>SlimeParagraphSend}j
-
 Plug 'janko/vim-test'
   nmap <silent> t<C-n> :TestNearest<CR>
   nmap <silent> t<C-f> :TestFile<CR>
@@ -161,7 +159,7 @@ Plug 'janko/vim-test'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = [
     \ "coc-pyright", "coc-json", "coc-vimtex",
-    \ "coc-tabnine", "coc-git", "coc-syntax", "coc-snippets",
+    \ "coc-tabnine", "coc-syntax", "coc-snippets",
     \ "coc-explorer", "coc-marketplace"
     \ ]
   nnoremap <leader>ce :CocCommand explorer<CR>
@@ -233,16 +231,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   command! -nargs=? Fold :call     CocAction('fold', <f-args>)
   " use `:OR` for organize import of current buffer
   command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-  "Git
-  nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
-  nmap <silent> <expr> ]c &diff ? ']c' : '<Plug>(coc-git-nextchunk)'
-  nmap gs <plug>(coc-git-chunkinfo)
-  nmap gC <plug>(coc-git-commit)
-  " create text object for git chunks
-  omap ig <Plug>(coc-git-chunk-inner)
-  xmap ig <Plug>(coc-git-chunk-inner)
-  omap ag <Plug>(coc-git-chunk-outer)
-  xmap ag <Plug>(coc-git-chunk-outer)
 Plug 'antoinemadec/coc-fzf'
   let g:coc_fzf_preview = ''
   let g:coc_fzf_opts = []
@@ -254,9 +242,9 @@ Plug 'antoinemadec/coc-fzf'
   nnoremap <leader>co :CocFzfList outline<CR>
   nnoremap <leader>cs :CocFzfList symbols<CR>
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'rhysd/git-messenger.vim'
-Plug 'f-person/git-blame.nvim'
-  nnoremap <leader>gb :GitBlameToggle<CR>
 
 Plug 'ludovicchabant/vim-gutentags'
   let g:gutentags_ctags_tagfile = '.tags'
@@ -303,6 +291,7 @@ Plug 'p00f/nvim-ts-rainbow'
 Plug 'romgrk/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  let g:semshi#mark_selected_nodes = 0
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
@@ -317,13 +306,14 @@ Plug 'itchyny/lightline.vim'
     \             [ 'readonly', 'filename', 'modified'] ],
     \   'right': [ [ 'percent' ,'lineinfo' ],
     \              [ 'fileencoding', 'filetype' ],
-    \              [ 'cocstatus', 'gutentags'] ]
+    \              [ 'cocstatus', 'gutentags', 'git'] ]
     \ },
     \ 'component_function': {
     \   'gutentags': 'gutentags#statusline',
     \   'cocstatus': 'LightlineCocStatus',
     \   'readonly': 'LightlineReadonly',
     \   'filename': 'LightlineFilename',
+    \   'git': 'GitSign'
     \ },
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '', 'right': '' },
@@ -353,6 +343,9 @@ Plug 'itchyny/lightline.vim'
     let env = matchstr(status, "(\'.*\':")[2:-3]
     return winwidth(0) > 120 ? status : env
   endfunction
+  function! GitSign()
+    return get(b:,'gitsigns_head','') . get(b:,'gitsigns_status','')
+  endfunction
 Plug 'sheerun/vim-polyglot'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sainnhe/sonokai'
@@ -366,13 +359,13 @@ call plug#end()
 " Theme
   colorscheme snazzy
   highlight FloatermBorder ctermbg=None guibg=None
-  highlight Folded          ctermbg=None guibg=None
-  highlight Comment       cterm=italic gui=italic
-  highlight TSKeyword     cterm=italic gui=italic
-  highlight TSType        cterm=italic gui=italic
-  highlight TSConditional cterm=italic gui=italic
-  highlight TSException   cterm=italic gui=italic
-  highlight TSInclude     cterm=italic gui=italic
+  highlight Folded         ctermbg=None guibg=None
+  highlight Comment        cterm=italic gui=italic
+  highlight TSKeyword      cterm=italic gui=italic
+  highlight TSType         cterm=italic gui=italic
+  highlight TSConditional  cterm=italic gui=italic
+  highlight TSException    cterm=italic gui=italic
+  highlight TSInclude      cterm=italic gui=italic
   
 
 lua <<EOF
@@ -410,5 +403,15 @@ require'nvim-treesitter.configs'.setup {
   },
 
   rainbow = { enable = true },
+}
+
+require('gitsigns').setup{
+  signs = {
+    add = {hl = 'diffAdded'},
+    change = {hl = 'diffFile'},
+    delete = {hl = 'diffRemoved'},
+    topdelete = {hl = 'diffRemoved'},
+    changedelete = {hl = 'diffFile'},
+  }
 }
 EOF
