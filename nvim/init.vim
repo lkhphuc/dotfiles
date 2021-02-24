@@ -10,6 +10,9 @@ endif
   lang en_US.UTF-8
   let mapleader="\<Space>"
   let maplocalleader="\<Space>"
+  set title
+  auto BufEnter * let &titlestring = hostname() . ":" . expand("%:f")
+  set title titlestring=%<%F%=%l/%L-%P titlelen=70
   set hidden
   set noshowmode
   set mouse=a
