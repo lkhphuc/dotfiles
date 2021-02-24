@@ -292,7 +292,10 @@ Plug 'romgrk/nvim-treesitter-context'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
   let g:semshi#mark_selected_nodes = 0
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
+  let g:indent_blankline_char_highlight = 'Folded'
+  let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+  " let g:indent_blankline_show_first_indent_level = v:false
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
 Plug 'dstein64/nvim-scrollview'
