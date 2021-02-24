@@ -25,7 +25,6 @@ endif
   set foldexpr=nvim_treesitter#foldexpr()
   " au TermEnter * setlocal sidescrolloff=0 scrolloff=0
   " au TermLeave * setlocal sidescroll=1 scrolloff=50
-  set colorcolumn=80
   set breakindent breakindentopt=shift:4,sbr
   set lbr formatoptions+=l " Ensures word-wrap does not split words
   set ignorecase smartcase
@@ -411,10 +410,10 @@ require'nvim-treesitter.configs'.setup {
 require('gitsigns').setup{
   signs = {
     add = {hl = 'diffAdded'},
-    change = {hl = 'diffFile'},
+    change = {hl = 'Constant'},
     delete = {hl = 'diffRemoved'},
     topdelete = {hl = 'diffRemoved'},
-    changedelete = {hl = 'diffFile'},
+    changedelete = {hl = 'Constant'},
   }
 }
 EOF
