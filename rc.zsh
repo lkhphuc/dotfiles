@@ -22,11 +22,11 @@ znap source zsh-users/zsh-autosuggestions
   export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 znap source zsh-users/zsh-completions
 znap source rupa/z
+znap source Tarrasch/zsh-autoenv 
 # znap source marlonrichert/zsh-autocomplete
 
 znap eval trapd00r/LS_COLORS 'command -v gdircolors >/dev/null 2>&1 && { gdircolors -b LS_COLORS} || { dircolors -b LS_COLORS}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-znap eval direnv 'direnv hook zsh'
 znap eval fuck 'thefuck --alias'
 znap eval pip 'pip completion --zsh'
 znap eval brew-shellenv 'command -v brew >/dev/null 2>&1 && { brew shellenv }'
