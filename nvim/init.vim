@@ -31,8 +31,7 @@ endif
   set inccommand=nosplit
   set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
   set shortmess+=c " don't give |ins-completion-menu| messages.
-  " Enable persistent undo so that undo history persists across vim sessions
-  set undofile undodir=~/.vim/undo
+  set undofile " Enable persistent undo so that undo history persists across vim sessions
 " Mapping
   nnoremap <leader><space> za
   nnoremap <C-s> :w<CR>
