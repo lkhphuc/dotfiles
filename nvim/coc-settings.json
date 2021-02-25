@@ -8,12 +8,11 @@
 
     "snippets.enableStatusItem": true,
 
-    "python.jediEnabled": false,
     "python.linting.flake8Enabled": true,
     "python.linting.flake8Args": ["--max-line-length=88, --extend-ignore=E203"],
     "python.linting.mypyEnabled": true,
 
-    "tabnine.priority": 90,
+    "tabnine.priority": 999,
 
     "explorer.width": 30,
     "explorer.position": "right",

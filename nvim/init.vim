@@ -1,10 +1,13 @@
 " vim:foldmethod=indent
+"Automatically install Vim Plug and plugins
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  "Automatically install Vim Plug
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
   \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 
 " General nvim settings
   lang en_US.UTF-8
@@ -62,7 +65,7 @@ endif
   tnoremap [b <C-\><C-n>:bprev<CR>
   tnoremap <C-^> <C-\><C-n><C-^>
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
@@ -75,7 +78,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
 Plug 'tpope/vim-rsi'  "Readline keybinding in insert model
 
-Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
+Plug '~/.zsh-snap/fzf'
 Plug 'junegunn/fzf.vim'
   nnoremap <leader>fh :History<CR>
   nnoremap <leader>fb :Buffers<CR>
@@ -296,7 +299,7 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
   let g:indent_blankline_char_highlight = 'Folded'
   let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
-  " let g:indent_blankline_show_first_indent_level = v:false
+  let g:indent_blankline_show_first_indent_level = v:false
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
 Plug 'dstein64/nvim-scrollview'

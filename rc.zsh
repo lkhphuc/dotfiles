@@ -25,6 +25,10 @@ znap source rupa/z
 znap source Tarrasch/zsh-autoenv 
 # znap source marlonrichert/zsh-autocomplete
 
+znap eval junegunn/fzf 'command -v fzf >/dev/null 2>&1 || {./install --bin} >/dev/null'
+znap source junegunn/fzf shell/{completion.zsh,key-bindings.zsh}
+path=(~[junegunn/fzf]/bin $path .)
+
 znap eval trapd00r/LS_COLORS 'command -v gdircolors >/dev/null 2>&1 && { gdircolors -b LS_COLORS} || { dircolors -b LS_COLORS}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 znap eval fuck 'thefuck --alias'
