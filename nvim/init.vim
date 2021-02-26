@@ -142,7 +142,7 @@ Plug 'ptzz/lf.vim'
   let g:lf_map_keys=0
   map <leader>lf :Lf<CR>
   let g:lf_replace_netrw = 1
-
+Plug 'mattboehm/vim-unstack'
 Plug 'jpalardy/vim-slime'  "Send text elsewhere
   let g:slime_target = 'neovim'
   let g:slime_python_ipython = 1
