@@ -35,6 +35,7 @@ znap eval fuck 'thefuck --alias'
 znap eval pip 'pip completion --zsh'
 znap eval brew-shellenv 'command -v brew >/dev/null 2>&1 && { brew shellenv }'
 
+source ~/dotfiles/diricons
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm" || EDITOR="nvim"
 alias v="$EDITOR" vim="nvim" vimdiff="nvim -d" lg="lazygit"
 
@@ -42,5 +43,5 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse"
 
-# export PAGER="bat --color=always --pager='less -FRX'"
-export MANPAGER="sh -c 'col -bx | bat -l man -p --pager='less -FRX''"
+export PAGER="bat"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"

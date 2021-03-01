@@ -1,2 +1,2 @@
 #!/bin/bash
-bat -f --style plain "$1"
+bat -f -p --italic-text=always "$1"

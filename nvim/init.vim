@@ -61,8 +61,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   " Terminal mode
   tnoremap <C-v> <C-\><C-n>
   tnoremap <PageUp> <C-\><C-n>
-  tnoremap ]b <C-\><C-n>:bnext<CR>
-  tnoremap [b <C-\><C-n>:bprev<CR>
   tnoremap <C-^> <C-\><C-n><C-^>
 
 call plug#begin(stdpath('data') . '/plugged')

@@ -1,6 +1,8 @@
 set previewer ~/dotfiles/lf/pv.sh
 map i $~/dotfiles/lf/pv.sh $f | less -RX
 
+set icons
+
 # interpreter for shell commands (needs to be POSIX compatible)
 set shell zsh
 
