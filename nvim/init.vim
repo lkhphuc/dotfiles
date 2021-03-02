@@ -92,6 +92,7 @@ Plug 'junegunn/fzf.vim'
   nnoremap <leader>fa :Ag<CR>
   nnoremap <leader>fr :Rg<CR>
   let g:fzf_commits_log_options = '--graph --pretty --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+Plug 'gennaro-tedesco/nvim-peekup'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
