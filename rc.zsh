@@ -4,24 +4,19 @@ fi
 source $HOME/.zsh-snap/zsh-snap/znap.zsh
 
 znap source romkatv/powerlevel10k
-znap source softmoth/zsh-vim-mode
-  # VIM_MODE_NO_DEFAULT_BINDINGS=true
-  KEYTIMEOUT=1
-  MODE_CURSOR_VIINS="blinking bar"
-  MODE_CURSOR_VICMD=" block"
+znap source jeffreytse/zsh-vi-mode
 
 znap source zpm-zsh/colors
 znap source zpm-zsh/ls
 znap source ohmyzsh/ohmyzsh plugins/git
-znap source ohmyzsh/ohmyzsh lib/history
 znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma/fast-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
-znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-autosuggestions  # On same line
   export ZSH_AUTO_SUGGEST_USE_ASYNC=true
 znap source zsh-users/zsh-completions
-znap source rupa/z
+znap source agkozak/zsh-z
 znap source Tarrasch/zsh-autoenv 
 # znap source marlonrichert/zsh-autocomplete
 
@@ -34,6 +29,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 znap eval fuck 'thefuck --alias'
 znap eval pip 'pip completion --zsh'
 znap eval brew-shellenv 'command -v brew >/dev/null 2>&1 && { brew shellenv }'
+znap eval kitty 'kitty + complete setup zsh'
 
 source ~/dotfiles/diricons
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm" || EDITOR="nvim"
