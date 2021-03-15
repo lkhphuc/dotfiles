@@ -302,58 +302,17 @@ Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
 Plug 'machakann/vim-highlightedyank'
 Plug 'romainl/vim-cool'  "Handle highlight search automatically
 Plug 'dstein64/nvim-scrollview'
-Plug 'itchyny/lightline.vim'
-  let g:lightline = {
-    \ 'colorscheme': 'one',
-    \ 'component': {
-    \ },
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'readonly', 'filename', 'modified'] ],
-    \   'right': [ [ 'percent' ,'lineinfo' ],
-    \              [ 'fileencoding', 'filetype' ],
-    \              [ 'cocstatus', 'gutentags', 'git'] ]
-    \ },
-    \ 'component_function': {
-    \   'gutentags': 'gutentags#statusline',
-    \   'cocstatus': 'LightlineCocStatus',
-    \   'readonly': 'LightlineReadonly',
-    \   'filename': 'LightlineFilename',
-    \   'git': 'GitSign'
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '', 'right': '' },
-    \}
-  function! LightlineReadonly()
-    return &readonly ? '' : ''
-  endfunction
-  function! LightlineFilename()
-    let name = ""
-    let subs = split(expand('%'), "/")
-    let i = 1
-    for s in subs
-      let parent = name
-      if  i == len(subs)
-        let name = parent . '/' . s
-      elseif i == 1
-        let name = s
-      else
-        let name = parent . '/' . strpart(s, 0, 2)
-      endif
-      let i += 1
-    endfor
-    return name
-  endfunction
-  function! LightlineCocStatus()
-    let status = coc#status()
-    let env = matchstr(status, "(\'.*\':")[2:-3]
-    return winwidth(0) > 120 ? status : env
-  endfunction
-  function! GitSign()
-    return get(b:,'gitsigns_head','') . get(b:,'gitsigns_status','')
-  endfunction
+Plug 'glepnir/spaceline.vim'
+  let g:spaceline_colorscheme = 'space'
+" Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 Plug 'sheerun/vim-polyglot'
-Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/nvim-bufferline.lua'
+  nnoremap <silent>[b :BufferLineCycleNext<CR>
+  nnoremap <silent>b] :BufferLineCyclePrev<CR>
+  nnoremap <silent>be :BufferLineSortByExtension<CR>
+  nnoremap <silent>bd :BufferLineSortByDirectory<CR>
+  nnoremap <silent> gb :BufferLinePick<CR>
 Plug 'sainnhe/sonokai'
   let g:sonokai_style = 'atlantis'
 Plug 'bluz71/vim-nightfly-guicolors'
@@ -420,4 +379,13 @@ require('gitsigns').setup{
     changedelete = {hl = 'Constant'},
   }
 }
+
+require'bufferline'.setup{
+  options = {
+    view = "multiwindow",
+    diagnostic = "nvim_lsp",
+    mappings = true,
+  }
+}
+
 EOF

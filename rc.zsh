@@ -26,7 +26,7 @@ path=(~[junegunn/fzf]/bin $path .)
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 1
   zstyle ':autocomplete:tab:*' insert-unambiguous yes
-  # zstyle ':autocomplete:tab:*' widget-style menu-select
+  zstyle ':autocomplete:tab:*' widget-style menu-select
   zstyle ':autocomplete:tab:*' fzf yes
 
 }
