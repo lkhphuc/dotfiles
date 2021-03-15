@@ -1,0 +1,73 @@
+/* Sans Serif */
+@font-face { font-family: -apple-system; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: -apple-system; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: BlinkMacSystemFont; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: BlinkMacSystemFont; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: "Segoe UI"; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: "Segoe UI"; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: "Inter"; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: "Inter"; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: "Roboto"; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: "Roboto"; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'Helvetica'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Helvetica'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'Arial'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Arial'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'IBMPlexSans'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'IBMPlexSans'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+@font-face { font-family: 'IBMPlexSans'; font-weight: 500; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'Lucida Grande'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Lucida Grande'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+
+@font-face { font-family: 'Roboto'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Roboto'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+
+@font-face { font-family: 'Noto Sans'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Noto Sans'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'Helvetica Neue'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'Helvetica Neue'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+@font-face { font-family: 'FreightSans'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'FreightSans'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+
+@font-face { font-family: 'BentonSans'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'BentonSans'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+@font-face { font-family: 'verdana'; font-weight: normal; src: local('Libertinus Sans'); }
+@font-face { font-family: 'verdana'; font-weight: bold; src: local('Libertinus Sans Bold'); }
+
+/* Serif font */ 
+
+@font-face { font-family: 'Georgia'; font-weight: normal; src: local('Libertinus'); }
+@font-face { font-family: 'Georgia'; font-weight: bold; src: local('Libertinus Bold'); }
+
+
+
+/* Mono Font */
+@font-face { font-family: 'SFMono-Regular'; font-weight: normal; src: local('VictorMono Nerd Font'); }
+@font-face { font-family: 'SFMono-Regular'; font-weight: bold; src: local('VictorMono Nerd Font Bold'); }
+
+@font-face { font-family: 'Menlo'; font-weight: normal; src: local('VictorMono Nerd Font'); }
+@font-face { font-family: 'Menlo'; font-weight: bold; src: local('VictorMono Nerd Font Bold'); }
+    
+@font-face { font-family: 'Monaco'; font-weight: normal; src: local('VictorMono Nerd Font'); }
+@font-face { font-family: 'Monaco'; font-weight: bold; src: local('VictorMono Nerd Font Bold'); }
+
+
+@font-face { font-family: 'IBMPlexMono'; font-weight: normal; src: local('VictorMono Nerd Font'); }
+@font-face { font-family: 'IBMPlexMono'; font-weight: bold; src: local('VictorMono Nerd Font Bold'); }
+
+@font-face { font-family: 'Noto Mono'; font-weight: normal; src: local('VictorMono Nerd Font'); }
+@font-face { font-family: 'Noto Mono'; font-weight: bold; src: local('VictorMono Nerd Font Bold'); }
+
