@@ -76,7 +76,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-sleuth'  "One plugin everything tab indent
 Plug 'tpope/vim-rsi'  "Readline keybinding in insert model
 
-Plug '~/.zsh-snap/fzf'
+Plug '~/.zsh/fzf'
 Plug 'junegunn/fzf.vim'
   nnoremap <leader>fh :History<CR>
   nnoremap <leader>fb :Buffers<CR>
