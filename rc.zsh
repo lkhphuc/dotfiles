@@ -11,14 +11,16 @@ znap source zsh-users/zsh-autosuggestions  # On same line
 znap eval junegunn/fzf 'command -v fzf >/dev/null 2>&1 || {./install --bin} >/dev/null'
   znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   path=(~[junegunn/fzf]/bin $path .)
+
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 1
+  zstyle ':autocomplete:tab:*' insert-unambiguous no
   zstyle ':autocomplete:tab:*' widget-style menu-select
   zstyle ':autocomplete:tab:*' fzf yes
 }
+znap source wfxr/forgit
 znap source zpm-zsh/colors
 znap source zpm-zsh/ls
-znap source ohmyzsh/ohmyzsh plugins/git
 znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma/fast-syntax-highlighting
@@ -34,8 +36,11 @@ znap eval brew-shellenv '{ command -v brew >/dev/null 2>&1 } && { brew shellenv 
 znap eval kitty 'kitty + complete setup zsh'
 
 source ~/dotfiles/diricons
+
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm" || EDITOR="nvim"
-alias v="$EDITOR" vim="nvim" vimdiff="nvim -d" lg="lazygit"
+alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
+
+alias g="git" lg="lazygit"
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
