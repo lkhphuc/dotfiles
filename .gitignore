@@ -2,3 +2,8 @@
 .DS_Store
 
 karabiner/automatic_backups/
+coc/
+gh/
+
+lazygit/state.yml
+pudb/saved-breakpoints*
