@@ -4987,27 +4987,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + y = amphetamine",
-                                "from": {
-                                    "key_code": "y",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a amphetamine"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
                                 "description": "y = Siri",
                                 "from": {
                                     "key_code": "y",

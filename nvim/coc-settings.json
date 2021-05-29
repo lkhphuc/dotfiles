@@ -12,7 +12,16 @@
     "python.linting.flake8Args": ["--max-line-length=88, --extend-ignore=E203"],
     "python.linting.mypyEnabled": true,
 
-    "tabnine.priority": 999,
+    "tabnine.priority": 10,
+
+    "languageserver": {
+      "fortran": {
+        "command": "fortls",
+        "filetypes": ["fortran", "f90", "f95"],
+        "args": ["--lowercase_intrinsics"],
+        "rootPatterns": [".fortls", ".git/"]
+      }
+    },
 
     "explorer.width": 30,
     "explorer.position": "right",
