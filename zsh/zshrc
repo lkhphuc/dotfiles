@@ -36,7 +36,7 @@ znap eval pip 'python3 -m pip completion --zsh'
 znap eval brew-shellenv '{ command -v brew >/dev/null 2>&1 } && { brew shellenv }'
 znap eval kitty 'kitty + complete setup zsh'
 
-source ~/dotfiles/diricons
+source ~/.config/diricons
 
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm" || EDITOR="nvim"
 alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
