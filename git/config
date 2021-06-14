@@ -1,59 +1,27 @@
-# This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
-	name = Phúc Lê
-	email = phuc.lkh@gmail.com
+    name = Phúc Lê Khắc
+    email = phuc.lkh@gmail.com
 [pull]
-	ff = only
+    ff = only
 [credential]
-	helper = cache
+    helper = cache
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [color]
-	ui = true
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = red normal
-	old = red bold
-	new = green bold
-[color "decorate"]
-	HEAD = cyan normal
-	grafted = magenta magenta dim bold
-	remoteBranch = magenta normal
-	tag = red normal
-	stash = brightblack normal
-	branch = cyan normal
-[color "status"]
-	changed = black yellow
-	unmerged = red brightblack italic bold
-	updated = red normal
-	nobranch = magenta magenta dim bold
-	added = red normal
-	untracked = brightblack normal
-	localBranch = cyan normal
-	branch = cyan normal
-	remoteBranch = magenta normal
-[color "interactive"]
-	help = brightblack normal
-	error = magenta magenta dim bold
-[color "branch"]
-	remote = magenta normal
-	upstream = magenta normal
-	plain = cyan normal
-	current = cyan normal reverse
-	local = cyan normal
-[color "grep"]
-	function = red normal
-	lineNumber = brightblack normal
-	column = brightblack normal
-[color "remote"]
-	success = red normal
-	error = red brightblack italic bold
-	hint = brightblack normal
-	warning = black yellow
+    ui = true
+[diff]
+    tool = nvimdiff
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
