@@ -38,10 +38,11 @@ znap eval kitty 'kitty + complete setup zsh'
 
 source ~/.config/diricons
 
-command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm" || EDITOR="nvim"
-alias v="$EDITOR" vim="nvim" vimdiff="nvim -d"
+EDITOR="nvim"
+command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
+alias v="$EDITOR" vimdiff="nvim -d"
 
-alias g="git" lg="lazygit"
+alias g="git" lg="EDITOR=nvim lazygit"
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
