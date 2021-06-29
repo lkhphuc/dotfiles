@@ -1,5 +1,5 @@
-set previewer ~/dotfiles/lf/pv.sh
-map i $~/dotfiles/lf/pv.sh $f | less -RX
+set previewer ~/.config/lf/pv.sh
+map i ~/.config/lf/pv.sh $f | less -RX
 
 set icons
 
