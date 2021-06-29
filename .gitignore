@@ -3,9 +3,9 @@
 
 karabiner/automatic_backups/
 coc/
-gh/
-
-lazygit/state.yml
-pudb/saved-breakpoints*
+gh/config.yml
 
 lazygit/
+pudb/saved-breakpoints*
+
+nvim/plugin/packer_compiled.vim
