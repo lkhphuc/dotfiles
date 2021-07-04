@@ -9,3 +9,5 @@ lazygit/
 pudb/saved-breakpoints*
 
 nvim/plugin/packer_compiled.vim
+
+gcloud/

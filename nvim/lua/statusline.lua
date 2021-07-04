@@ -4,10 +4,10 @@ local condition = require("galaxyline.condition")
 
 gl.short_line_list = {" "}
 
-local global_theme = "themes/" .. vim.g.nvchad_theme
+local global_theme = "themes/" .. vim.g.theme
 local colors = require(global_theme)
 
-gls.left[1] = {
+gls.left[#gls.left+1] = {
     FirstElement = {
         provider = function()
             return "▋"
@@ -16,18 +16,18 @@ gls.left[1] = {
     }
 }
 
-gls.left[2] = {
+gls.left[#gls.left+1] = {
     statusIcon = {
         provider = function()
             return "  "
         end,
         highlight = {colors.statusline_bg, colors.nord_blue},
-        separator = "  ",
+        separator = " ",
         separator_highlight = {colors.nord_blue, colors.lightbg}
     }
 }
 
-gls.left[3] = {
+gls.left[#gls.left+1] = {
     FileIcon = {
         provider = "FileIcon",
         condition = condition.buffer_not_empty,
@@ -35,21 +35,21 @@ gls.left[3] = {
     }
 }
 
-gls.left[4] = {
+gls.left[#gls.left+1] = {
     FileName = {
         provider = {"FileName"},
         condition = condition.buffer_not_empty,
         highlight = {colors.white, colors.lightbg},
-        separator = " ",
+        separator = "",
         separator_highlight = {colors.lightbg, colors.lightbg2}
     }
 }
 
-gls.left[5] = {
+gls.left[#gls.left+1] = {
     current_dir = {
         provider = function()
             local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-            return "  " .. dir_name .. " "
+            return "  " .. dir_name
         end,
         highlight = {colors.grey_fg2, colors.lightbg2},
         separator = " ",
@@ -65,76 +65,87 @@ local checkwidth = function()
     return false
 end
 
-gls.left[6] = {
+gls.left[#gls.left+1] = {
     DiffAdd = {
         provider = "DiffAdd",
         condition = checkwidth,
-        icon = "  ",
-        highlight = {colors.white, colors.statusline_bg}
+        icon = " ",
+        highlight = {colors.green, colors.statusline_bg}
     }
 }
 
-gls.left[7] = {
+gls.left[#gls.left+1] = {
     DiffModified = {
         provider = "DiffModified",
         condition = checkwidth,
-        icon = "   ",
-        highlight = {colors.grey_fg2, colors.statusline_bg}
+        icon = " ",
+        highlight = {colors.nord_blue, colors.statusline_bg}
     }
 }
 
-gls.left[8] = {
+gls.left[#gls.left+1] = {
     DiffRemove = {
         provider = "DiffRemove",
         condition = checkwidth,
-        icon = "  ",
-        highlight = {colors.grey_fg2, colors.statusline_bg}
-    }
-}
-
-gls.left[9] = {
-    DiagnosticError = {
-        provider = "DiagnosticError",
-        icon = "  ",
-        highlight = {colors.red, colors.statusline_bg}
-    }
-}
-
-gls.left[10] = {
-    DiagnosticWarn = {
-        provider = "DiagnosticWarn",
-        icon = "  ",
+        icon = " ",
         highlight = {colors.yellow, colors.statusline_bg}
     }
 }
 
-gls.right[1] = {
-    lsp_status = {
-        provider = function()
-            local clients = vim.lsp.get_active_clients()
-            if next(clients) ~= nil then
-                return " " .. "  " .. " LSP "
-            else
-                return ""
-            end
-        end,
-        highlight = {colors.grey_fg2, colors.statusline_bg}
+gls.left[#gls.left+1] = {
+    DiagnosticError = {
+        provider = "DiagnosticError",
+        icon = " ",
+        highlight = {colors.red, colors.statusline_bg}
     }
 }
 
-gls.right[2] = {
+gls.left[#gls.left+1] = {
+    DiagnosticWarn = {
+        provider = "DiagnosticWarn",
+        icon = " ",
+        highlight = {colors.yellow, colors.statusline_bg}
+    }
+}
+
+gls.right[#gls.right+1] = {
+    python = {
+        provider = function() return os.getenv('CONDA_DEFAULT_ENV') .. " " end,
+        condition = function()
+            if vim.bo.filetype == 'python' then
+                return true
+            end return false
+        end,
+        icon = ' ',
+        highlight = {colors.grey_fg2, colors.start_line_bg},
+    }
+}
+
+gls.right[#gls.right+1] = {
+    lsp_status = {
+        provider = function() return "  LSP" end,
+        condition = function()
+            if next(vim.lsp.get_active_clients()) ~= nil then
+                return true
+            end return false
+        end,
+        highlight = {colors.grey_fg2, colors.statusline_bg},
+    }
+}
+
+gls.right[#gls.right+1] = {
     GitIcon = {
         provider = function()
             return " "
         end,
         condition = require("galaxyline.provider_vcs").check_git_workspace,
         highlight = {colors.grey_fg2, colors.lightbg},
-        separator = "",
+        separator = " ",
         separator_highlight = {colors.lightbg, colors.statusline_bg}
     }
 }
 
-gls.right[3] = {
+gls.right[#gls.right+1] = {
     GitBranch = {
         provider = "GitBranch",
         condition = require("galaxyline.provider_vcs").check_git_workspace,
@@ -142,7 +153,7 @@ gls.right[3] = {
     }
 }
 
-gls.right[4] = {
+gls.right[#gls.right+1] = {
     viMode_icon = {
         provider = function()
             return " "
@@ -153,7 +164,7 @@ gls.right[4] = {
     }
 }
 
-gls.right[5] = {
+gls.right[#gls.right+1] = {
     ViMode = {
         provider = function()
             local alias = {
@@ -170,38 +181,77 @@ gls.right[5] = {
             if current_Mode == nil then
                 return "  Terminal "
             else
-                return "  " .. current_Mode .. " "
+                return "  " .. current_Mode
             end
         end,
         highlight = {colors.red, colors.lightbg}
     }
 }
 
-gls.right[6] = {
+gls.right[#gls.right+1] = {
     some_icon = {
         provider = function()
             return " "
         end,
-        separator = "",
+        separator = " ",
         separator_highlight = {colors.green, colors.lightbg},
         highlight = {colors.lightbg, colors.green}
     }
 }
 
-gls.right[7] = {
+gls.right[#gls.right+1] = {
     line_percentage = {
         provider = function()
             local current_line = vim.fn.line(".")
             local total_line = vim.fn.line("$")
 
             if current_line == 1 then
-                return "  Top "
+                return "  Top"
             elseif current_line == vim.fn.line("$") then
-                return "  Bot "
+                return "  Bot"
             end
             local result, _ = math.modf((current_line / total_line) * 100)
-            return "  " .. result .. "% "
+            return "  " .. result .. "%"
         end,
         highlight = {colors.green, colors.lightbg}
     }
 }
+
+local NeomuxProvider = {
+    Neomux = { -- Add neomux window nums if neomux is present
+        provider = function()
+            if vim.fn.exists("*WindowNumber") ~= 0 then
+                return vim.api.nvim_exec([[echo "  " . WindowNumber()]], true)
+            else
+                return ""
+            end
+        end,
+        separator = " ",
+        separator_highlight = {colors.teal, colors.lightbg},
+        highlight = {colors.lightbg, colors.teal}
+    }
+}
+
+gls.right[#gls.right+1] = NeomuxProvider
+
+-- Short line when not active
+gls.short_line_left[#gls.short_line_left+1] = {
+    FileIcon = {
+        provider = "FileIcon",
+        condition = condition.buffer_not_empty,
+        highlight = {colors.grey, colors.lightbg}
+    }
+}
+
+gls.short_line_left[#gls.short_line_left+1] = {
+    FileName = {
+        provider = {"FileName"},
+        condition = condition.buffer_not_empty,
+        highlight = {colors.white, colors.lightbg},
+        separator = " ",
+        separator_highlight = {colors.lightbg, colors.lightbg2}
+    }
+}
+
+gls.short_line_right[#gls.short_line_right+1] = {BufferIcon = {provider = "BufferIcon", highlight = {colors.white, colors.lightbg}}}
+gls.short_line_right[#gls.short_line_right+1] = NeomuxProvider
