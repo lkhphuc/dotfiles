@@ -41,8 +41,8 @@ cmd "hi Include gui=italic"
 cmd "hi TSConstant gui=bold"
 
 fg("NvimInternalError", red)
-fg("VertSplit", line)
-fg("EndOfBuffer", black)
+fg("VertSplit", grey)
+-- fg("EndOfBuffer", black)
 
 bg("Pmenu", one_bg)
 bg("PmenuSbar", one_bg2)

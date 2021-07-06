@@ -20,6 +20,7 @@ local use = packer.use
 
 packer.startup({function()
 use "wbthomason/packer.nvim"
+use "famiu/nvim-reload"
 
 -- text editing
 use "tpope/vim-surround"
@@ -42,9 +43,9 @@ use { "neovim/nvim-lspconfig",
   end, }
 use "kabouzeid/nvim-lspinstall"
 -- use { "glepnir/lspsaga.nvim", config = require'lspsaga'.init_lsp_saga() }
-use {'ray-x/navigator.lua',
-  config = function() require'navigator'.setup() end,
-  requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
+-- use {'ray-x/navigator.lua',
+--   config = function() require'navigator'.setup() end,
+--   requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
 use "ray-x/lsp_signature.nvim"
 
 use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
@@ -52,6 +53,8 @@ use { "mfussenegger/nvim-dap-python",
   config = function()
     require('dap-python').setup('/usr/local/Caskroom/miniconda/base/envs/debugpy/bin/python')
   end}
+use "mattboehm/vim-unstack"
+
 
 use { "hrsh7th/nvim-compe",
   event = "InsertEnter", -- load compe in insert mode only
@@ -159,6 +162,7 @@ use { "lewis6991/gitsigns.nvim",
 use {'pwntester/octo.nvim', config=function() require"octo".setup() end}
 
 use "nikvdp/neomux"
+  vim.cmd([[au BufEnter term://* set nonumber norelativenumber  ]])
 use "voldikss/vim-floaterm"
   vim.g.floaterm_keymap_next   = '<End>'   -- Hyper+o
   vim.g.floaterm_keymap_prev   = '<S-End>' -- Hyper+Command+o
@@ -169,7 +173,6 @@ use "voldikss/vim-floaterm"
   vim.g.floaterm_height = 0.9
   map("n", "<leader>lf", [[<Cmd> FloatermNew lf <CR>]], map_opt)
   map("n", "<leader>lg", [[<Cmd> FloatermNew lazygit <CR>]], map_opt)
-
 use "jpalardy/vim-slime"
   vim.g.slime_target = "neovim"
   vim.g.slime_no_mappings = 1
@@ -197,6 +200,7 @@ use { "terrortylor/nvim-comment",
 use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
 use "Iron-E/nvim-libmodal"
 use "Iron-E/nvim-tabmode"
+use "famiu/bufdelete.nvim"
 
 use { "karb94/neoscroll.nvim",
   event = "WinScrolled",
@@ -215,8 +219,6 @@ use { "lukas-reineke/indent-blankline.nvim", event = "BufRead" }
 
 use "ojroques/vim-oscyank"
   execute( [[ autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif ]])
-use "mattboehm/vim-unstack"
-
 use "yamatsum/nvim-cursorline" -- Highlight words and lines on the cursor
 use { "norcalli/nvim-colorizer.lua",
   event = "BufRead",

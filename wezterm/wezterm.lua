@@ -5,6 +5,6 @@ return {
     {family="Rec Mono Duotone"},
     {family="JetBrainsMono Nerd Font Mono"}
   }),
-  font_size = 14,
+  font_size = 15,
   color_scheme = "OneHalfDark",
 }
