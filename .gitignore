@@ -1,5 +1,5 @@
-.tags
-.DS_Store
+**.tags
+**.DS_Store
 
 karabiner/automatic_backups/
 coc/
@@ -8,6 +8,9 @@ gh/config.yml
 lazygit/
 pudb/saved-breakpoints*
 
-nvim/plugin/packer_compiled.vim
+**packer_compiled**
 
 gcloud/
+
+htop/htoprc
+**__pycache__/

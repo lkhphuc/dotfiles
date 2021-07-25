@@ -10,9 +10,9 @@ local opt = {}
 
 map("t", "<PageUp>",    "<C-\\><C-N>")  --Capslock+u
 vim.cmd[[au TermOpen * setlocal listchars= nonumber norelativenumber]]
-vim.cmd[[au TermOpen * startinsert]]
-vim.cmd[[au BufEnter,BufWinEnter,WinEnter term://* startinsert]]
-vim.cmd[[au BufLeave term://* stopinsert]]
+-- vim.cmd[[au TermOpen * startinsert]]
+-- vim.cmd[[au BufEnter,BufWinEnter,WinEnter term://* startinsert]]
+-- vim.cmd[[au BufLeave term://* stopinsert]]
 
 -- NAVIGATE WINDOWS
 map("t", "<C-^>",       "<C-\\><C-N><C-^>")

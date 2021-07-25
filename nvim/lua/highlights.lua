@@ -34,8 +34,6 @@ local function fg_bg(group, fgcol, bgcol)
     cmd("hi " .. group .. " guifg=" .. fgcol .. " guibg=" .. bgcol)
 end
 
-cmd "colo base16-onedark"
-
 cmd "hi Comment gui=italic"
 cmd "hi Include gui=italic"
 cmd "hi TSConstant gui=bold"

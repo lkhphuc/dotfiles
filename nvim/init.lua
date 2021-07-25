@@ -105,6 +105,7 @@ use "nvim-treesitter/nvim-treesitter-textobjects"
 use "romgrk/nvim-treesitter-context"
 use "p00f/nvim-ts-rainbow"
 use 'JoosepAlviste/nvim-ts-context-commentstring'
+use "numirias/semshi"
 
 use {"sbdchd/neoformat", cmd = "Neoformat"}
 
@@ -204,7 +205,14 @@ use "famiu/bufdelete.nvim"
 
 use { "karb94/neoscroll.nvim",
   event = "WinScrolled",
-  config = function() require("neoscroll").setup() end }
+  config = function()
+    require("neoscroll").setup({hide_cursor=false})
+    local t = {}
+    t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'false', '250'}}
+    t['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'false', '250'}}
+    require('neoscroll.config').set_mappings(t)
+  end }
+
 use { "kdav5758/TrueZen.nvim",
   cmd = {"TZAtaraxis", "TZMinimalist"},
   config = function()
@@ -229,7 +237,7 @@ use { "norcalli/nvim-colorizer.lua",
 use "machakann/vim-highlightedyank"
 use "romainl/vim-cool"  -- Handle highlight search automatically
 
-use "christianchiarulli/nvcode-color-schemes.vim"
+use "navarasu/onedark.nvim"
 use "RRethy/nvim-base16"
 
 
@@ -240,9 +248,9 @@ end,
 
 local opt = vim.opt
   opt.title = true
-  opt.titlestring = "%<%F%=%l/%L-%P"
+  opt.titlestring = "%<%F"
   opt.titlelen = 70
-  vim.cmd([[auto BufEnter * let &titlestring =  substitute(hostname(), '^.*\.', '', '').":".expand("%:f")]])
+  -- vim.cmd([[auto BufEnter * let &titlestring =  substitute(hostname(), '\..*$', '', '').":".expand("%:f")]])
 
   opt.foldmethod = "expr"
   opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -284,3 +292,4 @@ g.theme = "onedark"
 require "statusline"
 require "file-icons"
 require "highlights"
+vim.cmd "colorscheme base16-onedark"

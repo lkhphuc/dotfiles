@@ -110,7 +110,12 @@ gls.left[#gls.left+1] = {
 
 gls.right[#gls.right+1] = {
     python = {
-        provider = function() return os.getenv('CONDA_DEFAULT_ENV') .. " " end,
+        provider = function()
+            local env_name = os.getenv('CONDA_DEFAULT_ENV')
+            if env_name == nil then
+                env_name = ""
+            end return env_name .. ""
+        end,
         condition = function()
             if vim.bo.filetype == 'python' then
                 return true

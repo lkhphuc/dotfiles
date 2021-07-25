@@ -48,8 +48,6 @@ M.config = function()
         local lspconf = require("lspconfig")
         local servers = require "lspinstall".installed_servers()
 
-        table.insert(servers, "fortls")
-
         for _, lang in pairs(servers) do
             if lang ~= "lua" then
                 lspconf[lang].setup {
