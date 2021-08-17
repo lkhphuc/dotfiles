@@ -20,7 +20,6 @@ local use = packer.use
 
 packer.startup({function()
 use "wbthomason/packer.nvim"
-use "famiu/nvim-reload"
 
 -- text editing
 use "tpope/vim-surround"
@@ -183,7 +182,6 @@ use "jpalardy/vim-slime"
   vim.api.nvim_set_keymap("n", "<leader>sc", [[<Plug>SlimeConfig<CR>]], {})
   -- vim.api.nvim_set_keymap("n", "<S-Enter>", [[<Plug>(SlimeMotionSend)]], {})
 
-use "rmagatti/auto-session"
 use { "windwp/nvim-autopairs",
   event = "InsertEnter",
   config = function()

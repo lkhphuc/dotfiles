@@ -45,6 +45,7 @@ znap eval brew-shellenv '{ command -v brew >/dev/null 2>&1 } && { brew shellenv 
 znap eval kitty 'kitty + complete setup zsh'
 
 export EDITOR="nvim"
+if [[ lvim ]]; then EDITOR="lvim" fi
 if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
 alias v="$EDITOR" vimdiff="nvim -d"
