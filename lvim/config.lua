@@ -38,13 +38,13 @@ lvim.plugins = {
     }
   end },
 {"weilbith/nvim-code-action-menu",
-  key = "<leader>la", cmd = 'CodeActionMenu',
   config = function() vim.cmd [[nmap <leader>la :CodeActionMenu<CR>]] end,
 },
 {"mattboehm/vim-unstack",
   keys = "<leader>us",
   config = function() vim.g.unstack_mapkey="<leader>us" end},
 {"numirias/semshi"},
+{"mfussenegger/nvim-dap-python"},
 
 -- Git
 {"tpope/vim-fugitive", event="CmdlineEnter"},
@@ -89,8 +89,10 @@ lvim.plugins = {
     vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
 
     end },
-{"SmiteshP/nvim-gps"},
+{"SmiteshP/nvim-gps",
+  config = function() require('nvim-gps').setup() end},
 {"haringsrob/nvim_context_vt"},
+{"ray-x/cmp-treesitter"},
 
 -- Editting
 {"abecodes/tabout.nvim",
@@ -192,6 +194,7 @@ local keys = lvim.keys
   -- keymappings [view all the defaults by pressing <leader>Lk]
   lvim.leader = "space"
   keys.normal_mode["<C-s>"] = ":w<cr>"
+  keys.insert_mode["<C-s>"] = "<Esc>:w<cr>"
 
   -- Terminal
   keys.term_mode["<PageUp>"] = "<C-\\><C-N>"  --Capslock+u exit terminal mode
@@ -210,6 +213,8 @@ local keys = lvim.keys
   -- LSP
   keys.normal_mode["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
   keys.normal_mode["[d"] = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
+  keys.normal_mode["]g"] = "<cmd>lua require 'gitsigns'.next_hunk()<CR>"
+  keys.normal_mode["[g"] = "<cmd>lua require 'gitsigns'.prev_hunk()<CR>"
   -- keys.normal_mode["<leader>lF"] = "<cmd>lua vim.lsp.buf.formatting()<cr>"
   lvim.builtin.which_key.mappings["lF"] = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Formatting"}
   lvim.builtin.which_key.mappings["lf"] = {"<cmd>FloatermNew lf<cr>", "LF"}
@@ -218,7 +223,6 @@ local keys = lvim.keys
 lvim.log.level = "warn"
 lvim.format_on_save = false
 lvim.lint_on_save = true
--- lvim.colorscheme = "onedark"
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = false
 lvim.builtin.nvimtree.side = "left"
@@ -260,18 +264,12 @@ local ts = lvim.builtin.treesitter
     }
   }
 
--- LSP settings
-lvim.lang.fortran.lsp.setup.root_dir = function(fname)
-  local util = require"lspconfig.util"
-  return util.root_pattern(".git", ".fortls")(fname) or vim.fn.getcwd()
-end
-
 -- Lualine
 local lualine = lvim.builtin.lualine
-  lualine.options.section_separators = {left = '', right = ''}
-  lualine.options.component_separators = {left = '', right = ''}
+  lualine.options.section_separators = { left = '', right = ''}
+  lualine.options.component_separators = { left = '', right = ''}
   local components = require "core.lualine.components"
-  local gps = require "nvim-gps"
+  local gps = require("nvim-gps")
   lualine.sections.lualine_b = {
     components.branch,
     components.filename,

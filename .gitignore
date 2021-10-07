@@ -16,3 +16,5 @@ htop/htoprc
 **__pycache__/
 
 nvim/site/
+
+zsh/zshrc.zwc
