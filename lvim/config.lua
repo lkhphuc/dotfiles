@@ -174,7 +174,7 @@ local opt = vim.opt
   opt.wrap = true
   opt.breakindent = true
   opt.lbr = true
-  opt.breakindentopt = "shift:1"
+  opt.breakindentopt = "min:60,shift:2"
   opt.undofile = true
   opt.wildmode = "longest:full,full"
   opt.smartcase = true
@@ -268,7 +268,7 @@ local ts = lvim.builtin.treesitter
 local lualine = lvim.builtin.lualine
   lualine.options.section_separators = { left = '', right = ''}
   lualine.options.component_separators = { left = '', right = ''}
-  local components = require "core.lualine.components"
+  local components = require "lvim.core.lualine.components"
   local gps = require("nvim-gps")
   lualine.sections.lualine_b = {
     components.branch,
