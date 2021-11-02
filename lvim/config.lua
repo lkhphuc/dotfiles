@@ -91,7 +91,6 @@ lvim.plugins = {
     end },
 {"SmiteshP/nvim-gps",
   config = function() require('nvim-gps').setup() end},
-{"haringsrob/nvim_context_vt"},
 {"ray-x/cmp-treesitter"},
 
 -- Editting
@@ -129,6 +128,8 @@ lvim.plugins = {
 
 
 -- Visual
+{ "luukvbaal/stabilize.nvim",
+  config = function() require("stabilize").setup() end },
 {"karb94/neoscroll.nvim", event = "WinScrolled",
   config = function()
     require("neoscroll").setup()
@@ -161,10 +162,18 @@ lvim.plugins = {
     require("colorizer").setup()
     vim.cmd("ColorizerReloadAllBuffers")
   end },
-{"LunarVim/Colorschemes"},
 {"RRethy/nvim-base16"},
-{"Pocco81/Catppuccino.nvim"},
-
+{"olimorris/onedarkpro.nvim",
+  config = function ()
+    local odp = require('onedarkpro')
+    odp.setup({
+      styles = {
+        comments = "italic",
+        keywords = "bold,italic",
+      },
+    })
+    odp.load()
+  end},
 }
 
 local opt = vim.opt
@@ -186,9 +195,8 @@ local opt = vim.opt
   vim.g.python3_host_prog = "/usr/bin/python3"
 
 local cmd = vim.cmd
-  cmd "au TextYankPost * silent! lua vim.highlight.on_yank()"
-  cmd[[au TermOpen * setlocal listchars= nonumber norelativenumber]]
-  cmd[[highlight BufferCurrent gui=bold,italic]]
+  cmd "au TermOpen * setlocal listchars= nonumber norelativenumber"
+  cmd "highlight BufferCurrent gui=bold,italic"
 
 local keys = lvim.keys
   -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -231,8 +239,7 @@ lvim.builtin.dap.active = true
 -- Treesitter
 local ts = lvim.builtin.treesitter
   ts.ensure_installed = "maintained"
-  ts.highlight.enabled = true
-  ts.highlight.disable = {"fortran"}
+  -- ts.highlight.enabled = true
   ts.highlight.use_languagetree = true
   ts.incremental_selection = {
     enable = true,
