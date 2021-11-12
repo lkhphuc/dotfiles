@@ -6,6 +6,8 @@ prompt_install() {
 	stty $old_stty_cfg && echo
 	if echo "$answer" | grep -iq "^y" ;then
 		if [ -x "$(command -v apt-get)" ]; then
+			sudo add-apt-repository $2
+			sudo apt update
 			sudo apt install $1 -y
 
 		elif [ -x "$(command -v brew)" ]; then
@@ -68,13 +70,13 @@ fi
 
 check_for_software zsh
 # check_for_software tmux
-check_for_software nvim neovim
+check_for_software nvim neovim ppa:neovim-ppa/unstable
+check_for_software lazygit lazygit ppa:lazygit-team/release
 check_for_software rg ripgrep
 check_for_software thefuck thefuck
 check_for_software fd fd
 check_for_software bat bat
 check_for_software lf lf
-check_for_software ctags ctags
 check_for_software exa exa
 
 check_default_shell
@@ -93,18 +95,10 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-printf "source '$HOME/dotfiles/rc.zsh'" > $HOME/.zshrc
-printf "source-file $HOME/dotfiles/tmux.conf" > $HOME/.tmux.conf
+echo "Installing Lunarvim"
+LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
 
-ln -s $HOME/dotfiles/nvim $HOME/.config/nvim
-
-ln -s $HOME/dotfiles/kitty $HOME/.config/kitty
-
-mkdir -p $HOME/.ipython
-ln -s $HOME/dotfiles/ipython_config.py $HOME/.ipython/ipython_config.py
-
-mkdir -p $HOME/.config/karabiner
-ln -s $HOME/dotfiles/karabiner.json $HOME/.config/karabiner/karabiner.json
+printf "source '$HOME/.config/zsh/zshrc'" > $HOME/.zshrc
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

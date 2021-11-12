@@ -1,6 +1,8 @@
 -- vim:foldmethod=indent
 lvim.plugins = {
 -- Navigating
+-- {"nanozuki/tabby.nvim",
+--   config = function() require("tabby").setup() end, },
 {"Iron-E/nvim-libmodal"},
 {"Iron-E/nvim-tabmode"},
 {"ggandor/lightspeed.nvim", event="CursorMoved"},
@@ -17,9 +19,8 @@ lvim.plugins = {
 {"simrat39/symbols-outline.nvim",
   config = function() vim.cmd[[nmap <C-m> :SymbolsOutline<CR>]] end},
 {"simnalamburt/vim-mundo",
-  key = "<leader>u", command = ":MundoToggle",
+  key = "<leader>uu", command = ":MundoToggle",
   config = function() vim.cmd [[nmap <leader>u :MundoToggle<CR>]] end},
-
 
 -- IDE
 {"ray-x/lsp_signature.nvim", event = "InsertEnter",
@@ -37,14 +38,27 @@ lvim.plugins = {
       w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
     }
   end },
-{"weilbith/nvim-code-action-menu",
-  config = function() vim.cmd [[nmap <leader>la :CodeActionMenu<CR>]] end,
-},
+{"weilbith/nvim-code-action-menu"},
 {"mattboehm/vim-unstack",
-  keys = "<leader>us",
-  config = function() vim.g.unstack_mapkey="<leader>us" end},
+  key = "<leader>us", command = ":Unstack*",
+  config = function() vim.g.unstack_mapkey="<leader>us" end, },
 {"numirias/semshi"},
-{"mfussenegger/nvim-dap-python"},
+{"kosayoda/nvim-lightbulb", event = "InsertLeave"},
+-- {"mfussenegger/nvim-dap-python", ft="python"},
+{"lkhphuc/nvim-dap-python", ft="python",
+  config = function()
+    require('dap-python').setup('/usr/local/Caskroom/miniconda/base/envs/simone/bin/python')
+    vim.cmd [[nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>]]
+    vim.cmd [[nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>]]
+    vim.cmd [[vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>]]
+  end, },
+{"theHamsta/nvim-dap-virtual-text",
+  config = function() require('nvim-dap-virtual-text').setup() end},
+{"rcarriga/nvim-dap-ui",
+  config = function()
+    require('dapui').setup()
+    vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
+  end},
 
 -- Git
 {"tpope/vim-fugitive", event="CmdlineEnter"},
@@ -68,6 +82,13 @@ lvim.plugins = {
     vim.cmd [[nnoremap <leader>lg <Cmd>FloatermNew lazygit <CR>]]
     -- vim.cmd [[nnoremap <leader>lf <Cmd>FloatermNew lf <CR>]]
   end },
+{"jpalardy/vim-slime",
+  config = function()
+    vim.g.slime_target = "neovim"
+    vim.g.slime_python_ipython = 1
+    vim.cmd "xmap <S-CR> <Plug>SlimeRegionSend"
+    vim.cmd "nmap <S-CR> <Plug>SlimeParagraphSend"
+  end},
 
 -- Misc
 {"ojroques/vim-oscyank", event="CursorMoved",
@@ -76,9 +97,9 @@ lvim.plugins = {
   end, },
 
 -- Treesitter
-{"nvim-treesitter/nvim-treesitter-refactor", event="BufRead"},
--- {"nvim-treesitter/nvim-treesitter-textobjects"},
-{"romgrk/nvim-treesitter-context", event="BufRead"},  --Class, function lines always present
+{"nvim-treesitter/nvim-treesitter-refactor", event="BufRead" },
+{"nvim-treesitter/nvim-treesitter-textobjects", event="BufRead"},
+{"romgrk/nvim-treesitter-context", event="BufRead" },  --Class, function lines always present
 {"p00f/nvim-ts-rainbow", event="BufRead"},  --Rainbow paranetheses
 {"nvim-treesitter/playground", event = "BufRead", },
 {'David-Kunz/treesitter-unit', event="BufRead",
@@ -124,7 +145,7 @@ lvim.plugins = {
     vim.cmd [[nmap ga <Plug>(EasyAlign)]]
   end, },
 {"AndrewRadev/splitjoin.vim", event="CursorMoved"}, -- gS and gJ
-{"mg979/vim-visual-multi"},
+-- {"mg979/vim-visual-multi"},
 
 
 -- Visual
@@ -147,33 +168,20 @@ lvim.plugins = {
     vim.g.indent_blankline_show_current_context = true
   end },
 {"folke/zen-mode.nvim", event="BufEnter"},
-{"nacro90/numb.nvim", event = "BufRead",
-  config = function()
-  require("numb").setup {
-    show_numbers = true, -- Enable 'number' for the window while peeking
-    show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-  }
-  end, },
-{"kevinhwang91/nvim-hlslens"},
+{"nacro90/numb.nvim", event = "BufRead", config = function() require("numb").setup() end, },
+{"kevinhwang91/nvim-hlslens"},  -- show number beside search highlight
 {"romainl/vim-cool"},  -- Handle highlight search automatically
-{"folke/lsp-colors.nvim", event = "BufRead" },
 {"norcalli/nvim-colorizer.lua", event = "BufRead",
   config = function()
     require("colorizer").setup()
-    vim.cmd("ColorizerReloadAllBuffers")
   end },
 {"RRethy/nvim-base16"},
-{"olimorris/onedarkpro.nvim",
-  config = function ()
-    local odp = require('onedarkpro')
-    odp.setup({
-      styles = {
-        comments = "italic",
-        keywords = "bold,italic",
-      },
+{"rmehri01/onenord.nvim",
+  config = function() require('onenord').setup({
+      italic = { comments = true, keywords = true }
     })
-    odp.load()
-  end},
+    -- vim.cmd [[colorscheme onenord]]
+  end}
 }
 
 local opt = vim.opt
@@ -196,47 +204,51 @@ local opt = vim.opt
 
 local cmd = vim.cmd
   cmd "au TermOpen * setlocal listchars= nonumber norelativenumber"
-  cmd "highlight BufferCurrent gui=bold,italic"
+  cmd "au ColorScheme * highlight BufferCurrent gui=bold,italic"
+  cmd "au ColorScheme * highlight TSKeyword gui=bold,italic"
+  cmd "au ColorScheme * highlight TSKeywordFunction gui=bold,italic"
+  cmd "au ColorScheme * highlight TSVariableBuiltin gui=italic"
+  cmd "au ColorScheme * highlight TSInclude gui=bold,italic"
 
-local keys = lvim.keys
+local k = lvim.keys
+local wk = lvim.builtin.which_key
   -- keymappings [view all the defaults by pressing <leader>Lk]
   lvim.leader = "space"
-  keys.normal_mode["<C-s>"] = ":w<cr>"
-  keys.insert_mode["<C-s>"] = "<Esc>:w<cr>"
+  k.normal_mode["<C-s>"] = ":w<cr>"
+  k.insert_mode["<C-s>"] = "<Esc>:w<cr>"
 
   -- Terminal
-  keys.term_mode["<PageUp>"] = "<C-\\><C-N>"  --Capslock+u exit terminal mode
-  keys.term_mode["<C-^>"] ="<C-\\><C-N><C-^>"
+  k.term_mode["<PageUp>"] = "<C-\\><C-N>"  --Capslock+u exit terminal mode
+  k.term_mode["<C-^>"] ="<C-\\><C-N><C-^>"
 
   -- Clipboard Yank
-  keys.normal_mode["<leader>y"] = "\"+y"
-  keys.visual_mode["<leader>y"] = "\"+y"
-  keys.normal_mode["<leader>p"] = "\"+p"
-  keys.visual_mode["<leader>p"] = "\"+p"
-  keys.normal_mode["<leader><space>"] = "za"
+  k.normal_mode["<leader>y"] = "\"+y"
+  k.visual_mode["<leader>y"] = "\"+y"
+  k.normal_mode["<leader>p"] = "\"+p"
+  k.visual_mode["<leader>p"] = "\"+p"
+  k.normal_mode["<leader><space>"] = "za"
+  k.normal_mode["]<Tab>"] = ":tabnext<CR>"
+  k.normal_mode["[<Tab>"] = ":tabprev<CR>"
 
-  -- Use which-key to add extra bindings with the leader-key prefix
-  -- lvim.builtin.which_key.mappings["P"] = { "<cmd>lua require'telescope'.extensions.project.project{}<CR>", "Projects" }
-  keys.normal_mode["gb"] = ":BufferPick<CR>"
   -- LSP
-  keys.normal_mode["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
-  keys.normal_mode["[d"] = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
-  keys.normal_mode["]g"] = "<cmd>lua require 'gitsigns'.next_hunk()<CR>"
-  keys.normal_mode["[g"] = "<cmd>lua require 'gitsigns'.prev_hunk()<CR>"
-  -- keys.normal_mode["<leader>lF"] = "<cmd>lua vim.lsp.buf.formatting()<cr>"
-  lvim.builtin.which_key.mappings["lF"] = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Formatting"}
-  lvim.builtin.which_key.mappings["lf"] = {"<cmd>FloatermNew lf<cr>", "LF"}
+  k.normal_mode["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
+  k.normal_mode["[d"] = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
+  k.normal_mode["]g"] = "<cmd>lua require 'gitsigns'.next_hunk()<CR>"
+  k.normal_mode["[g"] = "<cmd>lua require 'gitsigns'.prev_hunk()<CR>"
+  wk.mappings["ss"] = {"<cmd>Telescope<CR>", "Telescope"}
+  wk.mappings["lF"] = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Formatting"}
+  wk.mappings["lf"] = {"<cmd>FloatermNew lf<cr>", "LF manager"}
+  wk.mappings["la"] = {"<cmd>CodeActionMenu<CR>", "Code Action"}
 
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = false
 lvim.lint_on_save = true
-lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = false
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.dap.active = true
--- Treesitter
+
 local ts = lvim.builtin.treesitter
   ts.ensure_installed = "maintained"
   -- ts.highlight.enabled = true
@@ -270,8 +282,59 @@ local ts = lvim.builtin.treesitter
       goto_previous_usage = "[u",
     }
   }
+  ts.textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ai"] = "@block.outer",
+        ["ii"] = "@block.inner",
+        ["c"] = "@comment.outer",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>sa"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>sA"] = "@parameter.inner",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["<leader>kf"] = "@function.outer",
+        ["<leader>kc"] = "@class.outer",
+      },
+    },
+  }
 
--- Lualine
 local lualine = lvim.builtin.lualine
   lualine.options.section_separators = { left = '', right = ''}
   lualine.options.component_separators = { left = '', right = ''}
@@ -282,3 +345,14 @@ local lualine = lvim.builtin.lualine
     components.filename,
     {gps.get_location, cond=gps.is_available},
   }
+
+local formatters = require "lvim.lsp.null-ls.formatters"
+  formatters.setup {
+    { exe = "black", filetypes = { "python" } },
+    { exe = "isort", filetypes = { "python" } },
+  }
+
+-- local linters = require "lvim.lsp.null-ls.linters"
+--   linters.setup {
+--     { exe = "pylint", filetypes = {"python"} }
+--   }

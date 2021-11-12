@@ -33,7 +33,7 @@ znap source zpm-zsh/colors
 znap source zpm-zsh/ls
 znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
-znap source zdharma/fast-syntax-highlighting
+znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 znap source agkozak/zsh-z
 
@@ -43,6 +43,8 @@ znap eval fuck 'thefuck --alias'
 znap eval pip 'python3 -m pip completion --zsh'
 znap eval brew-shellenv '{ command -v brew >/dev/null 2>&1 } && { brew shellenv }'
 znap eval kitty 'kitty + complete setup zsh'
+
+znap compdef _poetry 'poetry completions zsh'
 
 export EDITOR="nvim"
 if [[ lvim ]]; then EDITOR="lvim" fi
