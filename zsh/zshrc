@@ -13,7 +13,6 @@ znap source junegunn/fzf shell/{completion,key-bindings}.zsh
 }
 
 znap install Homebrew/brew
-znap eval brew "/opt/homebrew/bin/brew shellenv"
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 1
   zstyle ':autocomplete:*' widget-style menu-select
