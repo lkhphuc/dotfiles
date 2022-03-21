@@ -14,12 +14,7 @@ lvim.plugins = {
     vim.cmd[[omap gs <cmd>Pounce<CR>]]
   end},
 {"kevinhwang91/nvim-bqf"},
-{"andymass/vim-matchup",
-  config = function()
-    require("nvim-treesitter.configs").setup {
-      matchup = { enable =true }
-    }
-  end },
+{"andymass/vim-matchup"},
 
 -- SideBars
 {"simrat39/symbols-outline.nvim",
@@ -49,6 +44,10 @@ lvim.plugins = {
   key = "<leader>us", command = ":Unstack*",
   config = function() vim.g.unstack_mapkey="<leader>us" end, },
 {"kosayoda/nvim-lightbulb", event = "InsertLeave"},
+
+-- Languages
+{"eddiebergman/nvim-treesitter-pyfold"},
+{"blueyed/semshi", branch="handle-ColorScheme"},
 -- {"mfussenegger/nvim-dap-python", ft="python"},
 {"lkhphuc/nvim-dap-python", ft="python",
   config = function()
@@ -348,6 +347,13 @@ local ts = lvim.builtin.treesitter
         ["<leader>kc"] = "@class.outer",
       },
     },
+  }
+  require("nvim-treesitter.configs").setup {
+    matchup = { enable = true },
+    pyfold = {
+      enable = true,
+      custom_foldtext = true,
+    }
   }
 
 local lualine = lvim.builtin.lualine
