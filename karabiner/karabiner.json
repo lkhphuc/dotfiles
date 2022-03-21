@@ -1,7 +1,7 @@
 {
     "global": {
         "check_for_updates_on_startup": true,
-        "show_in_menu_bar": true,
+        "show_in_menu_bar": false,
         "show_profile_name_in_menu_bar": false
     },
     "profiles": [
@@ -4780,6 +4780,26 @@
                         "description": "Hyper Application",
                         "manipulators": [
                             {
+                                "description": "command + a = Preview",
+                                "from": {
+                                    "key_code": "a",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a Preview"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
                                 "description": "command + e = mail",
                                 "from": {
                                     "key_code": "e",
@@ -4842,7 +4862,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + r = preview",
+                                "description": "command + r = Wezterm",
                                 "from": {
                                     "key_code": "r",
                                     "modifiers": {
@@ -4857,7 +4877,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a Preview"
+                                        "shell_command": "open -a wezterm"
                                     }
                                 ],
                                 "type": "basic"
@@ -4884,7 +4904,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "r = kitty",
+                                "description": "r = termnial",
                                 "from": {
                                     "key_code": "r",
                                     "modifiers": {

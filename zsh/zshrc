@@ -6,17 +6,20 @@ source $HOME/.zsh/zsh-snap/znap.zsh
 znap source romkatv/powerlevel10k
 znap source jeffreytse/zsh-vi-mode
 function zvm_after_init() {
-znap source zsh-users/zsh-autosuggestions  # On same line
-export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_DEFAULT_OPTS="--layout=reverse"
   # export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
   export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+}
+
+znap install Homebrew/brew
+znap eval brew "/opt/homebrew/bin/brew shellenv"
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 1
   zstyle ':autocomplete:*' widget-style menu-select
   zstyle ':autocomplete:*' fzf-completion yes
-}
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+znap source zsh-users/zsh-autosuggestions  # On same line
 znap source zpm-zsh/colors
 znap source zpm-zsh/ls # Use exa for ls
 znap source zpm-zsh/autoenv
@@ -31,7 +34,6 @@ znap eval kitty 'kitty + complete setup zsh'
 znap eval fuck 'thefuck --alias'
 znap install esc/conda-zsh-completion
 znap install ogham/exa
-znap install Homebrew/brew
 znap fpath _poetry 'poetry completions zsh'
 
 export EDITOR="nvim"

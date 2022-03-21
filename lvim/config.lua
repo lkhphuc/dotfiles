@@ -5,8 +5,14 @@ lvim.plugins = {
 --   config = function() require("tabby").setup() end, },
 {"Iron-E/nvim-libmodal"},
 {"Iron-E/nvim-tabmode"},
-{"ggandor/lightspeed.nvim", event="CursorMoved"},
-{"wellle/targets.vim"}, -- More target text objects
+-- {"ggandor/lightspeed.nvim", event="CursorMoved"},
+{"rlane/pounce.nvim",
+  config = function()
+    vim.cmd[[nmap s <cmd>Pounce<CR>]]
+    vim.cmd[[nmap S <cmd>PounceRepeat<CR>]]
+    vim.cmd[[vmap s <cmd>Pounce<CR>]]
+    vim.cmd[[omap gs <cmd>Pounce<CR>]]
+  end},
 {"kevinhwang91/nvim-bqf"},
 {"andymass/vim-matchup",
   config = function()
@@ -42,7 +48,6 @@ lvim.plugins = {
 {"mattboehm/vim-unstack",
   key = "<leader>us", command = ":Unstack*",
   config = function() vim.g.unstack_mapkey="<leader>us" end, },
-{"numirias/semshi"},
 {"kosayoda/nvim-lightbulb", event = "InsertLeave"},
 -- {"mfussenegger/nvim-dap-python", ft="python"},
 {"lkhphuc/nvim-dap-python", ft="python",
@@ -52,13 +57,7 @@ lvim.plugins = {
     vim.cmd [[nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>]]
     vim.cmd [[vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>]]
   end, },
-{"theHamsta/nvim-dap-virtual-text",
-  config = function() require('nvim-dap-virtual-text').setup() end},
-{"rcarriga/nvim-dap-ui",
-  config = function()
-    require('dapui').setup()
-    vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
-  end},
+{"lervag/vimtex"},
 
 -- Git
 {"tpope/vim-fugitive", event="CmdlineEnter"},
@@ -96,9 +95,14 @@ lvim.plugins = {
   vim.cmd [[ autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif ]]
   end, },
 
+-- Text Objects
+{"wellle/targets.vim"}, -- More target text objects
+{"kana/vim-textobj-user"},
+{"Julian/vim-textobj-variable-segment"},
+{"nvim-treesitter/nvim-treesitter-textobjects", event="BufRead"},
+
 -- Treesitter
 {"nvim-treesitter/nvim-treesitter-refactor", event="BufRead" },
-{"nvim-treesitter/nvim-treesitter-textobjects", event="BufRead"},
 {"romgrk/nvim-treesitter-context", event="BufRead" },  --Class, function lines always present
 {"p00f/nvim-ts-rainbow", event="BufRead"},  --Rainbow paranetheses
 {"nvim-treesitter/playground", event = "BufRead", },
@@ -170,6 +174,14 @@ lvim.plugins = {
 {"folke/zen-mode.nvim", event="BufEnter"},
 {"nacro90/numb.nvim", event = "BufRead", config = function() require("numb").setup() end, },
 {"kevinhwang91/nvim-hlslens"},  -- show number beside search highlight
+{ 'anuvyklack/pretty-fold.nvim',
+   config = function()
+      require('pretty-fold').setup{}
+      require('pretty-fold.preview').setup({
+        key = 'l',
+      })
+   end
+},
 {"romainl/vim-cool"},  -- Handle highlight search automatically
 {"norcalli/nvim-colorizer.lua", event = "BufRead",
   config = function()
@@ -217,6 +229,8 @@ local wk = lvim.builtin.which_key
   k.normal_mode["<C-s>"] = ":w<cr>"
   k.insert_mode["<C-s>"] = "<Esc>:w<cr>"
 
+  k.normal_mode["gb"] = "<cmd> BufferLinePick<CR>"
+
   -- Terminal
   k.term_mode["<PageUp>"] = "<C-\\><C-N>"  --Capslock+u exit terminal mode
   k.term_mode["<C-^>"] ="<C-\\><C-N><C-^>"
@@ -226,13 +240,13 @@ local wk = lvim.builtin.which_key
   k.visual_mode["<leader>y"] = "\"+y"
   k.normal_mode["<leader>p"] = "\"+p"
   k.visual_mode["<leader>p"] = "\"+p"
-  k.normal_mode["<leader><space>"] = "za"
+  k.normal_mode["<leader><space>"] = "zA"
   k.normal_mode["]<Tab>"] = ":tabnext<CR>"
   k.normal_mode["[<Tab>"] = ":tabprev<CR>"
 
   -- LSP
-  k.normal_mode["]d"] = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
-  k.normal_mode["[d"] = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
+  k.normal_mode["]d"] = "<cmd>lua vim.diagnostic.goto_next({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
+  k.normal_mode["[d"] = "<cmd>lua vim.diagnostic.goto_prev({popup_opts = {border = lvim.lsp.popup_border}})<cr>"
   k.normal_mode["]g"] = "<cmd>lua require 'gitsigns'.next_hunk()<CR>"
   k.normal_mode["[g"] = "<cmd>lua require 'gitsigns'.prev_hunk()<CR>"
   wk.mappings["ss"] = {"<cmd>Telescope<CR>", "Telescope"}
@@ -248,6 +262,7 @@ lvim.builtin.terminal.active = false
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.dap.active = true
+lvim.builtin.project.manual_mode = true
 
 local ts = lvim.builtin.treesitter
   ts.ensure_installed = "maintained"
@@ -341,9 +356,12 @@ local lualine = lvim.builtin.lualine
   local components = require "lvim.core.lualine.components"
   local gps = require("nvim-gps")
   lualine.sections.lualine_b = {
-    components.branch,
     components.filename,
     {gps.get_location, cond=gps.is_available},
+  }
+  lualine.sections.lualine_c = {
+    components.diff,
+    components.branch,
   }
 
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -352,6 +370,7 @@ local formatters = require "lvim.lsp.null-ls.formatters"
     { exe = "isort", filetypes = { "python" } },
   }
 
+lvim.builtin.comment.toggler.block = "gcb"
 -- local linters = require "lvim.lsp.null-ls.linters"
 --   linters.setup {
 --     { exe = "pylint", filetypes = {"python"} }
