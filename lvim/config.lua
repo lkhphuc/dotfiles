@@ -84,9 +84,19 @@ lvim.plugins = {
   config = function()
     vim.g.slime_target = "neovim"
     vim.g.slime_python_ipython = 1
-    vim.cmd "xmap <S-CR> <Plug>SlimeRegionSend"
-    vim.cmd "nmap <S-CR> <Plug>SlimeParagraphSend"
   end},
+{"klafyvel/vim-slime-cells",
+  requires = {{'jpalardy/vim-slime', opt=true}},
+  ft = {'julia', 'python'},
+  config=function ()
+    vim.g.slime_cell_delimiter = "^\\s*##"
+    vim.cmd([[
+    nmap <C-c><CR> <Plug>SlimeCellsSendAndGoToNext
+    nmap <C-c>j <Plug>SlimeCellsNext
+    nmap <C-c>k <Plug>SlimeCellsPrev
+    ]])
+  end
+},
 
 -- Misc
 {"ojroques/vim-oscyank", event="CursorMoved",
