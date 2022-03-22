@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm';
 
 return {
+  default_gui_startup_args = {"connect", "gpu"},
   ssh_domains = {
     {
       name = "gpu",
@@ -39,5 +40,6 @@ return {
   keys = {
     {key="_", mods="CMD|SHIFT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
     {key="\\", mods="CMD|SHIFT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+    {key="Enter", mods="SHIFT", action="DisableDefaultAssignment"},
   }
 }

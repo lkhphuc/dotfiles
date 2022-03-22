@@ -175,10 +175,12 @@ lvim.plugins = {
 {"yamatsum/nvim-cursorline", event="BufRead"}, -- Highlight words and lines on the cursor
 {"lukas-reineke/indent-blankline.nvim", event = "BufRead",
   config = function()
-    vim.g.indent_blankline_filetype_exclude = {"help", "dashboard"}
-    vim.g.indent_blankline_buftype_exclude = {"terminal"}
-    vim.g.indent_blankline_use_treesitter = true
-    vim.g.indent_blankline_show_current_context = true
+    require("indent-blankline").setup {
+      show_current_context = true,
+      show_current_context_start = true,
+      use_treesitter = true,
+      show_end_of_line = true,
+    }
   end },
 {"folke/zen-mode.nvim", event="BufEnter"},
 {"nacro90/numb.nvim", event = "BufRead", config = function() require("numb").setup() end, },
@@ -222,6 +224,8 @@ local opt = vim.opt
   opt.numberwidth = 2
   opt.relativenumber = true
   vim.g.python3_host_prog = "/usr/bin/python3"
+  opt.list = true
+  opt.listchars = "eol:↲,trail:·,nbsp:␣"
 
 local cmd = vim.cmd
   cmd "au TermOpen * setlocal listchars= nonumber norelativenumber"
