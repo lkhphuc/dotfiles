@@ -175,7 +175,7 @@ lvim.plugins = {
 {"yamatsum/nvim-cursorline", event="BufRead"}, -- Highlight words and lines on the cursor
 {"lukas-reineke/indent-blankline.nvim", event = "BufRead",
   config = function()
-    require("indent-blankline").setup {
+    require("indent_blankline").setup {
       show_current_context = true,
       show_current_context_start = true,
       use_treesitter = true,

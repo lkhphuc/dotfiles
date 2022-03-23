@@ -44,6 +44,7 @@ alias g="git" lg="lazygit"
 
 export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export SAVEHIST=2000
 export HISTFILE=~/.zsh_history
 export HISTSIZE=2000
 
