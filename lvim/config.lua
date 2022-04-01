@@ -5,14 +5,7 @@ lvim.plugins = {
 --   config = function() require("tabby").setup() end, },
 {"Iron-E/nvim-libmodal"},
 {"Iron-E/nvim-tabmode"},
--- {"ggandor/lightspeed.nvim", event="CursorMoved"},
-{"rlane/pounce.nvim",
-  config = function()
-    vim.cmd[[nmap s <cmd>Pounce<CR>]]
-    vim.cmd[[nmap S <cmd>PounceRepeat<CR>]]
-    vim.cmd[[vmap s <cmd>Pounce<CR>]]
-    vim.cmd[[omap gs <cmd>Pounce<CR>]]
-  end},
+{"ggandor/lightspeed.nvim", event="CursorMoved"},
 {"kevinhwang91/nvim-bqf"},
 {"andymass/vim-matchup"},
 
@@ -25,7 +18,7 @@ lvim.plugins = {
 
 -- IDE
 {"ray-x/lsp_signature.nvim", event = "InsertEnter",
-  config = function() require"lsp_signature".on_attach() end, },
+  config = function() require"lsp_signature".setup() end, },
 {"folke/trouble.nvim", event="BufEnter",
   config = function()
     lvim.builtin.which_key.mappings["x"] = {
@@ -46,6 +39,7 @@ lvim.plugins = {
 {"kosayoda/nvim-lightbulb", event = "InsertLeave"},
 
 -- Languages
+{'m-demare/hlargs.nvim', config = function() require('hlargs').setup() end},
 {"eddiebergman/nvim-treesitter-pyfold"},
 {"blueyed/semshi", branch="handle-ColorScheme"},
 -- {"mfussenegger/nvim-dap-python", ft="python"},
@@ -162,7 +156,7 @@ lvim.plugins = {
 
 
 -- Visual
-{ "luukvbaal/stabilize.nvim",
+{"luukvbaal/stabilize.nvim",
   config = function() require("stabilize").setup() end },
 {"karb94/neoscroll.nvim", event = "WinScrolled",
   config = function()
@@ -177,9 +171,10 @@ lvim.plugins = {
   config = function()
     require("indent_blankline").setup {
       show_current_context = true,
-      show_current_context_start = true,
       use_treesitter = true,
       show_end_of_line = true,
+      buftype_exclude = {'terminal'},
+      filetype_exclude = {'help', 'dashboard'},
     }
   end },
 {"folke/zen-mode.nvim", event="BufEnter"},
@@ -211,10 +206,11 @@ local opt = vim.opt
   opt.timeoutlen = 300
   opt.foldmethod = "expr"
   opt.foldexpr = "nvim_treesitter#foldexpr()"
+  opt.shiftwidth = 2
   opt.wrap = true
   opt.breakindent = true
-  opt.lbr = true
-  opt.breakindentopt = "min:60,shift:2"
+  opt.linebreak = true
+  opt.breakindentopt = "min:60,sbr"
   opt.undofile = true
   opt.wildmode = "longest:full,full"
   opt.smartcase = true
@@ -275,7 +271,7 @@ lvim.builtin.terminal.active = false
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.dap.active = true
-lvim.builtin.project.manual_mode = true
+lvim.builtin.project.active = false
 
 local ts = lvim.builtin.treesitter
   ts.ensure_installed = "maintained"
