@@ -83,7 +83,7 @@ lvim.plugins = {
   requires = {{'jpalardy/vim-slime', opt=true}},
   ft = {'julia', 'python'},
   config=function ()
-    vim.g.slime_cell_delimiter = "^\\s*##"
+    vim.g.slime_cell_delimiter = "^\\s*##\\s*"
     vim.cmd([[
     nmap <C-c><CR> <Plug>SlimeCellsSendAndGoToNext
     nmap <C-c>j <Plug>SlimeCellsNext
@@ -198,10 +198,20 @@ lvim.plugins = {
   config = function() require('onenord').setup({
       italic = { comments = true, keywords = true }
     })
-    -- vim.cmd [[colorscheme onenord]]
-  end}
+  end},
+{"rebelot/kanagawa.nvim"},
+{"olimorris/onedarkpro.nvim",
+  config = function()
+    require("onedarkpro").setup({
+      options = { bold = true, italic = true, underline = true, undercurl = true, }
+    })
+  end},
+{"projekt0n/github-nvim-theme"},
+{"sainnhe/sonokai"},
+
 }
 
+-- lvim.colorscheme = "onedarkpro"
 local opt = vim.opt
   opt.timeoutlen = 300
   opt.foldmethod = "expr"
