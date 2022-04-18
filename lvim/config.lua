@@ -173,7 +173,7 @@ lvim.plugins = {
       show_current_context = true,
       use_treesitter = true,
       show_end_of_line = true,
-      buftype_exclude = {'terminal'},
+      buftype_exclude = {'nofile', 'terminal'},
       filetype_exclude = {'help', 'dashboard'},
     }
   end },
@@ -193,6 +193,8 @@ lvim.plugins = {
   config = function()
     require("colorizer").setup()
   end },
+
+-- COLORSCHEMES
 {"RRethy/nvim-base16"},
 {"rmehri01/onenord.nvim",
   config = function() require('onenord').setup({
@@ -202,16 +204,16 @@ lvim.plugins = {
 {"rebelot/kanagawa.nvim"},
 {"olimorris/onedarkpro.nvim",
   config = function()
-    require("onedarkpro").setup({
-      options = { bold = true, italic = true, underline = true, undercurl = true, }
-    })
+    vim.g.edge_better_performance = 1
+    vim.g.edge_enable_italic = 1
   end},
-{"projekt0n/github-nvim-theme"},
-{"sainnhe/sonokai"},
+{"cpea2506/one_monokai.nvim"},
 
 }
 
--- lvim.colorscheme = "onedarkpro"
+-- local colorscheme = "onedarkpro"
+lvim.colorscheme = colorscheme
+
 local opt = vim.opt
   opt.timeoutlen = 300
   opt.foldmethod = "expr"
@@ -232,6 +234,7 @@ local opt = vim.opt
   vim.g.python3_host_prog = "/usr/bin/python3"
   opt.list = true
   opt.listchars = "eol:↲,trail:·,nbsp:␣"
+  opt.laststatus = 3
 
 local cmd = vim.cmd
   cmd "au TermOpen * setlocal listchars= nonumber norelativenumber"
@@ -284,7 +287,7 @@ lvim.builtin.dap.active = true
 lvim.builtin.project.active = false
 
 local ts = lvim.builtin.treesitter
-  ts.ensure_installed = "maintained"
+  ts.ensure_installed = {"python", "lua", "bash", "vim", "comment"}
   -- ts.highlight.enabled = true
   ts.highlight.use_languagetree = true
   ts.incremental_selection = {
@@ -377,6 +380,7 @@ local ts = lvim.builtin.treesitter
   }
 
 local lualine = lvim.builtin.lualine
+  lualine.options.theme = colorscheme
   lualine.options.section_separators = { left = '', right = ''}
   lualine.options.component_separators = { left = '', right = ''}
   local components = require "lvim.core.lualine.components"
