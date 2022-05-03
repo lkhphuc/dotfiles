@@ -1,293 +1,275 @@
--- vim:foldmethod=indent
-local g = vim.g
+--  __________________
+-- < Bootstrap Packer >
+--  ------------------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
 local fn = vim.fn
-local map = vim.api.nvim_set_keymap
-local execute = vim.api.nvim_command
-local map_opt = {noremap = true, silent = true}
-
-vim.g.mapleader = " "
-
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-  execute 'packadd packer.nvim'
+  PACKER_BOOTSTRAP = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
 end
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerSync', group = packer_group, pattern = 'init.lua', })
+--  _________
+-- < Plugins >
+--  ---------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
+require('packer').startup({ function(use)
+  use 'wbthomason/packer.nvim'
+  use 'lewis6991/impatient.nvim'
+  use 'nvim-lua/plenary.nvim' -- Lua utility helpers
+  -- use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
+  use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
+  use 'williamboman/nvim-lsp-installer' -- Auto install language servers
+  -- use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
+  use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
+  use 'ludovicchabant/vim-gutentags' -- Automatic tags management
 
-require "mappings"
+  -- Completion
+  use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use 'rafamadriz/friendly-snippets'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'quangnguyen30192/cmp-nvim-tags'
+  --use {'tzachar/cmp-tabnine', run='./install.sh' }
+  use "ray-x/cmp-treesitter"
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-nvim-lsp-document-symbol' -- For / search command
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/nvim-cmp'
+  -- Debug Adapters
+  -- use "Pocco81/dap-buddy.nvim"
+  -- use {"theHamsta/nvim-dap-virtual-text",
+  --   config = function() require('nvim-dap-virtual-text').setup() end}
+  -- use {"rcarriga/nvim-dap-ui",
+  --   config = function()
+  --     require('dapui').setup()
+  --     vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
+  --   end}
 
-local packer = require("packer")
-local use = packer.use
-
-packer.startup({function()
-use "wbthomason/packer.nvim"
-
--- text editing
-use "tpope/vim-surround"
-use "tpope/vim-repeat"
-use "tpope/vim-sleuth"  --One plugin everything tab indent
-use "tpope/vim-unimpaired"
-use "junegunn/vim-easy-align"
-  vim.cmd [[xmap ga <Plug>(EasyAlign)]]
-  vim.cmd [[nmap ga <Plug>(EasyAlign)]]
-use "ggandor/lightspeed.nvim"
-use "AndrewRadev/splitjoin.vim" -- gS and gJ
-use "wellle/targets.vim"
-use "simnalamburt/vim-mundo"
-  vim.g.mundo_right = 1
-  map("n", "<leader>u", ":MundoToggle<CR>", map_opt)
-
-use { "neovim/nvim-lspconfig",
-  config = function()
-    require"nvim-lspconfig".config()
-  end, }
-use "kabouzeid/nvim-lspinstall"
--- use { "glepnir/lspsaga.nvim", config = require'lspsaga'.init_lsp_saga() }
--- use {'ray-x/navigator.lua',
---   config = function() require'navigator'.setup() end,
---   requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
-use "ray-x/lsp_signature.nvim"
-
-use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-use { "mfussenegger/nvim-dap-python",
-  config = function()
-    require('dap-python').setup('/usr/local/Caskroom/miniconda/base/envs/debugpy/bin/python')
-  end}
-use "mattboehm/vim-unstack"
-
-
-use { "hrsh7th/nvim-compe",
-  event = "InsertEnter", -- load compe in insert mode only
-  config = function()
-    require "compe".setup {
-      enabled = true,
-      autocomplete = true,
-      debug = false,
-      min_length = 1,
-      preselect = "enable",
-      throttle_time = 80,
-      source_timeout = 200,
-      incomplete_delay = 400,
-      max_abbr_width = 100,
-      max_kind_width = 100,
-      max_menu_width = 100,
-      documentation = true,
-      source = {
-        buffer = {kind = "﬘", true},
-        luasnip = {kind = "﬌", true},
-        nvim_lsp = true,
-        nvim_lua = true,
-        tabnine = {
-          priority = 0,
-        }
-      }
+  -- UI
+  use 'nvim-lua/popup.nvim'
+  use {'akinsho/bufferline.nvim',
+    config = function()
+      require("bufferline").setup({
+        diagnostic = 'nvim-lsp',
+      })
+    end}
+  use 'nvim-lualine/lualine.nvim'
+  use 'kyazdani42/nvim-tree.lua'
+  use 'kyazdani42/nvim-web-devicons'
+  use 'onsails/lspkind.nvim' -- Add pictogram to LSP
+  use 'stevearc/dressing.nvim'
+  use 'rcarriga/nvim-notify'
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use 'nvim-telescope/telescope.nvim'
+  use { "lukas-reineke/indent-blankline.nvim", event = "BufRead",
+    config = function()
+      require("indent_blankline").setup({
+        show_current_context = true,
+        use_treesitter       = true,
+        show_end_of_line     = true,
+      })
+    end }
+  use { "karb94/neoscroll.nvim",
+    config = function()
+      require("neoscroll").setup()
+      require('neoscroll.config').set_mappings({
+        ['<PageUp>']   = { 'scroll', { '-vim.wo.scroll', 'false', '250' } },
+        ['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'false', '250' } },
+      })
+    end }
+  use { "yamatsum/nvim-cursorline", event = "BufRead" }
+  use { "luukvbaal/stabilize.nvim",
+    config = function() require("stabilize").setup() end }
+  use "SmiteshP/nvim-gps"
+  use 'kevinhwang91/nvim-bqf'
+  use "kevinhwang91/nvim-hlslens" -- show number beside search highlight
+  use "romainl/vim-cool" -- Handle highlight search automatically
+  use { "norcalli/nvim-colorizer.lua", event = "BufRead",
+    config = function() require("colorizer").setup() end }
+  use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend',
+    config = function()
+      require('pretty-fold').setup {}
+      require('pretty-fold.preview').setup({ key = 'l', })
+    end }
+  use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
+    config = function() require("numb").setup() end, }
+  use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
+  -- Use treesitter to always show Class, function on top when overscrolled
+  use { "romgrk/nvim-treesitter-context", event = "BufRead" }
+  use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
+  use { "ray-x/lsp_signature.nvim",
+    config = function() require('lsp_signature').setup() end }
+  use { "folke/trouble.nvim", event = "BufEnter",
+    -- config = function()
+    -- lvim.builtin.which_key.mappings["x"] = {
+    --   name = "+Trouble",
+    --   x = { "<cmd>TroubleToggle<CR>", "Trouble Toggle" },
+    --   r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    --   f = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" },
+    --   d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Diagnosticss" },
+    --   q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
+    --   l = { "<cmd>TroubleToggle loclist<cr>", "LocationList" },
+    --   w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
+    -- } end
   }
-  end ,
-  wants = {"LuaSnip"}, }
-use {"tzachar/compe-tabnine", run="./install.sh"}
-use "rafamadriz/friendly-snippets"
-use { "L3MON4D3/LuaSnip",
-  wants = "friendly-snippets",
-  event = "InsertCharPre",
-  config = function()
-    require("luasnip").config.set_config({
-        history = true,
-        updateevents = "TextChanged,TextChangedI"
-    })
-    require("luasnip/loaders/from_vscode").load()
+  use { "weilbith/nvim-code-action-menu" }
+  use { "mattboehm/vim-unstack",
+    key = "<leader>us", command = ":unstack*",
+    config = function() vim.g.unstack_mapkey = "<leader>us" end, }
+  use { "kosayoda/nvim-lightbulb", event = "InsertLeave" }
+
+  -- Git
+  use 'tpope/vim-fugitive' -- Git commands in nvim
+  -- use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
+  use { "sindrets/diffview.nvim", event = "CmdlineEnter" }
+  use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim',
+    config = function() require('my.gitsigns') end }
+
+
+  -- Terminal
+  use { "nikvdp/neomux", event = "BufEnter", }
+  use { "voldikss/vim-floaterm", config = function()
+    vim.g.floaterm_keymap_next   = '<End>' -- Hyper+o
+    vim.g.floaterm_keymap_prev   = '<S-End>' -- Hyper+Command+o
+    vim.g.floaterm_keymap_new    = '<S-Home>' -- Hyper+Command+i
+    vim.g.floaterm_keymap_toggle = '<Home>' -- Hyper+i
+    vim.g.floaterm_position      = 'center'
+    vim.g.floaterm_width         = 0.9
+    vim.g.floaterm_height        = 0.9
+    vim.keymap.set("n", "<leader>lg", "<CMD>FloatermNew lazygit<CR>")
+    vim.keymap.set("n", "<leader>lf", "<Cmd>FloatermNew lf <CR>")
+    -- vim.cmd [[nnoremap <leader>lg <Cmd>FloatermNew lazygit <CR>]]
+    -- vim.cmd [[nnoremap <leader>lf <Cmd>FloatermNew lf <CR>]]
   end }
 
-use { "nvim-treesitter/nvim-treesitter",
-  run = ":TSUpdate",
-  config = require("treesitter-nvim").config(), }
-use "nvim-treesitter/nvim-treesitter-refactor"
-use "nvim-treesitter/nvim-treesitter-textobjects"
-use "romgrk/nvim-treesitter-context"
-use "p00f/nvim-ts-rainbow"
-use 'JoosepAlviste/nvim-ts-context-commentstring'
-use "numirias/semshi"
+  use { "jpalardy/vim-slime",
+    config = function()
+      vim.g.slime_target = "neovim"
+      vim.g.slime_python_ipython = 1
+    end }
+  use { "klafyvel/vim-slime-cells",
+    requires = { { 'jpalardy/vim-slime', opt = true } },
+    ft = { 'julia', 'python' },
+    config = function()
+      vim.g.slime_cell_delimiter = "^\\s*##\\s*"
+      vim.cmd([[
+      nmap <C-c><CR> <Plug>SlimeCellsSendAndGoToNext
+      nmap <C-c>j <Plug>SlimeCellsNext
+      nmap <C-c>k <Plug>SlimeCellsPrev
+      ]])
+    end
+  }
+  use { "ojroques/vim-oscyank", event = "CursorMoved",
+    config = function()
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        pattern = "*",
+        command = "if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif"
+      })
+    end }
+  use 'antoinemadec/FixCursorHold.nvim'
+  -- use { "nvim-treesitter/playground", event = "BufRead", }
+  use { 'David-Kunz/treesitter-unit', event = "BufRead",
+    config = function()
+      vim.keymap.set('x', 'iu', ':lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set('x', 'au', ':lua require"treesitter-unit".select(true)<CR>')
+      vim.keymap.set('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>')
+      vim.keymap.set('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>')
+    end }
 
-use {"sbdchd/neoformat", cmd = "Neoformat"}
+  -- Text Editting
+  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup({}) end }
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup() end }
+  use "tpope/vim-surround"
+  use "tpope/vim-repeat"
+  use "tpope/vim-sleuth" --One plugin everything tab indent
+  use "tpope/vim-unimpaired"
+  use "andymass/vim-matchup"
+  use "junegunn/vim-easy-align"
+  use "AndrewRadev/splitjoin.vim" -- gS and gJ
+  -- {"mg979/vim-visual-multi"},
+  use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
+  use "kana/vim-textobj-user"
+  use "Julian/vim-textobj-variable-segment" -- iv_av_text_objects
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
+    config = function() require("my.tabout") end, }
 
-use "folke/which-key.nvim"
-use "simrat39/symbols-outline.nvim"
-use "sindrets/diffview.nvim"
+  use 'mrjones2014/legendary.nvim' -- Command Pallate
+  use 'folke/which-key.nvim'
 
-use "kyazdani42/nvim-web-devicons"
-use "glepnir/galaxyline.nvim"
-use { "akinsho/nvim-bufferline.lua",
-  config = require("bufferline").setup() }
-  map("n", "]b", [[<Cmd>BufferLineCycleNext<CR>]], map_opt)
-  map("n", "[b", [[<Cmd>BufferLineCyclePrev<CR>]], map_opt)
-  map("n", "gb", [[<Cmd>BufferLinePick<CR>]], map_opt)
-use "kyazdani42/nvim-tree.lua"
-  map("n", "<C-n>", ":NvimTreeToggle<CR>", map_opt)
-use "liuchengxu/vista.vim"
-  map("n", "<C-m>", ":Vista<CR>", map_opt)
-use { "nvim-telescope/telescope.nvim",
-  requires = {
-    {"nvim-lua/popup.nvim"},
-    {"nvim-lua/plenary.nvim"},
-    {"nvim-telescope/telescope-fzf-native.nvim", run = "make"},
-    {"nvim-telescope/telescope-media-files.nvim"}
-  },
-  cmd = "Telescope",
-  config = function()
-    require("telescope-nvim").config()
-  end }
-  map("n", "<Leader>t",  [[<Cmd>Telescope<CR>]],                           map_opt)
-  map("n", "<Leader>ff", [[<Cmd> Telescope find_files <CR>]],              map_opt)
-  map("n", "<Leader>fo", [[<Cmd>Telescope oldfiles<CR>]],                  map_opt)
-  map("n", "<Leader>fg", [[<Cmd> Telescope live_grep<CR>]],                map_opt)
-  map("n", "<Leader>fw", [[<Cmd> Telescope grep_string<CR>]],              map_opt)
-  map("n", "<Leader>fb", [[<Cmd>Telescope buffers<CR>]],                   map_opt)
-  map("n", "<Leader>fh", [[<Cmd>Telescope help_tags<CR>]],                 map_opt)
-  map("n", "<Leader>fm", [[<Cmd>Telescope marks<CR>]],                     map_opt)
-  map("n", "<Leader>fc", [[<Cmd>Telescope commands<CR>]],                  map_opt)
-  map("n", "<Leader>fz", [[<Cmd>Telescope current_buffer_fuzzy_find<CR>]], map_opt)
+  -- Colorscheme
+  use 'mjlbach/onedark.nvim' -- Theme inspired by Atom
+  use { "RRethy/nvim-base16" }
+  -- use { "rmehri01/onenord.nvim",
+  --   config = require('onenord').setup({
+  --     italic = { comments = true, keywords = true }
+  --   }) }
+  use { "rebelot/kanagawa.nvim" }
+  use { "olimorris/onedarkpro.nvim",
+    config = function()
+      require("onedarkpro").setup({
+        options = { bold = true, italic = true, underline = true, undercurl = true, }
+      })
+    end }
+  use "projekt0n/github-nvim-theme"
+  use { "sainnhe/edge",
+    config = function()
+      vim.g.edge_better_performance = 1
+      vim.g.edge_enable_italic = 1
+    end }
+  use "cpea2506/one_monokai.nvim"
 
-  map("n", "<Leader>gs", [[<Cmd> Telescope git_status <CR>]], map_opt)
-  map("n", "<Leader>gb", [[<Cmd> Telescope git_bcommits <CR>]], map_opt)
-  map("n", "<Leader>gc", [[<Cmd> Telescope git_commits <CR>]], map_opt)
-
-  map("n", "gr", [[<Cmd>Telescope lsp_references<CR>]], map_opt)
-  map("n", "<Leader>ts", [[<Cmd>Telescope treesitter<CR>]], map_opt)
-
-  map("n", "<Leader>fp", [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]], map_opt)
-
-use { "lewis6991/gitsigns.nvim",
-  event = "BufRead",
-  config = function()
-    require("gitsigns-nvim").config()
-  end }
-use {'pwntester/octo.nvim', config=function() require"octo".setup() end}
-
-use "nikvdp/neomux"
-  vim.cmd([[au BufEnter term://* set nonumber norelativenumber  ]])
-use "voldikss/vim-floaterm"
-  vim.g.floaterm_keymap_next   = '<End>'   -- Hyper+o
-  vim.g.floaterm_keymap_prev   = '<S-End>' -- Hyper+Command+o
-  vim.g.floaterm_keymap_new    = '<S-Home>'-- Hyper+Command+i
-  vim.g.floaterm_keymap_toggle = '<Home>'  -- Hyper+i
-  vim.g.floaterm_position = 'center'
-  vim.g.floaterm_width = 0.9
-  vim.g.floaterm_height = 0.9
-  map("n", "<leader>lf", [[<Cmd> FloatermNew lf <CR>]], map_opt)
-  map("n", "<leader>lg", [[<Cmd> FloatermNew lazygit <CR>]], map_opt)
-use "jpalardy/vim-slime"
-  vim.g.slime_target = "neovim"
-  vim.g.slime_no_mappings = 1
-  vim.g.slime_python_ipython = 1
-  vim.api.nvim_set_keymap("x", "<S-Enter>", [[<Plug>SlimeRegionSend<CR>]], {})
-  vim.api.nvim_set_keymap("n", "<S-Enter>", [[<Plug>SlimeParagraphSend<CR>]], {})
-  vim.api.nvim_set_keymap("n", "<leader>sc", [[<Plug>SlimeConfig<CR>]], {})
-  -- vim.api.nvim_set_keymap("n", "<S-Enter>", [[<Plug>(SlimeMotionSend)]], {})
-
-use { "windwp/nvim-autopairs",
-  event = "InsertEnter",
-  config = function()
-    require("nvim-autopairs").setup()
-  end }
-
-use {"andymass/vim-matchup", event = "CursorMoved"}
-
-use { "terrortylor/nvim-comment",
-  event = "BufRead",
-  config = function()
-    require("nvim_comment").setup()
-  end }
-
-use {"tweekmonster/startuptime.vim", cmd = "StartupTime"}
-use "Iron-E/nvim-libmodal"
-use "Iron-E/nvim-tabmode"
-use "famiu/bufdelete.nvim"
-
-use { "karb94/neoscroll.nvim",
-  event = "WinScrolled",
-  config = function()
-    require("neoscroll").setup({hide_cursor=false})
-    local t = {}
-    t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'false', '250'}}
-    t['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'false', '250'}}
-    require('neoscroll.config').set_mappings(t)
-  end }
-
-use { "kdav5758/TrueZen.nvim",
-  cmd = {"TZAtaraxis", "TZMinimalist"},
-  config = function()
-    require("zenmode").config()
-  end }
-use { "lukas-reineke/indent-blankline.nvim", event = "BufRead" }
-  vim.g.indent_blankline_char = "▏"
-  vim.g.indent_blankline_filetype_exclude = {"help", "terminal", "dashboard"}
-  vim.g.indent_blankline_buftype_exclude = {"terminal"}
-  vim.g.indent_blankline_use_treesitter = true
-  vim.g.indent_blankline_show_current_context = true
-
-use "ojroques/vim-oscyank"
-  execute( [[ autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif ]])
-use "yamatsum/nvim-cursorline" -- Highlight words and lines on the cursor
-use { "norcalli/nvim-colorizer.lua",
-  event = "BufRead",
-  config = function()
-    require("colorizer").setup()
-    vim.cmd("ColorizerReloadAllBuffers")
-  end }
-use "machakann/vim-highlightedyank"
-use "romainl/vim-cool"  -- Handle highlight search automatically
-
-use "navarasu/onedark.nvim"
-use "RRethy/nvim-base16"
-
-
+  if PACKER_BOOTSTRAP then
+    require('packer').sync()
+  end
 end,
-  config = {
-    display = { open_fn = require('packer.util').float }
-  } })
+config = {
+  max_jobs = 70, -- bugs, has to specificed a number
+  display = { open_fn = require("packer.util").float },
+} })
 
-local opt = vim.opt
-  opt.title = true
-  opt.titlestring = "%<%F"
-  opt.titlelen = 70
-  -- vim.cmd([[auto BufEnter * let &titlestring =  substitute(hostname(), '\..*$', '', '').":".expand("%:f")]])
+require('impatient')
+require("my.lsp")
+require('my.cmp')
+require("my.lualine")
+require("my.telescope")
+require("my.treesitter")
+require("my.options")
+require("my.keymaps")
 
-  opt.foldmethod = "expr"
-  opt.foldexpr = "nvim_treesitter#foldexpr()"
-  opt.breakindent = true
-  opt.lbr = true
-  opt.breakindentopt = "shift:1"
-  opt.undofile = true
-  opt.wildmode = "longest:full,full"
-  opt.smartcase = true
+-- Visual command
+vim.cmd [[
+  colorscheme onedark |
+  highlight BufferCurrent gui=bold,italic |
+  highlight TSKeyword gui=bold,italic |
+  highlight TSKeywordFunction gui=bold,italic |
+  highlight TSVariableBuiltin gui=italic |
+  highlight TSInclude gui=bold,italic
+]]
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  command = " setlocal listchars= nonumber norelativenumber",
+})
+-- Highlight on yank
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
 
-  opt.ruler = false
-  opt.hidden = true
-  opt.ignorecase = true
-  opt.splitbelow = true
-  opt.splitright = true
-  opt.termguicolors = true
-  opt.cul = true
-  opt.mouse = "a"
-  opt.signcolumn = "yes"
-  opt.cmdheight = 1
-  opt.updatetime = 250 -- update interval for gitsigns
-  opt.clipboard = "unnamedplus"
-  opt.path = opt.path + "**"
-
-  -- Numbers
-  opt.number = true
-  opt.numberwidth = 2
-  opt.relativenumber = true
-
-  -- for indenline
-  opt.expandtab = true
-  opt.shiftwidth = 2
-  opt.smartindent = true
-
--- Provider
-g.python3_host_prog = "/usr/bin/python3"
-
-g.theme = "onedark"
-require "statusline"
-require "file-icons"
-require "highlights"
-vim.cmd "colorscheme base16-onedark"
+-- vim: ts=2 sts=2 sw=2 et
