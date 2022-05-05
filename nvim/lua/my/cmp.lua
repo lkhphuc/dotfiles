@@ -13,8 +13,8 @@ cmp.setup {
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-u>'] = cmp.mapping.scroll_docs(4),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping {
       i = cmp.mapping.abort(),
@@ -42,25 +42,39 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
+    ['<C-l>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        return cmp.complete_common_string()
+      end
+      fallback()
+    end, { 'i', 'c' }),
+
   }),
   formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = require('lspkind').cmp_format(),
-    menu = {
-      nvim_lsp = "[LSP]",
-      luasnip = "[Snippet]",
-      buffer = "[Buffer]",
-      path = "[Path]",
-    }
+    -- fields = { "kind", "abbr", "menu" },
+    format = require('lspkind').cmp_format({
+      mode = "symbol_text",
+      menu = {
+        nvim_lsp = " ",
+        luasnip = " ",
+        treesitter = " ",
+        tags = " ",
+        buffer = " ",
+        path = " ",
+        cmp_tabnine = " ",
+        rg = " ",
+      },
+    }),
   },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'treesitter' },
     { name = 'tags' },
-    --{ name = 'cmp_tabnine' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'cmp_tabnine' },
+    { name = 'rg' },
   },
   view = {
     entries = {name = 'custom', selection_order = 'near_cursor' }
@@ -82,3 +96,6 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))

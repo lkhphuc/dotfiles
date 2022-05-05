@@ -13,7 +13,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerSync', group = packer_group, pattern = 'init.lua', })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua', })
 --  _________
 -- < Plugins >
 --  ---------
@@ -39,6 +39,7 @@ require('packer').startup({ function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'quangnguyen30192/cmp-nvim-tags'
   --use {'tzachar/cmp-tabnine', run='./install.sh' }
+  use 'lukas-reineke/cmp-rg'
   use "ray-x/cmp-treesitter"
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-nvim-lsp-document-symbol' -- For / search command
@@ -55,6 +56,10 @@ require('packer').startup({ function(use)
   --     require('dapui').setup()
   --     vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
   --   end}
+  -- Languages
+  use "eddiebergman/nvim-treesitter-pyfold"
+  use {"blueyed/semshi", branch="handle-ColorScheme",
+    run="<cmd>UpdateRemotePlugin<cr>"}
 
   -- UI
   use 'nvim-lua/popup.nvim'
@@ -64,8 +69,15 @@ require('packer').startup({ function(use)
         diagnostic = 'nvim-lsp',
       })
     end}
+  use 'moll/vim-bbye'
   use 'nvim-lualine/lualine.nvim'
+-- SideBars
   use 'kyazdani42/nvim-tree.lua'
+  use {"simrat39/symbols-outline.nvim",
+    config = function() vim.cmd[[nmap <C-m> :SymbolsOutline<CR>]] end}
+  use {"simnalamburt/vim-mundo",
+    key = "<leader>uu", command = ":MundoToggle",
+    config = function() vim.cmd [[nmap <leader>u :MundoToggle<CR>]] end}
   use 'kyazdani42/nvim-web-devicons'
   use 'onsails/lspkind.nvim' -- Add pictogram to LSP
   use 'stevearc/dressing.nvim'
@@ -98,10 +110,10 @@ require('packer').startup({ function(use)
   use { "norcalli/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup() end }
   use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend',
-    config = function()
-      require('pretty-fold').setup {}
-      require('pretty-fold.preview').setup({ key = 'l', })
-    end }
+   config = function()
+      require('pretty-fold').setup()
+      require('pretty-fold.preview').setup({border = "shadow"})
+   end }
   use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
     config = function() require("numb").setup() end, }
   use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
@@ -111,17 +123,9 @@ require('packer').startup({ function(use)
   use { "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup() end }
   use { "folke/trouble.nvim", event = "BufEnter",
-    -- config = function()
-    -- lvim.builtin.which_key.mappings["x"] = {
-    --   name = "+Trouble",
-    --   x = { "<cmd>TroubleToggle<CR>", "Trouble Toggle" },
-    --   r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
-    --   f = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" },
-    --   d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Diagnosticss" },
-    --   q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
-    --   l = { "<cmd>TroubleToggle loclist<cr>", "LocationList" },
-    --   w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
-    -- } end
+    config = function()
+      require("trouble").setup()
+    end
   }
   use { "weilbith/nvim-code-action-menu" }
   use { "mattboehm/vim-unstack",
@@ -188,15 +192,42 @@ require('packer').startup({ function(use)
     end }
 
   -- Text Editting
-  use { 'numToStr/Comment.nvim', config = function() require('Comment').setup({}) end }
+  use { 'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup({
+         pre_hook = function(ctx)
+          local U = require 'Comment.utils'
+
+          local location = nil
+          if ctx.ctype == U.ctype.block then
+            location = require('ts_context_commentstring.utils').get_cursor_location()
+          elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+            location = require('ts_context_commentstring.utils').get_visual_start_location()
+          end
+
+          return require('ts_context_commentstring.internal').calculate_commentstring {
+            key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
+            location = location,
+    }
+  end,
+      })
+    end,
+  }
   use 'JoosepAlviste/nvim-ts-context-commentstring'
-  use { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup() end }
+  use { "windwp/nvim-autopairs",
+    config = function()
+      require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
+    end }
+  use {"ggandor/lightspeed.nvim", event="CursorMoved"}
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
   use "tpope/vim-sleuth" --One plugin everything tab indent
   use "tpope/vim-unimpaired"
   use "andymass/vim-matchup"
-  use "junegunn/vim-easy-align"
+  use {"junegunn/vim-easy-align", 
+    config = function()
+      vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
+    end }
   use "AndrewRadev/splitjoin.vim" -- gS and gJ
   -- {"mg979/vim-visual-multi"},
   use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
@@ -236,10 +267,11 @@ require('packer').startup({ function(use)
   end
 end,
 config = {
-  max_jobs = 70, -- bugs, has to specificed a number
+  max_jobs = 69, -- bugs, has to specificed a number
   display = { open_fn = require("packer.util").float },
 } })
 
+require('legendary').setup()
 require('impatient')
 require("my.lsp")
 require('my.cmp')
@@ -251,7 +283,7 @@ require("my.keymaps")
 
 -- Visual command
 vim.cmd [[
-  colorscheme onedark |
+  colorscheme kanagawa |
   highlight BufferCurrent gui=bold,italic |
   highlight TSKeyword gui=bold,italic |
   highlight TSKeywordFunction gui=bold,italic |

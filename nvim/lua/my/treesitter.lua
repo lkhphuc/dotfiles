@@ -1,7 +1,7 @@
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
-  ensure_installed = {"python", "lua", "bash", "vim", "comment"},
+  ensure_installed = {"python", "lua", "bash", "vim", "comment", "make", "regex", "yaml", "toml"},
   highlight = {
     enable = true, -- false will disable the whole extension
     -- use_languagetree = true,  -- What is this for?
@@ -11,11 +11,12 @@ require('nvim-treesitter.configs').setup {
     keymaps = {
       init_selection = "+",
       node_incremental = "+",
-      scope_incremental = "=",
+      -- scope_incremental = "=",
       node_decremental = "_",
     },
   },
   indent = { enable = true, },
+  autopair = { enable = true },
   rainbow = { enable = true, },
   refactor = {
     highlight_definitions= { enable = true},
@@ -88,6 +89,10 @@ require('nvim-treesitter.configs').setup {
     },
   },
   matchup = { enable = true },
+  context_commentstring = {
+    enable = true,
+    -- enable_autocmd = false,  -- Let Comment.nvim handles
+  },
   pyfold = {
     enable = true,
     custom_foldtext = true,

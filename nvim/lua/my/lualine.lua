@@ -86,22 +86,22 @@ local function env_cleanup(venv)
   return venv
 end
 
-python_env = {
+local python_env = {
   function()
     if vim.bo.filetype == "python" then
       local venv = os.getenv "CONDA_DEFAULT_ENV"
       if venv then
-        return string.format("  %s", env_cleanup(venv))
+        return string.format("(%s)", env_cleanup(venv))
       end
       venv = os.getenv "VIRTUAL_ENV"
       if venv then
-        return string.format("  %s", env_cleanup(venv))
+        return string.format("(%s)", env_cleanup(venv))
       end
       return ""
     end
     return ""
   end,
-  color = { fg = colors.cyan },
+  -- color = { fg = colors.cyan },
   cond = hide_in_width,
 }
 local treesitter = {
@@ -116,37 +116,12 @@ local treesitter = {
   cond = hide_in_width,
 }
 local lsp = {
-  function(msg)
-    msg = msg or "No LS"
-    local buf_clients = vim.lsp.buf_get_clients()
-    if next(buf_clients) == nil then
-      -- TODO: clean up this if statement
-      if type(msg) == "boolean" or #msg == 0 then
-	      return "No LS"
-      end
-      return msg
+  function(_)
+    local b = vim.api.nvim_get_current_buf()
+    if vim.lsp.buf_get_clients(0) == nil then
+      return ""
     end
-    local buf_ft = vim.bo.filetype
-    local buf_client_names = {}
-
-    -- add client
-    for _, client in pairs(buf_clients) do
-      if client.name ~= "null-ls" then
-	      table.insert(buf_client_names, client.name)
-      end
-    end
-
-    -- add formatter
-    local formatters = require "lvim.lsp.null-ls.formatters"
-    local supported_formatters = formatters.list_registered(buf_ft)
-    vim.list_extend(buf_client_names, supported_formatters)
-
-    -- add linter
-    local linters = require "lvim.lsp.null-ls.linters"
-    local supported_linters = linters.list_registered(buf_ft)
-    vim.list_extend(buf_client_names, supported_linters)
-
-    return "[" .. table.concat(buf_client_names, ", ") .. "]"
+    return " "
   end,
   color = { gui = "bold" },
   cond = hide_in_width,
@@ -154,13 +129,13 @@ local lsp = {
 local spaces = {
     function()
       if not vim.api.nvim_buf_get_option(0, "expandtab") then
-        return "Tab size: " .. vim.api.nvim_buf_get_option(0, "tabstop") .. " "
+        return " " .. vim.api.nvim_buf_get_option(0, "tabstop")
       end
       local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
       if size == 0 then
         size = vim.api.nvim_buf_get_option(0, "tabstop")
       end
-      return "Spaces: " .. size .. " "
+      return " " .. size
     end,
     cond = hide_in_width,
     color = {},
@@ -177,15 +152,15 @@ require('lualine').setup {
     globalstatus = true,
   },
   sections = {
-    lualine_a = { { function() return " " end, padding = 0 } },
-    lualine_b = { branch, diff } ,
+    -- lualine_a = { { function() return " " end, padding = 0 } },
+    lualine_a = { branch, } ,
+    lualine_b = { diff, 'filename' } ,
     lualine_c = {
-      { 'filename', fmt = trunc(90, 30, 50, false) },
       { gps.get_location, cond = gps.is_available },
     },
-    lualine_x = { diagnostics, python_env, treesitter },
-    lualine_y = { 'encoding', 'fileformat', 'filetype' },
-    lualine_z = { 'progress', 'location' , window }
+    lualine_x = { diagnostics },
+    lualine_y = { treesitter, lsp,  python_env, 'filetype'},
+    lualine_z = { spaces, 'progress', window }
   },
   inactive_sections = {
     lualine_a = {},

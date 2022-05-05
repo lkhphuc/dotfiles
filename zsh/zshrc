@@ -15,6 +15,7 @@ znap source junegunn/fzf shell/{completion,key-bindings}.zsh
 znap install Homebrew/brew
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 1
+  zstyle ':autocomplete:*' insert-unambiguous yes
   zstyle ':autocomplete:*' widget-style menu-select
   zstyle ':autocomplete:*' fzf-completion yes
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)

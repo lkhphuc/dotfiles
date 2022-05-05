@@ -1,4 +1,62 @@
-require('legendary').setup()
+--Remap space as leader key
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Normal --
+-- Better window navigation
+vim.keymap.set({"n", "t"}, "<C-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set({"n", "t"}, "<C-j>", "<C-\\><C-n><C-w>j" )
+vim.keymap.set({"n", "t"}, "<C-k>", "<C-\\><C-n><C-w>k")
+vim.keymap.set({"n", "t"}, "<C-l>", "<C-\\><C-n><C-w>l")
+-- Resize with arrows
+vim.keymap.set("n", "<C-Up>", ":resize -2<CR>")
+vim.keymap.set("n", "<C-Down>", ":resize +2<CR>")
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>")
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
+-- Move text up and down
+vim.keymap.set("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
+vim.keymap.set("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
+
+-- Visual --
+-- Stay in indent mode
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+-- Mov.sete text up and down
+vim.keymap.set("v", "<A-j>", ":m .+1<CR>==")
+vim.keymap.set("v", "<A-k>", ":m .-2<CR>==")
+vim.keymap.set("v", "p", '"_dP')
+vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv")
+vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv")
+vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv")
+vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
+
+--Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set({"n", "i"}, "<C-s>", ":w<CR>")
+vim.keymap.set("n", "gp", "<cmd>BufferLinePick<CR>")
+vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
+vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
+--vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
+-- Yank to system clipboard
+vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
+vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
+vim.keymap.set("n", "<leader><space>", "zA")
+-- Tab pages
+vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
+vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
+
+-- vim.keymap.set({"n", "v"}, "ga", "<cmd>EasyAlign<cr>")
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- vim.keymap.set('n', '<leader>so', "lua require('telescope.builtin').lsp_document_symbols", opts)
+vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+
 local which_key = require("which-key")
 
 local setup = {
@@ -53,7 +111,7 @@ local setup = {
     spacing = 3, -- spacing between columns
     align = "left", -- align columns left, center or right
   },
-  ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
+  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
   triggers = "auto", -- automatically setup triggers
@@ -170,73 +228,17 @@ local mappings = {
   },
 
   t = {
-    name = "Terminal",
-    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-    u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-    t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-    p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-    f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-  },
+    name = "Trouble",
+    x = { "<cmd>TroubleToggle<CR>", "Trouble Toggle" },
+    r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    f = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" },
+    d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Diagnosticss" },
+    q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "LocationList" },
+    w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
+  }
 }
 
 which_key.setup(setup)
 which_key.register(mappings, opts)
 
---Remap space as leader key
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Normal --
--- Better window navigation
-vim.keymap.set({"n", "t"}, "<C-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set({"n", "t"}, "<C-j>", "<C-\\><C-n><C-w>j" )
-vim.keymap.set({"n", "t"}, "<C-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set({"n", "t"}, "<C-l>", "<C-\\><C-n><C-w>l")
--- Resize with arrows
-vim.keymap.set("n", "<C-Up>", ":resize -2<CR>")
-vim.keymap.set("n", "<C-Down>", ":resize +2<CR>")
-vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>")
-vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
--- Move text up and down
-vim.keymap.set("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
-vim.keymap.set("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
-
--- Visual --
--- Stay in indent mode
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
--- Mov.sete text up and down
-vim.keymap.set("v", "<A-j>", ":m .+1<CR>==")
-vim.keymap.set("v", "<A-k>", ":m .-2<CR>==")
-vim.keymap.set("v", "p", '"_dP')
-vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv")
-vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv")
-vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv")
-vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
-
---Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set({"n", "i"}, "<C-s>", ":w<CR>")
-vim.keymap.set("n", "gp", "<cmd>BufferLinePick<CR>")
-vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
-vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
---vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
--- Yank to system clipboard
-vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
-vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
-vim.keymap.set("n", "<leader><space>", "zA")
--- Tab pages
-vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
-vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-
--- vim.keymap.set('n', '<leader>so', "lua require('telescope.builtin').lsp_document_symbols", opts)
-vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
