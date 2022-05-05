@@ -28,6 +28,7 @@ znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 znap source ajeetdsouza/zoxide
+znap source wez/wezterm assets/shell-integration/wezterm.sh
 
 znap eval pip 'python3 -m pip completion --zsh'
 znap eval kitty 'kitty + complete setup zsh'
@@ -50,3 +51,4 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=2000
 
 source $HOME/.config/lf/lficons.rc
+[ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"

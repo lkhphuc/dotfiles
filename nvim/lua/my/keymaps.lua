@@ -9,6 +9,7 @@ vim.keymap.set({"n", "t"}, "<C-h>", "<C-\\><C-n><C-w>h")
 vim.keymap.set({"n", "t"}, "<C-j>", "<C-\\><C-n><C-w>j" )
 vim.keymap.set({"n", "t"}, "<C-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set({"n", "t"}, "<C-l>", "<C-\\><C-n><C-w>l")
+
 -- Resize with arrows
 vim.keymap.set("n", "<C-Up>", ":resize -2<CR>")
 vim.keymap.set("n", "<C-Down>", ":resize +2<CR>")
@@ -35,8 +36,6 @@ vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set({"n", "i"}, "<C-s>", ":w<CR>")
-vim.keymap.set("n", "gp", "<cmd>BufferLinePick<CR>")
-vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
 vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 -- Yank to system clipboard
@@ -47,19 +46,13 @@ vim.keymap.set("n", "<leader><space>", "zA")
 vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
 vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
 
--- vim.keymap.set({"n", "v"}, "ga", "<cmd>EasyAlign<cr>")
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- vim.keymap.set('n', '<leader>so', "lua require('telescope.builtin').lsp_document_symbols", opts)
 vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 
 local which_key = require("which-key")
 
-local setup = {
+which_key.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -123,7 +116,30 @@ local setup = {
     i = { "j", "k" },
     v = { "j", "k" },
   },
+})
+
+local mappings = {
+  ["]"] = { name = "Next",
+    g = {"<CMD>Gitsigns next_hunk<CR>", "git hunk"},
+    d = {"<CMD>lua vim.diagnostic.goto_next()<CR>", "diagnostic"},
+  },
+  ["["] = { name = "Previous",
+    g = {"<CMD>Gitsigns prev_hunk<CR>", "Previous git hunk"},
+    d = {"<CMD>lua vim.diagnostic.goto_prev()<CR>", "diagnostic"},
+  },
+  g = { name = "Go ",
+    a = { "<cmd>EasyAlign<cr>", "Align"},
+    p = {"<cmd>BufferLinePick<CR>", "buffer"},
+  }
 }
+which_key.register(mappings, {
+  mode = "n", -- NORMAL mode
+  prefix = "",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+})
 
 local opts = {
   mode = "n", -- NORMAL mode
@@ -134,12 +150,13 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
+local leader_mappings = {
   -- ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["b"] = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
+  C = { "<cmd>vsplit ~/.config/nvim/init.lua<CR>", "Open config."},
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
@@ -163,7 +180,7 @@ local mappings = {
 
   g = {
     name = "Git",
-    g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+    g = { "<cmd>lua <CMD>FloatermNew lazygit<CR>", "Lazygit" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
@@ -207,6 +224,7 @@ local mappings = {
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
+    o = { "<cmd>vim.diagnostic.open_float()<cr>", "Open diagnostics in float window"},
     q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
@@ -238,7 +256,4 @@ local mappings = {
     w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
   }
 }
-
-which_key.setup(setup)
-which_key.register(mappings, opts)
-
+which_key.register(leader_mappings, opts)

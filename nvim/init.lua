@@ -11,7 +11,7 @@ local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
 end
--- Autocommand that reloads neovim whenever you save the plugins.lua file
+-- Autocommand that reloads neovim whenever you save this file
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua', })
 --  _________
@@ -72,7 +72,12 @@ require('packer').startup({ function(use)
   use 'moll/vim-bbye'
   use 'nvim-lualine/lualine.nvim'
 -- SideBars
-  use 'kyazdani42/nvim-tree.lua'
+  use {'kyazdani42/nvim-tree.lua',
+    config = function()
+      require("nvim-tree").setup({
+        diagnostics = { enable = true }
+      })
+    end }
   use {"simrat39/symbols-outline.nvim",
     config = function() vim.cmd[[nmap <C-m> :SymbolsOutline<CR>]] end}
   use {"simnalamburt/vim-mundo",
@@ -111,7 +116,7 @@ require('packer').startup({ function(use)
     config = function() require("colorizer").setup() end }
   use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend',
    config = function()
-      require('pretty-fold').setup()
+      require('pretty-fold').setup {}
       require('pretty-fold.preview').setup({border = "shadow"})
    end }
   use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
@@ -142,6 +147,7 @@ require('packer').startup({ function(use)
 
 
   -- Terminal
+  use 'christoomey/vim-tmux-navigator'
   use { "nikvdp/neomux", event = "BufEnter", }
   use { "voldikss/vim-floaterm", config = function()
     vim.g.floaterm_keymap_next   = '<End>' -- Hyper+o
@@ -224,10 +230,7 @@ require('packer').startup({ function(use)
   use "tpope/vim-sleuth" --One plugin everything tab indent
   use "tpope/vim-unimpaired"
   use "andymass/vim-matchup"
-  use {"junegunn/vim-easy-align", 
-    config = function()
-      vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
-    end }
+  use "junegunn/vim-easy-align"
   use "AndrewRadev/splitjoin.vim" -- gS and gJ
   -- {"mg979/vim-visual-multi"},
   use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter

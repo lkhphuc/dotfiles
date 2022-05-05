@@ -15,7 +15,7 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.complete {},
     ["<C-e>"] = cmp.mapping {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
@@ -55,7 +55,7 @@ cmp.setup {
     format = require('lspkind').cmp_format({
       mode = "symbol_text",
       menu = {
-        nvim_lsp = " ",
+        nvim_lsp = "ﮠ ",
         luasnip = " ",
         treesitter = " ",
         tags = " ",

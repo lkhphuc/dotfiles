@@ -91,11 +91,11 @@ local python_env = {
     if vim.bo.filetype == "python" then
       local venv = os.getenv "CONDA_DEFAULT_ENV"
       if venv then
-        return string.format("(%s)", env_cleanup(venv))
+        return string.format("%s", env_cleanup(venv))
       end
       venv = os.getenv "VIRTUAL_ENV"
       if venv then
-        return string.format("(%s)", env_cleanup(venv))
+        return string.format("%s", env_cleanup(venv))
       end
       return ""
     end
@@ -118,10 +118,11 @@ local treesitter = {
 local lsp = {
   function(_)
     local b = vim.api.nvim_get_current_buf()
-    if vim.lsp.buf_get_clients(0) == nil then
-      return ""
+    -- if vim.lsp.buf_get_clients(b) == nil then
+    if next(vim.lsp.buf_get_clients()) then
+      return "ﮠ "
     end
-    return " "
+    return ""
   end,
   color = { gui = "bold" },
   cond = hide_in_width,
