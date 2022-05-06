@@ -19,11 +19,7 @@ vim.o.path = vim.o.path .. "**"
 vim.o.list = true
 vim.o.listchars = "eol:↲,trail:·,nbsp:␣"
 vim.o.signcolumn = "yes"
-vim.o.laststatus = 3
+vim.o.showtabline = 0
 
 vim.g.python3_host_prog = "/usr/bin/python3"
-
---Set colorscheme
-vim.o.termguicolors = true
-
 vim.g.neomux_win_num_status = ""

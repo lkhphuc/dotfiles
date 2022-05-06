@@ -3,6 +3,8 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
+
 -- Normal --
 -- Better window navigation
 vim.keymap.set({"n", "t"}, "<C-h>", "<C-\\><C-n><C-w>h")

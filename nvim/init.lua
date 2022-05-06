@@ -63,12 +63,6 @@ require('packer').startup({ function(use)
 
   -- UI
   use 'nvim-lua/popup.nvim'
-  use {'akinsho/bufferline.nvim',
-    config = function()
-      require("bufferline").setup({
-        diagnostic = 'nvim-lsp',
-      })
-    end}
   use 'moll/vim-bbye'
   use 'nvim-lualine/lualine.nvim'
 -- SideBars
@@ -105,7 +99,10 @@ require('packer').startup({ function(use)
         ['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'false', '250' } },
       })
     end }
-  use { "yamatsum/nvim-cursorline", event = "BufRead" }
+  use { "yamatsum/nvim-cursorline", event = "BufRead",
+    config = function ()
+      require('nvim-cursorline').setup()
+    end }
   use { "luukvbaal/stabilize.nvim",
     config = function() require("stabilize").setup() end }
   use "SmiteshP/nvim-gps"
@@ -189,13 +186,6 @@ require('packer').startup({ function(use)
     end }
   use 'antoinemadec/FixCursorHold.nvim'
   -- use { "nvim-treesitter/playground", event = "BufRead", }
-  use { 'David-Kunz/treesitter-unit', event = "BufRead",
-    config = function()
-      vim.keymap.set('x', 'iu', ':lua require"treesitter-unit".select()<CR>')
-      vim.keymap.set('x', 'au', ':lua require"treesitter-unit".select(true)<CR>')
-      vim.keymap.set('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>')
-      vim.keymap.set('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>')
-    end }
 
   -- Text Editting
   use { 'numToStr/Comment.nvim',
@@ -224,7 +214,10 @@ require('packer').startup({ function(use)
     config = function()
       require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
     end }
-  use {"ggandor/lightspeed.nvim", event="CursorMoved"}
+  use {"ggandor/leap.nvim",
+    config = function ()
+      require("leap").set_default_keymaps()
+    end}
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
   use "tpope/vim-sleuth" --One plugin everything tab indent
@@ -235,8 +228,9 @@ require('packer').startup({ function(use)
   -- {"mg979/vim-visual-multi"},
   use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
   use "kana/vim-textobj-user"
-  use "Julian/vim-textobj-variable-segment" -- iv_av_text_objects
+  use "chaoren/vim-wordmotion"  -- w handles Snake/camelCase, etc
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  -- use 'mfussenegger/nvim-treehopper'
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end, }
 
