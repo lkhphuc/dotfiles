@@ -1,22 +1,36 @@
+local tele = require('telescope.builtin')
 local lspconfig = require 'lspconfig'
+
 local on_attach = function(_, bufnr)
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, opts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wl', function()
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
+  vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
+
+  vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
+  vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc="Declaration" })
+  vim.keymap.set('n', 'gi', tele.lsp_implementations, { buffer = bufnr, desc="Implementation" })
+
+  vim.keymap.set('n', '<leader>D', tele.lsp_type_definitions, { buffer = bufnr, desc="Type definition" })
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr, desc="Rename symbol under cursor" })
+  vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = bufnr, desc="Code Action" })
+  vim.keymap.set('n', '<leader>ls', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
+  vim.keymap.set('n', '<leader>lF', vim.lsp.buf.formatting, { buffer = bufnr, desc="Formatting" })
+  vim.keymap.set('n', '<leader>ld', function() tele.diagnostics(0) end, {buffer = bufnr, desc="Document Diagnostics" })
+  vim.keymap.set( 'n', '<leader>lD', tele.diagnostics, { buffer = bufnr, desc = "All Document Diagnostics"} )
+  vim.keymap.set('n', '<leader>li', "<cmd>LspInfo", { buffer = bufnr, desc = "Lsp Info"})
+  vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo", { buffer = bufnr, desc = "Lsp Install Info"})
+  vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
+  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
+  -- vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, desc("Open diagnostics."))
+
+  vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc="Add workspace" } )
+  vim.keymap.set( 'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc="Remove workspace" } )
+  vim.keymap.set( 'n', '<leader>wl', function()
     vim.inspect(vim.lsp.buf.list_workspace_folders())
-  end, opts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, opts)
-  vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+  end, { buffer = bufnr, desc="List workspace folder" } )
+  vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -34,37 +48,11 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
 
-lspconfig.sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
+local luadev = require("lua-dev").setup({
+  lspconfig = { on_attach=on_attach }
+})
+lspconfig.sumneko_lua.setup(luadev)
 
 -- _________________
 -- < vim.diagnostics >
@@ -110,18 +98,3 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
   border = "shadow",
 })
 
-local function lsp_highlight_document(client)
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec(
-      [[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-      false
-    )
-  end
-end

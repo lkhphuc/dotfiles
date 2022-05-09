@@ -9,10 +9,10 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "+",
-      node_incremental = "+",
-      -- scope_incremental = "=",
-      node_decremental = "_",
+      init_selection = "+",  -- Hold Shift with 2 keys next to Del 
+      node_incremental = "+",  -- to start and increase selection
+      node_decremental = "_",  -- or decrease selection per node,
+      scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
     },
   },
   indent = { enable = true, },
@@ -36,6 +36,8 @@ require('nvim-treesitter.configs').setup {
       }
     }
   },
+
+  --- { nvim-treesitter-textobjects
   textobjects = {
     select = {
       enable = true,
@@ -47,7 +49,7 @@ require('nvim-treesitter.configs').setup {
         ["ic"] = "@class.inner",
         ["ai"] = "@block.outer",
         ["ii"] = "@block.inner",
-        ["c"] = "@comment.outer",
+        ["c"] = "@comment.outer", -- There is no comment.inner
       },
     },
     move = {
@@ -73,21 +75,23 @@ require('nvim-treesitter.configs').setup {
     swap = {
       enable = true,
       swap_next = {
-        ["<leader>sa"] = "@parameter.inner",
+        ["]s"] = "@parameter.inner",
       },
       swap_previous = {
-        ["<leader>sA"] = "@parameter.inner",
+        ["[s"] = "@parameter.inner",
       },
     },
     lsp_interop = {
       enable = true,
-      border = 'none',
+      border = 'shadow',
       peek_definition_code = {
-        ["<leader>kf"] = "@function.outer",
-        ["<leader>kc"] = "@class.outer",
+        ["<leader>k"] = "@function.outer",
+        ["<leader>K"] = "@class.outer",
       },
     },
   },
+  --- }
+
   matchup = { enable = true },
   context_commentstring = {
     enable = true,

@@ -76,7 +76,7 @@ which_key.setup({
   },
   -- add operators that will trigger motion and text object completion
   -- to enable all native operators, set the preset / operators plugin above
-  operators = { gc = "Comments", ga = "Align" },
+  operators = { gc = "Comments", },
   key_labels = {
     -- override the label used to display some keys. It doesn't effect WK in any other way.
     -- For example:
@@ -130,12 +130,11 @@ local mappings = {
     d = {"<CMD>lua vim.diagnostic.goto_prev()<CR>", "diagnostic"},
   },
   g = { name = "Go ",
-    a = { "<cmd>EasyAlign<cr>", "Align"},
     p = {"<cmd>BufferLinePick<CR>", "buffer"},
   }
 }
 which_key.register(mappings, {
-  mode = "n", -- NORMAL mode
+  mode = "n", -- NORMAL
   prefix = "",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
@@ -153,6 +152,7 @@ local opts = {
 }
 
 local leader_mappings = {
+  ["*"] = {"<cmd>Telescope grep_string<CR>"},  -- extend * to search current word in project
   -- ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["b"] = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
@@ -160,10 +160,8 @@ local leader_mappings = {
   },
   C = { "<cmd>vsplit ~/.config/nvim/init.lua<CR>", "Open config."},
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-  ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
     "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Find files",
@@ -182,80 +180,48 @@ local leader_mappings = {
 
   g = {
     name = "Git",
-    g = { "<cmd>lua <CMD>FloatermNew lazygit<CR>", "Lazygit" },
-    j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-    k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-    r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-    R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-    s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-    u = {
-      "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-      "Undo Stage Hunk",
-    },
+    g = { "<cmd>FloatermNew lazygit<CR>", "Lazygit" },
+    j = { "<cmd>Gitsigns next_hunk<cr>", "Next Hunk" },
+    k = { "<cmd>Gitsigns prev_hunk<cr>", "Prev Hunk" },
+    l = { "<cmd>Gitsigns blame_line<cr>", "Blame" },
+    p = { "<cmd>Gitsigns preview_hunk<cr>", "Preview Hunk" },
+    r = { "<cmd>Gitsigns reset_hunk<cr>", "Reset Hunk" },
+    R = { "<cmd>Gitsigns reset_buffer<cr>", "Reset Buffer" },
+    s = { "<cmd>Gitsigns stage_hunk<cr>", "Stage Hunk" },
+    u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "Undo Stage Hunk", },
+    d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Diff", },
     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    d = {
-      "<cmd>Gitsigns diffthis HEAD<cr>",
-      "Diff",
-    },
   },
 
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    d = {
-      "<cmd>Telescope lsp_document_diagnostics<cr>",
-      "Document Diagnostics",
-    },
-    w = {
-      "<cmd>Telescope lsp_workspace_diagnostics<cr>",
-      "Workspace Diagnostics",
-    },
-    f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
-    I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-    j = {
-      "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-      "Next Diagnostic",
-    },
-    k = {
-      "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
-      "Prev Diagnostic",
-    },
-    l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    o = { "<cmd>vim.diagnostic.open_float()<cr>", "Open diagnostics in float window"},
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-    },
   },
   s = {
     name = "Search",
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+    b = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Buffer fuzzy find" },
+    C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+    c = { "<cmd>Telescope commands<cr>", "Commands" },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
+    j = { "<cmd>Telescope jumplist<cr>", "Jumplist" },
+    n = { "<cmd>Telescope resume<cr>", "Continue" },
+    s = { "<cmd>Telescope<cr>", "Telescope" },
   },
 
-  t = {
+  x = {
     name = "Trouble",
     x = { "<cmd>TroubleToggle<CR>", "Trouble Toggle" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
     f = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" },
-    d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Diagnosticss" },
+    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Diagnosticss" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
     l = { "<cmd>TroubleToggle loclist<cr>", "LocationList" },
-    w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Diagnosticss" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnosticss" },
   }
 }
 which_key.register(leader_mappings, opts)

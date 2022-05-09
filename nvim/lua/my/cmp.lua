@@ -73,28 +73,26 @@ cmp.setup {
     { name = 'tags' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'cmp_tabnine' },
-    { name = 'rg' },
+    -- { name = 'cmp_tabnine' },
+    -- { name = 'rg' },
   },
   view = {
     entries = {name = 'custom', selection_order = 'near_cursor' }
   },
 }
 cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
   sources = {
+    { name = 'buffer' },
     { name = 'nvim_lsp_document_symbol' },
-    { name = 'cmdline' },
-  }, {
-    { name = 'buffer' }
-  }
+  },
 })
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
+    { name = 'cmdline' },
+    { name = 'path' },
+  }),
 })
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')

@@ -20,6 +20,7 @@ vim.o.list = true
 vim.o.listchars = "eol:↲,trail:·,nbsp:␣"
 vim.o.signcolumn = "yes"
 vim.o.showtabline = 0
+vim.o.swapfile = false
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 vim.g.neomux_win_num_status = ""

@@ -41,7 +41,7 @@ local diagnostics = {
 }
 
 local hide_in_width = function()
-	return vim.fn.winwidth(0) > 80
+	return vim.o.columns > 100
 end
 
 local function diff_source()
@@ -123,7 +123,7 @@ local lsp = {
     end
     return output
   end,
-  color = { fg = colors.green, gui = "italic" },
+  color = { fg = colors.green, },
   cond = hide_in_width,
 }
 
@@ -154,17 +154,19 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = {
-      { 'hostname', icon = ' ', separator = { left = '' , right = '' } },
+      { 'hostname', icon = ' ',
+        separator = { left = '' , right = '' },
+        cond=hide_in_width },
     },
     lualine_b = {
       branch,
       diff,
       python_env,
-      {'filetype', icon_only = true, separator = false,},
     },
     lualine_c = {
-      {'filename', path = 1, padding = {left = 1, right = 1}, separator = ">" },
-      { gps.get_location, cond = gps.is_available },
+      {'filetype', icon_only = true, padding = {left = 1, right = 0}, separator = false,},
+      {'filename', path = 1, separator = ">", color = { gui = "italic"} },
+      { gps.get_location, cond = gps.is_available, },
     },
     lualine_x = { diagnostics, },
     lualine_y = { treesitter, lsp, spaces, 'fileformat', },

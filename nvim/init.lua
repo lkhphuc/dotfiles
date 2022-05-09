@@ -25,11 +25,12 @@ vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | Packer
 require('packer').startup({ function(use)
   use 'wbthomason/packer.nvim'
   use 'lewis6991/impatient.nvim'
+  use 'folke/lua-dev.nvim'
   use 'nvim-lua/plenary.nvim' -- Lua utility helpers
   -- use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
   use 'williamboman/nvim-lsp-installer' -- Auto install language servers
-  -- use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
+  use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
   use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
   use 'ludovicchabant/vim-gutentags' -- Automatic tags management
 
@@ -81,6 +82,7 @@ require('packer').startup({ function(use)
   use 'onsails/lspkind.nvim' -- Add pictogram to LSP
   use 'stevearc/dressing.nvim'
   use 'rcarriga/nvim-notify'
+  use 'nvim-telescope/telescope-ui-select.nvim'
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'nvim-telescope/telescope.nvim'
   use { "lukas-reineke/indent-blankline.nvim", event = "BufRead",
@@ -88,7 +90,6 @@ require('packer').startup({ function(use)
       require("indent_blankline").setup({
         show_current_context = true,
         use_treesitter       = true,
-        show_end_of_line     = true,
       })
     end }
   use { "karb94/neoscroll.nvim",
@@ -133,7 +134,15 @@ require('packer').startup({ function(use)
   use { "mattboehm/vim-unstack",
     key = "<leader>us", command = ":unstack*",
     config = function() vim.g.unstack_mapkey = "<leader>us" end, }
-  use { "kosayoda/nvim-lightbulb", event = "InsertLeave" }
+  use { "kosayoda/nvim-lightbulb", event = "InsertLeave",
+    config = function()
+      vim.api.nvim_create_autocmd( {"CursorHold", "CursorHoldI"},
+        { pattern = "*",
+          callback = require'nvim-lightbulb'.update_lightbulb,
+        }
+      )
+    end
+  }
 
   -- Git
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -154,10 +163,9 @@ require('packer').startup({ function(use)
     vim.g.floaterm_position      = 'center'
     vim.g.floaterm_width         = 0.9
     vim.g.floaterm_height        = 0.9
-    vim.keymap.set("n", "<leader>lg", "<CMD>FloatermNew lazygit<CR>")
-    vim.keymap.set("n", "<leader>lf", "<Cmd>FloatermNew lf <CR>")
-    -- vim.cmd [[nnoremap <leader>lg <Cmd>FloatermNew lazygit <CR>]]
-    -- vim.cmd [[nnoremap <leader>lf <Cmd>FloatermNew lf <CR>]]
+    vim.keymap.set("n", "<leader>gg", "<CMD>FloatermNew lazygit<CR>", {desc="LazyGit"})
+    vim.keymap.set("n", "<leader>lg", "<CMD>FloatermNew lazygit<CR>", {desc="LazyGit"})
+    vim.keymap.set("n", "<leader>lf", "<Cmd>FloatermNew lf <CR>", {desc = "File Manager"})
   end }
 
   use { "jpalardy/vim-slime",
@@ -223,7 +231,10 @@ require('packer').startup({ function(use)
   use "tpope/vim-sleuth" --One plugin everything tab indent
   use "tpope/vim-unimpaired"
   use "andymass/vim-matchup"
-  use "junegunn/vim-easy-align"
+  use {"junegunn/vim-easy-align",
+    config = function()
+      vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
+    end}
   use "AndrewRadev/splitjoin.vim" -- gS and gJ
   -- {"mg979/vim-visual-multi"},
   use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
@@ -271,6 +282,7 @@ config = {
 require('legendary').setup()
 require('impatient')
 require("my.lsp")
+require("my.null-ls")
 require('my.cmp')
 require("my.lualine")
 require("my.telescope")

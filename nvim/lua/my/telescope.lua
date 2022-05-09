@@ -91,7 +91,8 @@ telescope.setup {
   },
 }
 
--- require('telescope').load_extension 'fzf'
+telescope.load_extension('fzf')
+telescope.load_extension('ui-select')
 
 -- vim.keymap.set('n', '<leader>sf', function()
 --   require('telescope.builtin').find_files { previewer = false }
