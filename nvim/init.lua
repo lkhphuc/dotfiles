@@ -6,10 +6,11 @@
 --             (__)\       )\/\
 --                 ||----w |
 --                 ||     ||
-local fn = vim.fn
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 -- Autocommand that reloads neovim whenever you save this file
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
@@ -60,12 +61,20 @@ require('packer').startup({ function(use)
   -- Languages
   use "eddiebergman/nvim-treesitter-pyfold"
   use {"blueyed/semshi", branch="handle-ColorScheme",
-    run="<cmd>UpdateRemotePlugin<cr>"}
+    run=":UpdateRemotePlugin"}
 
   -- UI
   use 'nvim-lua/popup.nvim'
   use 'moll/vim-bbye'
-  use 'nvim-lualine/lualine.nvim'
+  use {'nvim-lualine/lualine.nvim',  }
+  -- use {'tamton-aquib/staline.nvim', config = require("my.staline") }
+  use {'vimpostor/vim-tpipeline',
+    config = function()
+      vim.g.tpipeline_usepane = 1
+      -- vim.g.tpipeline_fillcentre = true
+      vim.g.tpipeline_clearstl = 1
+    end
+  }
 -- SideBars
   use {'kyazdani42/nvim-tree.lua',
     config = function()
@@ -193,7 +202,7 @@ require('packer').startup({ function(use)
       })
     end }
   use 'antoinemadec/FixCursorHold.nvim'
-  -- use { "nvim-treesitter/playground", event = "BufRead", }
+  use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
   use { 'numToStr/Comment.nvim',
@@ -249,28 +258,41 @@ require('packer').startup({ function(use)
   use 'folke/which-key.nvim'
 
   -- Colorscheme
-  use 'mjlbach/onedark.nvim' -- Theme inspired by Atom
   use { "RRethy/nvim-base16" }
-  -- use { "rmehri01/onenord.nvim",
-  --   config = require('onenord').setup({
-  --     italic = { comments = true, keywords = true }
-  --   }) }
+  use { "rmehri01/onenord.nvim"}
   use { "rebelot/kanagawa.nvim" }
-  use { "olimorris/onedarkpro.nvim",
-    config = function()
-      require("onedarkpro").setup({
-        options = { bold = true, italic = true, underline = true, undercurl = true, }
-      })
-    end }
-  use "projekt0n/github-nvim-theme"
+  use { "navarasu/onedark.nvim" }
+  use { "olimorris/onedarkpro.nvim"}
+  use { "projekt0n/github-nvim-theme" }
   use { "sainnhe/edge",
     config = function()
       vim.g.edge_better_performance = 1
       vim.g.edge_enable_italic = 1
     end }
   use "cpea2506/one_monokai.nvim"
+  use 'folke/tokyonight.nvim'
+  use {"EdenEast/nightfox.nvim",
+    config = function ()
+      require("nightfox").setup({
+        options = {
+          styles = {    -- Value is any valid attr-list value `:help attr-list`
+            comments = "bold,italic",
+            conditionals = "bold,italic",
+            constants = "bold,italic",
+            functions = "bold,italic",
+            keywords = "bold,italic",
+            numbers = "NONE",
+            operators = "NONE",
+            strings = "NONE",
+            types = "bold,italic",
+            variables = "italic",
+          },
+        }
+      })
+    end
+  }
 
-  if PACKER_BOOTSTRAP then
+  if is_bootstrap then
     require('packer').sync()
   end
 end,
@@ -292,12 +314,12 @@ require("my.keymaps")
 
 -- Visual command
 vim.cmd [[
-  colorscheme kanagawa |
-  highlight BufferCurrent gui=bold,italic |
-  highlight TSKeyword gui=bold,italic |
-  highlight TSKeywordFunction gui=bold,italic |
-  highlight TSVariableBuiltin gui=italic |
-  highlight TSInclude gui=bold,italic
+  colorscheme nightfox |
+  " highlight BufferCurrent gui=bold,italic |
+  " highlight TSKeyword gui=bold,italic |
+  " highlight TSKeywordFunction gui=bold,italic |
+  " highlight TSVariableBuiltin gui=italic |
+  " highlight TSInclude gui=bold,italic |
 ]]
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",

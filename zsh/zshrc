@@ -38,7 +38,7 @@ znap install ogham/exa
 znap fpath _poetry 'poetry completions zsh'
 
 export EDITOR="nvim"
-if [[ lvim ]]; then EDITOR="lvim" fi
+# if [[ lvim ]]; then EDITOR="lvim" fi
 if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
 alias v="$EDITOR" vimdiff="nvim -d"
