@@ -60,8 +60,14 @@ require('packer').startup({ function(use)
   --   end}
   -- Languages
   use "eddiebergman/nvim-treesitter-pyfold"
-  use {"blueyed/semshi", branch="handle-ColorScheme",
-    run=":UpdateRemotePlugin"}
+  use {"blueyed/semshi",
+    branch="handle-ColorScheme",
+    run=":UpdateRemotePlugin",
+    config = function()
+      vim.g["semshi#error_sign"] = false
+      vim.g["semshi#simplify_markup"] = false
+    end
+  }
 
   -- UI
   use 'nvim-lua/popup.nvim'
@@ -83,7 +89,16 @@ require('packer').startup({ function(use)
       })
     end }
   use {"simrat39/symbols-outline.nvim",
-    config = function() vim.cmd[[nmap <C-m> :SymbolsOutline<CR>]] end}
+    config = function()
+      vim.g.symbols_outline = {
+        keymaps = {
+          hover_symbol = "K",
+          toggle_preview = "P",
+        }
+      }
+      vim.keymap.set("n", "<C-m>", "<cmd>SymbolsOutline<CR>")
+    end
+  }
   use {"simnalamburt/vim-mundo",
     key = "<leader>uu", command = ":MundoToggle",
     config = function() vim.cmd [[nmap <leader>u :MundoToggle<CR>]] end}
@@ -271,26 +286,8 @@ require('packer').startup({ function(use)
     end }
   use "cpea2506/one_monokai.nvim"
   use 'folke/tokyonight.nvim'
-  use {"EdenEast/nightfox.nvim",
-    config = function ()
-      require("nightfox").setup({
-        options = {
-          styles = {    -- Value is any valid attr-list value `:help attr-list`
-            comments = "bold,italic",
-            conditionals = "bold,italic",
-            constants = "bold,italic",
-            functions = "bold,italic",
-            keywords = "bold,italic",
-            numbers = "NONE",
-            operators = "NONE",
-            strings = "NONE",
-            types = "bold,italic",
-            variables = "italic",
-          },
-        }
-      })
-    end
-  }
+  use { "EdenEast/nightfox.nvim", }
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   if is_bootstrap then
     require('packer').sync()
@@ -314,12 +311,14 @@ require("my.keymaps")
 
 -- Visual command
 vim.cmd [[
-  colorscheme nightfox |
-  " highlight BufferCurrent gui=bold,italic |
-  " highlight TSKeyword gui=bold,italic |
-  " highlight TSKeywordFunction gui=bold,italic |
-  " highlight TSVariableBuiltin gui=italic |
-  " highlight TSInclude gui=bold,italic |
+  colorscheme base16-material-palenight |
+  highlight BufferCurrent gui=bold,italic |
+  highlight TSKeyword gui=bold|
+  highlight TSFunction gui=italic|
+  highlight TSKeywordFunction gui=bold,italic |
+  highlight TSVariableBuiltin gui=italic |
+  highlight TSInclude gui=bold,italic |
+  highlight TSVariable gui=none |
 ]]
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",

@@ -37,7 +37,7 @@ vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
 --Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set({"n", "i"}, "<C-s>", ":w<CR>")
+vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>")
 vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 -- Yank to system clipboard
