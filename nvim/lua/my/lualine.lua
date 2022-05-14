@@ -19,6 +19,12 @@ gps.setup()
 local function windows()
   return " " .. vim.api.nvim_win_get_number(0)
 end
+local function terminal()
+  if vim.o.buftype == "terminal" then
+    return " " .. vim.o.channel
+  end
+  return ""
+end
 
 local function tabs()
   local total_tabs = vim.fn.tabpagenr("$")
@@ -68,7 +74,7 @@ local branch = {
   cond = hide_in_width,
 }
 
-local function env_cleanup(venv)
+local function _env_cleanup(venv)
   if string.find(venv, "/") then
     local final_venv = venv
     for w in venv:gmatch "([^/]+)" do
@@ -86,11 +92,11 @@ local python_env = {
     end
     local venv = os.getenv "CONDA_DEFAULT_ENV"
     if venv then
-      return  env_cleanup(venv)
+      return  _env_cleanup(venv)
     end
     venv = os.getenv "VIRTUAL_ENV"
     if venv then
-      return env_cleanup(venv)
+      return _env_cleanup(venv)
     end
     return ""
   end,
@@ -123,7 +129,7 @@ local lsp = {
     end
     return output
   end,
-  color = { fg = colors.green, },
+  color = { fg = colors.blue, },
   cond = hide_in_width,
 }
 
@@ -168,9 +174,9 @@ require('lualine').setup {
       {'filename', path = 1, separator = ">", color = { gui = "italic"} },
       { gps.get_location, cond = gps.is_available, },
     },
-    lualine_x = { diagnostics, },
-    lualine_y = { treesitter, lsp, spaces, 'fileformat', },
-    lualine_z = { 'progress', tabs, {windows, separator = {right = ''} }  },
+    lualine_x = { diagnostics, 'lsp_progress', lsp, treesitter, },
+    lualine_y = { spaces,  'progress', 'fileformat' },
+    lualine_z = { terminal, tabs, {windows, separator = {left = '', right = ''} }  },
   },
   inactive_sections = {
     lualine_a = {},
@@ -178,7 +184,7 @@ require('lualine').setup {
     lualine_c = { 'filename' },
     lualine_x = { 'location' },
     lualine_y = {},
-    lualine_z = {windows}
+    lualine_z = {terminal, windows}
   },
   tabline = {},
   extensions = { 'quickfix', 'nvim-tree'}
