@@ -1,12 +1,12 @@
 local tele = require('telescope.builtin')
 local lspconfig = require 'lspconfig'
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- local  opts = { buffer = bufnr, }
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
-  vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
+  vim.keymap.set('n', '<leader>lS', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
 
   vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
   vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
@@ -31,6 +31,47 @@ local on_attach = function(_, bufnr)
     vim.inspect(vim.lsp.buf.list_workspace_folders())
   end, { buffer = bufnr, desc="List workspace folder" } )
   vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
+  -- Auto open diagnostic float windows
+  vim.api.nvim_create_autocmd("CursorHold", {
+    buffer = bufnr,
+    callback = function()
+      local opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+      }
+      vim.diagnostic.open_float(nil, opts)
+    end
+  })
+  -- Highlight symbol under cursor NOTE: somewhat duplicate with nvim_cursorline
+  if client.server_capabilities.documentHighlightProvider then
+    vim.cmd [[
+      hi! LspReferenceRead cterm=bold gui=underdot
+      hi! LspReferenceText cterm=bold gui=underdot
+      hi! LspReferenceWrite cterm=bold gui=underdot
+    ]]
+    vim.api.nvim_create_augroup('lsp_document_highlight', {
+      clear = false
+    })
+    vim.api.nvim_clear_autocmds({
+      buffer = bufnr,
+      group = 'lsp_document_highlight',
+    })
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd('CursorMoved', {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
+  end
+  require('virtualtypes').on_attach()
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -38,9 +79,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'sumneko_lua', 'pyright',  }
+local servers = { 'sumneko_lua', 'pyright', 'hls', 'bashls', 'julials' }
 require("nvim-lsp-installer").setup({
-  ensure_installed = servers,
+  automatic_installation = true,
 })
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -84,8 +125,8 @@ vim.diagnostic.config({
     focusable = false,
     style = "minimal",
     border = "rounded",
-    source = "always",
-    -- header = "",
+    source = "if_many",
+    header = "",
     -- prefix = "",
   },
 })
@@ -94,7 +135,8 @@ vim.diagnostic.config({
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "shadow",
-})
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+--   border = "shadow",
+-- })
 
+require("fidget").setup()

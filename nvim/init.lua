@@ -31,9 +31,10 @@ require('packer').startup({ function(use)
   -- use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
   use 'williamboman/nvim-lsp-installer' -- Auto install language servers
+  use 'j-hui/fidget.nvim'  -- LSP status spinner
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
   use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
-  use 'ludovicchabant/vim-gutentags' -- Automatic tags management
+  use 'yioneko/nvim-yati' -- TODO: Until treesitter fit indent
 
   -- Completion
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
@@ -66,13 +67,14 @@ require('packer').startup({ function(use)
     config = function()
       vim.g["semshi#error_sign"] = false
       vim.g["semshi#simplify_markup"] = false
+      vim.g["semshi#mark_selected_nodes"] = false
     end
   }
 
   -- UI
   use 'nvim-lua/popup.nvim'
   use 'moll/vim-bbye'
-  use {'nvim-lualine/lualine.nvim',  }
+  use {'nvim-lualine/lualine.nvim' }
   -- use {'tamton-aquib/staline.nvim', config = require("my.staline") }
   use {'vimpostor/vim-tpipeline',
     config = function()
@@ -124,7 +126,7 @@ require('packer').startup({ function(use)
         ['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'false', '250' } },
       })
     end }
-  use { "yamatsum/nvim-cursorline", event = "BufRead",
+  use { "yamatsum/nvim-cursorline",
     config = function ()
       require('nvim-cursorline').setup()
     end }
@@ -145,7 +147,7 @@ require('packer').startup({ function(use)
     config = function() require("numb").setup() end, }
   use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
   -- Use treesitter to always show Class, function on top when overscrolled
-  use { "romgrk/nvim-treesitter-context", event = "BufRead" }
+  use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
   use { "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup() end }
@@ -167,6 +169,7 @@ require('packer').startup({ function(use)
       )
     end
   }
+  -- use 'jubnzv/virtual-types.nvim' -- TODO: need codelen
 
   -- Git
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -254,7 +257,11 @@ require('packer').startup({ function(use)
   use "tpope/vim-repeat"
   use "tpope/vim-sleuth" --One plugin everything tab indent
   use "tpope/vim-unimpaired"
-  use "andymass/vim-matchup"
+  use {"andymass/vim-matchup",
+    config = function ()
+      vim.g.matchup_matchparen_offscreen = {method= 'popup'}
+    end
+  }
   use {"junegunn/vim-easy-align",
     config = function()
       vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
@@ -265,6 +272,7 @@ require('packer').startup({ function(use)
   use "kana/vim-textobj-user"
   use "chaoren/vim-wordmotion"  -- w handles Snake/camelCase, etc
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'RRethy/nvim-treesitter-textsubjects' -- smart
   -- use 'mfussenegger/nvim-treehopper'
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end, }

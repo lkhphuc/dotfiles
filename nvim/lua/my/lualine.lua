@@ -65,12 +65,13 @@ local diff = {
   source = diff_source,
   symbols = { added = " ", modified = " ", removed = " " },
   colored = true,
+  padding = {left=1, right=0}
 }
 
 local branch = {
   "b:gitsigns_head",
   icon = "",
-  color = { gui = "bold,italic" },
+  color = { gui = "bold," },
   cond = hide_in_width,
 }
 
@@ -102,7 +103,6 @@ local python_env = {
   end,
   separator = false,
   color = { fg = colors.cyan, gui="italic" },
-  padding = 1,
   cond = hide_in_width,
 }
 
@@ -167,14 +167,14 @@ require('lualine').setup {
     lualine_b = {
       branch,
       diff,
-      python_env,
     },
     lualine_c = {
-      {'filetype', icon_only = true, padding = {left = 1, right = 0}, separator = false,},
+      python_env,
+      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, separator = ">", color = { gui = "italic"} },
       { gps.get_location, cond = gps.is_available, },
     },
-    lualine_x = { diagnostics, 'lsp_progress', lsp, treesitter, },
+    lualine_x = { diagnostics, lsp, treesitter, },
     lualine_y = { spaces,  'progress', 'fileformat' },
     lualine_z = { terminal, tabs, {windows, separator = {left = '', right = ''} }  },
   },

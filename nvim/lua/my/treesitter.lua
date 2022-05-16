@@ -6,20 +6,30 @@ require('nvim-treesitter.configs').setup {
     enable = true, -- false will disable the whole extension
     -- use_languagetree = true,  -- What is this for?
   },
-  incremental_selection = {
+  -- incremental_selection = {
+  --   enable = true,
+  --   keymaps = {
+  --     init_selection = "+",  -- Hold Shift with 2 keys next to Del 
+  --     node_incremental = "+",  -- to start and increase selection
+  --     node_decremental = "_",  -- or decrease selection per node,
+  --     scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
+  --   },
+  -- },
+  textsubjects = {
     enable = true,
+    prev_selection = '_', -- (Optional) keymap to select the previous selection
     keymaps = {
-      init_selection = "+",  -- Hold Shift with 2 keys next to Del 
-      node_incremental = "+",  -- to start and increase selection
-      node_decremental = "_",  -- or decrease selection per node,
-      scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
+      ['+'] = 'textsubjects-smart',
+      [';'] = 'textsubjects-container-outer',
+      ['i;'] = 'textsubjects-container-inner',
     },
   },
-  indent = { enable = true, },
+  -- indent = { enable = true, },
+  yati = { enable = true },
   autopair = { enable = true },
   rainbow = { enable = true, },
   refactor = {
-    highlight_definitions= { enable = true},
+    highlight_definitions= { enable = true },
     -- highlight_current_scope = { enable = true},
     smart_rename = {
       enable = true,
@@ -37,7 +47,6 @@ require('nvim-treesitter.configs').setup {
     }
   },
 
-  --- { nvim-treesitter-textobjects
   textobjects = {
     select = {
       enable = true,
@@ -83,14 +92,13 @@ require('nvim-treesitter.configs').setup {
     },
     lsp_interop = {
       enable = true,
-      border = 'shadow',
+      border = 'double',
       peek_definition_code = {
         ["<leader>k"] = "@function.outer",
         ["<leader>K"] = "@class.outer",
       },
     },
   },
-  --- }
 
   matchup = {
     enable = true,
