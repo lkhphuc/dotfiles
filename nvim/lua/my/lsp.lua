@@ -2,6 +2,7 @@ local tele = require('telescope.builtin')
 local lspconfig = require 'lspconfig'
 
 local on_attach = function(client, bufnr)
+  require('which-key').register({["<leader>l"] = { name = "LSP" }})
   -- local  opts = { buffer = bufnr, }
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
@@ -71,7 +72,8 @@ local on_attach = function(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
-  require('virtualtypes').on_attach()
+  -- require('virtualtypes').on_attach()
+  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -79,8 +81,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'sumneko_lua', 'pyright', 'hls', 'bashls', 'julials' }
+local servers = { 'sumneko_lua', 'pyright', 'bashls', }
 require("nvim-lsp-installer").setup({
+--   ensure_installed = servers,
   automatic_installation = true,
 })
 for _, lsp in ipairs(servers) do
@@ -118,7 +121,7 @@ vim.diagnostic.config({
   signs = {
     active = signs,
   },
-  update_in_insert = true,
+  update_in_insert = false,
   underline = true,
   severity_sort = true,
   float = {
@@ -135,8 +138,8 @@ vim.diagnostic.config({
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
---   border = "shadow",
--- })
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "shadow",
+})
 
 require("fidget").setup()

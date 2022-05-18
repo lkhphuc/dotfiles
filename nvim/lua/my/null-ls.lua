@@ -9,10 +9,8 @@ null_ls.setup({
     -- diagnostics.pylama,
     diagnostics.flake8.with({
       extra_args = {
-        "--extend-ignore",
-        "E111,E114,E501",
-        "--indent-size",
-        vim.o.shiftwidth,
+        "--extend-ignore", "E111,E114,E501",
+        "--indent-size", vim.o.shiftwidth,
       }
     }),
     -- diagnostics.pylint,

@@ -3,9 +3,14 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
-
--- Normal --
+--  _____________
+-- < Normal Mode >
+--  -------------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
 -- Better window navigation
 vim.keymap.set({"n", "t"}, "<C-h>", "<C-\\><C-n><C-w>h")
 vim.keymap.set({"n", "t"}, "<C-j>", "<C-\\><C-n><C-w>j" )
@@ -17,15 +22,32 @@ vim.keymap.set("n", "<C-Up>", ":resize -2<CR>")
 vim.keymap.set("n", "<C-Down>", ":resize +2<CR>")
 vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>")
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
--- Move text up and down
-vim.keymap.set("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
-vim.keymap.set("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
 
--- Visual --
+--Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- Tab pages
+vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
+vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
+
+vim.keymap.set("n", "<leader><space>", "zA", {desc = "Toggle fold recursively"})
+vim.keymap.set("n", "<leader>C", "<cmd>vsplit ~/.config/nvim/init.lua<CR>", {desc = "Open config"})
+vim.keymap.set("n", "q", ":q!<cr>", {desc = "Force Quit"})
+
+vim.keymap.set("n", "<leader>lg", ":tabnew term://lazygit<CR>", {desc = "Lazy Git"})
+vim.keymap.set("n", "<leader>lf", ":tabnew term://lf<CR>", {desc = "File manager"})
+--  _____________
+-- < Visual Mode >
+--  -------------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
--- Mov.sete text up and down
+-- Move text up and down
 vim.keymap.set("v", "<A-j>", ":m .+1<CR>==")
 vim.keymap.set("v", "<A-k>", ":m .-2<CR>==")
 vim.keymap.set("v", "p", '"_dP')
@@ -34,23 +56,33 @@ vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv")
 vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv")
 vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
 
---Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>")
-vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
+-- Misc mode
+vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
+vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save with Ctrl-s
+--
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 -- Yank to system clipboard
 vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
 vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
-vim.keymap.set("n", "<leader><space>", "zA")
--- Tab pages
-vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
-vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
 
+--  ______________
+-- < Terminal Mode>
+--  --------------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
+vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
+vim.api.nvim_create_autocmd("TermClose", {
+  callback = function ()
+    if vim.v.event.status == 0 then
+      vim.api.nvim_buf_delete(0, {})
+    end
+  end
+})
+-- autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
--- vim.keymap.set('n', '<leader>so', "lua require('telescope.builtin').lsp_document_symbols", opts)
-vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 
 local which_key = require("which-key")
 
@@ -120,20 +152,11 @@ which_key.setup({
   },
 })
 
-local mappings = {
-  ["]"] = { name = "Next",
-    g = {"<CMD>Gitsigns next_hunk<CR>", "git hunk"},
-    d = {"<CMD>lua vim.diagnostic.goto_next()<CR>", "diagnostic"},
-  },
-  ["["] = { name = "Previous",
-    g = {"<CMD>Gitsigns prev_hunk<CR>", "Previous git hunk"},
-    d = {"<CMD>lua vim.diagnostic.goto_prev()<CR>", "diagnostic"},
-  },
-  g = { name = "Go ",
-    p = {"<cmd>BufferLinePick<CR>", "buffer"},
-  }
-}
-which_key.register(mappings, {
+which_key.register({
+  ["]"] = { name = "Next", },
+  ["["] = { name = "Previous", },
+  g = { name = "Go ", }
+}, {
   mode = "n", -- NORMAL
   prefix = "",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -142,86 +165,3 @@ which_key.register(mappings, {
   nowait = true, -- use `nowait` when creating keymaps
 })
 
-local opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
-
-local leader_mappings = {
-  ["*"] = {"<cmd>Telescope grep_string<CR>"},  -- extend * to search current word in project
-  -- ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-  ["b"] = {
-    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Buffers",
-  },
-  C = { "<cmd>vsplit ~/.config/nvim/init.lua<CR>", "Open config."},
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  ["q"] = { "<cmd>q!<CR>", "Quit" },
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
-  ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Find files",
-  },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-  ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-
-  p = {
-    name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
-  },
-
-  g = {
-    name = "Git",
-    g = { "<cmd>FloatermNew lazygit<CR>", "Lazygit" },
-    j = { "<cmd>Gitsigns next_hunk<cr>", "Next Hunk" },
-    k = { "<cmd>Gitsigns prev_hunk<cr>", "Prev Hunk" },
-    l = { "<cmd>Gitsigns blame_line<cr>", "Blame" },
-    p = { "<cmd>Gitsigns preview_hunk<cr>", "Preview Hunk" },
-    r = { "<cmd>Gitsigns reset_hunk<cr>", "Reset Hunk" },
-    R = { "<cmd>Gitsigns reset_buffer<cr>", "Reset Buffer" },
-    s = { "<cmd>Gitsigns stage_hunk<cr>", "Stage Hunk" },
-    u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "Undo Stage Hunk", },
-    d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Diff", },
-    o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-  },
-
-  l = {
-    name = "LSP",
-  },
-  s = {
-    name = "Search",
-    b = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Buffer fuzzy find" },
-    C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    c = { "<cmd>Telescope commands<cr>", "Commands" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    j = { "<cmd>Telescope jumplist<cr>", "Jumplist" },
-    n = { "<cmd>Telescope resume<cr>", "Continue" },
-    s = { "<cmd>Telescope<cr>", "Telescope" },
-  },
-
-  x = {
-    name = "Trouble",
-    x = { "<cmd>TroubleToggle<CR>", "Trouble Toggle" },
-    r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
-    f = { "<cmd>TroubleToggle lsp_definitions<cr>", "Definitions" },
-    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Diagnosticss" },
-    q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
-    l = { "<cmd>TroubleToggle loclist<cr>", "LocationList" },
-    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnosticss" },
-  }
-}
-which_key.register(leader_mappings, opts)

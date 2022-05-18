@@ -45,5 +45,22 @@ gitsigns.setup {
   yadm = {
     enable = false,
   },
+  on_attach = function ()
+    require('which-key').register({["<leader>g"] = { name = "Git"}})
+    vim.keymap.set("n", "]g", "<cmd>Gitsigns next_hunk<CR>",               { desc = "Next hunk"         })
+    vim.keymap.set("n", "[g", "<cmd>Gitsigns prev_hunk<CR>",               { desc = "Previous hunk"     })
+    vim.keymap.set("n", "<leader>gj", "<cmd>Gitsigns next_hunk<CR>",       { desc = "Next hunk"         })
+    vim.keymap.set("n", "<leader>gk", "<cmd>Gitsigns prev_hunk<CR>",       { desc = "Previous hunk"     })
+    vim.keymap.set("n", "<leader>gl", "<cmd>Gitsigns blame_line<cr>",      { desc = "Blame"             })
+    vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>",    { desc = "Preview Hunk"      })
+    vim.keymap.set("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>",      { desc = "Reset Hunk"        })
+    vim.keymap.set("n", "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>",    { desc = "Reset Buffer"      })
+    vim.keymap.set("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>",      { desc = "Stage Hunk"        })
+    vim.keymap.set("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>", { desc = "Undo Stage"        })
+    vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>",   { desc = "Diff"              })
+    vim.keymap.set("n", "<leader>go", "<cmd>Telescope git_status<cr>",     { desc = "Open changed file" })
+    vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>",   { desc = "Checkout branch"   })
+    vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>",    { desc = "Checkout commit"   })
+  end
 }
 

@@ -24,7 +24,16 @@ vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | Packer
 --                 ||----w |
 --                 ||     ||
 require('packer').startup({ function(use)
-  use 'wbthomason/packer.nvim'
+  use {'wbthomason/packer.nvim',
+    config = function ()
+      require("which-key").register({["<leader>p"] = {name = "Packer"}})
+      vim.keymap.set("n", "<leader>pc", "<cmd>PackerCompile<cr>", {desc = "Compile" })
+      vim.keymap.set("n", "<leader>pi", "<cmd>PackerInstall<cr>", {desc = "Install" })
+      vim.keymap.set("n", "<leader>ps", "<cmd>PackerSync<cr>",    {desc = "Sync" })
+      vim.keymap.set("n", "<leader>pS", "<cmd>PackerStatus<cr>",  {desc = "Status" })
+      vim.keymap.set("n", "<leader>pu", "<cmd>PackerUpdate<cr>",  {desc = "Update" })
+    end
+  }
   use 'lewis6991/impatient.nvim'
   use 'folke/lua-dev.nvim'
   use 'nvim-lua/plenary.nvim' -- Lua utility helpers
@@ -33,7 +42,11 @@ require('packer').startup({ function(use)
   use 'williamboman/nvim-lsp-installer' -- Auto install language servers
   use 'j-hui/fidget.nvim'  -- LSP status spinner
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
-  use 'nvim-treesitter/nvim-treesitter' -- Highlight, edit, and navigate code
+  use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
+    config = function ()
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
+    end
+  }
   use 'yioneko/nvim-yati' -- TODO: Until treesitter fit indent
 
   -- Completion
@@ -73,13 +86,14 @@ require('packer').startup({ function(use)
 
   -- UI
   use 'nvim-lua/popup.nvim'
-  use 'moll/vim-bbye'
+  use {'moll/vim-bbye',
+    config = function ()
+      vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
+    end}
   use {'nvim-lualine/lualine.nvim' }
-  -- use {'tamton-aquib/staline.nvim', config = require("my.staline") }
   use {'vimpostor/vim-tpipeline',
     config = function()
       vim.g.tpipeline_usepane = 1
-      -- vim.g.tpipeline_fillcentre = true
       vim.g.tpipeline_clearstl = 1
     end
   }
@@ -138,7 +152,8 @@ require('packer').startup({ function(use)
   use "romainl/vim-cool" -- Handle highlight search automatically
   use { "norcalli/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup() end }
-  use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend',
+  use { 'anuvyklack/pretty-fold.nvim',
+    -- requires = 'anuvyklack/nvim-keymap-amend',
    config = function()
       require('pretty-fold').setup {}
       require('pretty-fold.preview').setup({border = "shadow"})
@@ -154,6 +169,14 @@ require('packer').startup({ function(use)
   use { "folke/trouble.nvim", event = "BufEnter",
     config = function()
       require("trouble").setup()
+      require("which-key").register({["<leader>x"] = {name = "Trouble"}})
+      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<CR>", {desc="Trouble Toggle"})
+      vim.keymap.set("n", "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", {desc = "References" })
+      vim.keymap.set("n", "<leader>xf", "<cmd>TroubleToggle lsp_definitions<cr>", {desc = "Definitions" })
+      vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", {desc = "Diagnosticss" })
+      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", {desc = "QuickFix" })
+      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", {desc="LocationList" })
+      vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", {desc = "Diagnosticss" })
     end
   }
   use { "weilbith/nvim-code-action-menu" }
@@ -169,7 +192,7 @@ require('packer').startup({ function(use)
       )
     end
   }
-  -- use 'jubnzv/virtual-types.nvim' -- TODO: need codelen
+  use 'jubnzv/virtual-types.nvim' -- TODO: need codelen
 
   -- Git
   use 'tpope/vim-fugitive' -- Git commands in nvim
@@ -191,8 +214,6 @@ require('packer').startup({ function(use)
     vim.g.floaterm_width         = 0.9
     vim.g.floaterm_height        = 0.9
     vim.keymap.set("n", "<leader>gg", "<CMD>FloatermNew lazygit<CR>", {desc="LazyGit"})
-    vim.keymap.set("n", "<leader>lg", "<CMD>FloatermNew lazygit<CR>", {desc="LazyGit"})
-    vim.keymap.set("n", "<leader>lf", "<Cmd>FloatermNew lf <CR>", {desc = "File Manager"})
   end }
 
   use { "jpalardy/vim-slime",
@@ -239,8 +260,8 @@ require('packer').startup({ function(use)
           return require('ts_context_commentstring.internal').calculate_commentstring {
             key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
             location = location,
-    }
-  end,
+          }
+        end,
       })
     end,
   }
@@ -267,13 +288,13 @@ require('packer').startup({ function(use)
       vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
     end}
   use "AndrewRadev/splitjoin.vim" -- gS and gJ
-  -- {"mg979/vim-visual-multi"},
+  -- use {"mg979/vim-visual-multi"},
   use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
   use "kana/vim-textobj-user"
   use "chaoren/vim-wordmotion"  -- w handles Snake/camelCase, etc
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'RRethy/nvim-treesitter-textsubjects' -- smart
-  -- use 'mfussenegger/nvim-treehopper'
+  use 'mfussenegger/nvim-treehopper'
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end, }
 
@@ -307,6 +328,7 @@ config = {
 } })
 
 require('legendary').setup()
+require("my.keymaps")
 require('impatient')
 require("my.lsp")
 require("my.null-ls")
@@ -315,7 +337,6 @@ require("my.lualine")
 require("my.telescope")
 require("my.treesitter")
 require("my.options")
-require("my.keymaps")
 
 -- Visual command
 vim.cmd [[
@@ -327,6 +348,7 @@ vim.cmd [[
   highlight TSVariableBuiltin gui=italic |
   highlight TSInclude gui=bold,italic |
   highlight TSVariable gui=none |
+  highlight Folded guibg=None |
 ]]
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
@@ -342,4 +364,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- vim: ts=2 sts=2 sw=2 et
+-- vim: ts=2 sts=2 sw=2 fdls=4 et

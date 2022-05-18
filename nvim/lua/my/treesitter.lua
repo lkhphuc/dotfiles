@@ -9,7 +9,7 @@ require('nvim-treesitter.configs').setup {
   -- incremental_selection = {
   --   enable = true,
   --   keymaps = {
-  --     init_selection = "+",  -- Hold Shift with 2 keys next to Del 
+  --     init_selection = "+",  -- Hold Shift with 2 keys next to Del
   --     node_incremental = "+",  -- to start and increase selection
   --     node_decremental = "_",  -- or decrease selection per node,
   --     scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
