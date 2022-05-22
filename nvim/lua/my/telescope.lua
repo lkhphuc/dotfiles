@@ -74,14 +74,21 @@ telescope.setup {
       },
     },
     layout_strategies = 'flex',
+    layout_config = {
+      cursor = {
+        widht = 0.6,
+      }
+    }
   },
   pickers = {
-    grep_string               = { theme = 'cursor', },
-    find_files                = { theme = "dropdown", previewer = false, },
-    buffers                   = { theme = "dropdown", previewer = false, },
-    current_buffer_fuzzy_find = { theme = "ivy", preview = false, },
-    live_grep                 = { theme= "ivy", },
-    colorscheme               = { theme = "dropdown", previewer = false, },
+    grep_string = { theme = "cursor", layout_config = { width = 0.7}, },
+    find_files = { theme = "dropdown", },
+    buffers = { theme = "dropdown", },
+    current_buffer_fuzzy_find = { theme = "ivy", },
+    live_grep = { theme = "ivy", },
+    colorscheme = { theme = "dropdown", },
+    lsp_references = { theme = "cursor", layout_config = { width = 0.7}, },
+    lsp_definitions = { theme = "cursor", layout_config = { width = 0.7}, }
   },
   extensions = {
     ["ui-select"] = { theme = 'cursor', },
@@ -93,18 +100,18 @@ telescope.load_extension('fzf')
 telescope.load_extension('ui-select')
 
 require("which-key").register({["<leader>s"] = {name = "Search" }})
-vim.keymap.set("n", "<leader>*",  builtin.grep_string,               { desc = "Cursor word"})
-vim.keymap.set("n", "<leader>bb", builtin.buffers,                   { desc = "Buffers"})
-vim.keymap.set("n", "<leader>bf", builtin.current_buffer_fuzzy_find, { desc = "Buffer fuzzy"})
-vim.keymap.set("n", "<leader>f",  builtin.find_files,                { desc = "Files"})
-vim.keymap.set("n", "<leader>F",  builtin.live_grep,                 { desc = "Workspace grep"})
-vim.keymap.set("n", "<leader>sC", builtin.colorscheme,               { desc = "Find text in workspace"})
-vim.keymap.set("n", "<leader>sc", builtin.commands ,                 { desc = "Find command"})
-vim.keymap.set("n", "<leader>sh", builtin.help_tags ,                { desc = "Find Help"})
-vim.keymap.set("n", "<leader>sM", builtin.man_pages ,                { desc = "Man Page"})
-vim.keymap.set("n", "<leader>sr", builtin.oldfiles ,                 { desc = "Recent"})
-vim.keymap.set("n", "<leader>sR", builtin.registers ,                { desc = "Registers"})
-vim.keymap.set("n", "<leader>sk", builtin.keymaps ,                  { desc = "Keymaps"})
-vim.keymap.set("n", "<leader>sj", builtin.jumplist ,                 { desc = "Jumplist"})
-vim.keymap.set("n", "<leader>sn", builtin.resume ,                   { desc = "Continue next search"})
-vim.keymap.set("n", "<leader>ss", builtin.builtin,                   { desc = "Telescope Pickers"})
+vim.keymap.set("n", "g*", builtin.grep_string, { desc = "Cursor word"})
+vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Buffers"})
+vim.keymap.set("n", "<leader>f", builtin.find_files,{ desc = "Files"})
+vim.keymap.set("n", "<leader>F", builtin.live_grep, { desc = "Grep workspace"})
+vim.keymap.set("n", "<leader>sb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy buffer"})
+vim.keymap.set("n", "<leader>sC", builtin.colorscheme, { desc = "Find colorschemes"})
+vim.keymap.set("n", "<leader>sc", builtin.commands, { desc = "Find command"})
+vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Find Help"})
+vim.keymap.set("n", "<leader>sM", builtin.man_pages, { desc = "Man Page"})
+vim.keymap.set("n", "<leader>sr", builtin.oldfiles, { desc = "Recent"})
+vim.keymap.set("n", "<leader>sR", builtin.registers, { desc = "Registers"})
+vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Keymaps"})
+vim.keymap.set("n", "<leader>sj", builtin.jumplist, { desc = "Jumplist"})
+vim.keymap.set("n", "<leader>sn", builtin.resume, { desc = "Continue next search"})
+vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "Telescope Pickers"})

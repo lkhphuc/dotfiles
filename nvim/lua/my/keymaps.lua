@@ -32,7 +32,7 @@ vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
 
 vim.keymap.set("n", "<leader><space>", "zA", {desc = "Toggle fold recursively"})
 vim.keymap.set("n", "<leader>C", "<cmd>vsplit ~/.config/nvim/init.lua<CR>", {desc = "Open config"})
-vim.keymap.set("n", "q", ":q!<cr>", {desc = "Force Quit"})
+vim.keymap.set("n", "<leader>q", ":q!<cr>", {desc = "Force Quit"})
 
 vim.keymap.set("n", "<leader>lg", ":tabnew term://lazygit<CR>", {desc = "Lazy Git"})
 vim.keymap.set("n", "<leader>lf", ":tabnew term://lf<CR>", {desc = "File manager"})

@@ -220,17 +220,11 @@ require('packer').startup({ function(use)
     config = function()
       vim.g.slime_target = "neovim"
       vim.g.slime_python_ipython = 1
-    end }
-  use { "klafyvel/vim-slime-cells",
-    requires = { { 'jpalardy/vim-slime', opt = true } },
-    ft = { 'julia', 'python' },
-    config = function()
-      vim.g.slime_cell_delimiter = "^\\s*##\\s*"
-      vim.cmd([[
-      nmap <C-c><CR> <Plug>SlimeCellsSendAndGoToNext
-      nmap <C-c>j <Plug>SlimeCellsNext
-      nmap <C-c>k <Plug>SlimeCellsPrev
-      ]])
+      vim.b.slime_cell_delimiter = "# %%"
+      vim.g.slime_no_mapping = 1
+      vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend '>") -- Send then move last line of selection
+      vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
+      vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
     end
   }
   use { "ojroques/vim-oscyank", event = "CursorMoved",
@@ -244,27 +238,7 @@ require('packer').startup({ function(use)
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
-  use { 'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup({
-         pre_hook = function(ctx)
-          local U = require 'Comment.utils'
-
-          local location = nil
-          if ctx.ctype == U.ctype.block then
-            location = require('ts_context_commentstring.utils').get_cursor_location()
-          elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-            location = require('ts_context_commentstring.utils').get_visual_start_location()
-          end
-
-          return require('ts_context_commentstring.internal').calculate_commentstring {
-            key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
-            location = location,
-          }
-        end,
-      })
-    end,
-  }
+  use { 'numToStr/Comment.nvim', config = require("my.comment")}
   use 'JoosepAlviste/nvim-ts-context-commentstring'
   use { "windwp/nvim-autopairs",
     config = function()

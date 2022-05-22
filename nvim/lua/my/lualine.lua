@@ -16,9 +16,13 @@ local colors = {
 local gps = require("nvim-gps")
 gps.setup()
 
-local function windows()
-  return " " .. vim.api.nvim_win_get_number(0)
-end
+local windows = {
+  function ()
+    return " " .. vim.api.nvim_win_get_number(0)
+  end,
+  separator = {left = '', right = ''},
+  padding = 0, 
+}
 local function terminal()
   if vim.o.buftype == "terminal" then
     return " " .. vim.o.channel
@@ -162,7 +166,8 @@ require('lualine').setup {
     lualine_a = {
       { 'hostname', icon = ' ',
         separator = { left = '' , right = '' },
-        cond=hide_in_width },
+        cond=hide_in_width, padding = 0,
+      },
     },
     lualine_b = {
       branch,
@@ -176,7 +181,7 @@ require('lualine').setup {
     },
     lualine_x = { diagnostics, lsp, treesitter, },
     lualine_y = { spaces,  'progress', 'fileformat' },
-    lualine_z = { terminal, tabs, {windows, separator = {left = '', right = ''} }  },
+    lualine_z = { terminal, tabs,  windows, },
   },
   inactive_sections = {
     lualine_a = {},
@@ -187,5 +192,16 @@ require('lualine').setup {
     lualine_z = {terminal, windows}
   },
   tabline = {},
+  winbar = {
+    lualine_c = {
+      python_env,
+      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
+      {'filename', path = 1, separator = ">", color = { gui = "italic"} },
+      { gps.get_location, cond = gps.is_available, },
+    },
+  },
   extensions = { 'quickfix', 'nvim-tree'}
 }
+
+-- vim.o.winbar = "%f" .. {gps.get_location()}
+-- vim.opt.winbar = "%{%v:lua.require'omega.modules.ui.winbar'.eval()%}"
