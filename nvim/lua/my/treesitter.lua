@@ -4,7 +4,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {"python", "lua", "bash", "vim", "comment", "make", "regex", "yaml", "toml"},
   highlight = {
     enable = true, -- false will disable the whole extension
-    -- use_languagetree = true,  -- What is this for?
+    use_languagetree = true,  -- What is this for?
   },
   -- incremental_selection = {
   --   enable = true,
@@ -110,6 +110,6 @@ require('nvim-treesitter.configs').setup {
   },
   pyfold = {
     enable = true,
-    custom_foldtext = true,
+    custom_foldtext = false,
   }
 }

@@ -5,8 +5,6 @@ vim.o.ignorecase = true --Case insensitive searching
 vim.o.smartcase = true -- UNLESS /C or capital in search
 vim.o.completeopt = 'menuone,noselect' -- complete to comment string
 vim.o.timeoutlen = 300
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.tabstop = 2  -- If not set by sleuth, a tab is 2 space
 vim.o.shiftwidth = 2  -- For >>, <<
 vim.o.wrap = true
@@ -24,6 +22,10 @@ vim.o.signcolumn = "yes"
 vim.o.showtabline = 0
 vim.o.swapfile = false
 vim.o.lazyredraw = true
+vim.o.showmode = false
 
 vim.g.python3_host_prog = "/usr/bin/python3"
+-- Can not put this inside neomux config for some reason
+vim.g.neomux_winjump_map_prefix = "gw"
 vim.g.neomux_win_num_status = ""
+vim.g.neomux_dont_fix_term_ctrlw_map = 1

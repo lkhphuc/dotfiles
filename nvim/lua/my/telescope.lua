@@ -39,6 +39,7 @@ telescope.setup {
         ["<M-q>"]      = actions.send_selected_to_qflist + actions.open_qflist,
         ["<C-l>"]      = actions.complete_tag,
         ["<C-_>"]      = actions.which_key, -- keys from pressing <C-/>
+        ["<C-f>"]      = actions.to_fuzzy_refine,
       },
 
       n = {
@@ -81,30 +82,28 @@ telescope.setup {
     }
   },
   pickers = {
-    grep_string = { theme = "cursor", layout_config = { width = 0.7}, },
+    grep_string = { theme = "dropdown" },
     find_files = { theme = "dropdown", },
     buffers = { theme = "dropdown", },
     current_buffer_fuzzy_find = { theme = "ivy", },
-    live_grep = { theme = "ivy", },
+    live_grep = { },
     colorscheme = { theme = "dropdown", },
-    lsp_references = { theme = "cursor", layout_config = { width = 0.7}, },
-    lsp_definitions = { theme = "cursor", layout_config = { width = 0.7}, }
+    lsp_references = { theme = "dropdown" },
+    lsp_definitions = { theme = "dropdown" }
   },
   extensions = {
-    ["ui-select"] = { theme = 'cursor', },
     fzf = {}
   },
 }
 
 telescope.load_extension('fzf')
-telescope.load_extension('ui-select')
 
 require("which-key").register({["<leader>s"] = {name = "Search" }})
-vim.keymap.set("n", "g*", builtin.grep_string, { desc = "Cursor word"})
+vim.keymap.set("n", "<leader>*", builtin.grep_string, { desc = "Cursor word"})
 vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Buffers"})
 vim.keymap.set("n", "<leader>f", builtin.find_files,{ desc = "Files"})
-vim.keymap.set("n", "<leader>F", builtin.live_grep, { desc = "Grep workspace"})
-vim.keymap.set("n", "<leader>sb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy buffer"})
+vim.keymap.set("n", "<leader>st", builtin.live_grep, { desc = "Live grep workspace"})
+vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy buffer"})
 vim.keymap.set("n", "<leader>sC", builtin.colorscheme, { desc = "Find colorschemes"})
 vim.keymap.set("n", "<leader>sc", builtin.commands, { desc = "Find command"})
 vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Find Help"})

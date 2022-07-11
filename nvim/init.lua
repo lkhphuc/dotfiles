@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | Packer
 require('packer').startup({ function(use)
   use {'wbthomason/packer.nvim',
     config = function ()
-      require("which-key").register({["<leader>p"] = {name = "Packer"}})
+      -- require("which-key").register({["<leader>p"] = {name = "Packer"}})
       vim.keymap.set("n", "<leader>pc", "<cmd>PackerCompile<cr>", {desc = "Compile" })
       vim.keymap.set("n", "<leader>pi", "<cmd>PackerInstall<cr>", {desc = "Install" })
       vim.keymap.set("n", "<leader>ps", "<cmd>PackerSync<cr>",    {desc = "Sync" })
@@ -35,17 +35,16 @@ require('packer').startup({ function(use)
     end
   }
   use 'lewis6991/impatient.nvim'
-  use 'folke/lua-dev.nvim'
+  use 'mrjones2014/legendary.nvim' -- Command Pallate
+  use 'folke/which-key.nvim'
   use 'nvim-lua/plenary.nvim' -- Lua utility helpers
-  -- use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
+  use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
   use 'williamboman/nvim-lsp-installer' -- Auto install language servers
   use 'j-hui/fidget.nvim'  -- LSP status spinner
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
   use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
-    config = function ()
-      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
-    end
+    run = ":TSUpdate",
   }
   use 'yioneko/nvim-yati' -- TODO: Until treesitter fit indent
 
@@ -54,7 +53,7 @@ require('packer').startup({ function(use)
   use 'rafamadriz/friendly-snippets'
   use 'saadparwaiz1/cmp_luasnip'
   use 'quangnguyen30192/cmp-nvim-tags'
-  --use {'tzachar/cmp-tabnine', run='./install.sh' }
+  -- use {'tzachar/cmp-tabnine', run='./install.sh' }
   use 'lukas-reineke/cmp-rg'
   use "ray-x/cmp-treesitter"
   use 'hrsh7th/cmp-buffer'
@@ -63,6 +62,7 @@ require('packer').startup({ function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/nvim-cmp'
+
   -- Debug Adapters
   -- use "Pocco81/dap-buddy.nvim"
   -- use {"theHamsta/nvim-dap-virtual-text",
@@ -72,8 +72,8 @@ require('packer').startup({ function(use)
   --     require('dapui').setup()
   --     vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
   --   end}
-  -- Languages
-  use "eddiebergman/nvim-treesitter-pyfold"
+  -- use 'github/copilot.vim'
+
   use {"blueyed/semshi",
     branch="handle-ColorScheme",
     run=":UpdateRemotePlugin",
@@ -97,12 +97,13 @@ require('packer').startup({ function(use)
       vim.g.tpipeline_clearstl = 1
     end
   }
--- SideBars
+  -- SideBars
   use {'kyazdani42/nvim-tree.lua',
     config = function()
       require("nvim-tree").setup({
         diagnostics = { enable = true }
       })
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
     end }
   use {"simrat39/symbols-outline.nvim",
     config = function()
@@ -122,7 +123,6 @@ require('packer').startup({ function(use)
   use 'onsails/lspkind.nvim' -- Add pictogram to LSP
   use 'stevearc/dressing.nvim'
   use 'rcarriga/nvim-notify'
-  use 'nvim-telescope/telescope-ui-select.nvim'
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'nvim-telescope/telescope.nvim'
   use { "lukas-reineke/indent-blankline.nvim", event = "BufRead",
@@ -146,18 +146,19 @@ require('packer').startup({ function(use)
     end }
   use { "luukvbaal/stabilize.nvim",
     config = function() require("stabilize").setup() end }
-  use "SmiteshP/nvim-gps"
+  use { "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+  }
   use 'kevinhwang91/nvim-bqf'
   use "kevinhwang91/nvim-hlslens" -- show number beside search highlight
   use "romainl/vim-cool" -- Handle highlight search automatically
   use { "norcalli/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup() end }
-  use { 'anuvyklack/pretty-fold.nvim',
-    -- requires = 'anuvyklack/nvim-keymap-amend',
-   config = function()
-      require('pretty-fold').setup {}
-      require('pretty-fold.preview').setup({border = "shadow"})
-   end }
+
+
+  -- Folding
+  use "eddiebergman/nvim-treesitter-pyfold"
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', }
   use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
     config = function() require("numb").setup() end, }
   use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
@@ -169,7 +170,7 @@ require('packer').startup({ function(use)
   use { "folke/trouble.nvim", event = "BufEnter",
     config = function()
       require("trouble").setup()
-      require("which-key").register({["<leader>x"] = {name = "Trouble"}})
+      -- require("which-key").register({["<leader>x"] = {name = "Trouble"}})
       vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<CR>", {desc="Trouble Toggle"})
       vim.keymap.set("n", "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", {desc = "References" })
       vim.keymap.set("n", "<leader>xf", "<cmd>TroubleToggle lsp_definitions<cr>", {desc = "Definitions" })
@@ -204,7 +205,7 @@ require('packer').startup({ function(use)
 
   -- Terminal
   use 'christoomey/vim-tmux-navigator'
-  use { "nikvdp/neomux", event = "BufEnter", }
+  use { "nikvdp/neomux", }
   use { "voldikss/vim-floaterm", config = function()
     vim.g.floaterm_keymap_next   = '<End>' -- Hyper+o
     vim.g.floaterm_keymap_prev   = '<S-End>' -- Hyper+Command+o
@@ -238,8 +239,7 @@ require('packer').startup({ function(use)
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
-  use { 'numToStr/Comment.nvim', config = require("my.comment")}
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use { 'numToStr/Comment.nvim', requires = 'JoosepAlviste/nvim-ts-context-commentstring' }
   use { "windwp/nvim-autopairs",
     config = function()
       require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
@@ -272,9 +272,6 @@ require('packer').startup({ function(use)
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end, }
 
-  use 'mrjones2014/legendary.nvim' -- Command Pallate
-  use 'folke/which-key.nvim'
-
   -- Colorscheme
   use { "RRethy/nvim-base16" }
   use { "rmehri01/onenord.nvim"}
@@ -299,11 +296,13 @@ end,
 config = {
   max_jobs = 69, -- bugs, has to specificed a number
   display = { open_fn = require("packer.util").float },
-} })
+}
+})
 
 require('legendary').setup()
 require("my.keymaps")
 require('impatient')
+require("my.comment")
 require("my.lsp")
 require("my.null-ls")
 require('my.cmp')
@@ -311,31 +310,17 @@ require("my.lualine")
 require("my.telescope")
 require("my.treesitter")
 require("my.options")
+require("my.fold")
 
 -- Visual command
 vim.cmd [[
   colorscheme base16-material-palenight |
-  highlight BufferCurrent gui=bold,italic |
-  highlight TSKeyword gui=bold|
-  highlight TSFunction gui=italic|
-  highlight TSKeywordFunction gui=bold,italic |
-  highlight TSVariableBuiltin gui=italic |
+  highlight TSKeyword gui=bold,italic|
   highlight TSInclude gui=bold,italic |
+  highlight TSFunction gui=italic |
+  highlight TSVariableBuiltin gui=italic |
+  highlight TSConstructor gui=bold |
   highlight TSVariable gui=none |
   highlight Folded guibg=None |
 ]]
-vim.api.nvim_create_autocmd("TermOpen", {
-  pattern = "*",
-  command = " setlocal listchars= nonumber norelativenumber",
-})
--- Highlight on yank
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
-
 -- vim: ts=2 sts=2 sw=2 fdls=4 et

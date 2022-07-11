@@ -30,7 +30,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
 vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
 
-vim.keymap.set("n", "<leader><space>", "zA", {desc = "Toggle fold recursively"})
+vim.keymap.set("n", "<leader><space>", "za", {desc = "Toggle fold recursively."})
 vim.keymap.set("n", "<leader>C", "<cmd>vsplit ~/.config/nvim/init.lua<CR>", {desc = "Open config"})
 vim.keymap.set("n", "<leader>q", ":q!<cr>", {desc = "Force Quit"})
 
@@ -64,6 +64,13 @@ vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save with Ctrl-s
 -- Yank to system clipboard
 vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
 vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
+-- Highlight on yank
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function() vim.highlight.on_yank() end,
+  group = highlight_group,
+  pattern = '*',
+})
 
 --  ______________
 -- < Terminal Mode>
@@ -74,15 +81,17 @@ vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
 --                 ||----w |
 --                 ||     ||
 vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  command = " setlocal listchars= nonumber norelativenumber",
+})
 vim.api.nvim_create_autocmd("TermClose", {
   callback = function ()
-    if vim.v.event.status == 0 then
+    if vim.v.event.status == 0 and vim.bo.filetype ~= "floaterm" then
       vim.api.nvim_buf_delete(0, {})
     end
-  end
+  end,
 })
--- autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
-
 
 local which_key = require("which-key")
 
@@ -151,7 +160,6 @@ which_key.setup({
     v = { "j", "k" },
   },
 })
-
 which_key.register({
   ["]"] = { name = "Next", },
   ["["] = { name = "Previous", },

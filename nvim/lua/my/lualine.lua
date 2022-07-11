@@ -13,8 +13,10 @@ local colors = {
   red = "#ec5f67",
 }
 
-local gps = require("nvim-gps")
-gps.setup()
+local navic = require("nvim-navic")
+navic.setup({
+    highlight = true,
+  })
 
 local windows = {
   function ()
@@ -177,7 +179,6 @@ require('lualine').setup {
       python_env,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, separator = ">", color = { gui = "italic"} },
-      { gps.get_location, cond = gps.is_available, },
     },
     lualine_x = { diagnostics, lsp, treesitter, },
     lualine_y = { spaces,  'progress', 'fileformat' },
@@ -192,16 +193,8 @@ require('lualine').setup {
     lualine_z = {terminal, windows}
   },
   tabline = {},
-  winbar = {
-    lualine_c = {
-      python_env,
-      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 1, separator = ">", color = { gui = "italic"} },
-      { gps.get_location, cond = gps.is_available, },
-    },
-  },
   extensions = { 'quickfix', 'nvim-tree'}
 }
 
--- vim.o.winbar = "%f" .. {gps.get_location()}
+vim.wo.winbar = " %{winnr()}::%f > %{%v:lua.require'nvim-navic'.get_location()%}"
 -- vim.opt.winbar = "%{%v:lua.require'omega.modules.ui.winbar'.eval()%}"

@@ -4,13 +4,13 @@ fi
 source $HOME/.zsh/zsh-snap/znap.zsh
 
 znap source romkatv/powerlevel10k
-znap source jeffreytse/zsh-vi-mode
-function zvm_after_init() {
+# znap source jeffreytse/zsh-vi-mode
+# function zvm_after_init() {
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_DEFAULT_OPTS="--layout=reverse"
   # export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
   export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-}
+# }
 
 znap install Homebrew/brew
 znap source marlonrichert/zsh-autocomplete
@@ -47,8 +47,13 @@ alias g="git" lg="lazygit"
 export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export SAVEHIST=2000
-export HISTFILE=~/.zsh_history
+export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000
 
 source $HOME/.config/lf/lficons.rc
 [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
+
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+

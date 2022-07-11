@@ -50,9 +50,9 @@ local on_attach = function(client, bufnr)
   -- Highlight symbol under cursor NOTE: somewhat duplicate with nvim_cursorline
   if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[
-      hi! LspReferenceRead cterm=bold gui=underdot
-      hi! LspReferenceText cterm=bold gui=underdot
-      hi! LspReferenceWrite cterm=bold gui=underdot
+      hi! LspReferenceRead cterm=bold gui=underdotted
+      hi! LspReferenceText cterm=bold gui=underdotted
+      hi! LspReferenceWrite cterm=bold gui=underdotted
     ]]
     vim.api.nvim_create_augroup('lsp_document_highlight', {
       clear = false
@@ -73,12 +73,18 @@ local on_attach = function(client, bufnr)
     })
   end
   -- require('virtualtypes').on_attach()
+  require('nvim-navic').attach(client, bufnr)
   vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- capabilities.textDocument.foldingRange = {
+--     dynamicRegistration = false,
+--     lineFoldingOnly = true
+-- }
+-- require('ufo').setup()
 
 -- Enable the following language servers
 local servers = { 'sumneko_lua', 'pyright', 'bashls', }
@@ -97,6 +103,8 @@ local luadev = require("lua-dev").setup({
   lspconfig = { on_attach=on_attach }
 })
 lspconfig.sumneko_lua.setup(luadev)
+
+require("fidget").setup()
 
 -- _________________
 -- < vim.diagnostics >
@@ -122,7 +130,7 @@ vim.diagnostic.config({
     active = signs,
   },
   update_in_insert = false,
-  underline = true,
+  underline = false,
   severity_sort = true,
   float = {
     focusable = false,
@@ -141,5 +149,3 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "shadow",
 })
-
-require("fidget").setup()
