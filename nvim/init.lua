@@ -90,7 +90,12 @@ require('packer').startup({ function(use)
     config = function ()
       vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
     end}
-  use {'nvim-lualine/lualine.nvim' }
+  use {'nvim-lualine/lualine.nvim',
+    branch = 'feat/refresh_on_timer'
+    }
+  -- use {'diegodox/lualine.nvim',
+  --     branch='winbar'
+  --   }
   use {'vimpostor/vim-tpipeline',
     config = function()
       vim.g.tpipeline_usepane = 1
@@ -254,7 +259,8 @@ require('packer').startup({ function(use)
   use "tpope/vim-unimpaired"
   use {"andymass/vim-matchup",
     config = function ()
-      vim.g.matchup_matchparen_offscreen = {method= 'popup'}
+      vim.g.matchup_matchparen_offscreen = {method= 'popup', position='cursor'}
+      vim.g.matchup_matchparen_deferred = 1
     end
   }
   use {"junegunn/vim-easy-align",
