@@ -54,6 +54,7 @@ require('packer').startup({ function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'quangnguyen30192/cmp-nvim-tags'
   -- use {'tzachar/cmp-tabnine', run='./install.sh' }
+  use 'zbirenbaum/copilot-cmp'
   use 'lukas-reineke/cmp-rg'
   use "ray-x/cmp-treesitter"
   use 'hrsh7th/cmp-buffer'
@@ -73,6 +74,12 @@ require('packer').startup({ function(use)
   --     vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
   --   end}
   -- use 'github/copilot.vim'
+  use { "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    config = function ()
+      vim.schedule(function() require("copilot").setup() end)
+    end,
+  }
 
   use {"blueyed/semshi",
     branch="handle-ColorScheme",

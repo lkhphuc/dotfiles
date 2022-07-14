@@ -61,6 +61,7 @@ cmp.setup {
         tags = "",
         buffer = "",
         path = "",
+        copilot = "",
         cmp_tabnine = "",
         rg = "",
       },
@@ -73,13 +74,18 @@ cmp.setup {
     { name = 'tags' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'copilot' },
     -- { name = 'cmp_tabnine' },
     -- { name = 'rg' },
   },
   view = {
     entries = {name = 'custom', selection_order = 'near_cursor' }
   },
+  experimental = {
+    ghost_text = true,
+  },
 }
+
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
@@ -87,6 +93,7 @@ cmp.setup.cmdline('/', {
     { name = 'nvim_lsp_document_symbol' },
   },
 })
+
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({

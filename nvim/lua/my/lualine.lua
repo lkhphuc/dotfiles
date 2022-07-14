@@ -62,9 +62,6 @@ end
 
 local function tabs()
   local total_tabs = vim.fn.tabpagenr("$")
-  -- if total_tabs == 1 then
-  --   return ""
-  -- end
   local tab_id = vim.fn.tabpagenr()
   return " " ..tab_id .. "/" .. total_tabs
 end
@@ -93,7 +90,7 @@ local branch = {
   "b:gitsigns_head",
   icon = "",
   color = { gui = "bold," },
-  cond = hide_in_width,
+  separator = { left = '' , right = '' },
 }
 
 local function _env_cleanup(venv)
@@ -122,8 +119,6 @@ local python_env = {
     end
     return ""
   end,
-  separator = false,
-  color = { gui="italic" },
   cond = hide_in_width,
 }
 
@@ -141,7 +136,7 @@ local treesitter = {
 
 local lsp = {
   function(_)
-    local clients = vim.lsp.get_active_clients(0)
+    local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
       return ""
     end
@@ -174,7 +169,8 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    component_separators = { left = '', right = '' },
+    -- component_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
     disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline", "TelescopePrompt", "floaterm" },
     always_divide_middle = true,
@@ -183,25 +179,22 @@ require('lualine').setup {
 
   sections = {
     lualine_a = {
-      { 'hostname', icon = ' ',
-        separator = { left = '' , right = '' },
-        cond=hide_in_width, padding = 0,
-      },
-      tabs,
+      branch,
     },
     lualine_b = {
-      -- { 'tabs', mode = 2, icon = ' ' },
+      python_env,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 1, separator = ">", color = { gui = "italic"} },
+      {'filename', path = 1, color = { gui = "italic"} },
     },
     lualine_c = {
-      python_env,
+      diff,
     },
-    lualine_x = { lsp, treesitter, },
-    lualine_y = { diff },
+    lualine_x = {  },
+    lualine_y = { lsp, treesitter, },
     lualine_z = {
-      -- terminal,
-      branch,
+      terminal,
+      tabs,
+      { 'hostname', icon = ' ', },
     },
   },
   inactive_sections = {
@@ -234,10 +227,10 @@ require('lualine').setup {
     lualine_z = { terminal, windows }
   },
   inactive_winbar = {
-    -- lualine_c = {
-    --   {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-    --   {'filename', path = 0, separator = ">", color = { gui = "italic"} },
-    -- },
+    lualine_c = {
+      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
+      {'filename', path = 0, separator = ">", color = { gui = "italic"} },
+    },
     lualine_z = { terminal, windows },
   },
 
