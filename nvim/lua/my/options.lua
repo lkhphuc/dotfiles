@@ -26,6 +26,6 @@ vim.o.showmode = false
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 -- Can not put this inside neomux config for some reason
-vim.g.neomux_winjump_map_prefix = "gw"
 vim.g.neomux_win_num_status = ""
 vim.g.neomux_dont_fix_term_ctrlw_map = 1
+vim.g.neomux_no_exit_term_map = 1

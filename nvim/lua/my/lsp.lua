@@ -6,25 +6,28 @@ local on_attach = function(client, bufnr)
   -- local  opts = { buffer = bufnr, }
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
+  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
+  vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, { desc="Open diagnostics." })
+
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
-  vim.keymap.set('n', '<leader>lS', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
+  vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
 
   vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
   vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc="Declaration" })
   vim.keymap.set('n', 'gi', tele.lsp_implementations, { buffer = bufnr, desc="Implementation" })
+  vim.keymap.set('n', 'gy', tele.lsp_type_definitions, { buffer = bufnr, desc="TYpe definition" })
 
-  vim.keymap.set('n', '<leader>D', tele.lsp_type_definitions, { buffer = bufnr, desc="Type definition" })
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr, desc="Rename symbol under cursor" })
   vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = bufnr, desc="Code Action" })
-  vim.keymap.set('n', '<leader>ls', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
-  vim.keymap.set({'n', 'x'}, '<leader>lF', vim.lsp.buf.range_formatting, { buffer = bufnr, desc="Formatting" })
-  vim.keymap.set('n', '<leader>ld', tele.diagnostics, { buffer = bufnr, desc = "Documents Diagnostics"} )
-  vim.keymap.set('n', '<leader>li', "<cmd>LspInfo", { buffer = bufnr, desc = "Lsp Info"})
-  vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo", { buffer = bufnr, desc = "Lsp Install Info"})
+  vim.keymap.set('n', '<leader>ss', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
+  vim.keymap.set('n', '<leader>sd', tele.diagnostics, { buffer = bufnr, desc = "Documents Diagnostics"} )
+  vim.keymap.set('n', '<leader>li', "<cmd>LspInfo<CR>", { buffer = bufnr, desc = "Lsp Info"})
+  vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo<CR>", { buffer = bufnr, desc = "Lsp Install Info"})
   vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
-  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
-  -- vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, desc("Open diagnostics."))
+
+  vim.keymap.set({'n', 'x'}, '<leader>lF', vim.lsp.buf.range_formatting, { buffer = bufnr, desc="Formatting" })
+  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 
   vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc="Add workspace" } )
   vim.keymap.set( 'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc="Remove workspace" } )
@@ -72,18 +75,19 @@ local on_attach = function(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
+
   -- require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+  require("aerial").on_attach(client, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
--- capabilities.textDocument.foldingRange = {
---     dynamicRegistration = false,
---     lineFoldingOnly = true
--- }
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 -- require('ufo').setup()
 
 -- Enable the following language servers

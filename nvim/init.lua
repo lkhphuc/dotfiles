@@ -117,15 +117,18 @@ require('packer').startup({ function(use)
       })
       vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
     end }
-  use {"simrat39/symbols-outline.nvim",
+  -- use {"simrat39/symbols-outline.nvim",
+  use {"mxsdev/symbols-outline.nvim",
+    branch = "folding",
     config = function()
       vim.g.symbols_outline = {
+        preview_bg_highlight = "",
         keymaps = {
           hover_symbol = "K",
           toggle_preview = "P",
         }
       }
-      vim.keymap.set("n", "<C-m>", "<cmd>SymbolsOutline<CR>")
+      vim.keymap.set("n", "<leader>o", "<cmd>SymbolsOutline<CR>")
     end
   }
   use {"simnalamburt/vim-mundo",

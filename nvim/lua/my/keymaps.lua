@@ -58,7 +58,8 @@ vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
 
 -- Misc mode
 vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
-vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save with Ctrl-s
+vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save in normal/insert
+vim.keymap.set({"t"}, "<C-s>", "<C-\\><C-n>") -- Escape in terminal
 --
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 -- Yank to system clipboard

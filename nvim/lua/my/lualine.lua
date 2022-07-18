@@ -35,23 +35,16 @@ vim.api.nvim_set_hl(0, "NavicIconsString",        {default = true, bg = colors.b
 vim.api.nvim_set_hl(0, "NavicIconsNumber",        {default = true, bg = colors.bg, fg = colors.fg})
 vim.api.nvim_set_hl(0, "NavicIconsBoolean",       {default = true, bg = colors.bg, fg = colors.fg})
 vim.api.nvim_set_hl(0, "NavicIconsArray",         {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsObject",        {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsKey",           {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsNull",          {default = true, bg = colors.bg, fg = colors.fg})
+vim.api.nvim_set_hl(0, "NavicIconsObject",        {default = true, bg = colors.bg, fg = colors.green})
 vim.api.nvim_set_hl(0, "NavicIconsEnumMember",    {default = true, bg = colors.bg, fg = colors.yellow})
 vim.api.nvim_set_hl(0, "NavicIconsStruct",        {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsEvent",         {default = true, bg = colors.bg, fg = colors.fg})
 vim.api.nvim_set_hl(0, "NavicIconsOperator",      {default = true, bg = colors.bg, fg = colors.cyan})
-vim.api.nvim_set_hl(0, "NavicIconsTypeParameter", {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicText",               {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicSeparator",          {default = true, bg = colors.bg, fg = colors.fg})
 
 local windows = {
   function ()
     return " " .. vim.api.nvim_win_get_number(0)
   end,
-  separator = {left = '', right = ''},
-  padding = 0, 
+  padding = {left = 1, right = 0},
 }
 local function terminal()
   if vim.o.buftype == "terminal" then
@@ -73,7 +66,6 @@ end
 local diff = { "diff",
     symbols = { added = " ", modified = " ", removed = " " },
     colored = true,
-    -- padding = {left=1, right=0}
     source = function()
       local gitsigns = vim.b.gitsigns_status_dict
       if gitsigns then
@@ -90,7 +82,6 @@ local branch = {
   "b:gitsigns_head",
   icon = "",
   color = { gui = "bold," },
-  separator = { left = '' , right = '' },
 }
 
 local function _env_cleanup(venv)
@@ -106,18 +97,10 @@ end
 
 local python_env = {
   function()
-    if vim.bo.filetype ~= "python" then
-      return ""
-    end
-    local venv = os.getenv "CONDA_DEFAULT_ENV"
+    local venv = os.getenv("CONDA_DEFAULT_ENV") or _env_cleanup(os.getenv("VIRTUAL_ENV"))
     if venv then
-      return  _env_cleanup(venv)
+      return " "..venv
     end
-    venv = os.getenv "VIRTUAL_ENV"
-    if venv then
-      return _env_cleanup(venv)
-    end
-    return ""
   end,
   cond = hide_in_width,
 }
@@ -128,7 +111,6 @@ local treesitter = {
     if next(vim.treesitter.highlighter.active[b]) then
       return ""
     end
-    return ""
   end,
   color = { fg = colors.green },
   cond = hide_in_width,
@@ -136,7 +118,7 @@ local treesitter = {
 
 local lsp = {
   function(_)
-    local clients = vim.lsp.get_active_clients()
+    local clients = vim.lsp.get_active_clients({bufnr = 0})
     if next(clients) == nil then
       return ""
     end
@@ -146,8 +128,17 @@ local lsp = {
     end
     return output
   end,
-  color = { fg = colors.blue, },
   cond = hide_in_width,
+}
+
+local diagnostics = {
+  "diagnostics",
+  sources = { "nvim_diagnostic" },
+  sections = { 'error', 'warn', 'info', 'hint' },
+  symbols = { error = " ", warn = " ", info = " ", hint = " " },
+  colored = true,
+  update_in_insert = false,
+  separator = false,
 }
 
 local spaces = {
@@ -162,7 +153,6 @@ local spaces = {
       return  ""..size
     end,
     cond = hide_in_width,
-    color = {},
   }
 
 require('lualine').setup {
@@ -172,30 +162,29 @@ require('lualine').setup {
     -- component_separators = { left = '', right = '' },
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
-    disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline", "TelescopePrompt", "floaterm" },
+    disabled_filetypes = {
+      winbar = {"dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
+    },
     always_divide_middle = true,
     globalstatus = true,
   },
 
   sections = {
     lualine_a = {
-      branch,
+      { 'hostname', icon = ' ', },
+      tabs,
     },
     lualine_b = {
-      python_env,
+      terminal,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 1, color = { gui = "italic"} },
+      {'filename', path = 1, color = { gui = "italic"}, separator = false },
     },
     lualine_c = {
       diff,
     },
-    lualine_x = {  },
-    lualine_y = { lsp, treesitter, },
-    lualine_z = {
-      terminal,
-      tabs,
-      { 'hostname', icon = ' ', },
-    },
+    lualine_x = { diagnostics, lsp, },
+    lualine_y = { treesitter, spaces,  'progress', 'fileformat', },
+    lualine_z = { branch, python_env, },
   },
   inactive_sections = {
     lualine_a = {},
@@ -207,31 +196,21 @@ require('lualine').setup {
   },
 
   winbar = {
-    lualine_c = {
+    lualine_a = { windows, terminal, },
+    lualine_b = {
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 0, separator = ">", color = { gui = "italic"} },
+    },
+    lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
-
-    lualine_x = {
-      { "diagnostics",
-        sources = { "nvim_diagnostic" },
-        sections = { 'error', 'warn', 'info', 'hint' },
-        symbols = { error = " ", warn = " ", info = " ", hint = " " },
-        colored = true,
-        update_in_insert = false,
-        -- always_visible = true,
-      }
-    },
-    lualine_y = { spaces,  'progress', 'fileformat' },
-    lualine_z = { terminal, windows }
   },
   inactive_winbar = {
-    lualine_c = {
+    lualine_a = { terminal, windows },
+    lualine_b = {
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 0, separator = ">", color = { gui = "italic"} },
     },
-    lualine_z = { terminal, windows },
   },
 
   tabline = {},
