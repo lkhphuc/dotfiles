@@ -10,11 +10,16 @@ local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nv
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   is_bootstrap = true
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  vim.fn.execute('!git clone --depth 1 https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 -- Autocommand that reloads neovim whenever you save this file
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua', })
+local config_group = vim.api.nvim_create_augroup('Config', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  command = 'source <afile> | PackerCompile',
+  group = config_group,
+  pattern = 'init.lua',
+  nested = true,
+})
 --  _________
 -- < Plugins >
 --  ---------
@@ -97,12 +102,7 @@ require('packer').startup({ function(use)
     config = function ()
       vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
     end}
-  use {'nvim-lualine/lualine.nvim',
-    branch = 'feat/refresh_on_timer'
-    }
-  -- use {'diegodox/lualine.nvim',
-  --     branch='winbar'
-  --   }
+  use {'nvim-lualine/lualine.nvim', }
   use {'vimpostor/vim-tpipeline',
     config = function()
       vim.g.tpipeline_usepane = 1
@@ -289,21 +289,16 @@ require('packer').startup({ function(use)
     config = function() require("my.tabout") end, }
 
   -- Colorscheme
-  use { "RRethy/nvim-base16" }
   use { "rmehri01/onenord.nvim"}
   use { "rebelot/kanagawa.nvim" }
   use { "navarasu/onedark.nvim" }
-  use { "olimorris/onedarkpro.nvim"}
   use { "projekt0n/github-nvim-theme" }
-  use { "sainnhe/edge",
-    config = function()
-      vim.g.edge_better_performance = 1
-      vim.g.edge_enable_italic = 1
-    end }
-  use "cpea2506/one_monokai.nvim"
-  use 'folke/tokyonight.nvim'
+  use { "cpea2506/one_monokai.nvim", }
+  use { "folke/tokyonight.nvim"}
   use { "EdenEast/nightfox.nvim", }
-  use { "catppuccin/nvim", as = "catppuccin" }
+  use { "catppuccin/nvim", as = "catppuccin", }
+  use { "marko-cerovac/material.nvim", }
+  use { "bluz71/vim-moonfly-colors"}
 
   if is_bootstrap then
     require('packer').sync()
@@ -327,16 +322,6 @@ require("my.telescope")
 require("my.treesitter")
 require("my.options")
 require("my.fold")
+require("my.colorscheme")
 
--- Visual command
-vim.cmd [[
-  colorscheme base16-material-palenight |
-  highlight TSKeyword gui=bold,italic|
-  highlight TSInclude gui=bold,italic |
-  highlight TSFunction gui=italic |
-  highlight TSVariableBuiltin gui=italic |
-  highlight TSConstructor gui=bold |
-  highlight TSVariable gui=none |
-  highlight Folded guibg=None |
-]]
 -- vim: ts=2 sts=2 sw=2 fdls=4 et
