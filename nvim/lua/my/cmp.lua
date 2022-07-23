@@ -74,7 +74,7 @@ cmp.setup {
     { name = 'tags' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'copilot' },
+    { name = 'copilot', priority=99, },
     -- { name = 'cmp_tabnine' },
     -- { name = 'rg' },
   },

@@ -7,7 +7,7 @@ telescope.setup {
 
     prompt_prefix = " ",
     selection_caret = " ",
-    path_display = { "smart" },
+    path_display = { "truncate" },
 
     mappings = {
       i = {
@@ -87,7 +87,7 @@ telescope.setup {
     buffers = { theme = "dropdown", },
     current_buffer_fuzzy_find = { theme = "ivy", },
     live_grep = { },
-    colorscheme = { theme = "dropdown", },
+    colorscheme = { theme = "dropdown", enable_preview = true },
     lsp_references = { theme = "dropdown" },
     lsp_definitions = { theme = "dropdown" }
   },
@@ -108,9 +108,14 @@ vim.keymap.set("n", "<leader>sC", builtin.colorscheme, { desc = "Find colorschem
 vim.keymap.set("n", "<leader>sc", builtin.commands, { desc = "Find command"})
 vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Find Help"})
 vim.keymap.set("n", "<leader>sM", builtin.man_pages, { desc = "Man Page"})
-vim.keymap.set("n", "<leader>sr", builtin.oldfiles, { desc = "Recent"})
-vim.keymap.set("n", "<leader>sR", builtin.registers, { desc = "Registers"})
+vim.keymap.set("n", "<leader>so", builtin.oldfiles, { desc = "Recent"})
+vim.keymap.set("n", "<leader>s\'", builtin.registers, { desc = "Registers"})
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Keymaps"})
 vim.keymap.set("n", "<leader>sj", builtin.jumplist, { desc = "Jumplist"})
-vim.keymap.set("n", "<leader>sn", builtin.resume, { desc = "Continue next search"})
+vim.keymap.set("n", "<leader>sm", builtin.marks, { desc = "Marks"})
+vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Continue next search"})
 vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "Telescope Pickers"})
+vim.keymap.set("n", "<leader>s?", builtin.search_history, { desc = "Search history"})
+vim.keymap.set("n", "<leader>s;", builtin.command_history, { desc = "Command history"})
+-- vim.keymap.set("n", "<leader>sp", builtin.projects, { desc = "Projects"})
+vim.keymap.set("n", "<leader>sO", builtin.vim_options, { desc = "Vim options"})

@@ -247,7 +247,7 @@ require('packer').startup({ function(use)
     config = function()
       vim.api.nvim_create_autocmd("TextYankPost", {
         pattern = "*",
-        command = "if v:event.operator is 'y' && v:event.regname is '+' | OSCYankReg + | endif"
+        command = "if v:event.regname is '+' | OSCYankReg + | endif"
       })
     end }
   use 'antoinemadec/FixCursorHold.nvim'
@@ -263,7 +263,15 @@ require('packer').startup({ function(use)
     config = function ()
       require("leap").set_default_keymaps()
     end}
-  use "tpope/vim-surround"
+  use{ "kylechui/nvim-surround",
+    config = function()
+        require("nvim-surround").setup({
+          highlight_motion = {
+            duration = 1000,
+          }
+        })
+    end
+  }
   use "tpope/vim-repeat"
   use "tpope/vim-sleuth" --One plugin everything tab indent
   use "tpope/vim-unimpaired"
@@ -305,7 +313,7 @@ require('packer').startup({ function(use)
   end
 end,
 config = {
-  max_jobs = 69, -- bugs, has to specificed a number
+  max_jobs = 50, -- bugs, has to specificed a number
   display = { open_fn = require("packer.util").float },
 }
 })

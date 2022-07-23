@@ -6,8 +6,8 @@ local on_attach = function(client, bufnr)
   -- local  opts = { buffer = bufnr, }
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
-  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
-  vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, { desc="Open diagnostics." })
+  vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
+  vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc="Open diagnostics." })
 
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
   vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
@@ -78,7 +78,6 @@ local on_attach = function(client, bufnr)
 
   -- require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)
-  require("aerial").on_attach(client, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -129,7 +128,7 @@ for _, sign in ipairs(signs) do
 end
 
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   signs = {
     active = signs,
   },

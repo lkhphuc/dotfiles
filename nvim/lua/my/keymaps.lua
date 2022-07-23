@@ -60,11 +60,20 @@ vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
 vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
 vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save in normal/insert
 vim.keymap.set({"t"}, "<C-s>", "<C-\\><C-n>") -- Escape in terminal
---
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
+
 -- Yank to system clipboard
 vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
 vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
+-- Don't yank empty line to clipboard
+local function smart_dd()
+  if vim.api.nvim_get_current_line():match("^%s*$") then
+    return "\"_dd"
+  else
+    return "dd"
+  end
+end
+vim.keymap.set( "n", "dd", smart_dd, { noremap = true, expr = true } )
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
