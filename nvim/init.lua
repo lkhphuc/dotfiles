@@ -296,6 +296,36 @@ require('packer').startup({ function(use)
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end, }
 
+  use { "kwkarlwang/bufresize.nvim",
+    config = function()
+        require("bufresize").setup()
+    end
+  }
+  use {'mrjones2014/smart-splits.nvim',
+    requires = "bufresize.nvim",
+    config = function ()
+      require("smart-splits").setup({
+          resize_mode = {
+            hooks = {
+              on_leave = require("bufresize").register
+            }
+          }
+        })
+    end
+  }
+  use "szw/vim-maximizer"
+  use {'sindrets/winshift.nvim',
+    config = function()
+      require("winshift").setup({
+          highlight_moving_win = true
+        })
+    config = function()
+        require("bufresize").setup()
+    end
+    end
+  }
+  use {'anuvyklack/hydra.nvim', }
+
   -- Colorscheme
   use { "rmehri01/onenord.nvim"}
   use { "rebelot/kanagawa.nvim" }
@@ -331,5 +361,6 @@ require("my.treesitter")
 require("my.options")
 require("my.fold")
 require("my.colorscheme")
+require("my.windows")
 
 -- vim: ts=2 sts=2 sw=2 fdls=4 et
