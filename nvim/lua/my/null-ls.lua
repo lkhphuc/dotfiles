@@ -8,15 +8,22 @@ null_ls.setup({
     -- Python
     -- diagnostics.pylama,
     diagnostics.flake8.with({
-      extra_args = {
-        "--extend-ignore", "E111,E114,E501",
-        "--indent-size", vim.o.shiftwidth,
-      }
+      extra_args = function(params)
+        return params
+        and {
+          "--extend-ignore", "E111,E114,E501",
+          "--indent-size", vim.fn.shiftwidth(),
+        }
+      end,
     }),
-    -- diagnostics.pylint,
-    -- diagnostics.mypy, -- mostly already covered by Pyright
-    formatting.black,
+    -- diagnostics.mypy.with({
+    --   extra_args = {
+    --     "--ignore-missing-imports",
+    --   }
+    -- }),
+    formatting.yapf,
     formatting.isort,
+
     -- Lua
     formatting.stylua,
     -- sh

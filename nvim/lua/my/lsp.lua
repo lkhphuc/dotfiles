@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
 
   vim.keymap.set({'n', 'x'}, '<leader>lF', vim.lsp.buf.range_formatting, { buffer = bufnr, desc="Formatting" })
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+  vim.api.nvim_create_user_command("Format", vim.lsp.buf.format, { })
 
   vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc="Add workspace" } )
   vim.keymap.set( 'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc="Remove workspace" } )
@@ -35,27 +35,12 @@ local on_attach = function(client, bufnr)
     vim.inspect(vim.lsp.buf.list_workspace_folders())
   end, { buffer = bufnr, desc="List workspace folder" } )
   vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
-  -- Auto open diagnostic float windows
-  vim.api.nvim_create_autocmd("CursorHold", {
-    buffer = bufnr,
-    callback = function()
-      local opts = {
-        focusable = false,
-        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        border = 'rounded',
-        source = 'always',
-        prefix = ' ',
-        scope = 'cursor',
-      }
-      vim.diagnostic.open_float(nil, opts)
-    end
-  })
   -- Highlight symbol under cursor NOTE: somewhat duplicate with nvim_cursorline
   if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[
-      hi! LspReferenceRead cterm=bold gui=underdotted
-      hi! LspReferenceText cterm=bold gui=underdotted
-      hi! LspReferenceWrite cterm=bold gui=underdotted
+      hi! LspReferenceRead cterm=bold gui=underline
+      hi! LspReferenceText cterm=bold gui=underline
+      hi! LspReferenceWrite cterm=bold gui=underline
     ]]
     vim.api.nvim_create_augroup('lsp_document_highlight', {
       clear = false
@@ -76,7 +61,7 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  -- require('virtualtypes').on_attach()
+  require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)
 end
 
@@ -87,12 +72,13 @@ capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
--- require('ufo').setup()
 
 -- Enable the following language servers
 local servers = { 'sumneko_lua', 'pyright', 'bashls', }
-require("nvim-lsp-installer").setup({
---   ensure_installed = servers,
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = servers,
   automatic_installation = true,
 })
 for _, lsp in ipairs(servers) do
@@ -129,9 +115,7 @@ end
 
 vim.diagnostic.config({
   virtual_text = true,
-  signs = {
-    active = signs,
-  },
+  signs = { active = signs, },
   update_in_insert = false,
   underline = false,
   severity_sort = true,
