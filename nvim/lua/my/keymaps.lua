@@ -34,8 +34,7 @@ vim.keymap.set("n", "<leader><space>", "za", {desc = "Toggle fold recursively."}
 vim.keymap.set("n", "<leader>C", "<cmd>vsplit ~/.config/nvim/init.lua<CR>", {desc = "Open config"})
 vim.keymap.set("n", "<leader>q", ":q!<cr>", {desc = "Force Quit"})
 
-vim.keymap.set("n", "<leader>lg", ":tabnew term://lazygit<CR>", {desc = "Lazy Git"})
-vim.keymap.set("n", "<leader>lf", ":tabnew term://lf<CR>", {desc = "File manager"})
+vim.keymap.set("n", "<leader>F", ":tabnew term://lf<CR>", {desc = "File manager"})
 --  _____________
 -- < Visual Mode >
 --  -------------

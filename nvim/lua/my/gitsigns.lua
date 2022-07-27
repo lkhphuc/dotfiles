@@ -61,6 +61,7 @@ gitsigns.setup {
     vim.keymap.set("n", "<leader>go", "<cmd>Telescope git_status<cr>",     { desc = "Open changed file" })
     vim.keymap.set("n", "<leader>gb", "<cmd>Telescope git_branches<cr>",   { desc = "Checkout branch"   })
     vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>",    { desc = "Checkout commit"   })
+    vim.keymap.set("n", "<leader>gg", ":tabnew term://lazygit<CR>", {desc="LazyGit"})
   end
 }
 

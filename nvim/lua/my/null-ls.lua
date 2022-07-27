@@ -11,7 +11,7 @@ null_ls.setup({
       extra_args = function(params)
         return params
         and {
-          "--extend-ignore", "E111,E114,E501",
+          "--extend-ignore", "E111,E114,E501,F722",
           "--indent-size", vim.fn.shiftwidth(),
         }
       end,

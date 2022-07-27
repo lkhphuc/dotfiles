@@ -47,7 +47,9 @@ require('packer').startup({ function(use)
   -- use 'williamboman/nvim-lsp-installer' -- Auto install language servers
   use { "williamboman/mason.nvim", }
   use { "williamboman/mason-lspconfig.nvim", }
-  use 'j-hui/fidget.nvim'  -- LSP status spinner
+  use { 'j-hui/fidget.nvim',   -- LSP status spinner
+    config = function() require("fidget").setup() end
+  }
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
   use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
     run = ":TSUpdate",
@@ -70,14 +72,16 @@ require('packer').startup({ function(use)
   use 'hrsh7th/nvim-cmp'
 
   -- Debug Adapters
-  -- use "Pocco81/dap-buddy.nvim"
-  -- use {"theHamsta/nvim-dap-virtual-text",
-  --   config = function() require('nvim-dap-virtual-text').setup() end}
-  -- use {"rcarriga/nvim-dap-ui",
-  --   config = function()
-  --     require('dapui').setup()
-  --     vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
-  --   end}
+  use "Pocco81/dap-buddy.nvim"
+  use {"theHamsta/nvim-dap-virtual-text",
+    config = function() require('nvim-dap-virtual-text').setup() end}
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+    config = function()
+      require('dapui').setup()
+      vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
+    end
+  }
+
   -- use 'github/copilot.vim'
   use { "zbirenbaum/copilot.lua",
     event = "InsertEnter",
@@ -101,13 +105,19 @@ require('packer').startup({ function(use)
   use 'stevearc/dressing.nvim'
   use 'rcarriga/nvim-notify'
   use { 'rmagatti/goto-preview',
-    config = function() require('goto-preview').setup { default_mappings = true } end
+    config = function()
+      require('goto-preview').setup({})
+      vim.keymap.set("n", "q", require("goto-preview").close_all_win, {desc = "Close" })
+    end,
   }
   use {'moll/vim-bbye',
     config = function ()
       vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
     end}
-  use {'nvim-lualine/lualine.nvim', }
+  use {'nvim-lualine/lualine.nvim',}
+  use {"b0o/incline.nvim",
+    config = function () require('incline').setup() end
+    }
   use {'vimpostor/vim-tpipeline',
     config = function()
       vim.g.tpipeline_usepane = 1
@@ -238,20 +248,40 @@ require('packer').startup({ function(use)
     vim.g.floaterm_position      = 'center'
     vim.g.floaterm_width         = 0.9
     vim.g.floaterm_height        = 0.9
-    vim.keymap.set("n", "<leader>gg", "<CMD>FloatermNew lazygit<CR>", {desc="LazyGit"})
   end }
+  -- use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
+  --   require("toggleterm").setup()
+  -- end}
 
   use { "jpalardy/vim-slime",
+    requires = "hanschen/vim-ipython-cell",
     config = function()
       vim.g.slime_target = "neovim"
-      vim.g.slime_python_ipython = 1
-      vim.b.slime_cell_delimiter = "# %%"
       vim.g.slime_no_mapping = 1
-      vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend '>") -- Send then move last line of selection
-      vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
-      vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
+      vim.keymap.set("x", "<leader>r", "<Plug>SlimeRegionSend '>") -- Send then move last line of selection
+      vim.keymap.set("n", "<leader>rr", "<Plug>SlimeSend")
+      -- vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
+      -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
+      -- python
+      vim.g.slime_python_ipython = 1
+      vim.keymap.set("n", "<S-CR>", "<Cmd>IPythonCellExecuteCellJump<CR>", {desc = "Execute and jumpt to next cell"})
+      vim.keymap.set("n", "<leader><CR>", "<Cmd>IPythonCellExecuteCell<CR>", {desc = "Execute cell"})
+      vim.keymap.set("n", "<leader>rs", "<Cmd>IPythonCellRun<CR>", {desc = "Run script"})
+      vim.keymap.set("n", "<leader>rS", "<Cmd>IPythonCellRunTime<CR>", {desc = "Run script and time it"})
+      vim.keymap.set("n", "<leader>rc", "<Cmd>IPythonCellClear<CR>", {desc = "Clear IPython screen"})
+      vim.keymap.set("n", "<leader>rx", "<Cmd>IPythonCellClose<CR>", {desc = "Close all matplotlib figure windows"})
+      vim.keymap.set("n", "<leader>rr", "<Cmd>IPythonCellPrevCommand<CR>", {desc = "ReRun previous command"})
+      vim.keymap.set("n", "<leader>ri", "<Cmd>SlimeSend1 ipython --matplotlib<CR>", {desc = "Run ipython"})
+      vim.keymap.set("n", "<leader>rR", "<Cmd>IPythonCellRestart<CR>", {desc = "Restart ipython"})
+      vim.keymap.set("n", "<leader>rd", "<Cmd>SlimeSend1 %debug<CR>", {desc = "Debug ipython"})
+      vim.keymap.set("n", "<leader>rq", "<Cmd>SlimeSend1 exit<CR>", {desc = "Exit"})
+      vim.keymap.set("n", "[c", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to previous cell"})
+      vim.keymap.set("n", "]c", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to next cell"})
+      vim.keymap.set("n", "[i", "<Cmd>IPythonCellInsertAbove<CR>i", {desc = "Insert new cell above"})
+      vim.keymap.set("n", "]i", "<Cmd>IPythonCellNextCell<CR>i", {desc = "Insert new cell below"})
     end
   }
+  use { "goerz/jupytext.vim" }
   use {'ojroques/nvim-osc52',
     config = function ()
       local function copy(lines, _)
@@ -266,8 +296,6 @@ require('packer').startup({ function(use)
         paste = {['+'] = paste, ['*'] = paste},
       }
       -- Now the '+' register will copy to system clipboard using OSC52
-      vim.keymap.set('n', '<leader>c', '"+y')
-      vim.keymap.set('n', '<leader>cc', '"+yy') 
     end
   }
   use 'antoinemadec/FixCursorHold.nvim'
@@ -284,7 +312,7 @@ require('packer').startup({ function(use)
     config = function ()
       require("leap").set_default_keymaps()
     end}
-  use{ "kylechui/nvim-surround",
+  use { "kylechui/nvim-surround",
     config = function()
         require("nvim-surround").setup({
           highlight_motion = {
