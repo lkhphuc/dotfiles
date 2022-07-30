@@ -407,7 +407,7 @@ require("my.telescope")
 require("my.treesitter")
 require("my.options")
 require("my.fold")
-require("my.colorscheme")
 require("my.windows")
+require("my.colorscheme")
 
 -- vim: ts=2 sts=2 sw=2 fdls=4 et

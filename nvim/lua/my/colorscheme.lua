@@ -1,37 +1,51 @@
-vim.g.termguicolors = 1
-
 -- Confusingly these options cannot be set in the config section of their respective plugins
 vim.g.material_style = 'deep ocean'-- darker lighter oceanic palenight deep ocean
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+vim.g.everforest_background = 'hard'
 
 -- Due to the way different colorschemes configure different highlights group,
 -- there is no universal way to add gui options to all the desired components.
 -- Findout the final highlight group being linked to and update gui option.
-vim.api.nvim_create_autocmd("ColorScheme", {
+local function mod_hl(hl_name, opts)
+  local is_ok, hl_def = pcall(vim.api.nvim_get_hl_by_name, hl_name, true)
+  if is_ok then
+    for k,v in pairs(opts) do hl_def[k] = v end
+    vim.api.nvim_set_hl(0, hl_name, hl_def)
+  end
+end
+
+vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
   group = vim.api.nvim_create_augroup('Color', {}),
   pattern = "*",
   callback = function ()
-    vim.cmd "highlight Include gui=bold,italic"
-    vim.cmd "highlight TSKeywordReturn gui=bold,italic"
-    vim.cmd "highlight TSConstBuiltin gui=bold,italic"
-    vim.cmd "highlight TSFuncBuiltin gui=bold,italic"
-    vim.cmd "highlight TSTypeBuiltin gui=bold,italic"
-    vim.cmd "highlight TSVariableBuiltin gui=bold,italic"
+    mod_hl("TSKeywordReturn", { bold=true, italic=true })
+    mod_hl("TSConstBuiltin", { bold=true, italic=true })
+    mod_hl("TSFuncBuiltin", { bold=true, italic=true })
+    mod_hl("TSTypeBuiltin", { bold=true, italic=true })
+    mod_hl("TSBoolean", { bold=true, italic=true })
 
-    vim.cmd "highlight TSType gui=bold"
-    vim.cmd "highlight TSConstructor gui=bold"
-    vim.cmd "highlight TSOperator gui=bold"
+    mod_hl("TSType", { bold=true })
+    mod_hl("TSConstructor", { bold=true })
+    mod_hl("TSOperator", { bold=true })
 
-    vim.cmd "highlight TSConditional gui=italic"
-    -- vim.cmd "highlight Statement gui=italic"
-    vim.cmd "highlight TSKeyword gui=italic"
-    vim.cmd "highlight TSKeywordFunction gui=italic"
-    vim.cmd "highlight Comment gui=italic"
-    vim.cmd "highlight TSParameter gui=italic"
+    mod_hl("TSInclude", { italic=true, })
+    mod_hl("TSVariableBuiltin",{ italic=true })
+    mod_hl("TSConditional", { italic=true })
+    mod_hl("TSKeyword", { italic=true })
+    mod_hl("TSKeywordFunction", { italic=true })
+    mod_hl("TSComment", { italic=true })
+    mod_hl("TSParameter", { italic=true })
 
-    -- vim.cmd "highlight TSVariable gui=none"
-    -- vim.cmd "highlight Folded guibg=None"
+    mod_hl("semshiBuiltin", { italic=true, })
+    -- vim.api.nvim_set_hl(0, "semshiImported", {link="TSConstant"})
+    -- mod_hl("semshiImported", { bold=true, })
+    vim.api.nvim_set_hl(0, "semshiAttribute", {link="TSAttribute"})
+
+
+    -- mod_hl("TSVariable", { bold=false, italic=false, })
+    -- mod_hl("Folded", { bg="" })
   end
 })
 
-vim.cmd "colorscheme one_monokai "
+vim.cmd "set termguicolors"
+vim.cmd "colorscheme catppuccin"

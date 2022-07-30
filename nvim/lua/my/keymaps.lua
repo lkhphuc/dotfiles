@@ -62,8 +62,8 @@ vim.keymap.set({"t"}, "<C-s>", "<C-\\><C-n>") -- Escape in terminal
 --vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 
 -- Yank to system clipboard
-vim.keymap.set({"n","v"}, "<leader>y", "\"+y")
-vim.keymap.set({"n","v"}, "<leader>p", "\"+p")
+vim.keymap.set({"n","v"}, "<leader>y", '"+y', {remap=true})
+vim.keymap.set({"n","v"}, "<leader>p", '"+p', {remap=true})
 -- Don't yank empty line to clipboard
 local function smart_dd()
   if vim.api.nvim_get_current_line():match("^%s*$") then

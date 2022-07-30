@@ -121,7 +121,7 @@ vim.diagnostic.config({
   virtual_text = true,
   signs = { active = signs, },
   update_in_insert = false,
-  underline = false,
+  underline = true,
   severity_sort = true,
   float = {
     focusable = false,
