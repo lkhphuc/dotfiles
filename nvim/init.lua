@@ -188,7 +188,7 @@ require('packer').startup({ function(use)
   use "eddiebergman/nvim-treesitter-pyfold"
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', }
   use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
-    config = function() require("numb").setup() end, 
+    config = function() require("numb").setup() end,
   }
   use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
   -- Use treesitter to always show Class, function on top when overscrolled
@@ -315,7 +315,7 @@ require('packer').startup({ function(use)
   use { "kylechui/nvim-surround",
     config = function()
         require("nvim-surround").setup({
-          highlight_motion = {
+          highlight = {
             duration = 1000,
           }
         })

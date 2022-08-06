@@ -87,12 +87,16 @@ Hydra({
     on_enter = function()
       vim.cmd('silent! %foldopen!')
       vim.bo.modifiable = false
-      gitsigns.toggle_signs(true)
       gitsigns.toggle_linehl(true)
+      gitsigns.toggle_numhl(true)
+      gitsigns.toggle_word_diff(true)
+      gitsigns.toggle_current_line_blame(true)
     end,
     on_exit = function()
-      gitsigns.toggle_signs(false)
       gitsigns.toggle_linehl(false)
+      gitsigns.toggle_numhl(false)
+      gitsigns.toggle_word_diff(false)
+      gitsigns.toggle_current_line_blame(false)
       gitsigns.toggle_deleted(false)
     end,
   },
@@ -122,6 +126,7 @@ Hydra({
     { 'B', function() gitsigns.blame_line{ full = true } end, { desc = 'blame show full' } },
     { '/', gitsigns.show, { exit = true, desc = 'show base file' } }, -- show the base of the file
     { '<Enter>', ':tabnew term://lazygit<CR>', { exit = true, desc = 'LazyGit' } },
+    { 'g', ':tabnew term://lazygit<CR>', { exit = true, desc = 'LazyGit' } },
     { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
   }
 })
