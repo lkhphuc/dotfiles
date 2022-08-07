@@ -124,6 +124,21 @@ require('packer').startup({ function(use)
       vim.g.tpipeline_clearstl = 1
     end
   }
+  use { "Pocco81/true-zen.nvim",
+    config = function()
+      local truezen = require('true-zen')
+      truezen.setup()
+      vim.keymap.set('n', '<leader>zn', function() truezen.narrow(0, vim.api.nvim_buf_line_count(0)) end)
+      vim.keymap.set('v', '<leader>zn', function() truezen.narrow(vim.fn.line('v'), vim.fn.line('.')) end)
+      vim.keymap.set('n', '<leader>zf', truezen.focus)
+      vim.keymap.set('n', '<leader>zm', truezen.minimalist)
+      vim.keymap.set('n', '<leader>za', truezen.ataraxis)
+    end,
+  }
+  use { "folke/twilight.nvim",
+    config = function() require("twilight").setup { } end
+  }
+
   -- SideBars
   use {'kyazdani42/nvim-tree.lua',
     config = function()
@@ -385,6 +400,9 @@ require('packer').startup({ function(use)
   use { "marko-cerovac/material.nvim", }
   use { "bluz71/vim-moonfly-colors"}
   use { "Yazeed1s/minimal.nvim" }
+  use { "pappasam/papercolor-theme-slim" }
+  use { "sainnhe/everforest" }
+  use { "sainnhe/sonokai" }
 
   if is_bootstrap then
     require('packer').sync()
