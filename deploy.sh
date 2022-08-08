@@ -51,6 +51,7 @@ brew install zoxide
 brew install neovim
 brew install lazygit
 brew install lf
+brew install btop
 
 check_default_shell
 

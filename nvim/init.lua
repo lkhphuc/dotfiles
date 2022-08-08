@@ -54,6 +54,7 @@ require('packer').startup({ function(use)
   use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
     run = ":TSUpdate",
   }
+  use {"yioneko/nvim-yati"}
 
   -- Completion
   use 'L3MON4D3/LuaSnip' -- Snippets plugin

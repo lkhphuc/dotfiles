@@ -14,7 +14,7 @@ znap source junegunn/fzf shell/{completion,key-bindings}.zsh
 
 znap install Homebrew/brew
 znap source marlonrichert/zsh-autocomplete
-  zstyle ':autocomplete:*' min-input 1
+  zstyle ':autocomplete:*' min-input 0
   zstyle ':autocomplete:*' insert-unambiguous yes
   zstyle ':autocomplete:*' widget-style menu-select
   zstyle ':autocomplete:*' fzf-completion yes
@@ -32,13 +32,13 @@ znap source wez/wezterm assets/shell-integration/wezterm.sh
 
 znap eval pip 'python3 -m pip completion --zsh'
 znap eval kitty 'kitty + complete setup zsh'
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 znap eval fuck 'thefuck --alias'
 znap install esc/conda-zsh-completion
 znap install ogham/exa
 znap fpath _poetry 'poetry completions zsh'
 
 export EDITOR="nvim"
-# if [[ lvim ]]; then EDITOR="lvim" fi
 if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
 command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
 alias v="$EDITOR" vimdiff="nvim -d"
@@ -56,4 +56,3 @@ source $HOME/.config/lf/lficons.rc
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
-
