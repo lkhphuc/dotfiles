@@ -116,9 +116,6 @@ require('packer').startup({ function(use)
       vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
     end}
   use {'nvim-lualine/lualine.nvim',}
-  use {"b0o/incline.nvim",
-    config = function () require('incline').setup() end
-    }
   use {'vimpostor/vim-tpipeline',
     config = function()
       vim.g.tpipeline_usepane = 1

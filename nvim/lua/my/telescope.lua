@@ -77,8 +77,10 @@ telescope.setup {
     layout_strategies = 'flex',
     layout_config = {
       cursor = {
-        widht = 0.6,
-      }
+        height = 0.9,
+        preview_cutoff = 80,
+        width = 0.9
+      },
     }
   },
   pickers = {

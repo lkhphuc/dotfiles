@@ -44,7 +44,6 @@ local windows = {
   function ()
     return " " .. vim.api.nvim_win_get_number(0)
   end,
-  padding = {left = 1, right = 0},
 }
 local function terminal()
   if vim.o.buftype == "terminal" then
@@ -138,7 +137,6 @@ local diagnostics = {
   symbols = { error = " ", warn = " ", info = " ", hint = " " },
   colored = true,
   update_in_insert = false,
-  separator = false,
 }
 
 local spaces = {
@@ -159,63 +157,54 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    -- component_separators = { left = '', right = '' },
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    -- component_separators = { left = '𑗅', right = '𑗅' },
+    -- component_separators = { left = '', right = '' },
+    -- section_separators = { left = '', right = '' },
     disabled_filetypes = {
       winbar = {"dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
     },
-    always_divide_middle = true,
+    always_divide_middle = false,
     globalstatus = true,
   },
 
   sections = {
-    lualine_a = {
-      { 'hostname', icon = ' ', },
-      tabs,
-    },
+    lualine_a = { branch, terminal, },
     lualine_b = {
-      terminal,
+      diff,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, color = { gui = "italic"}, separator = false },
     },
     lualine_c = {
-      diff,
-    },
-    lualine_x = { diagnostics, lsp, },
-    lualine_y = { treesitter, spaces,  'progress', 'fileformat', },
-    lualine_z = { branch, python_env, },
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { 'filename' },
-    lualine_x = { 'location' },
-    lualine_y = {},
-    lualine_z = { terminal, windows }
-  },
-
-  winbar = {
-    lualine_a = { windows, terminal, },
-    lualine_b = {
-      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 0, separator = ">", color = { gui = "italic"} },
-    },
-    lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
+    lualine_x = { diagnostics, lsp, treesitter, },
+    lualine_y = { spaces, 'progress', 'fileformat', },
+    lualine_z = { python_env, { 'hostname', icon = ' ',} },
   },
-  inactive_winbar = {
-    lualine_a = { terminal, windows },
-    lualine_b = {
-      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 0, separator = ">", color = { gui = "italic"} },
+  tabline = {
+    lualine_a = {
+      windows,
     },
+    lualine_c = {
+      {'windows',
+        mode = 2,
+        windows_color = {
+          active = 'lualine_c_normal',
+          inactive = 'lualine_c_inactive',
+        }
+      },
+    },
+    lualine_y = {
+      {'tabs',
+        max_length = vim.o.columns,
+        mode = 3,
+        tabs_color = {
+          active = 'lualine_b_normal',
+          inactive = 'lualine_b_inactive',
+        },
+      },
+    },
+    lualine_z = { tabs, },
   },
-
-  tabline = {},
   extensions = { 'quickfix', 'nvim-tree'}
 }
-
--- vim.wo.winbar = " %{winnr()}::%f > %{%v:lua.require'nvim-navic'.get_location()%}"
--- vim.opt.winbar = "%{%v:lua.require'omega.modules.ui.winbar'.eval()%}"
