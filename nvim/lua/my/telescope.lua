@@ -75,13 +75,7 @@ telescope.setup {
       },
     },
     layout_strategies = 'flex',
-    layout_config = {
-      cursor = {
-        height = 0.9,
-        preview_cutoff = 80,
-        width = 0.9
-      },
-    }
+    layout_config = { }
   },
   pickers = {
     grep_string = { theme = "dropdown" },

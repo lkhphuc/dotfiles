@@ -142,13 +142,13 @@ local diagnostics = {
 local spaces = {
     function()
       if not vim.api.nvim_buf_get_option(0, "expandtab") then
-        return  " "..vim.api.nvim_buf_get_option(0, "tabstop")
+        return  vim.api.nvim_buf_get_option(0, "tabstop").." "
       end
       local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
       if size == 0 then
         size = vim.api.nvim_buf_get_option(0, "tabstop")
       end
-      return  ""..size
+      return  size..""
     end,
     cond = hide_in_width,
   }

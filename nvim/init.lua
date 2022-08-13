@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 --             (__)\       )\/\
 --                 ||----w |
 --                 ||     ||
-require('packer').startup({ function(use)
+local function packer_plugins(use)
   use 'folke/which-key.nvim'
   use {'wbthomason/packer.nvim',
     config = function ()
@@ -149,7 +149,9 @@ require('packer').startup({ function(use)
   use {"mxsdev/symbols-outline.nvim", branch = "folding",
     config = function()
       vim.g.symbols_outline = {
+        -- width = 10,
         preview_bg_highlight = "",
+        -- auto_preview = false,
         keymaps = {
           hover_symbol = "K",
           toggle_preview = "P",
@@ -327,11 +329,11 @@ require('packer').startup({ function(use)
     end}
   use { "kylechui/nvim-surround",
     config = function()
-        require("nvim-surround").setup({
-          highlight = {
-            duration = 1000,
-          }
-        })
+      require("nvim-surround").setup({
+        highlight = {
+          duration = 1000,
+        }
+      })
     end
   }
   use "tpope/vim-repeat"
@@ -361,27 +363,27 @@ require('packer').startup({ function(use)
 
   use { "kwkarlwang/bufresize.nvim",
     config = function()
-        require("bufresize").setup()
+      require("bufresize").setup()
     end
   }
   use {'mrjones2014/smart-splits.nvim',
     requires = "bufresize.nvim",
     config = function ()
       require("smart-splits").setup({
-          resize_mode = {
-            hooks = {
-              on_leave = require("bufresize").register
-            }
+        resize_mode = {
+          hooks = {
+            on_leave = require("bufresize").register
           }
-        })
+        }
+      })
     end
   }
   use "szw/vim-maximizer"
   use {'sindrets/winshift.nvim',
     config = function()
       require("winshift").setup({
-          highlight_moving_win = true
-        })
+        highlight_moving_win = true
+      })
     end
   }
   use {'anuvyklack/hydra.nvim', }
@@ -405,13 +407,16 @@ require('packer').startup({ function(use)
   if is_bootstrap then
     require('packer').sync()
   end
-end,
-config = {
-  max_jobs = 50, -- bugs, has to specificed a number
-  display = { open_fn = require("packer.util").float },
-}
-})
+end
 
+require('packer').startup(
+  { packer_plugins,
+    config = {
+      max_jobs = 50, -- bugs, has to specificed a number
+      display = { open_fn = require("packer.util").float },
+    }
+  }
+)
 require("my.keymaps")
 require("impatient")
 require("my.comment")
