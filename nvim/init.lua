@@ -73,15 +73,14 @@ local function packer_plugins(use)
   use 'hrsh7th/nvim-cmp'
 
   -- Debug Adapters
-  use "Pocco81/dap-buddy.nvim"
-  use {"theHamsta/nvim-dap-virtual-text",
-    config = function() require('nvim-dap-virtual-text').setup() end}
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
-    config = function()
-      require('dapui').setup()
-      vim.cmd [[nmap <leader>dy :lua require("dapui").toggle()<CR>]]
-    end
+  --
+  use {"mfussenegger/nvim-dap"}
+  use { "rcarriga/nvim-dap-ui",
+    config = function() require('dapui').setup() end
   }
+  use {"theHamsta/nvim-dap-virtual-text",
+    config = function() require('nvim-dap-virtual-text').setup({}) end}
+  use {"mfussenegger/nvim-dap-python"}
 
   -- use 'github/copilot.vim'
   use { "zbirenbaum/copilot.lua",
@@ -421,6 +420,7 @@ require("my.keymaps")
 require("impatient")
 require("my.comment")
 require("my.lsp")
+require("my.dap")
 require("my.null-ls")
 require('my.cmp')
 require("my.lualine")

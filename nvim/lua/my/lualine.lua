@@ -130,6 +130,12 @@ local lsp = {
   cond = hide_in_width,
 }
 
+local dap = {
+  function ()
+    return " "..require("dap").status()
+  end
+}
+
 local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
@@ -177,7 +183,7 @@ require('lualine').setup {
     lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
-    lualine_x = { diagnostics, lsp, treesitter, },
+    lualine_x = { diagnostics, dap, lsp, treesitter, },
     lualine_y = { spaces, 'progress', 'fileformat', },
     lualine_z = { python_env, { 'hostname', icon = ' ',} },
   },

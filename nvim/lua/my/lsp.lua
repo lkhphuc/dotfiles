@@ -7,8 +7,8 @@ local on_attach = function(client, bufnr)
   -- local  opts = { buffer = bufnr, }
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
-  vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
-  vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc="Open diagnostics." })
+  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
+  vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, { desc="Open diagnostics." })
   vim.keymap.set('n', '<leader>sd', tele.diagnostics, { buffer = bufnr, desc = "Documents Diagnostics"} )
 
   vim.keymap.set('n', '<leader>ss', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
