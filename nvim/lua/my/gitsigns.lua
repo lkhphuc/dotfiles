@@ -72,7 +72,7 @@ local hint = [[
  _K_: prev hunk   _u_: undo last stage   _p_: preview hunk   _B_: blame show full 
  ^ ^              _S_: stage buffer      ^ ^                 _/_: show base file
  ^
- ^ ^              _<Enter>_: LazyGit              _q_: exit
+ ^ ^              _<Enter>_: LazyGit              _<Esc>_: exit
 ]]
 Hydra({
   name = 'Git',
@@ -126,7 +126,6 @@ Hydra({
     { 'B', function() gitsigns.blame_line{ full = true } end, { desc = 'blame show full' } },
     { '/', gitsigns.show, { exit = true, desc = 'show base file' } }, -- show the base of the file
     { '<Enter>', ':tabnew term://lazygit<CR>', { exit = true, desc = 'LazyGit' } },
-    { 'g', ':tabnew term://lazygit<CR>', { exit = true, desc = 'LazyGit' } },
-    { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
+    { '<Esc>', nil, { exit = true, nowait = true, desc = 'exit' } },
   }
 })

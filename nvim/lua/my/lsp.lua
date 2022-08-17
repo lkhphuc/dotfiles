@@ -14,8 +14,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>ss', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
 
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
-
-  vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
+  vim.keymap.set('n', 'S', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
   vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
   vim.keymap.set('n', 'gpd', preview.goto_preview_definition, { buffer = bufnr, desc="Definition" })
   vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })

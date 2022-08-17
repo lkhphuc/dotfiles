@@ -208,8 +208,13 @@ local function packer_plugins(use)
   -- Use treesitter to always show Class, function on top when overscrolled
   use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
+  vim.fn.appendbufline(expr, how, lso)
   use { "ray-x/lsp_signature.nvim",
-    config = function() require('lsp_signature').setup() end }
+    config = function() require('lsp_signature').setup({
+        toggle_key = "<C-e>",  -- Similar to cmp abort
+        select_signature_key = "<C-n>",
+      })
+    end }
   use { "folke/trouble.nvim", event = "BufEnter",
     config = function()
       require("trouble").setup()
@@ -322,10 +327,7 @@ local function packer_plugins(use)
       require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
     end
   }
-  use {"ggandor/leap.nvim",
-    config = function ()
-      require("leap").set_default_keymaps()
-    end}
+  use {"ggandor/leap.nvim", config = function () require("my.leap") end}
   use { "kylechui/nvim-surround",
     config = function()
       require("nvim-surround").setup({

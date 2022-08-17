@@ -132,7 +132,11 @@ local lsp = {
 
 local dap = {
   function ()
-    return " "..require("dap").status()
+    local stat = require("dap").status()
+    if stat == "" then
+      return ""
+    end
+    return " ".. stat
   end
 }
 
