@@ -40,31 +40,6 @@ local on_attach = function(client, bufnr)
     vim.inspect(vim.lsp.buf.list_workspace_folders())
   end, { buffer = bufnr, desc="List workspace folder" } )
   vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
-  -- Highlight symbol under cursor NOTE: somewhat duplicate with nvim_cursorline
-  if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-      hi! LspReferenceRead cterm=bold gui=underline
-      hi! LspReferenceText cterm=bold gui=underline
-      hi! LspReferenceWrite cterm=bold gui=underline
-    ]]
-    vim.api.nvim_create_augroup('lsp_document_highlight', {
-      clear = false
-    })
-    vim.api.nvim_clear_autocmds({
-      buffer = bufnr,
-      group = 'lsp_document_highlight',
-    })
-    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-      group = 'lsp_document_highlight',
-      buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd('CursorMoved', {
-      group = 'lsp_document_highlight',
-      buffer = bufnr,
-      callback = vim.lsp.buf.clear_references,
-    })
-  end
 
   require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)

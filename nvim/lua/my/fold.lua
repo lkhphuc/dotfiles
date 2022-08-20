@@ -22,29 +22,26 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         end
         curWidth = curWidth + chunkWidth
     end
-    table.insert(newVirtText, {suffix, 'Folded'})
+    table.insert(newVirtText, {suffix, 'UfoPreviewThumb'})
     return newVirtText
 end
 
 require('ufo').setup({
   fold_virt_text_handler = handler,
-  preview = {
-    win_config = {
-      border = 'shadow',
+  provider_selector = function(bufnr, filetype, buftype)
+    local ftMap = {
+      vim = {"treesitter", "indent"},
+      python = {"treesitter", "indent"}
     }
-  },
-  provider_selector = function(bufnr, filtype)
-    return {'treesitter', 'indent'}
+    return ftMap[filetype]
   end,
 })
 
--- buffer scope handler
--- will override global handler if it is existed
-local bufnr = vim.api.nvim_get_current_buf()
-require('ufo').setFoldVirtTextHandler(bufnr, handler)
 
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+-- vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
+-- vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
 vim.keymap.set('n', 'h', function()
   local winid = require('ufo').peekFoldedLinesUnderCursor()
   if not winid then
@@ -54,9 +51,7 @@ vim.keymap.set('n', 'h', function()
   end
 end)
 
+-- vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
--- vim.o.foldcolumn = '1'
--- vim.wo.foldmethod = "expr"
--- vim.o.foldexpr = "nvim_treesitter#foldexpr()"

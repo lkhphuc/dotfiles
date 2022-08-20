@@ -82,7 +82,6 @@ local function packer_plugins(use)
     config = function() require('nvim-dap-virtual-text').setup({}) end}
   use {"mfussenegger/nvim-dap-python"}
 
-  -- use 'github/copilot.vim'
   use { "zbirenbaum/copilot.lua",
     event = "InsertEnter",
     config = function ()
@@ -144,13 +143,12 @@ local function packer_plugins(use)
       })
       vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
     end }
-  -- use {"simrat39/symbols-outline.nvim",
-  use {"mxsdev/symbols-outline.nvim", branch = "folding",
+  use {"simrat39/symbols-outline.nvim",
     config = function()
       vim.g.symbols_outline = {
-        -- width = 10,
+        width = 15,
         preview_bg_highlight = "",
-        -- auto_preview = false,
+        auto_preview = false,
         keymaps = {
           hover_symbol = "K",
           toggle_preview = "P",
@@ -183,14 +181,13 @@ local function packer_plugins(use)
         ['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'false', '250' } },
       })
     end }
-  use { "yamatsum/nvim-cursorline",
-    config = function ()
-      require('nvim-cursorline').setup()
-    end }
+  use {"RRethy/vim-illuminate"}
+  use {"delphinus/auto-cursorline.nvim",
+    config=function () require("auto-cursorline").setup() end}
   use { "luukvbaal/stabilize.nvim",
     config = function() require("stabilize").setup() end }
   use { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig", }
-  use 'kevinhwang91/nvim-bqf'
+  use {'kevinhwang91/nvim-bqf', ft="qf"}
   use "kevinhwang91/nvim-hlslens" -- show number beside search highlight
   use "romainl/vim-cool" -- Handle highlight search automatically
   use { "norcalli/nvim-colorizer.lua", event = "BufRead",
@@ -199,12 +196,11 @@ local function packer_plugins(use)
 
 
   -- Folding
-  use "eddiebergman/nvim-treesitter-pyfold"
+  use "lkhphuc/nvim-treesitter-pyfold"
   use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', }
   use { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
     config = function() require("numb").setup() end,
   }
-  use { "nvim-treesitter/nvim-treesitter-refactor", event = "BufRead" }
   -- Use treesitter to always show Class, function on top when overscrolled
   use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
@@ -321,13 +317,19 @@ local function packer_plugins(use)
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
-  use { 'numToStr/Comment.nvim', requires = 'JoosepAlviste/nvim-ts-context-commentstring' }
+  use { 'numToStr/Comment.nvim',
+    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
+    config = function() require("my.comment") end,
+  }
   use { "windwp/nvim-autopairs",
     config = function()
       require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
     end
   }
-  use {"ggandor/leap.nvim", config = function () require("my.leap") end}
+  use { "ggandor/leap.nvim",
+    requires = 'ggandor/leap-ast.nvim',
+    config = function () require("my.leap") end
+  }
   use { "kylechui/nvim-surround",
     config = function()
       require("nvim-surround").setup({
@@ -362,6 +364,18 @@ local function packer_plugins(use)
     config = function() require("my.tabout") end,
   }
 
+  use {"gbrlsnchs/winpick.nvim",
+    config = function()
+      local winpick = require("winpick")
+      local function pick()
+        local winid = winpick.select()
+        if winid then
+          vim.api.nvim_set_current_win(winid)
+        end
+      end
+      vim.keymap.set("n", "<C-w>0", pick)
+    end
+  }
   use { "kwkarlwang/bufresize.nvim",
     config = function()
       require("bufresize").setup()
@@ -420,7 +434,6 @@ require('packer').startup(
 )
 require("my.keymaps")
 require("impatient")
-require("my.comment")
 require("my.lsp")
 require("my.dap")
 require("my.null-ls")

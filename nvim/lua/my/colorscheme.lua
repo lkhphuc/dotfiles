@@ -1,4 +1,5 @@
 -- Confusingly these options cannot be set in the config section of their respective plugins
+vim.g.tokyonight_style = 'night'
 vim.g.material_style = 'deep ocean'-- darker lighter oceanic palenight deep ocean
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.g.everforest_background = 'hard'
@@ -37,13 +38,9 @@ vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
     mod_hl("TSParameter", { italic=true })
 
     mod_hl("semshiBuiltin", { italic=true, })
-    -- vim.api.nvim_set_hl(0, "semshiImported", {link="TSConstant"})
-    -- mod_hl("semshiImported", { bold=true, })
     vim.api.nvim_set_hl(0, "semshiAttribute", {link="TSAttribute"})
 
-
-    -- mod_hl("TSVariable", { bold=false, italic=false, })
-    -- mod_hl("Folded", { bg="" })
+    mod_hl("Folded", { bg="" })
   end
 })
 

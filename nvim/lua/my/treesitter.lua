@@ -2,9 +2,9 @@
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
   ensure_installed = {"python", "lua", "bash", "vim", "comment", "make", "regex", "yaml", "toml"},
-  highlight = {
-    enable = true, -- false will disable the whole extension
-    use_languagetree = true,  -- What is this for?
+  highlight = {  -- Consistent syntax highlighting
+    enable = true,
+    additional_vim_regex_highlighting = false,
   },
   -- incremental_selection = {
   --   enable = true,
@@ -28,24 +28,6 @@ require('nvim-treesitter.configs').setup {
   yati = { enable = true },
   autopair = { enable = true },
   rainbow = { enable = true, },
-  refactor = {
-    highlight_definitions= { enable = true },
-    -- highlight_current_scope = { enable = true},
-    smart_rename = {
-      enable = true,
-      keymaps = { smart_rename = "<leader>Tn"}
-    },
-    navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition_lsp_fallback = "gd",
-        list_definitions = "go",
-        list_definitions_toc = "gO",
-        goto_next_usage = "]u",
-        goto_previous_usage = "[u",
-      }
-    }
-  },
 
   textobjects = {
     select = {
@@ -106,10 +88,10 @@ require('nvim-treesitter.configs').setup {
   },
   context_commentstring = {
     enable = true,
-    -- enable_autocmd = false,  -- Let Comment.nvim handles
+    enable_autocmd = false,  -- Let Comment.nvim handles
   },
   pyfold = {
     enable = true,
-    custom_foldtext = false,
+    custom_foldtext = true,
   }
 }
