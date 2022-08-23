@@ -1,5 +1,5 @@
 -- Confusingly these options cannot be set in the config section of their respective plugins
-vim.g.tokyonight_style = 'night'
+vim.g.tokyonight_style = 'storm'  -- storm | night | day
 vim.g.material_style = 'deep ocean'-- darker lighter oceanic palenight deep ocean
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.g.everforest_background = 'hard'

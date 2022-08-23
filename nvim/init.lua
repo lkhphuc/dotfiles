@@ -145,15 +145,13 @@ local function packer_plugins(use)
     end }
   use {"simrat39/symbols-outline.nvim",
     config = function()
-      vim.g.symbols_outline = {
-        width = 15,
+      require("symbols-outline").setup({
+        width = 5,
         preview_bg_highlight = "",
-        auto_preview = false,
         keymaps = {
-          hover_symbol = "K",
-          toggle_preview = "P",
+          hover_symbol = "S",
         }
-      }
+      })
       vim.keymap.set("n", "<leader>o", "<cmd>SymbolsOutline<CR>")
     end
   }
