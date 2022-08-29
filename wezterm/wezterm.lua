@@ -46,24 +46,24 @@ return {
   },
 
   font = wezterm.font_with_fallback({
-    { family="Cascadia Code",
+    {family="Cascadia Code",
       harfbuzz_features={"calt", "ss01", "ss02"},
     },
-    {family="Rec Mono Duotone"},
-    {family="VictorMono Nerd Font", weight="Medium"},
-    {family="JetBrainsMono Nerd Font"},
+    {family="Rec Mono Duotone", },
+    {family="Victor Mono", weight="Medium", },
+    {family = "JetBrains Mono" },
   }),
-  allow_square_glyphs_to_overflow_width = "Always",
-  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+  allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
   font_size = 14,
-  color_scheme = "OneHalfDark",
+  color_scheme = "Catppuccin Mocha",
 
   window_padding = {
-    left   = "0cell",
-    right  = "0cell",
-    top    = "0cell",
-    bottom = "0cell",
+    left   = "0.1cell",
+    right  = "0.1cell",
+    top    = "0.0cell",
+    bottom = "0.0cell",
   },
+  window_decorations = "RESIZE",
 
   keys = {
     {key = "_", mods="CMD|SHIFT", action=wezterm.action{SplitVertical   = {domain="CurrentPaneDomain"}}},

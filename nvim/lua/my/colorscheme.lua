@@ -3,6 +3,7 @@ vim.g.tokyonight_style = 'storm'  -- storm | night | day
 vim.g.material_style = 'deep ocean'-- darker lighter oceanic palenight deep ocean
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.g.everforest_background = 'hard'
+vim.g.starry_daylight_switch = false  --this allow using brighter color
 
 -- Due to the way different colorschemes configure different highlights group,
 -- there is no universal way to add gui options to all the desired components.

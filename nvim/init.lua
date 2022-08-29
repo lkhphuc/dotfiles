@@ -106,7 +106,6 @@ local function packer_plugins(use)
   use { 'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup({})
-      vim.keymap.set("n", "q", require("goto-preview").close_all_win, {desc = "Close" })
     end,
   }
   use {'moll/vim-bbye',
@@ -202,7 +201,6 @@ local function packer_plugins(use)
   -- Use treesitter to always show Class, function on top when overscrolled
   use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
-  vim.fn.appendbufline(expr, how, lso)
   use { "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup({
         toggle_key = "<C-e>",  -- Similar to cmp abort
@@ -416,6 +414,7 @@ local function packer_plugins(use)
   use { "pappasam/papercolor-theme-slim" }
   use { "sainnhe/everforest" }
   use { "sainnhe/sonokai" }
+  use { 'ray-x/starry.nvim'}
 
   if is_bootstrap then
     require('packer').sync()
