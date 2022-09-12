@@ -62,7 +62,16 @@ local function packer_plugins(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'quangnguyen30192/cmp-nvim-tags'
   -- use {'tzachar/cmp-tabnine', run='./install.sh' }
-  use 'zbirenbaum/copilot-cmp'
+  use { "zbirenbaum/copilot.lua",
+    event = {"VimEnter"},
+    config = function()
+      vim.defer_fn(function() require("copilot").setup() end, 100)
+    end,
+  }
+  use { "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function () require("copilot_cmp").setup() end
+  }
   use 'lukas-reineke/cmp-rg'
   use "ray-x/cmp-treesitter"
   use 'hrsh7th/cmp-buffer'
@@ -82,12 +91,6 @@ local function packer_plugins(use)
     config = function() require('nvim-dap-virtual-text').setup({}) end}
   use {"mfussenegger/nvim-dap-python"}
 
-  use { "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
-    config = function ()
-      vim.schedule(function() require("copilot").setup() end)
-    end,
-  }
 
   use {"blueyed/semshi",
     branch="handle-ColorScheme",
@@ -187,7 +190,7 @@ local function packer_plugins(use)
   use {'kevinhwang91/nvim-bqf', ft="qf"}
   use "kevinhwang91/nvim-hlslens" -- show number beside search highlight
   use "romainl/vim-cool" -- Handle highlight search automatically
-  use { "norcalli/nvim-colorizer.lua", event = "BufRead",
+  use { "NvChad/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup() end
   }
 
@@ -201,6 +204,8 @@ local function packer_plugins(use)
   -- Use treesitter to always show Class, function on top when overscrolled
   use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
+  use {'m-demare/hlargs.nvim', }
+  use { "mizlan/iswap.nvim"}
   use { "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup({
         toggle_key = "<C-e>",  -- Similar to cmp abort
@@ -406,6 +411,7 @@ local function packer_plugins(use)
   use { "projekt0n/github-nvim-theme" }
   use { "cpea2506/one_monokai.nvim", }
   use { "folke/tokyonight.nvim"}
+  use 'tiagovla/tokyodark.nvim'
   use { "EdenEast/nightfox.nvim", }
   use { "catppuccin/nvim", as = "catppuccin", }
   use { "marko-cerovac/material.nvim", }

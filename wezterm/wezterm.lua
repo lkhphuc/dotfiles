@@ -33,10 +33,10 @@ return {
   ssh_domains = {
     {
       name = "gpu",
-      remote_address = "gpu-et",
+      remote_address = "gpu",
       username = "phuc",
       local_echo_threshold_ms = 100,
-      -- remote_wezterm_path = "/home/linuxbrew/.linuxbrew/bin/wezterm",
+      remote_wezterm_path = "~/.local/bin/wezterm",
     },
     {
       name = "carles",

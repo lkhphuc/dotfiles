@@ -47,3 +47,6 @@ vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
 
 vim.cmd "set termguicolors"
 vim.cmd "colorscheme catppuccin"
+require('hlargs').setup({
+  excluded_filetypes = {"python"},
+})
