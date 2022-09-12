@@ -314,7 +314,8 @@ local function packer_plugins(use)
       -- Now the '+' register will copy to system clipboard using OSC52
     end
   }
-  use 'antoinemadec/FixCursorHold.nvim'
+  use { "lambdalisue/suda.vim" }
+  use { 'antoinemadec/FixCursorHold.nvim' }
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
