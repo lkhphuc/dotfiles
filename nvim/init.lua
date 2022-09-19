@@ -126,11 +126,11 @@ local function packer_plugins(use)
     config = function()
       local truezen = require('true-zen')
       truezen.setup()
-      vim.keymap.set('n', '<leader>zn', function() truezen.narrow(0, vim.api.nvim_buf_line_count(0)) end)
-      vim.keymap.set('v', '<leader>zn', function() truezen.narrow(vim.fn.line('v'), vim.fn.line('.')) end)
-      vim.keymap.set('n', '<leader>zf', truezen.focus)
-      vim.keymap.set('n', '<leader>zm', truezen.minimalist)
-      vim.keymap.set('n', '<leader>za', truezen.ataraxis)
+      vim.keymap.set('n', '<leader>zn', function() truezen.narrow(0, vim.api.nvim_buf_line_count(0)) end, {})
+      vim.keymap.set('v', '<leader>zn', function() truezen.narrow(vim.fn.line('v'), vim.fn.line('.')) end, {})
+      vim.keymap.set('n', '<leader>zf', truezen.focus, {})
+      vim.keymap.set('n', '<leader>zm', truezen.minimalist, {})
+      vim.keymap.set('n', '<leader>za', truezen.ataraxis, {})
     end,
   }
   use { "folke/twilight.nvim",
@@ -173,14 +173,7 @@ local function packer_plugins(use)
       })
     end }
 
-  use { "karb94/neoscroll.nvim",
-    config = function()
-      require("neoscroll").setup()
-      require('neoscroll.config').set_mappings({
-        ['<PageUp>']   = { 'scroll', { '-vim.wo.scroll', 'false', '250' } },
-        ['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'false', '250' } },
-      })
-    end }
+  use {"joeytwiddle/sexy_scroller.vim"}
   use {"RRethy/vim-illuminate"}
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
@@ -188,12 +181,14 @@ local function packer_plugins(use)
     config = function() require("stabilize").setup() end }
   use { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig", }
   use {'kevinhwang91/nvim-bqf', ft="qf"}
-  use "kevinhwang91/nvim-hlslens" -- show number beside search highlight
-  use "romainl/vim-cool" -- Handle highlight search automatically
+  use { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
+    config = function()
+      require'hlslens'.setup { calm_down = true, }
+    end
+  }
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup() end
   }
-
 
   -- Folding
   use "lkhphuc/nvim-treesitter-pyfold"
@@ -226,11 +221,11 @@ local function packer_plugins(use)
     end
   }
   use { "weilbith/nvim-code-action-menu" }
-  use{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      -- require("lsp_lines").register_lsp_virtual_lines()
-    end,
-  }
+  -- use{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --   config = function()
+  --     require("lsp_lines").register_lsp_virtual_lines()
+  --   end,
+  -- }
   use { "mattboehm/vim-unstack",
     key = "<leader>us", command = ":unstack*",
     config = function() vim.g.unstack_mapkey = "<leader>us" end, }
@@ -365,6 +360,15 @@ local function packer_plugins(use)
   use { "abecodes/tabout.nvim", after = { "nvim-cmp", "nvim-treesitter", },
     config = function() require("my.tabout") end,
   }
+  use {'monaqa/dial.nvim',
+    config = function ()
+      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal, {noremap = true})
+      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal, {noremap = true})
+      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual, {noremap = true})
+      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual, {noremap = true})
+      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual, {noremap = true})
+      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual, {noremap = true})
+    end}
 
   use {"gbrlsnchs/winpick.nvim",
     config = function()
