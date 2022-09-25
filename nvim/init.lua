@@ -44,7 +44,6 @@ local function packer_plugins(use)
   use 'nvim-lua/plenary.nvim' -- Lua utility helpers
   use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
-  -- use 'williamboman/nvim-lsp-installer' -- Auto install language servers
   use { "williamboman/mason.nvim", }
   use { "williamboman/mason-lspconfig.nvim", }
   use { 'j-hui/fidget.nvim',   -- LSP status spinner
@@ -113,7 +112,7 @@ local function packer_plugins(use)
   }
   use {'moll/vim-bbye',
     config = function ()
-      vim.keymap.set("n", "<leader>c", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
+      vim.keymap.set("n", "<leader>bc", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
     end}
   use {'nvim-lualine/lualine.nvim',}
   use {'vimpostor/vim-tpipeline',
@@ -286,10 +285,10 @@ local function packer_plugins(use)
       vim.keymap.set("n", "<leader>rR", "<Cmd>IPythonCellRestart<CR>", {desc = "Restart ipython"})
       vim.keymap.set("n", "<leader>rd", "<Cmd>SlimeSend1 %debug<CR>", {desc = "Debug ipython"})
       vim.keymap.set("n", "<leader>rq", "<Cmd>SlimeSend1 exit<CR>", {desc = "Exit"})
-      vim.keymap.set("n", "[c", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to previous cell"})
-      vim.keymap.set("n", "]c", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to next cell"})
-      vim.keymap.set("n", "[i", "<Cmd>IPythonCellInsertAbove<CR>i", {desc = "Insert new cell above"})
-      vim.keymap.set("n", "]i", "<Cmd>IPythonCellNextCell<CR>i", {desc = "Insert new cell below"})
+      vim.keymap.set("n", "<leader>cj", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to previous cell"})
+      vim.keymap.set("n", "<leader>ck", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to next cell"})
+      vim.keymap.set("n", "<leader>ci", "<Cmd>IPythonCellInsertAbove<CR>i", {desc = "Insert new cell above"})
+      vim.keymap.set("n", "<leader>ca", "<Cmd>IPythonCellNextCell<CR>i", {desc = "Insert new cell below"})
     end
   }
   use { "goerz/jupytext.vim" }
