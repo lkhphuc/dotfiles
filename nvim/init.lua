@@ -6,12 +6,17 @@
 --             (__)\       )\/\
 --                 ||----w |
 --                 ||     ||
-local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = true
-  vim.fn.execute('!git clone --depth 1 https://github.com/wbthomason/packer.nvim ' .. install_path)
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
+local packer_bootstrap ensure_packer()
 -- Autocommand that reloads neovim whenever you save this file
 local config_group = vim.api.nvim_create_augroup('Config', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', {
@@ -172,7 +177,20 @@ local function packer_plugins(use)
       })
     end }
 
-  use {"joeytwiddle/sexy_scroller.vim"}
+  use {
+    'declancm/cinnamon.nvim',
+    config = function() require('cinnamon').setup({
+      extra_keymaps = true,    -- Create extra keymaps.
+      extended_keymaps = true, -- Create extended keymaps.
+      override_keymaps = true, -- The plugin keymaps will override any existing keymaps.
+      hide_cursor = true,
+      max_length = 500, --ms
+      scroll_limit = -1,  -- always scroll no matter how far
+    }) end,
+    cond = function()
+      return vim.g.neovide == nil
+    end
+  }
   use {"RRethy/vim-illuminate"}
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
@@ -186,7 +204,7 @@ local function packer_plugins(use)
     end
   }
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",
-    config = function() require("colorizer").setup() end
+    config = function() require("colorizer").setup({}) end
   }
 
   -- Folding
@@ -426,19 +444,18 @@ local function packer_plugins(use)
   use { "sainnhe/sonokai" }
   use { 'ray-x/starry.nvim'}
 
-  if is_bootstrap then
+  if packer_bootstrap then
     require('packer').sync()
   end
 end
 
-require('packer').startup(
-  { packer_plugins,
-    config = {
-      max_jobs = 50, -- bugs, has to specificed a number
-      display = { open_fn = require("packer.util").float },
-    }
+require('packer').startup({
+  packer_plugins,
+  config = {
+    max_jobs = 50, -- bugs, has to specificed a number
+    display = { open_fn = require("packer.util").float },
   }
-)
+})
 require("my.keymaps")
 require("impatient")
 require("my.lsp")

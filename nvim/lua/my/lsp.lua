@@ -31,8 +31,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>li', "<cmd>LspInfo<CR>", { buffer = bufnr, desc = "Lsp Info"})
   vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo<CR>", { buffer = bufnr, desc = "Lsp Install Info"})
   vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
-  vim.keymap.set({'n', 'x'}, '<leader>lF', vim.lsp.buf.range_formatting, { buffer = bufnr, desc="Formatting" })
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.format, { })
 
   vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc="Add workspace" } )
   vim.keymap.set( 'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc="Remove workspace" } )
