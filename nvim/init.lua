@@ -177,20 +177,6 @@ local function packer_plugins(use)
       })
     end }
 
-  use {
-    'declancm/cinnamon.nvim',
-    config = function() require('cinnamon').setup({
-      extra_keymaps = true,    -- Create extra keymaps.
-      extended_keymaps = true, -- Create extended keymaps.
-      override_keymaps = true, -- The plugin keymaps will override any existing keymaps.
-      hide_cursor = true,
-      max_length = 500, --ms
-      scroll_limit = -1,  -- always scroll no matter how far
-    }) end,
-    cond = function()
-      return vim.g.neovide == nil
-    end
-  }
   use {"RRethy/vim-illuminate"}
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
@@ -201,8 +187,20 @@ local function packer_plugins(use)
   use { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
     config = function()
       require'hlslens'.setup { calm_down = true, }
+      local kopts = {noremap = true, silent = true}
+      vim.api.nvim_set_keymap('n', 'n',
+      [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+      kopts)
+      vim.api.nvim_set_keymap('n', 'N',
+          [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+          kopts)
+      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     end
   }
+  use {'joeytwiddle/sexy_scroller.vim', requires = "hlslens"}
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup({}) end
   }
