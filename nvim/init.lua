@@ -200,7 +200,7 @@ local function packer_plugins(use)
       vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     end
   }
-  use {'joeytwiddle/sexy_scroller.vim', requires = "hlslens"}
+  use {'joeytwiddle/sexy_scroller.vim'}
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup({}) end
   }
