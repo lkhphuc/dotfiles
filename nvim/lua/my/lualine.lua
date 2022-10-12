@@ -17,28 +17,6 @@ local navic = require("nvim-navic")
 navic.setup({
   highlight = true,
 })
-vim.api.nvim_set_hl(0, "NavicIconsFile",          {default = true, bg = colors.bg, fg = colors.blue})
-vim.api.nvim_set_hl(0, "NavicIconsModule",        {default = true, bg = colors.bg, fg = colors.violet})
-vim.api.nvim_set_hl(0, "NavicIconsNamespace",     {default = true, bg = colors.bg, fg = colors.magenta})
-vim.api.nvim_set_hl(0, "NavicIconsPackage",       {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsClass",         {default = true, bg = colors.bg, fg = colors.green})
-vim.api.nvim_set_hl(0, "NavicIconsMethod",        {default = true, bg = colors.bg, fg = colors.blue})
-vim.api.nvim_set_hl(0, "NavicIconsProperty",      {default = true, bg = colors.bg, fg = colors.cyan})
-vim.api.nvim_set_hl(0, "NavicIconsField",         {default = true, bg = colors.bg, fg = colors.blue})
-vim.api.nvim_set_hl(0, "NavicIconsConstructor",   {default = true, bg = colors.bg, fg = colors.green})
-vim.api.nvim_set_hl(0, "NavicIconsEnum",          {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsInterface",     {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsFunction",      {default = true, bg = colors.bg, fg = colors.blue})
-vim.api.nvim_set_hl(0, "NavicIconsVariable",      {default = true, bg = colors.bg, fg = colors.green})
-vim.api.nvim_set_hl(0, "NavicIconsConstant",      {default = true, bg = colors.bg, fg = colors.orange})
-vim.api.nvim_set_hl(0, "NavicIconsString",        {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsNumber",        {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsBoolean",       {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsArray",         {default = true, bg = colors.bg, fg = colors.fg})
-vim.api.nvim_set_hl(0, "NavicIconsObject",        {default = true, bg = colors.bg, fg = colors.green})
-vim.api.nvim_set_hl(0, "NavicIconsEnumMember",    {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsStruct",        {default = true, bg = colors.bg, fg = colors.yellow})
-vim.api.nvim_set_hl(0, "NavicIconsOperator",      {default = true, bg = colors.bg, fg = colors.cyan})
 
 local windows = {
   function ()
@@ -76,12 +54,6 @@ local diff = { "diff",
       end
     end,
   }
-
-local branch = {
-  "b:gitsigns_head",
-  icon = "",
-  color = { gui = "bold," },
-}
 
 local function _env_cleanup(venv)
   if string.find(venv, "/") then
@@ -167,9 +139,10 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    -- component_separators = { left = '𑗅', right = '𑗅' },
+    component_separators = '|',
     -- component_separators = { left = '', right = '' },
     -- section_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
       winbar = {"dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
     },
@@ -178,8 +151,9 @@ require('lualine').setup {
   },
 
   sections = {
-    lualine_a = { branch, terminal, },
+    lualine_a = { "mode" },
     lualine_b = {
+      'branch',
       diff,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, color = { gui = "italic"}, separator = false },
@@ -189,29 +163,20 @@ require('lualine').setup {
     },
     lualine_x = { diagnostics, dap, lsp, treesitter, },
     lualine_y = { spaces, 'progress', 'fileformat', },
-    lualine_z = { python_env, { 'hostname', icon = ' ',} },
+    lualine_z = { python_env, { 'hostname', icon = ' ', left_padding = 2 } },
   },
   tabline = {
     lualine_a = {
       windows,
+      terminal,
     },
-    lualine_c = {
-      {'windows',
-        mode = 2,
-        windows_color = {
-          active = 'lualine_c_normal',
-          inactive = 'lualine_c_inactive',
-        }
-      },
+    lualine_b = {
+      {'windows', mode = 2, },
     },
     lualine_y = {
       {'tabs',
         max_length = vim.o.columns,
         mode = 3,
-        tabs_color = {
-          active = 'lualine_b_normal',
-          inactive = 'lualine_b_inactive',
-        },
       },
     },
     lualine_z = { tabs, },

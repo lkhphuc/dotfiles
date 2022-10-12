@@ -168,7 +168,13 @@ local function packer_plugins(use)
   use 'onsails/lspkind.nvim' -- Add pictogram to LSP
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'nvim-telescope/telescope.nvim'
+  use { 'nvim-telescope/telescope.nvim'}
+  use { 'LukasPietzschmann/telescope-tabs',
+    requires = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require'telescope-tabs'.setup{ }
+    end
+  }
   use { "lukas-reineke/indent-blankline.nvim", event = "BufRead",
     config = function()
       require("indent_blankline").setup({
@@ -186,7 +192,8 @@ local function packer_plugins(use)
   use {'kevinhwang91/nvim-bqf', ft="qf"}
   use { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
     config = function()
-      require'hlslens'.setup { calm_down = true, }
+      local hlslens = require("hlslens")
+      hlslens.setup { calm_down = true, }
       local kopts = {noremap = true, silent = true}
       vim.api.nvim_set_keymap('n', 'n',
       [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
@@ -198,6 +205,19 @@ local function packer_plugins(use)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      -- Search selected text with * and #
+      vim.keymap.set("n", "*", "", {
+        callback = function()
+          vim.fn.execute("normal! *N")
+          hlslens.start()
+        end,
+      })
+      vim.keymap.set("n", "#", "", {
+        callback = function()
+          vim.fn.execute("normal! #N")
+          hlslens.start()
+        end,
+      })
     end
   }
   use {'joeytwiddle/sexy_scroller.vim'}
@@ -280,27 +300,31 @@ local function packer_plugins(use)
   -- end}
 
   use { "jpalardy/vim-slime",
-    requires = "hanschen/vim-ipython-cell",
     config = function()
       vim.g.slime_target = "neovim"
       vim.g.slime_no_mapping = 1
-      vim.keymap.set("x", "<leader>r", "<Plug>SlimeRegionSend '>") -- Send then move last line of selection
-      vim.keymap.set("n", "<leader>rr", "<Plug>SlimeSend")
+      vim.keymap.set("n", "<S-CR>", "<Plug>SlimeSend")
+      vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend")
       -- vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
       -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
-      -- python
+    end
+  }
+  use {"hanschen/vim-ipython-cell",
+    filetype="python",
+    config = function()
       vim.g.slime_python_ipython = 1
-      vim.keymap.set("n", "<S-CR>", "<Cmd>IPythonCellExecuteCellJump<CR>", {desc = "Execute and jumpt to next cell"})
-      vim.keymap.set("n", "<leader><CR>", "<Cmd>IPythonCellExecuteCell<CR>", {desc = "Execute cell"})
+      vim.keymap.set("n", "<leader>ri", "<Cmd>SlimeSend1 ipython --matplotlib --ext=autoreload<CR>", {desc = "Run interpreter"})
+      vim.keymap.set("n", "<leader>ra", "<Cmd>SlimeSend1 %autoreload 2<CR>", {desc = "Autoreload python module"})
+      vim.keymap.set("n", "<leader>rd", "<Cmd>SlimeSend1 %debug<CR>", {desc = "Debug ipython"})
+      vim.keymap.set("n", "<leader>re", "<Cmd>SlimeSend1 exit<CR>", {desc = "Exit"})
       vim.keymap.set("n", "<leader>rs", "<Cmd>IPythonCellRun<CR>", {desc = "Run script"})
       vim.keymap.set("n", "<leader>rS", "<Cmd>IPythonCellRunTime<CR>", {desc = "Run script and time it"})
       vim.keymap.set("n", "<leader>rc", "<Cmd>IPythonCellClear<CR>", {desc = "Clear IPython screen"})
       vim.keymap.set("n", "<leader>rx", "<Cmd>IPythonCellClose<CR>", {desc = "Close all matplotlib figure windows"})
-      vim.keymap.set("n", "<leader>rr", "<Cmd>IPythonCellPrevCommand<CR>", {desc = "ReRun previous command"})
-      vim.keymap.set("n", "<leader>ri", "<Cmd>SlimeSend1 ipython --matplotlib<CR>", {desc = "Run ipython"})
+      vim.keymap.set("n", "<leader>rp", "<Cmd>IPythonCellPrevCommand<CR>", {desc = "Run Previous command"})
       vim.keymap.set("n", "<leader>rR", "<Cmd>IPythonCellRestart<CR>", {desc = "Restart ipython"})
-      vim.keymap.set("n", "<leader>rd", "<Cmd>SlimeSend1 %debug<CR>", {desc = "Debug ipython"})
-      vim.keymap.set("n", "<leader>rq", "<Cmd>SlimeSend1 exit<CR>", {desc = "Exit"})
+      vim.keymap.set("n", "<leader>cc", "<Cmd>IPythonCellExecuteCellJump<CR>", {desc = "Execute and jumpt to next cell"})
+      vim.keymap.set("n", "<leader>cC", "<Cmd>IPythonCellExecuteCell<CR>", {desc = "Execute cell"})
       vim.keymap.set("n", "<leader>cj", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to previous cell"})
       vim.keymap.set("n", "<leader>ck", "<Cmd>IPythonCellNextCell<CR>", {desc = "Jump to next cell"})
       vim.keymap.set("n", "<leader>ci", "<Cmd>IPythonCellInsertAbove<CR>i", {desc = "Insert new cell above"})

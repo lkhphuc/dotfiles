@@ -81,7 +81,7 @@ cmp.setup {
     { name = 'tags' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'copilot', priority=99, },
+    { name = 'copilot', priority=2, },
     -- { name = 'cmp_tabnine' },
     -- { name = 'rg' },
   },
@@ -91,9 +91,12 @@ cmp.setup {
   experimental = {
     ghost_text = true,
   },
+  sorting = {
+    priority_weight = 2,
+  }
 }
 
-cmp.setup.cmdline('/', {
+cmp.setup.cmdline({'/', '?'}, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' },

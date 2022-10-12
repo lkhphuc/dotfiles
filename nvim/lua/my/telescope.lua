@@ -118,3 +118,4 @@ vim.keymap.set("n", "<leader>s?", builtin.search_history, { desc = "Search histo
 vim.keymap.set("n", "<leader>s;", builtin.command_history, { desc = "Command history"})
 -- vim.keymap.set("n", "<leader>sP", builtin.projects, { desc = "Projects"})
 vim.keymap.set("n", "<leader>sO", builtin.vim_options, { desc = "Vim options"})
+vim.keymap.set("n", "<leader>s<Tab>", require('telescope-tabs').list_tabs, { desc = "Tabs"})
