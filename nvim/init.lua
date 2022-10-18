@@ -47,7 +47,7 @@ local function packer_plugins(use)
   }
   use 'lewis6991/impatient.nvim'
   use 'nvim-lua/plenary.nvim' -- Lua utility helpers
-  use 'folke/lua-dev.nvim' -- Dev setup for init.lua and plugin
+  use 'folke/neodev.nvim' -- Dev setup for init.lua and plugin
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
   use { "williamboman/mason.nvim", }
   use { "williamboman/mason-lspconfig.nvim", }

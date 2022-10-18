@@ -44,8 +44,8 @@ local on_attach = function(client, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
@@ -59,17 +59,13 @@ require("mason-lspconfig").setup({
   ensure_installed = servers,
   automatic_installation = true,
 })
+require("neodev").setup({})
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
-
-local luadev = require("lua-dev").setup({
-  lspconfig = { on_attach=on_attach }
-})
-lspconfig.sumneko_lua.setup(luadev)
 
 -- _________________
 -- < vim.diagnostics >
