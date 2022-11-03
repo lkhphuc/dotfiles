@@ -251,7 +251,7 @@ local function packer_plugins(use)
   use { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
     config = function()
       local hlslens = require("hlslens")
-      hlslens.setup { calm_down = true, }
+      hlslens.setup({ calm_down = true, })
       local kopts = {noremap = true, silent = true}
       vim.api.nvim_set_keymap('n', 'n',
       [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],

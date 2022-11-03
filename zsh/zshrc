@@ -12,7 +12,6 @@ znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 # }
 
-znap install Homebrew/brew
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 0
   zstyle ':autocomplete:*' insert-unambiguous yes
@@ -27,15 +26,20 @@ znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
-znap source ajeetdsouza/zoxide
 
+znap eval zoxide "zoxide init zsh"
 znap eval pip 'python3 -m pip completion --zsh'
 znap eval kitty 'kitty + complete setup zsh'
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
-znap eval fuck 'thefuck --alias'
-znap install esc/conda-zsh-completion
+znap fpath _fuck "$(thefuck --alias)"
+znap install conda-incubator/conda-zsh-completion
 znap install ogham/exa
 znap fpath _poetry 'poetry completions zsh'
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 
 export EDITOR="nvim"
 if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
