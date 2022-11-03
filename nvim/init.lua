@@ -105,7 +105,77 @@ local function packer_plugins(use)
       vim.g["semshi#mark_selected_nodes"] = false
     end
   }
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use {'echasnovski/mini.nvim',
+    config = function()
+      require('mini.cursorword').setup({})
 
+      require('mini.bufremove').setup({})
+      vim.keymap.set("n", "<leader>bd", MiniBufremove.delete, {desc="Delete buffer"})
+      vim.keymap.set("n", "<leader>bu", MiniBufremove.unshow, {desc="Unshow buffer"})
+
+      local spec_treesitter = require('mini.ai').gen_spec.treesitter
+      require('mini.ai').setup({
+        custom_textobjects = {
+          F = spec_treesitter({ a = '@function.outer', i = '@function.inner' }),
+          C = spec_treesitter({ a = '@class.outer', i = '@class.inner' }),
+          o = spec_treesitter({
+            a = { '@conditional.outer', '@loop.outer' },
+            i = { '@conditional.inner', '@loop.inner' },
+          }),
+          t = spec_treesitter({ a = '@block.outer', i = '@block.inner' }),
+          c = spec_treesitter({ a = '@comment.outer', i = '@comment.inner' }),
+        }
+      })
+
+      require('mini.align').setup({})
+
+      require('mini.comment').setup({
+        hooks = {
+          pre = function()
+            require('ts_context_commentstring.internal').update_commentstring({})
+          end
+        }
+      })
+
+      require('mini.indentscope').setup({})
+      local map = require('mini.map')
+      map.setup({
+        symbols = {
+          encode = map.gen_encode_symbols.dot('4x2'),
+        },
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.gitsigns(),
+          map.gen_integration.diagnostic(),
+        },
+      })
+      vim.keymap.set('n', '<Leader>mc', MiniMap.close)
+      vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus)
+      vim.keymap.set('n', '<Leader>mo', MiniMap.open)
+      vim.keymap.set('n', '<Leader>mr', MiniMap.refresh)
+      vim.keymap.set('n', '<Leader>ms', MiniMap.toggle_side)
+      vim.keymap.set('n', '<Leader>mm', MiniMap.toggle)
+
+      require('mini.jump').setup({})
+
+      require('mini.pairs').setup({})
+
+      local starter = require('mini.starter')
+      starter.setup({
+        items = {
+          starter.sections.telescope(),
+        },
+        content_hooks = {
+          starter.gen_hook.adding_bullet(),
+          starter.gen_hook.aligning('center', 'center'),
+        },
+      })
+
+      require('mini.trailspace').setup({})
+      vim.keymap.set('n', '<leader>mt', MiniTrailspace.trim, {desc="Trim trailing whitespace."})
+    end
+  }
   -- UI
   use 'nvim-lua/popup.nvim'
   use 'stevearc/dressing.nvim'
@@ -115,10 +185,6 @@ local function packer_plugins(use)
       require('goto-preview').setup({})
     end,
   }
-  use {'moll/vim-bbye',
-    config = function ()
-      vim.keymap.set("n", "<leader>bc", "<cmd>:Bdelete<cr>", {desc = "Close Buffer"})
-    end}
   use {'nvim-lualine/lualine.nvim',}
   use {'vimpostor/vim-tpipeline',
     config = function()
@@ -175,15 +241,7 @@ local function packer_plugins(use)
       require'telescope-tabs'.setup{ }
     end
   }
-  use { "lukas-reineke/indent-blankline.nvim", event = "BufRead",
-    config = function()
-      require("indent_blankline").setup({
-        show_current_context = true,
-        use_treesitter       = true,
-      })
-    end }
 
-  use {"RRethy/vim-illuminate"}
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
   use { "luukvbaal/stabilize.nvim",
@@ -353,15 +411,6 @@ local function packer_plugins(use)
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
-  use { 'numToStr/Comment.nvim',
-    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
-    config = function() require("my.comment") end,
-  }
-  use { "windwp/nvim-autopairs",
-    config = function()
-      require('nvim-autopairs').setup({ fast_wrap = {} }) -- <M-e>
-    end
-  }
   use { "ggandor/leap.nvim",
     requires = 'ggandor/leap-ast.nvim',
     config = function () require("my.leap") end
@@ -384,13 +433,7 @@ local function packer_plugins(use)
       vim.g.matchup_matchparen_deferred = 1
     end
   }
-  use {"junegunn/vim-easy-align",
-    config = function()
-      vim.keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)")
-    end}
   use "AndrewRadev/splitjoin.vim" -- gS and gJ
-  -- use {"mg979/vim-visual-multi"},
-  use "wellle/targets.vim" -- Text objects qoute,block,argument,delimiter
   use "kana/vim-textobj-user"
   use "chaoren/vim-wordmotion"  -- w handles Snake/camelCase, etc
   use 'nvim-treesitter/nvim-treesitter-textobjects'
