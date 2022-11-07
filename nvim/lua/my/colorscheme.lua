@@ -29,24 +29,22 @@ vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
     mod_hl("TSType", { bold=true })
     mod_hl("TSConstructor", { bold=true })
     mod_hl("TSOperator", { bold=true })
+    mod_hl("TSKeyword", { bold=true })
 
     mod_hl("TSInclude", { italic=true, })
     mod_hl("TSVariableBuiltin",{ italic=true })
     mod_hl("TSConditional", { italic=true })
-    mod_hl("TSKeyword", { italic=true })
     mod_hl("TSKeywordFunction", { italic=true })
+    mod_hl("Function", { italic=true, nocombine=true })
     mod_hl("TSComment", { italic=true })
     mod_hl("TSParameter", { italic=true })
 
     mod_hl("semshiBuiltin", { italic=true, })
-    vim.api.nvim_set_hl(0, "semshiAttribute", {link="TSAttribute"})
 
     mod_hl("Folded", { bg="" })
+    vim.cmd [[highlight! link MiniIndentscopeSymbol IndentBlanklineChar]]
   end
 })
 
 vim.cmd "set termguicolors"
 vim.cmd "colorscheme catppuccin"
-require('hlargs').setup({
-  excluded_filetypes = {"python"},
-})

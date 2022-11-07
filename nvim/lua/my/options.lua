@@ -4,7 +4,7 @@ local hint = [[
   ^ ^        Options
   ^
   _v_ %{ve} virtual edit
-  _i_ %{list} invisible characters  
+  _i_ %{list} invisible characters
   _s_ %{spell} spell
   _w_ %{wrap} wrap
   _c_ %{cul} cursor line
@@ -119,7 +119,6 @@ vim.o.sidescrolloff = 1
 vim.o.signcolumn = "yes"
 vim.o.showtabline = 0
 vim.o.swapfile = false
-vim.o.lazyredraw = true
 vim.o.showmode = false
 
 vim.g.python3_host_prog = "/usr/bin/python3"

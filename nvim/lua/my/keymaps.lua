@@ -27,8 +27,8 @@ vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 -- Tab pages
-vim.keymap.set("n", "]<TAB>", ":tabnext<CR>")
-vim.keymap.set("n", "[<TAB>", ":tabprev<CR>")
+vim.keymap.set("n", "]<TAB>", ":tabnext<CR>", {silent=true})
+vim.keymap.set("n", "[<TAB>", ":tabprev<CR>", {silent=true})
 
 vim.keymap.set("n", "<leader><space>", "za", {desc = "Toggle fold recursively."})
 vim.keymap.set("n", "<leader>C", "<cmd>vsplit ~/.config/nvim/init.lua<CR>", {desc = "Open config"})
@@ -47,19 +47,17 @@ vim.keymap.set("n", "<leader>F", ":tabnew term://lf<CR>", {desc = "File manager"
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 -- Move text up and down
-vim.keymap.set("v", "<A-j>", ":m .+1<CR>==")
-vim.keymap.set("v", "<A-k>", ":m .-2<CR>==")
-vim.keymap.set("v", "p", '"_dP')
-vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv")
-vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv")
-vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv")
-vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv")
+vim.keymap.set("v", "<A-j>", ":m .+1<CR>==", {silent=true})
+vim.keymap.set("v", "<A-k>", ":m .-2<CR>==", {silent=true})
+vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", {silent=true})
+vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", {silent=true})
+vim.keymap.set("v", "p", '"_dP')  -- In selection mode, paste over but don't yank
 
 -- Misc mode
 vim.keymap.set({"o", "v"}, "m", "<cmd>lua require('tsht').nodes()<CR>")
-vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>") -- Save in normal/insert
-vim.keymap.set({"t"}, "<C-s>", "<C-\\><C-n>") -- Escape in terminal
---vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
+vim.keymap.set({"n", "i"}, "<C-s>", "<Esc>:w<CR>", {silent=true}) -- Save in normal/insert
+vim.keymap.set({"t"}, "<C-s>", "<C-\\><C-n>", {silent=true}) -- Escape in terminal
+vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 
 -- Yank to system clipboard
 vim.keymap.set({"n","v"}, "<leader>y", '"+y', {remap=true})

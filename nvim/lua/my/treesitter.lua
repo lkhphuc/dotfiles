@@ -24,8 +24,8 @@ require('nvim-treesitter.configs').setup {
       ['i;'] = 'textsubjects-container-inner',
     },
   },
-  -- indent = { enable = true, },
-  yati = { enable = true },
+  indent = { enable = false, },
+  yati = { enable = true, default_lazy=true, },
   autopair = { enable = true },
   rainbow = { enable = true, },
 

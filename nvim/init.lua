@@ -51,9 +51,6 @@ local function packer_plugins(use)
   use 'neovim/nvim-lspconfig' -- Configs for built-in LSP client
   use { "williamboman/mason.nvim", }
   use { "williamboman/mason-lspconfig.nvim", }
-  use { 'j-hui/fidget.nvim',   -- LSP status spinner
-    config = function() require("fidget").setup() end
-  }
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
   use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
     run = ":TSUpdate",
@@ -180,6 +177,52 @@ local function packer_plugins(use)
   use 'nvim-lua/popup.nvim'
   use 'stevearc/dressing.nvim'
   use 'rcarriga/nvim-notify'
+  use({
+    "folke/noice.nvim",
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("noice").setup({
+        presets = {
+          bottom_search = true,
+          command_palette = false, -- position the cmdline and popupmenu together
+        },
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+          signature = {
+            enabled = false,  -- use lsp_signature
+          }
+        },
+        routes = {
+          {
+            filter = {
+              event = "msg_show",
+              kind = "search_count",
+            },
+            opts = { skip = true },
+          },
+        },
+        smart_move = {
+          enabled = true, -- you can disable this behaviour here
+          excluded_filetypes = { "notify" },
+        },
+      })
+      vim.keymap.set("n", "<leader>ml", function()
+        require("noice").cmd("last")
+      end, {desc="Message last"})
+
+      vim.keymap.set("n", "<leader>mh", function()
+        require("noice").cmd("history")
+      end, {desc="Message history"})
+    end,
+  })
   use { 'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup({})
@@ -253,16 +296,12 @@ local function packer_plugins(use)
       local hlslens = require("hlslens")
       hlslens.setup({ calm_down = true, })
       local kopts = {noremap = true, silent = true}
-      vim.api.nvim_set_keymap('n', 'n',
-      [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      kopts)
-      vim.api.nvim_set_keymap('n', 'N',
-          [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-          kopts)
-      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       -- Search selected text with * and #
       vim.keymap.set("n", "*", "", {
         callback = function()
@@ -278,57 +317,7 @@ local function packer_plugins(use)
       })
     end
   }
-  use {"hrsh7th/vim-searchx",
-    config = function()
-      vim.cmd [[
-      " Overwrite / and ?.
-        nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-        nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-        xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-        xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-        cnoremap ; <Cmd>call searchx#select()<CR>
-
-        " Move to next/prev match.
-        " nnoremap N <Cmd>call searchx#prev_dir()<CR>
-        " nnoremap n <Cmd>call searchx#next_dir()<CR>
-        " xnoremap N <Cmd>call searchx#prev_dir()<CR>
-        " xnoremap n <Cmd>call searchx#next_dir()<CR>
-        " nnoremap <C-k> <Cmd>call searchx#prev()<CR>
-        " nnoremap <C-j> <Cmd>call searchx#next()<CR>
-        " xnoremap <C-k> <Cmd>call searchx#prev()<CR>
-        " xnoremap <C-j> <Cmd>call searchx#next()<CR>
-        " cnoremap <C-k> <Cmd>call searchx#prev()<CR>
-        " cnoremap <C-j> <Cmd>call searchx#next()<CR>
-
-        let g:searchx = {}
-
-        " Auto jump if the recent input matches to any marker.
-        let g:searchx.auto_accept = v:true
-
-        " The scrolloff value for moving to next/prev.
-        let g:searchx.scrolloff = &scrolloff
-
-        " To enable scrolling animation.
-        " let g:searchx.scrolltime = 500
-
-        " To enable auto nohlsearch after cursor is moved
-        " let g:searchx.nohlsearch = {}
-        " let g:searchx.nohlsearch.jump = v:true
-
-        " Marker characters.
-        let g:searchx.markers = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '.\zs')
-
-        " Convert search pattern.
-        function g:searchx.convert(input) abort
-          if a:input !~# '\k'
-            return '\V' .. a:input
-          endif
-          return a:input[0] .. substitute(a:input[1:], '\\\@<! ', '.\\{-}', 'g')
-        endfunction
-      ]]
-    end
-  }
-  use {'joeytwiddle/sexy_scroller.vim'}
+  use {'joeytwiddle/sexy_scroller.vim',}
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",
     config = function() require("colorizer").setup({}) end
   }
@@ -342,14 +331,30 @@ local function packer_plugins(use)
   -- Use treesitter to always show Class, function on top when overscrolled
   use { "romgrk/nvim-treesitter-context", }
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
-  use {'m-demare/hlargs.nvim', }
+  use {'m-demare/hlargs.nvim',
+    config = function() require("hlargs").setup({
+      -- excluded_filetypes = {"python"},
+      excluded_argnames = {
+        declarations = {
+          python = {"self", "cls"},
+        },
+        usages = {
+          python = { 'self', 'cls' },
+          lua = { 'self' }
+        }
+      },
+    }) end
+  }
   use { "mizlan/iswap.nvim"}
   use { "ray-x/lsp_signature.nvim",
-    config = function() require('lsp_signature').setup({
+    config = function()
+      require('lsp_signature').setup({
+        noice = true,
         toggle_key = "<C-e>",  -- Similar to cmp abort
         select_signature_key = "<C-n>",
       })
-    end }
+    end
+  }
   use { "folke/trouble.nvim", event = "BufEnter",
     config = function()
       require("trouble").setup()

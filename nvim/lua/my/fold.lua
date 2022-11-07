@@ -26,28 +26,31 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     return newVirtText
 end
 
+local ftMap = {
+  vim = {"treesitter", "indent"},
+  python = {"treesitter", "indent"},
+  git = '',
+}
+
 require('ufo').setup({
   fold_virt_text_handler = handler,
   provider_selector = function(bufnr, filetype, buftype)
-    local ftMap = {
-      vim = {"treesitter", "indent"},
-      python = {"treesitter", "indent"}
-    }
     return ftMap[filetype]
   end,
 })
 
-
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
--- vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
--- vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
+vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+
 vim.keymap.set('n', 'h', function()
   local winid = require('ufo').peekFoldedLinesUnderCursor()
   if not winid then
     local curpos = vim.api.nvim_win_get_cursor(0)
     curpos[2] = math.max(0, curpos[2]-1)
     vim.api.nvim_win_set_cursor(0, curpos)
+    -- vim.lsp.buf.hover()
   end
 end)
 

@@ -151,7 +151,13 @@ require('lualine').setup {
   },
 
   sections = {
-    lualine_a = { "mode" },
+    lualine_a = {
+      "mode",
+      {
+        require("noice").api.status.mode.get,
+        cond = require("noice").api.status.mode.has,
+      },
+    },
     lualine_b = {
       'branch',
       diff,
