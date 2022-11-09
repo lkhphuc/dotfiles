@@ -2,6 +2,7 @@ require("luasnip/loaders/from_vscode").lazy_load()
 require("luasnip.loaders.from_snipmate").lazy_load()
 local luasnip = require 'luasnip'
 local cmp = require 'cmp'
+local compare = require('cmp.config.compare')
 
 local has_words_before = function()
   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
@@ -79,8 +80,8 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'treesitter' },
     { name = 'tags' },
-    { name = 'buffer' },
-    { name = 'path' },
+    { name = 'fuzzy_buffer' },
+    { name = 'fuzzy_path' },
     { name = 'copilot', priority=2, },
     -- { name = 'cmp_tabnine' },
     -- { name = 'rg' },
@@ -93,13 +94,25 @@ cmp.setup {
   },
   sorting = {
     priority_weight = 2,
+    comparators = {
+      require('cmp_fuzzy_buffer.compare'),
+      require('cmp_fuzzy_path.compare'),
+      compare.offset,
+      compare.exact,
+      compare.score,
+      compare.recently_used,
+      compare.kind,
+      compare.sort_text,
+      compare.length,
+      compare.order,
+    }
   }
 }
 
 cmp.setup.cmdline({'/', '?'}, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = 'buffer' },
+    { name = 'fuzzy_buffer'},
     { name = 'nvim_lsp_document_symbol' },
   },
 })
@@ -108,6 +121,6 @@ cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'cmdline' },
-    { name = 'path' },
+    { name = 'fuzzy_path' },
   }),
 })

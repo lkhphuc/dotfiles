@@ -56,7 +56,7 @@ local function packer_plugins(use)
     run = ":TSUpdate",
   }
   use {"yioneko/nvim-yati"}
-
+  use {"tzachar/fuzzy.nvim"}
   -- Completion
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'rafamadriz/friendly-snippets'
@@ -75,9 +75,9 @@ local function packer_plugins(use)
   }
   use 'lukas-reineke/cmp-rg'
   use "ray-x/cmp-treesitter"
-  use 'hrsh7th/cmp-buffer'
+  use 'tzachar/cmp-fuzzy-buffer'
   use 'hrsh7th/cmp-nvim-lsp-document-symbol' -- For / search command
-  use 'hrsh7th/cmp-path'
+  use 'tzachar/cmp-fuzzy-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/nvim-cmp'
