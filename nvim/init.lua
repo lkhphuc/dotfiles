@@ -175,6 +175,16 @@ local function packer_plugins(use)
   use 'nvim-lua/popup.nvim'
   use 'stevearc/dressing.nvim'
   use 'rcarriga/nvim-notify'
+  use {
+    "smjonas/live-command.nvim",
+    config = function()
+      require("live-command").setup {
+        commands = {
+          Norm = { cmd = "norm" },
+        },
+      }
+    end,
+  }
   use({
     "folke/noice.nvim",
     requires = {
@@ -185,8 +195,6 @@ local function packer_plugins(use)
     config = function()
       require("noice").setup({
         presets = {
-          bottom_search = true,
-          command_palette = false, -- position the cmdline and popupmenu together
           inc_rename = true,
         },
         lsp = {
@@ -220,6 +228,7 @@ local function packer_plugins(use)
       vim.keymap.set("n", "<leader>mh", function()
         require("noice").cmd("history")
       end, {desc="Message history"})
+      vim.keymap.set("n", "<leader>md", require("notify").dismiss, {desc="Dimiss notification"})
     end,
   })
   use { 'rmagatti/goto-preview',
@@ -287,8 +296,6 @@ local function packer_plugins(use)
 
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
-  use { "luukvbaal/stabilize.nvim",
-    config = function() require("stabilize").setup() end }
   use { "SmiteshP/nvim-navic", requires = "neovim/nvim-lspconfig", }
   use {'kevinhwang91/nvim-bqf', ft="qf"}
   use { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
@@ -315,7 +322,7 @@ local function packer_plugins(use)
           hlslens.start()
         end,
       })
-    end
+    end,
   }
   use {'joeytwiddle/sexy_scroller.vim',}
   use { "NvChad/nvim-colorizer.lua", event = "BufRead",

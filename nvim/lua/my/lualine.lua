@@ -206,7 +206,7 @@ local function get_diagnostic_label(props)
 end
 
 local function get_git_diff()
-  local icons = { removed = "", modified = "",added = "" }
+  local icons = { removed = "", changed = "",added = "" }
   local labels = {}
   local signs = vim.b.gitsigns_status_dict
   for name, icon in pairs(icons) do

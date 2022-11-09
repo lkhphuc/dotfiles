@@ -120,6 +120,7 @@ vim.o.signcolumn = "yes"
 vim.o.showtabline = 0
 vim.o.swapfile = false
 vim.o.showmode = false
+vim.g.splitkeep = "screen"
 
 vim.g.python3_host_prog = "/usr/bin/python3"
 -- Can not put this inside neomux config for some reason
