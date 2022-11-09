@@ -26,7 +26,7 @@ local on_attach = function(client, bufnr)
 
   vim.keymap.set('n', '<leader>lci', tele.lsp_incoming_calls, { buffer = bufnr, desc="Incoming calls" })
   vim.keymap.set('n', '<leader>lco', tele.lsp_outgoing_calls, { buffer = bufnr, desc="Outgoing calls" })
-  vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, { buffer = bufnr, desc="Rename symbol under cursor" })
+  vim.keymap.set('n', '<leader>lr', ":IncRename ", { buffer = bufnr, desc="Rename symbol" })
   vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = bufnr, desc="Code Action" })
   vim.keymap.set('n', '<leader>li', "<cmd>LspInfo<CR>", { buffer = bufnr, desc = "Lsp Info"})
   vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo<CR>", { buffer = bufnr, desc = "Lsp Install Info"})
@@ -75,10 +75,10 @@ end
 --                 ||----w |
 --                 ||     ||
 local signs = {
-  { name = "DiagnosticSignError", text = "" },
+  { name = "DiagnosticSignError", text = "" },
   { name = "DiagnosticSignWarn", text = "" },
-  { name = "DiagnosticSignHint", text = "" },
-  { name = "DiagnosticSignInfo", text = "" },
+  { name = "DiagnosticSignHint", text = "" },
+  { name = "DiagnosticSignInfo", text = "" },
 }
 for _, sign in ipairs(signs) do
   vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })

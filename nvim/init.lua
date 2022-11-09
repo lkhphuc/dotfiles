@@ -121,7 +121,6 @@ local function packer_plugins(use)
             i = { '@conditional.inner', '@loop.inner' },
           }),
           t = spec_treesitter({ a = '@block.outer', i = '@block.inner' }),
-          c = spec_treesitter({ a = '@comment.outer', i = '@comment.inner' }),
         }
       })
 
@@ -135,7 +134,7 @@ local function packer_plugins(use)
         }
       })
 
-      require('mini.indentscope').setup({})
+      require('mini.indentscope').setup({})  -- Define ai/ii object
       local map = require('mini.map')
       map.setup({
         symbols = {
@@ -147,12 +146,11 @@ local function packer_plugins(use)
           map.gen_integration.diagnostic(),
         },
       })
-      vim.keymap.set('n', '<Leader>mc', MiniMap.close)
-      vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus)
-      vim.keymap.set('n', '<Leader>mo', MiniMap.open)
-      vim.keymap.set('n', '<Leader>mr', MiniMap.refresh)
-      vim.keymap.set('n', '<Leader>ms', MiniMap.toggle_side)
-      vim.keymap.set('n', '<Leader>mm', MiniMap.toggle)
+      vim.keymap.set('n', '<Leader>mc', MiniMap.close, {desc="Map close."})
+      vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus, {desc="Map focus"})
+      vim.keymap.set('n', '<Leader>mr', MiniMap.refresh, {desc="Map refresh"})
+      vim.keymap.set('n', '<Leader>ms', MiniMap.toggle_side, {desc="Map switch side"})
+      vim.keymap.set('n', '<Leader>mm', MiniMap.toggle, {desc="Map Toggle"})
 
       require('mini.jump').setup({})
 
@@ -189,6 +187,7 @@ local function packer_plugins(use)
         presets = {
           bottom_search = true,
           command_palette = false, -- position the cmdline and popupmenu together
+          inc_rename = true,
         },
         lsp = {
           override = {
@@ -228,6 +227,7 @@ local function packer_plugins(use)
       require('goto-preview').setup({})
     end,
   }
+  use {"b0o/incline.nvim"}
   use {'nvim-lualine/lualine.nvim',}
   use {'vimpostor/vim-tpipeline',
     config = function()
@@ -344,6 +344,11 @@ local function packer_plugins(use)
         }
       },
     }) end
+  }
+  use { "smjonas/inc-rename.nvim",
+    config = function()
+      require("inc_rename").setup()
+    end,
   }
   use { "mizlan/iswap.nvim"}
   use { "ray-x/lsp_signature.nvim",

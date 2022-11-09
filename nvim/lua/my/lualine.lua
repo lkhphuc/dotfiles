@@ -18,19 +18,19 @@ navic.setup({
   highlight = true,
 })
 
-local windows = {
+local windows_idx = {
   function ()
     return " " .. vim.api.nvim_win_get_number(0)
   end,
 }
-local function terminal()
+local function terminal_idx()
   if vim.o.buftype == "terminal" then
     return " " .. vim.o.channel
   end
   return ""
 end
 
-local function tabs()
+local function tabs_count()
   local total_tabs = vim.fn.tabpagenr("$")
   local tab_id = vim.fn.tabpagenr()
   return " " ..tab_id .. "/" .. total_tabs
@@ -42,7 +42,6 @@ end
 
 local diff = { "diff",
     symbols = { added = " ", modified = " ", removed = " " },
-    colored = true,
     source = function()
       local gitsigns = vim.b.gitsigns_status_dict
       if gitsigns then
@@ -116,7 +115,7 @@ local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
   sections = { 'error', 'warn', 'info', 'hint' },
-  symbols = { error = " ", warn = " ", info = " ", hint = " " },
+  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ', },
   colored = true,
   update_in_insert = false,
 }
@@ -160,32 +159,83 @@ require('lualine').setup {
     },
     lualine_b = {
       'branch',
-      diff,
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, color = { gui = "italic"}, separator = false },
     },
     lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
-    lualine_x = { diagnostics, dap, lsp, treesitter, },
+    lualine_x = { dap, treesitter, lsp, },
     lualine_y = { spaces, 'progress', 'fileformat', },
-    lualine_z = { python_env, { 'hostname', icon = ' ', left_padding = 2 } },
+    lualine_z = { python_env, tabs_count, { 'hostname', icon = ' ', left_padding = 2 } },
   },
   tabline = {
-    lualine_a = {
-      windows,
-      terminal,
-    },
-    lualine_b = {
-      {'windows', mode = 2, },
-    },
-    lualine_y = {
-      {'tabs',
-        max_length = vim.o.columns,
-        mode = 3,
-      },
-    },
-    lualine_z = { tabs, },
+    -- lualine_a = {
+    --   windows_idx,
+    --   terminal_idx,
+    -- },
+    -- lualine_b = {
+    --   {'windows', mode = 2, },
+    -- },
+    -- lualine_y = {
+    --   {'tabs',
+    --     max_length = vim.o.columns,
+    --     mode = 3,
+    --   },
+    -- },
+    -- lualine_z = { tabs_count, },
   },
   extensions = { 'quickfix', 'nvim-tree'}
 }
+
+
+local function get_diagnostic_label(props)
+  local icons = { error = '', warn = '', info = '', hint = '', }
+  local label = {}
+
+  for severity, icon in pairs(icons) do
+    local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+    if n > 0 then
+      table.insert(label, { icon .. ' ' .. n .. ' ', group = 'DiagnosticSign' .. severity })
+    end
+  end
+  if #label > 0 then
+    table.insert(label, {'| '})
+  end
+  return label
+end
+
+local function get_git_diff()
+  local icons = { removed = "", modified = "",added = "" }
+  local labels = {}
+  local signs = vim.b.gitsigns_status_dict
+  for name, icon in pairs(icons) do
+    if tonumber(signs[name]) and signs[name] > 0 then
+      table.insert(labels, { icon .. " " .. signs[name] .. " ",
+        group = "Diff" .. name
+      })
+    end
+  end
+  if #labels > 0 then
+    table.insert(labels, {'| '})
+  end
+  return labels
+end
+
+require('incline').setup({
+  render = function(props)
+
+    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+    local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+    local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
+
+    local buffer = {
+        { get_diagnostic_label(props) },
+        { get_git_diff() },
+        { ft_icon, guifg = ft_color }, { " " },
+        { filename, gui = modified },
+    }
+    return buffer
+  end
+})
+
