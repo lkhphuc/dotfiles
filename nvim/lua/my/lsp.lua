@@ -46,8 +46,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gt', tele.lsp_type_definitions, { buffer = bufnr, desc="Type definition" })
 
   vim.keymap.set({"n","v"}, "<leader>la", "<cmd>Lspsaga code_action<CR>", { silent = true })
-  vim.keymap.set('n', '<leader>lci', tele.lsp_incoming_calls, { buffer = bufnr, desc="Incoming calls" })
-  vim.keymap.set('n', '<leader>lco', tele.lsp_outgoing_calls, { buffer = bufnr, desc="Outgoing calls" })
+  vim.keymap.set('n', '<leader>li', tele.lsp_incoming_calls, { buffer = bufnr, desc="Incoming calls" })
+  vim.keymap.set('n', '<leader>lo', tele.lsp_outgoing_calls, { buffer = bufnr, desc="Outgoing calls" })
   vim.keymap.set('n', '<leader>lr', ":IncRename ", { buffer = bufnr, desc="Rename symbol" })
   vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
 
@@ -58,8 +58,8 @@ local on_attach = function(client, bufnr)
   end, { buffer = bufnr, desc="List workspace folder" } )
   vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
 
-  -- Outline
-  vim.keymap.set("n","<leader>o", "<cmd>LSoutlineToggle<CR>",{ silent = true })
+  vim.keymap.set("n","<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
+  vim.keymap.set({"n", "v"}, "<leader>lf", vim.lsp.buf.format, { silent = true })
 
   require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)

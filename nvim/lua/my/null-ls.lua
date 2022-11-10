@@ -6,7 +6,6 @@ local hover = null_ls.builtins.hover
 
 null_ls.setup({
   sources = {
-    -- Python
     diagnostics.ruff.with({
       extra_args = function(params)
         return params and {
@@ -16,11 +15,16 @@ null_ls.setup({
       end
     }),
 
-    formatting.black,
+    formatting.yapf.with({
+      extra_args = function(params)
+        return params and {
+          "--style={indent_width:"..vim.fn.shiftwidth().."}",
+        }
+      end
+    }),
     formatting.usort,
     formatting.stylua,
 
-    code_actions.refactoring,
     code_actions.shellcheck,
 
     hover.dictionary,

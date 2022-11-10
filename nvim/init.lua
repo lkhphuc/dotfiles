@@ -340,7 +340,7 @@ local function packer_plugins(use)
   use { "p00f/nvim-ts-rainbow", event = "BufRead" } --Rainbow paranetheses
   use {'m-demare/hlargs.nvim',
     config = function() require("hlargs").setup({
-      -- excluded_filetypes = {"python"},
+      excluded_filetypes = {"python"},
       excluded_argnames = {
         declarations = {
           python = {"self", "cls"},
