@@ -37,6 +37,11 @@ require('ufo').setup({
   provider_selector = function(bufnr, filetype, buftype)
     return ftMap[filetype]
   end,
+  preview = {
+    win_config = {
+      border = 'shadow',
+    }
+  }
 })
 
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
@@ -50,7 +55,6 @@ vim.keymap.set('n', 'h', function()
     local curpos = vim.api.nvim_win_get_cursor(0)
     curpos[2] = math.max(0, curpos[2]-1)
     vim.api.nvim_win_set_cursor(0, curpos)
-    -- vim.lsp.buf.hover()
   end
 end)
 

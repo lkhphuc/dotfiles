@@ -1,35 +1,54 @@
 local tele = require('telescope.builtin')
 local lspconfig = require 'lspconfig'
-local preview = require('goto-preview')
 
 local on_attach = function(client, bufnr)
   require('which-key').register({["<leader>l"] = { name = "LSP" }})
   -- local  opts = { buffer = bufnr, }
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
+  -- Diagnsotic jump can use `<c-o>` to jump back
+  vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+  vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+  vim.keymap.set("n", "[D", function()
+    require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  end, { silent = true })
+  vim.keymap.set("n", "]D", function()
+    require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+  end, { silent = true })
+  -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr,desc="next diagnostic" })
+  -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc="previous diagnostic" })
   vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { buffer = bufnr, desc="Quickfix" })
-  vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, { desc="Open diagnostics." })
+  vim.keymap.set("n", "<leader>ld", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+
+  -- vim.keymap.set('n', '<leader>lo', vim.diagnostic.open_float, { desc="Open diagnostics." })
   vim.keymap.set('n', '<leader>sd', tele.diagnostics, { buffer = bufnr, desc = "Documents Diagnostics"} )
 
   vim.keymap.set('n', '<leader>ss', tele.lsp_document_symbols, { buffer = bufnr, desc="Document symbols" })
 
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, {buffer = bufnr,  desc="Hover" })
+  vim.keymap.set('n', 'K', function()
+      if not require('ufo').peekFoldedLinesUnderCursor() then vim.lsp.buf.hover() end
+    end,
+    {buffer = bufnr,  desc="Hover" })
   vim.keymap.set('n', 'S', vim.lsp.buf.signature_help, { buffer = bufnr, desc="Signature" })
-  vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
-  vim.keymap.set('n', 'gpd', preview.goto_preview_definition, { buffer = bufnr, desc="Definition" })
-  vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
+  -- Lsp finder find the symbol definition implement reference
+  -- if there is no implement it will hide
+  -- when you use action in finder like open vsplit then you can
+  -- use <C-t> to jump back
+  vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+  -- vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
+
+  -- Peek Definition
+  -- you can edit the definition file in this flaotwindow
+  -- also support open/vsplit/etc operation check definition_action_keys
+  -- support tagstack C-t jump back
+  vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+  -- vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc="Declaration" })
-  vim.keymap.set('n', 'gi', preview.goto_preview_implementation, { buffer = bufnr, desc="Implementation" })
   vim.keymap.set('n', 'gI', tele.lsp_implementations, { buffer = bufnr, desc="Implementation" })
-  vim.keymap.set('n', 'gpt', preview.goto_preview_type_definition, { buffer = bufnr, desc="Type definition" })
   vim.keymap.set('n', 'gt', tele.lsp_type_definitions, { buffer = bufnr, desc="Type definition" })
 
+  vim.keymap.set({"n","v"}, "<leader>la", "<cmd>Lspsaga code_action<CR>", { silent = true })
   vim.keymap.set('n', '<leader>lci', tele.lsp_incoming_calls, { buffer = bufnr, desc="Incoming calls" })
   vim.keymap.set('n', '<leader>lco', tele.lsp_outgoing_calls, { buffer = bufnr, desc="Outgoing calls" })
   vim.keymap.set('n', '<leader>lr', ":IncRename ", { buffer = bufnr, desc="Rename symbol" })
-  vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { buffer = bufnr, desc="Code Action" })
-  vim.keymap.set('n', '<leader>li', "<cmd>LspInfo<CR>", { buffer = bufnr, desc = "Lsp Info"})
-  vim.keymap.set('n', '<leader>lI', "<cmd>LspInstallInfo<CR>", { buffer = bufnr, desc = "Lsp Install Info"})
   vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = bufnr, desc = "Run CodeLens Action"})
 
   vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc="Add workspace" } )
@@ -38,6 +57,9 @@ local on_attach = function(client, bufnr)
     vim.inspect(vim.lsp.buf.list_workspace_folders())
   end, { buffer = bufnr, desc="List workspace folder" } )
   vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = bufnr, desc="Workspace Symbol" })
+
+  -- Outline
+  vim.keymap.set("n","<leader>o", "<cmd>LSoutlineToggle<CR>",{ silent = true })
 
   require('virtualtypes').on_attach()
   require('nvim-navic').attach(client, bufnr)

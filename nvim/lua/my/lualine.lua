@@ -151,14 +151,14 @@ require('lualine').setup {
 
   sections = {
     lualine_a = {
-      "mode",
+      -- "mode",
       {
         require("noice").api.status.mode.get,
         cond = require("noice").api.status.mode.has,
       },
+      'branch',
     },
     lualine_b = {
-      'branch',
       {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
       {'filename', path = 1, color = { gui = "italic"}, separator = false },
     },

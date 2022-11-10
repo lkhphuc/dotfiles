@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd({"VimEnter", "ColorScheme"}, {
 
     mod_hl("semshiBuiltin", { italic=true, })
 
-    mod_hl("Folded", { bg="" })
+    mod_hl("Folded", { bg="" })  --Folded line don't have background, ever
     vim.cmd [[highlight! link MiniIndentscopeSymbol IndentBlanklineChar]]
   end
 })

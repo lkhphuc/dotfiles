@@ -15,7 +15,7 @@ Hydra({
     { 'H', 'zH' },
     { 'L', 'zL', { desc = 'half screen ←/→' } },
   }
-}) 
+})
 
 local buffer_hydra = Hydra({
    name = 'Barbar',

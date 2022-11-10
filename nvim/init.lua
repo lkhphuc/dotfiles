@@ -52,9 +52,7 @@ local function packer_plugins(use)
   use { "williamboman/mason.nvim", }
   use { "williamboman/mason-lspconfig.nvim", }
   use 'jose-elias-alvarez/null-ls.nvim'  -- Create ls from external programs
-  use {'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
-    run = ":TSUpdate",
-  }
+  use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate", }
   use {"yioneko/nvim-yati"}
   use {"tzachar/fuzzy.nvim"}
   -- Completion
@@ -92,6 +90,11 @@ local function packer_plugins(use)
     config = function() require('nvim-dap-virtual-text').setup({}) end}
   use {"mfussenegger/nvim-dap-python"}
 
+  use { "ThePrimeagen/refactoring.nvim",
+    config = function ()
+      require("refactoring").setup() -- Use null-ls code action
+    end,
+  }
 
   use {"blueyed/semshi",
     branch="handle-ColorScheme",
@@ -114,13 +117,13 @@ local function packer_plugins(use)
       local spec_treesitter = require('mini.ai').gen_spec.treesitter
       require('mini.ai').setup({
         custom_textobjects = {
-          F = spec_treesitter({ a = '@function.outer', i = '@function.inner' }),
-          C = spec_treesitter({ a = '@class.outer', i = '@class.inner' }),
+          F = spec_treesitter({ a = '@function.outer', i = '@function.inner' }, {}),
+          C = spec_treesitter({ a = '@class.outer', i = '@class.inner' }, {}),
           o = spec_treesitter({
             a = { '@conditional.outer', '@loop.outer' },
             i = { '@conditional.inner', '@loop.inner' },
-          }),
-          t = spec_treesitter({ a = '@block.outer', i = '@block.inner' }),
+          }, {}),
+          t = spec_treesitter({ a = '@block.outer', i = '@block.inner' }, {}),
         }
       })
 
@@ -134,7 +137,9 @@ local function packer_plugins(use)
         }
       })
 
-      require('mini.indentscope').setup({})  -- Define ai/ii object
+      require('mini.indentscope').setup({
+        symbol = "▏", -- '╎', "▏", "│", "┊", "┆",
+      })  -- Define ai/ii object
       local map = require('mini.map')
       map.setup({
         symbols = {
@@ -158,8 +163,11 @@ local function packer_plugins(use)
 
       local starter = require('mini.starter')
       starter.setup({
-        items = {
-          starter.sections.telescope(),
+          items = {
+            starter.sections.builtin_actions(),
+            starter.sections.telescope(),
+            starter.sections.recent_files(),
+            starter.sections.sessions(),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(),
@@ -185,8 +193,7 @@ local function packer_plugins(use)
       }
     end,
   }
-  use({
-    "folke/noice.nvim",
+  use({ "folke/noice.nvim",
     requires = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
@@ -231,11 +238,16 @@ local function packer_plugins(use)
       vim.keymap.set("n", "<leader>md", require("notify").dismiss, {desc="Dimiss notification"})
     end,
   })
-  use { 'rmagatti/goto-preview',
+  use({ "glepnir/lspsaga.nvim",
+    branch = "main",
     config = function()
-      require('goto-preview').setup({})
+        require("lspsaga").init_lsp_saga({
+          code_action_icon ='',
+          code_action_lightbulb = {enable_in_insert = false, virtual_text = false,},
+          symbol_in_winbar = { in_custom = true, show_file = false},
+        })
     end,
-  }
+})
   use {"b0o/incline.nvim"}
   use {'nvim-lualine/lualine.nvim',}
   use {'vimpostor/vim-tpipeline',
@@ -267,18 +279,6 @@ local function packer_plugins(use)
       })
       vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
     end }
-  use {"simrat39/symbols-outline.nvim",
-    config = function()
-      require("symbols-outline").setup({
-        width = 5,
-        preview_bg_highlight = "",
-        keymaps = {
-          hover_symbol = "S",
-        }
-      })
-      vim.keymap.set("n", "<leader>o", "<cmd>SymbolsOutline<CR>")
-    end
-  }
   use {"simnalamburt/vim-mundo",
     key = "<leader>uu", command = ":MundoToggle",
     config = function() vim.cmd [[nmap <leader>u :MundoToggle<CR>]] end}
@@ -389,15 +389,6 @@ local function packer_plugins(use)
   use { "mattboehm/vim-unstack",
     key = "<leader>us", command = ":unstack*",
     config = function() vim.g.unstack_mapkey = "<leader>us" end, }
-  use { "kosayoda/nvim-lightbulb", event = "InsertLeave",
-    config = function()
-      vim.api.nvim_create_autocmd( {"CursorHold", "CursorHoldI"},
-        { pattern = "*",
-          callback = require'nvim-lightbulb'.update_lightbulb,
-        }
-      )
-    end
-  }
   use 'jubnzv/virtual-types.nvim' -- TODO: need codelen
 
   -- Git
@@ -478,9 +469,11 @@ local function packer_plugins(use)
   use { "nvim-treesitter/playground", event = "BufRead", }
 
   -- Text Editting
-  use { "ggandor/leap.nvim",
-    requires = 'ggandor/leap-ast.nvim',
-    config = function () require("my.leap") end
+  use {"rlane/pounce.nvim",
+    config = function ()
+      vim.keymap.set({"n", "v"}, "s", "<Cmd>Pounce<CR>")
+      vim.keymap.set("o", "gs", "<Cmd>Pounce<CR>")
+    end
   }
   use { "kylechui/nvim-surround",
     config = function()
@@ -522,13 +515,14 @@ local function packer_plugins(use)
   use {"gbrlsnchs/winpick.nvim",
     config = function()
       local winpick = require("winpick")
-      local function pick()
-        local winid = winpick.select()
-        if winid then
-          vim.api.nvim_set_current_win(winid)
-        end
+      local function filter (winid, bufid)
+        return vim.api.nvim_win_get_config(winid).relative == ""
       end
-      vim.keymap.set("n", "<C-w>0", pick)
+      winpick.setup({filter=filter})
+      vim.keymap.set("n", "<C-w>0", function ()
+        local winid = winpick.select()
+        if winid then vim.api.nvim_set_current_win(winid) end
+      end)
     end
   }
   use { "kwkarlwang/bufresize.nvim",
@@ -565,7 +559,6 @@ local function packer_plugins(use)
   use { "projekt0n/github-nvim-theme" }
   use { "cpea2506/one_monokai.nvim", }
   use { "folke/tokyonight.nvim"}
-  use 'tiagovla/tokyodark.nvim'
   use { "EdenEast/nightfox.nvim", }
   use { "catppuccin/nvim", as = "catppuccin", }
   use { "marko-cerovac/material.nvim", }
