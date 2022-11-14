@@ -223,7 +223,11 @@ local function packer_plugins(use)
     config = function()
       require("noice").setup({
         presets = {
-          inc_rename = true,
+          bottom_search = true, -- use a classic bottom cmdline for search
+          command_palette = true, -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false, -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false, -- add a border to hover docs and signature help
         },
         lsp = {
           override = {
@@ -262,11 +266,18 @@ local function packer_plugins(use)
   use({ "glepnir/lspsaga.nvim",
     branch = "main",
     config = function()
-        require("lspsaga").init_lsp_saga({
-          code_action_icon ='',
-          code_action_lightbulb = {enable_in_insert = false, virtual_text = false,},
-          symbol_in_winbar = { in_custom = true, show_file = false},
-        })
+      require("lspsaga").init_lsp_saga({
+        code_action_icon ='',
+        code_action_lightbulb = {enable_in_insert = false, virtual_text = false,},
+        symbol_in_winbar = { in_custom = true, show_file = false},
+        definition_action_keys = {
+          edit   = '<C-w>o',
+          vsplit = '<C-w>v',
+          split  = '<C-w>s',
+          tabe   = '<C-w><tab>',
+          quit   = 'q',
+        },
+      })
     end,
 })
   use {"b0o/incline.nvim"}

@@ -22,7 +22,7 @@ null_ls.setup({
         }
       end
     }),
-    formatting.usort,
+    formatting.reorder_python_imports,
     formatting.stylua,
 
     code_actions.shellcheck,
