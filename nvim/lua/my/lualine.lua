@@ -174,7 +174,7 @@ require('lualine').setup {
   sections = {
     lualine_a = {
       { 'mode',
-        separator = { left = '' },
+        separator = { left = '', right = '' },
         padding = 0,
         fmt = function(str) return str:sub(1, 1) end,
       },

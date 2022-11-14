@@ -1,3 +1,5 @@
+#!/bin/bash
+
 check_default_shell() {
 	if [ -z "${SHELL##*zsh*}" ] ;then
 			echo "Default shell is zsh."
@@ -6,9 +8,9 @@ check_default_shell() {
 		old_stty_cfg=$(stty -g)
 		stty raw -echo
 		answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-		stty $old_stty_cfg && echo
+		stty "$old_stty_cfg" && echo
 		if echo "$answer" | grep -iq "^y" ;then
-			chsh -s $(which zsh)
+			chsh -s "$(which zsh)"
 		else
 			echo "Warning: Your configuration won't work properly. If you exec zsh, it'll exec tmux which will exec your default shell which isn't zsh."
 		fi
@@ -22,7 +24,7 @@ echo "Let's get started? (y/n)"
 old_stty_cfg=$(stty -g)
 stty raw -echo
 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-stty $old_stty_cfg
+stty "$old_stty_cfg"
 if echo "$answer" | grep -iq "^y" ;then
 	echo
 else
@@ -52,12 +54,10 @@ brew install neovim
 brew install lazygit
 brew install lf
 brew install btop
+brew install direnv
 
 check_default_shell
 
-echo
-echo "Optionally install LunarVim by running this command \\
- LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) "
 
 echo
 echo -n "Would you like to backup your current dotfiles? (y/n) "
@@ -72,7 +72,7 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-printf "source '$HOME/.config/zsh/zshrc'" >> $HOME/.zshrc
+printf "source '$HOME/.config/zsh/zshrc'" >> "$HOME"/.zshrc
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

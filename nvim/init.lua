@@ -186,7 +186,7 @@ local function packer_plugins(use)
   use {"xiyaowong/nvim-transparent",
     config = function()
       require("transparent").setup({
-        enable = true,
+        enable = false,
         -- extra_groups = 'all',
       })
     end

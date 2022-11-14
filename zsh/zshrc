@@ -27,11 +27,13 @@ znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 
+znap eval direnv  "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
 znap eval pip 'python3 -m pip completion --zsh'
 znap eval kitty 'kitty + complete setup zsh'
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 znap fpath _fuck "$(thefuck --alias)"
+znap eval conda "conda shell.zsh hook"
 znap install conda-incubator/conda-zsh-completion
 znap install ogham/exa
 znap fpath _poetry 'poetry completions zsh'
