@@ -88,15 +88,21 @@ telescope.setup {
     lsp_definitions = { theme = "dropdown" }
   },
   extensions = {
-    fzf = {}
+    fzf = {},
+    file_browser = {
+      theme = "ivy",
+    }
   },
 }
 
 telescope.load_extension('fzf')
+telescope.load_extension('file_browser')
+local fb = require("telescope").extensions.file_browser
 
 require("which-key").register({["<leader>s"] = {name = "Search" }})
 vim.keymap.set("n", "<leader>*", builtin.grep_string, { desc = "Cursor word"})
 vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Buffers"})
+vim.keymap.set("n", "<leader>bf",fb.file_browser, { desc = "Browse files"})
 vim.keymap.set("n", "<leader>f", builtin.find_files,{ desc = "Files"})
 vim.keymap.set("n", "<leader>st", builtin.live_grep, { desc = "Live grep workspace"})
 vim.keymap.set("n", "<leader>sT",

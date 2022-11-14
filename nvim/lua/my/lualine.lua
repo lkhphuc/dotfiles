@@ -19,7 +19,7 @@ navic.setup({
 })
 
 local windows_idx = {
-  function ()
+  function()
     return " " .. vim.api.nvim_win_get_number(0)
   end,
 }
@@ -33,26 +33,26 @@ end
 local function tabs_count()
   local total_tabs = vim.fn.tabpagenr("$")
   local tab_id = vim.fn.tabpagenr()
-  return " " ..tab_id .. "/" .. total_tabs
+  return " " .. tab_id .. "/" .. total_tabs
 end
 
-local hide_in_width = function()
-	return vim.o.columns > 100
+local width_gt_than = function(width)
+  return vim.o.columns > width
 end
 
 local diff = { "diff",
-    symbols = { added = " ", modified = " ", removed = " " },
-    source = function()
-      local gitsigns = vim.b.gitsigns_status_dict
-      if gitsigns then
-        return {
-          added = gitsigns.added,
-          modified = gitsigns.changed,
-          removed = gitsigns.removed,
-        }
-      end
-    end,
-  }
+  symbols = { added = " ", modified = " ", removed = " " },
+  source = function()
+    local gitsigns = vim.b.gitsigns_status_dict
+    if gitsigns then
+      return {
+        added = gitsigns.added,
+        modified = gitsigns.changed,
+        removed = gitsigns.removed,
+      }
+    end
+  end,
+}
 
 local function _env_cleanup(venv)
   if string.find(venv, "/") then
@@ -69,10 +69,10 @@ local python_env = {
   function()
     local venv = os.getenv("CONDA_DEFAULT_ENV") or _env_cleanup(os.getenv("VIRTUAL_ENV"))
     if venv then
-      return " "..venv
+      return " " .. venv
     end
   end,
-  cond = hide_in_width,
+  -- cond = width_gt_than(120),
 }
 
 local treesitter = {
@@ -83,7 +83,7 @@ local treesitter = {
     end
   end,
   color = { fg = colors.green },
-  cond = hide_in_width,
+  -- cond = width_gt_than(120),
 }
 
 local lsp = {
@@ -98,16 +98,16 @@ local lsp = {
     end
     return output
   end,
-  cond = hide_in_width,
+  -- cond = width_gt_than(120),
 }
 
 local dap = {
-  function ()
+  function()
     local stat = require("dap").status()
     if stat == "" then
       return ""
     end
-    return " ".. stat
+    return " " .. stat
   end
 }
 
@@ -121,18 +121,40 @@ local diagnostics = {
 }
 
 local spaces = {
-    function()
-      if not vim.api.nvim_buf_get_option(0, "expandtab") then
-        return  vim.api.nvim_buf_get_option(0, "tabstop").." "
-      end
-      local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
-      if size == 0 then
-        size = vim.api.nvim_buf_get_option(0, "tabstop")
-      end
-      return  size..""
-    end,
-    cond = hide_in_width,
+  function()
+    if not vim.api.nvim_buf_get_option(0, "expandtab") then
+      return vim.api.nvim_buf_get_option(0, "tabstop") .. " "
+    end
+    local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
+    if size == 0 then
+      size = vim.api.nvim_buf_get_option(0, "tabstop")
+    end
+    return size .. ""
+  end,
+  -- cond = width_gt_than(120),
+}
+
+local custom_fname = require('lualine.components.filename'):extend()
+local highlight = require 'lualine.highlight'
+
+function custom_fname:init(options)
+  custom_fname.super.init(self, options)
+  self.status_colors = {
+    saved = highlight.create_component_highlight_group(
+      { gui = "bold" }, 'filename_status_saved', self.options),
+    modified = highlight.create_component_highlight_group(
+      { gui = "bold,italic" }, 'filename_status_modified', self.options),
   }
+  if self.options.color == nil then self.options.color = '' end
+end
+
+function custom_fname:update_status()
+  local data = custom_fname.super.update_status(self)
+  data = highlight.component_format_highlight(vim.bo.modified
+    and self.status_colors.modified
+    or self.status_colors.saved) .. data
+  return data
+end
 
 require('lualine').setup {
   options = {
@@ -140,10 +162,10 @@ require('lualine').setup {
     theme = 'auto',
     component_separators = '|',
     -- component_separators = { left = '', right = '' },
-    -- section_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
+    -- section_separators = { left = '', right = '' },
     disabled_filetypes = {
-      winbar = {"dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
+      winbar = { "dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
     },
     always_divide_middle = false,
     globalstatus = true,
@@ -151,43 +173,58 @@ require('lualine').setup {
 
   sections = {
     lualine_a = {
-      -- "mode",
-      {
-        require("noice").api.status.mode.get,
+      { 'mode',
+        separator = { left = '' },
+        padding = 0,
+        fmt = function(str) return str:sub(1, 1) end,
+      },
+      { require("noice").api.status.mode.get,
         cond = require("noice").api.status.mode.has,
       },
-      'branch',
+      { 'branch', color = { gui = "italic" } },
     },
     lualine_b = {
-      {'filetype', icon_only = true, padding = {left=1, right=0}, separator = false,},
-      {'filename', path = 1, color = { gui = "italic"}, separator = false },
+      { 'filetype', icon_only = true, padding = { left = 1, right = 0 }, separator = false },
+      { custom_fname, path = 1, separator = { right = '', } },
     },
     lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
-    lualine_x = { dap, treesitter, lsp, },
+    lualine_x = { dap, lsp, },
     lualine_y = { spaces, 'progress', 'fileformat', },
-    lualine_z = { python_env, tabs_count, { 'hostname', icon = ' ', left_padding = 2 } },
+    lualine_z = {
+      python_env,
+      tabs_count,
+      { 'hostname', icon = ' ', separator = { right = '' }, },
+    },
   },
-  tabline = {
-    -- lualine_a = {
-    --   windows_idx,
-    --   terminal_idx,
-    -- },
-    -- lualine_b = {
-    --   {'windows', mode = 2, },
-    -- },
-    -- lualine_y = {
-    --   {'tabs',
-    --     max_length = vim.o.columns,
-    --     mode = 3,
-    --   },
-    -- },
-    -- lualine_z = { tabs_count, },
-  },
-  extensions = { 'quickfix', 'nvim-tree'}
+  -- tabline = {
+  --   lualine_a = {
+  --     windows_idx,
+  --     terminal_idx,
+  --   },
+  --   lualine_b = {
+  --     {'windows', mode = 2, },
+  --   },
+  --   lualine_y = {
+  --     {'tabs',
+  --       max_length = vim.o.columns,
+  --       mode = 3,
+  --     },
+  --   },
+  --   lualine_z = { tabs_count, },
+  -- },
+  extensions = { 'quickfix', 'nvim-tree' }
 }
 
+--  ______________
+-- < incline.nvim >
+--  --------------
+--         \   ^__^
+--          \  (oo)\_______
+--             (__)\       )\/\
+--                 ||----w |
+--                 ||     ||
 
 local function get_diagnostic_label(props)
   local icons = { error = '', warn = '', info = '', hint = '', }
@@ -200,13 +237,13 @@ local function get_diagnostic_label(props)
     end
   end
   if #label > 0 then
-    table.insert(label, {'| '})
+    table.insert(label, { '| ' })
   end
   return label
 end
 
 local function get_git_diff()
-  local icons = { removed = "", changed = "",added = "" }
+  local icons = { removed = "", changed = "", added = "" }
   local labels = {}
   local signs = vim.b.gitsigns_status_dict
   for name, icon in pairs(icons) do
@@ -217,7 +254,7 @@ local function get_git_diff()
     end
   end
   if #labels > 0 then
-    table.insert(labels, {'| '})
+    table.insert(labels, { '| ' })
   end
   return labels
 end
@@ -230,12 +267,11 @@ require('incline').setup({
     local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
 
     local buffer = {
-        { get_diagnostic_label(props) },
-        { get_git_diff() },
-        { ft_icon, guifg = ft_color }, { " " },
-        { filename, gui = modified },
+      { get_diagnostic_label(props) },
+      { get_git_diff() },
+      { ft_icon, guifg = ft_color , guibg="none"}, { " " },
+      { filename, gui = modified },
     }
     return buffer
   end
 })
-

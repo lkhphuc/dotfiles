@@ -150,6 +150,9 @@ local function packer_plugins(use)
           map.gen_integration.gitsigns(),
           map.gen_integration.diagnostic(),
         },
+        window = {
+          show_integration_count = false,
+        }
       })
       vim.keymap.set('n', '<Leader>mc', MiniMap.close, {desc="Map close."})
       vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus, {desc="Map focus"})
@@ -180,9 +183,27 @@ local function packer_plugins(use)
     end
   }
   -- UI
+  use {"xiyaowong/nvim-transparent",
+    config = function()
+      require("transparent").setup({
+        enable = true,
+        -- extra_groups = 'all',
+      })
+    end
+  }
+  use {
+    "nvim-zh/colorful-winsep.nvim",
+    config = function ()
+      require('colorful-winsep').setup()
+    end
+  }
   use 'nvim-lua/popup.nvim'
   use 'stevearc/dressing.nvim'
-  use 'rcarriga/nvim-notify'
+  use {'rcarriga/nvim-notify',
+    config = function()
+      require('notify').setup({ background_colour = "#000000", })
+    end
+  }
   use {
     "smjonas/live-command.nvim",
     config = function()
@@ -267,6 +288,13 @@ local function packer_plugins(use)
       vim.keymap.set('n', '<leader>za', truezen.ataraxis, {})
     end,
   }
+  -- Lua
+  use { "folke/todo-comments.nvim",
+    config = function()
+      require("todo-comments").setup { }
+      vim.keymap.set("n", "<leader>xt", "<cmd>TodoTrouble<cr>", {desc = "TODO" })
+    end
+  }
   use { "folke/twilight.nvim",
     config = function() require("twilight").setup { } end
   }
@@ -286,13 +314,14 @@ local function packer_plugins(use)
   use 'onsails/lspkind.nvim' -- Add pictogram to LSP
 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use { 'nvim-telescope/telescope.nvim'}
+  use { "nvim-telescope/telescope-file-browser.nvim" }
   use { 'LukasPietzschmann/telescope-tabs',
     requires = { 'nvim-telescope/telescope.nvim' },
     config = function()
       require'telescope-tabs'.setup{ }
     end
   }
+  use { 'nvim-telescope/telescope.nvim' }
 
   use {"delphinus/auto-cursorline.nvim",
     config=function () require("auto-cursorline").setup() end}
