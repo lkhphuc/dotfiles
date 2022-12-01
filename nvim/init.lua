@@ -201,7 +201,11 @@ local function packer_plugins(use)
   use 'stevearc/dressing.nvim'
   use {'rcarriga/nvim-notify',
     config = function()
-      require('notify').setup({ background_colour = "#000000", })
+      require('notify').setup({
+        on_open = function(win)
+          vim.api.nvim_win_set_option(win, "winblend", 20)
+        end,
+      })
     end
   }
   use {
@@ -299,7 +303,7 @@ local function packer_plugins(use)
       vim.keymap.set('n', '<leader>za', truezen.ataraxis, {})
     end,
   }
-  -- Lua
+
   use { "folke/todo-comments.nvim",
     config = function()
       require("todo-comments").setup { }

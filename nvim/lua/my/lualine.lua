@@ -175,7 +175,6 @@ require('lualine').setup {
     lualine_a = {
       { 'mode',
         separator = { left = '', right = '' },
-        padding = 0,
         fmt = function(str) return str:sub(1, 1) end,
       },
       { require("noice").api.status.mode.get,
@@ -184,8 +183,8 @@ require('lualine').setup {
       { 'branch', color = { gui = "italic" } },
     },
     lualine_b = {
-      { 'filetype', icon_only = true, padding = { left = 1, right = 0 }, separator = false },
-      { custom_fname, path = 1, separator = { right = '', } },
+      { 'filetype', icon_only = true, },
+      { custom_fname, path = 1, padding = 0, separator = { right = '', } },
     },
     lualine_c = {
       { navic.get_location, cond = navic.is_available, },
