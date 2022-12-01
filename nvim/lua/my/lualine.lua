@@ -92,10 +92,10 @@ local lsp = {
     if next(clients) == nil then
       return ""
     end
-    local output = " "
-    for _, client in pairs(clients) do
-      output = output .. ":" .. client.name
-    end
+    local output = " " .. #clients
+    -- for _, client in pairs(clients) do
+    --   output = output .. ":" .. client.name
+    -- end
     return output
   end,
   -- cond = width_gt_than(120),
@@ -156,6 +156,8 @@ function custom_fname:update_status()
   return data
 end
 
+local noice = require("noice").api.status
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -177,9 +179,7 @@ require('lualine').setup {
         separator = { left = '', right = '' },
         fmt = function(str) return str:sub(1, 1) end,
       },
-      { require("noice").api.status.mode.get,
-        cond = require("noice").api.status.mode.has,
-      },
+      { noice.mode.get, cond = noice.mode.has, },
       { 'branch', color = { gui = "italic" } },
     },
     lualine_b = {
@@ -189,8 +189,10 @@ require('lualine').setup {
     lualine_c = {
       { navic.get_location, cond = navic.is_available, },
     },
-    lualine_x = { dap, lsp, },
-    lualine_y = { spaces, 'progress', 'fileformat', },
+    lualine_x = {
+      { noice.command.get_hl, cond = noice.command.has, },
+    },
+    lualine_y = { dap, lsp, spaces, 'progress', 'fileformat', },
     lualine_z = {
       python_env,
       tabs_count,

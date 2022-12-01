@@ -1,6 +1,7 @@
 local telescope = require "telescope"
 local actions = require "telescope.actions"
 local builtin = require "telescope.builtin"
+local trouble = require "trouble.providers.telescope"
 
 telescope.setup {
   defaults = {
@@ -23,7 +24,7 @@ telescope.setup {
         ["<Up>"]       = actions.move_selection_previous,
 
         ["<CR>"]       = actions.select_default,
-        ["<C-x>"]      = actions.select_horizontal,
+        ["<C-s>"]      = actions.select_horizontal,
         ["<C-v>"]      = actions.select_vertical,
         ["<C-t>"]      = actions.select_tab,
 
@@ -35,6 +36,7 @@ telescope.setup {
 
         ["<Tab>"]      = actions.toggle_selection + actions.move_selection_worse,
         ["<S-Tab>"]    = actions.toggle_selection + actions.move_selection_better,
+        ["<C-x>"]      = trouble.open_with_trouble,
         ["<C-q>"]      = actions.send_to_qflist + actions.open_qflist,
         ["<M-q>"]      = actions.send_selected_to_qflist + actions.open_qflist,
         ["<C-l>"]      = actions.complete_tag,
@@ -45,12 +47,13 @@ telescope.setup {
       n = {
         ["<esc>"]      = actions.close,
         ["<CR>"]       = actions.select_default,
-        ["<C-x>"]      = actions.select_horizontal,
+        ["<C-s>"]      = actions.select_horizontal,
         ["<C-v>"]      = actions.select_vertical,
         ["<C-t>"]      = actions.select_tab,
 
         ["<Tab>"]      = actions.toggle_selection + actions.move_selection_worse,
         ["<S-Tab>"]    = actions.toggle_selection + actions.move_selection_better,
+        ["<C-x>"]      = trouble.open_with_trouble,
         ["<C-q>"]      = actions.send_to_qflist + actions.open_qflist,
         ["<M-q>"]      = actions.send_selected_to_qflist + actions.open_qflist,
 
@@ -80,11 +83,18 @@ telescope.setup {
   pickers = {
     grep_string = { theme = "dropdown" },
     find_files = { theme = "dropdown", },
-    buffers = { theme = "dropdown", },
+    buffers = {
+      theme = "dropdown",
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
+        }
+      }
+    },
     current_buffer_fuzzy_find = { theme = "ivy", },
     live_grep = { },
     colorscheme = { theme = "dropdown", enable_preview = true },
-    lsp_references = { theme = "dropdown" },
+    lsp_references = { theme = "dropdown", show_line = false },
     lsp_definitions = { theme = "dropdown" }
   },
   extensions = {

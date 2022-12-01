@@ -109,6 +109,7 @@ local function packer_plugins(use)
   use {'echasnovski/mini.nvim',
     config = function()
       require('mini.cursorword').setup({})
+      vim.cmd [[hi! MiniCursorwordCurrent gui=nocombine guifg=NONE guibg=NONE]]
 
       require('mini.bufremove').setup({})
       vim.keymap.set("n", "<leader>bd", MiniBufremove.delete, {desc="Delete buffer"})
@@ -230,7 +231,7 @@ local function packer_plugins(use)
           bottom_search = true, -- use a classic bottom cmdline for search
           command_palette = true, -- position the cmdline and popupmenu together
           long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false, -- enables an input dialog for inc-rename.nvim
+          inc_rename = true, -- enables an input dialog for inc-rename.nvim
           lsp_doc_border = false, -- add a border to hover docs and signature help
         },
         lsp = {
@@ -240,7 +241,7 @@ local function packer_plugins(use)
             ["cmp.entry.get_documentation"] = true,
           },
           signature = {
-            enabled = false,  -- use lsp_signature
+            enabled = true,  -- use lsp_signature
           }
         },
         routes = {
@@ -251,20 +252,26 @@ local function packer_plugins(use)
             },
             opts = { skip = true },
           },
+          {
+            filter = {
+              event = "msg_show",
+              kind = "",
+              find = "written",
+            },
+            opts = { skip = true },
+          },
         },
-        smart_move = {
-          enabled = true, -- you can disable this behaviour here
-          excluded_filetypes = { "notify" },
-        },
+        {
+          filter = {
+            event = "msg_show",
+            find = "which",
+          },
+          opts = { skip = true },
+        }
       })
-      vim.keymap.set("n", "<leader>ml", function()
-        require("noice").cmd("last")
-      end, {desc="Message last"})
-
-      vim.keymap.set("n", "<leader>mh", function()
-        require("noice").cmd("history")
-      end, {desc="Message history"})
-      vim.keymap.set("n", "<leader>md", require("notify").dismiss, {desc="Dimiss notification"})
+      vim.keymap.set("n", "<leader>ml", function() require("noice").cmd("last") end, { desc = "Message last" })
+      vim.keymap.set("n", "<leader>mh", function() require("noice").cmd("history") end, { desc = "Message history" })
+      vim.keymap.set("n", "<leader>md", require("notify").dismiss, { desc = "Dimiss notification" })
     end,
   })
   use({ "glepnir/lspsaga.nvim",
@@ -331,10 +338,7 @@ local function packer_plugins(use)
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use { 'LukasPietzschmann/telescope-tabs',
-    requires = { 'nvim-telescope/telescope.nvim' },
-    config = function()
-      require'telescope-tabs'.setup{ }
-    end
+    config = function() require'telescope-tabs'.setup{ } end
   }
   use { 'nvim-telescope/telescope.nvim' }
 
@@ -346,26 +350,22 @@ local function packer_plugins(use)
     config = function()
       local hlslens = require("hlslens")
       hlslens.setup({ calm_down = true, })
-      local kopts = {noremap = true, silent = true}
-      vim.keymap.set('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      -- Search selected text with * and #
-      vim.keymap.set("n", "*", "", {
-        callback = function()
-          vim.fn.execute("normal! *N")
-          hlslens.start()
-        end,
-      })
-      vim.keymap.set("n", "#", "", {
-        callback = function()
-          vim.fn.execute("normal! #N")
-          hlslens.start()
-        end,
-      })
+      vim.keymap.set('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]])
+      vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]])
+      vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]])
+      vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]])
+      vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]])
+      vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]])
+      -- run `:nohlsearch` and export results to quickfix
+      -- if Neovim is 0.8.0 before, remap yourself.
+      vim.keymap.set({'n', 'x'}, '<leader>L', function()
+        vim.schedule(function()
+          if require('hlslens').exportLastSearchToQuickfix() then
+            vim.cmd('cw')
+          end
+        end)
+        return ':noh<CR>'
+      end, {expr = true})
     end,
   }
   use {'joeytwiddle/sexy_scroller.vim',}
@@ -402,15 +402,6 @@ local function packer_plugins(use)
     end,
   }
   use { "mizlan/iswap.nvim"}
-  use { "ray-x/lsp_signature.nvim",
-    config = function()
-      require('lsp_signature').setup({
-        noice = true,
-        toggle_key = "<C-e>",  -- Similar to cmp abort
-        select_signature_key = "<C-n>",
-      })
-    end
-  }
   use { "folke/trouble.nvim", event = "BufEnter",
     config = function()
       require("trouble").setup()
