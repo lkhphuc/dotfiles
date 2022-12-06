@@ -33,14 +33,14 @@ local on_attach = function(client, bufnr)
   -- when you use action in finder like open vsplit then you can
   -- use <C-t> to jump back
   vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
-  -- vim.keymap.set('n', 'gr', tele.lsp_references, { buffer = bufnr, desc="References" })
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, desc="References" })
 
   -- Peek Definition
   -- you can edit the definition file in this flaotwindow
   -- also support open/vsplit/etc operation check definition_action_keys
   -- support tagstack C-t jump back
-  vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
-  -- vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
+  vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", { desc="peek", silent = true })
+  vim.keymap.set('n', 'gd', tele.lsp_definitions, { buffer = bufnr, desc="Definition" })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc="Declaration" })
   vim.keymap.set('n', 'gI', tele.lsp_implementations, { buffer = bufnr, desc="Implementation" })
   vim.keymap.set('n', 'gt', tele.lsp_type_definitions, { buffer = bufnr, desc="Type definition" })
