@@ -103,7 +103,7 @@ vim.o.completeopt = 'menu,menuone,noselect' -- complete to comment string
 vim.o.timeoutlen = 300
 vim.o.tabstop = 2  -- If not set by sleuth, a tab is 2 space
 vim.o.shiftwidth = 2  -- For >>, <<
-vim.o.wrap = true
+vim.o.wrap = false
 vim.o.linebreak = true  -- wrap at specific char rather than last one
 vim.o.breakat = " ^I!@*;:,./?(="
 vim.o.showbreak = "|>"

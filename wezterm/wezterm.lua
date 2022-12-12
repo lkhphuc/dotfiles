@@ -1,30 +1,33 @@
 local wezterm = require 'wezterm';
-local os = require("os")
+local act = wezterm.action;
 
-local move_around = function(window, pane, direction_wez, direction_nvim)
-  local result = os.execute("env NVIM_LISTEN_ADDRESS=/tmp/nvim" .. pane:pane_id() ..  " $HOME/go/bin/wezterm.nvim.navigator " .. direction_nvim)
-  if result then
-    window:perform_action(wezterm.action({ SendString = "\x17" .. direction_nvim }), pane)
+local function isViProcess(pane)
+  return pane:get_foreground_process_name():find('n?vim') ~= nil
+end
+
+local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
+  if isViProcess(pane) then
+    window:perform_action(
+      -- This should match the keybinds you set in Neovim.
+      act.SendKey({ key = vim_direction, mods = 'CTRL' }),
+      pane
+    )
   else
-    window:perform_action(wezterm.action({ ActivatePaneDirection = direction_wez }), pane)
+    window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
   end
 end
 
-
-wezterm.on("move-left", function(window, pane)
-	move_around(window, pane, "Left", "h")
+wezterm.on('ActivatePaneDirection-right', function(window, pane)
+  conditionalActivatePane(window, pane, 'Right', 'l')
 end)
-
-wezterm.on("move-right", function(window, pane)
-	move_around(window, pane, "Right", "l")
+wezterm.on('ActivatePaneDirection-left', function(window, pane)
+  conditionalActivatePane(window, pane, 'Left', 'h')
 end)
-
-wezterm.on("move-up", function(window, pane)
-	move_around(window, pane, "Up", "k")
+wezterm.on('ActivatePaneDirection-up', function(window, pane)
+  conditionalActivatePane(window, pane, 'Up', 'k')
 end)
-
-wezterm.on("move-down", function(window, pane)
-	move_around(window, pane, "Down", "j")
+wezterm.on('ActivatePaneDirection-down', function(window, pane)
+  conditionalActivatePane(window, pane, 'Down', 'j')
 end)
 
 
@@ -36,7 +39,6 @@ return {
       remote_address = "gpu",
       username = "phuc",
       local_echo_threshold_ms = 100,
-      remote_wezterm_path = "~/.local/bin/wezterm",
     },
     {
       name = "carles",
@@ -66,17 +68,18 @@ return {
   window_decorations = "RESIZE",
 
   keys = {
-    {key = "_", mods="CMD|SHIFT", action=wezterm.action{SplitVertical   = {domain="CurrentPaneDomain"}}},
-    {key = "|", mods="CMD|SHIFT", action=wezterm.action{SplitHorizontal = {domain="CurrentPaneDomain"}}},
-    {key = "Enter", mods="SHIFT", action="DisableDefaultAssignment"},
-    -- pane move(vim aware)
-    { key = "h", mods = "CTRL", action = wezterm.action({ EmitEvent = "move-left"  }) },
-    { key = "l", mods = "CTRL", action = wezterm.action({ EmitEvent = "move-right" }) },
-    { key = "k", mods = "CTRL", action = wezterm.action({ EmitEvent = "move-up"    }) },
-    { key = "j", mods = "CTRL", action = wezterm.action({ EmitEvent = "move-down"  }) },
+    { key = "_", mods = "CMD|SHIFT", action = act { SplitVertical = { domain = "CurrentPaneDomain" } } },
+    { key = "|", mods = "CMD|SHIFT", action = act { SplitHorizontal = { domain = "CurrentPaneDomain" } } },
+    { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment},
+    { key = "w", mods = "CMD", action = wezterm.action { CloseCurrentPane = { confirm = true } } },
 
-    {key="UpArrow", mods="SHIFT", action=wezterm.action{ScrollToPrompt=-1}},
-    {key="DownArrow", mods="SHIFT", action=wezterm.action{ScrollToPrompt=1}},
+    { key = 'h', mods = 'CTRL', action = act.EmitEvent('ActivatePaneDirection-left') },
+    { key = 'j', mods = 'CTRL', action = act.EmitEvent('ActivatePaneDirection-down') },
+    { key = 'k', mods = 'CTRL', action = act.EmitEvent('ActivatePaneDirection-up') },
+    { key = 'l', mods = 'CTRL', action = act.EmitEvent('ActivatePaneDirection-right') },
+
+    { key = "UpArrow", mods = "SHIFT", action = wezterm.action { ScrollToPrompt = -1 } },
+    { key = "DownArrow", mods = "SHIFT", action = wezterm.action { ScrollToPrompt = 1 } },
   },
   -- mouse_bindings = {
   --   { event={Down={streak=3, button="Left"}},
@@ -84,4 +87,5 @@ return {
   --     mods="NONE"
   --   },
   -- },
+  enable_kitty_graphics=true,
 }

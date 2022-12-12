@@ -435,7 +435,17 @@ local function packer_plugins(use)
 
 
   -- Terminal
-  use 'christoomey/vim-tmux-navigator'
+  use {
+    'numToStr/Navigator.nvim',
+    config = function()
+      require('Navigator').setup({})
+      vim.keymap.set('n', '<C-h>', '<CMD>NavigatorLeft<CR>')
+      vim.keymap.set('n', '<C-l>', '<CMD>NavigatorRight<CR>')
+      vim.keymap.set('n', '<C-k>', '<CMD>NavigatorUp<CR>')
+      vim.keymap.set('n', '<C-j>', '<CMD>NavigatorDown<CR>')
+      vim.keymap.set('n', '<C-p>', '<CMD>NavigatorPrevious<CR>')
+    end
+  }
   use { "nikvdp/neomux", }
   use { "voldikss/vim-floaterm", config = function()
     vim.g.floaterm_keymap_next   = '<End>' -- Hyper+o
