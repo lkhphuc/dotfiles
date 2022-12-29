@@ -1,16 +1,6 @@
-local colors = {
-  bg = "#202328",
-  fg = "#bbc2cf",
-  yellow = "#ECBE7B",
-  cyan = "#008080",
-  darkblue = "#081633",
-  green = "#98be65",
-  orange = "#FF8800",
-  violet = "#a9a1e1",
-  magenta = "#c678dd",
-  purple = "#c678dd",
-  blue = "#51afef",
-  red = "#ec5f67",
+local M = {
+  'nvim-lualine/lualine.nvim',
+  event = "VeryLazy",
 }
 
 local windows_idx = {
@@ -77,7 +67,6 @@ local treesitter = {
       return ""
     end
   end,
-  color = { fg = colors.green },
   -- cond = width_gt_than(120),
 }
 
@@ -129,44 +118,15 @@ local spaces = {
   -- cond = width_gt_than(120),
 }
 
-local M = {
-  'nvim-lualine/lualine.nvim',
-}
-
 function M.config()
-  local custom_fname = require('lualine.components.filename'):extend()
-  local highlight = require 'lualine.highlight'
-
-  function custom_fname:init(options)
-    custom_fname.super.init(self, options)
-    self.status_colors = {
-      saved = highlight.create_component_highlight_group(
-        { gui = "bold" }, 'filename_status_saved', self.options),
-      modified = highlight.create_component_highlight_group(
-        { gui = "bold,italic" }, 'filename_status_modified', self.options),
-    }
-    if self.options.color == nil then self.options.color = '' end
-  end
-
-  function custom_fname:update_status()
-    local data = custom_fname.super.update_status(self)
-    data = highlight.component_format_highlight(vim.bo.modified
-      and self.status_colors.modified
-      or self.status_colors.saved) .. data
-    return data
-  end
-
   local noice = require("noice").api.status
-
 
   require('lualine').setup {
     options = {
       icons_enabled = true,
       theme = 'auto',
-      component_separators = '|',
-      -- component_separators = { left = '', right = '' },
+      component_separators = '┊', --        
       section_separators = { left = '', right = '' },
-      -- section_separators = { left = '', right = '' },
       disabled_filetypes = {
         winbar = { "dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
       },
@@ -176,27 +136,26 @@ function M.config()
 
     sections = {
       lualine_a = {
-        { 'mode',
-          separator = { left = '', right = '' },
-          fmt = function(str) return str:sub(1, 1) end,
-        },
+        { 'mode', separator = { left = '' }, padding = {left = 0, right = 1} },
+      },
+      lualine_b = {
         { noice.mode.get, cond = noice.mode.has, },
         { 'branch', color = { gui = "italic" } },
       },
-      lualine_b = {
-        { 'filetype', icon_only = true, },
-        { custom_fname, path = 1, padding = 0, separator = { right = '', } },
-      },
       lualine_c = {
-        { require('nvim-navic').get_location, cond = require('nvim-navic').is_available, },
+        { terminal_idx },
+        { 'filetype', icon_only = true, separator = "", padding = { left = 1, right = 0}},
+        { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" } },
+        { require('nvim-navic').get_location, cond = require('nvim-navic').is_available, separator = { left = ">"} },
       },
       lualine_x = {
         { noice.command.get_hl, cond = noice.command.has, },
+        'progress',
       },
-      lualine_y = { dap, lsp, spaces, 'progress', 'fileformat', },
+      lualine_y = {  dap, lsp, spaces, },
       lualine_z = {
         python_env,
-        tabs_count,
+        -- tabs_count,
         { 'hostname', icon = ' ', separator = { right = '' }, },
       },
     },

@@ -5,6 +5,8 @@ local M = {
   dependencies = {
     'folke/neodev.nvim', -- Dev setup for init.lua and plugin
     'williamboman/mason-lspconfig.nvim',
+    { "SmiteshP/nvim-navic", config = { highlight = true, depth_limit = 5 } },
+    'jubnzv/virtual-types.nvim', -- TODO: need codelen
   },
 }
 
@@ -16,7 +18,9 @@ function M.config()
   local lspconfig = require("lspconfig")
 
   local function on_attach(client, buffer)
-    require('virtualtypes').on_attach()
+    if client.supports_method("textDocument/codeLens") then
+      require('virtualtypes').on_attach(client, buffer)
+    end
     require('nvim-navic').attach(client, buffer)
     require('plugins.lsp.keys').setup(client, buffer)
   end

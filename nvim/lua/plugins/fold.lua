@@ -34,7 +34,7 @@ end
 local ftMap = {
   vim = { "treesitter", "indent" },
   python = { "treesitter", "indent" },
-  git = '',
+  -- git = '',
 }
 
 function M.config()
@@ -55,14 +55,14 @@ function M.config()
   vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
   vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
 
-  vim.keymap.set('n', 'h', function()
-    local winid = require('ufo').peekFoldedLinesUnderCursor()
-    if not winid then
-      local curpos = vim.api.nvim_win_get_cursor(0)
-      curpos[2] = math.max(0, curpos[2] - 1)
-      vim.api.nvim_win_set_cursor(0, curpos)
-    end
-  end)
+  -- vim.keymap.set('n', 'h', function()
+  --   local winid = require('ufo').peekFoldedLinesUnderCursor()
+  --   if not winid then
+  --     local curpos = vim.api.nvim_win_get_cursor(0)
+  --     curpos[2] = math.max(0, curpos[2] - 1)
+  --     vim.api.nvim_win_set_cursor(0, curpos)
+  --   end
+  -- end)
 
   -- vim.o.foldcolumn = '1'
   vim.o.foldlevel = 99

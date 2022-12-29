@@ -4,7 +4,6 @@ return {
     event = "BufReadPost",
     dependencies = {
       { 'yioneko/nvim-yati', },
-      -- { "lkhphuc/nvim-treesitter-pyfold" },
       { 'RRethy/nvim-treesitter-textsubjects' }, -- smart
     },
     config = function()

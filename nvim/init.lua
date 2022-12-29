@@ -21,6 +21,7 @@ end
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.termguicolors = true
 
 -- Plugins management
 require("lazy").setup("plugins", {
@@ -48,5 +49,3 @@ vim.keymap.set("n", "<leader>P", "<cmd>:Lazy<cr>")
 
 require("options")
 require("mappings")
-
--- vim: ts=2 sts=2 sw=2 fdls=4 et

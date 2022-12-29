@@ -1,6 +1,6 @@
 local M = {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  event = "BufRead",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     'hrsh7th/cmp-nvim-lsp-document-symbol', -- For / search command
@@ -15,8 +15,14 @@ local M = {
     "quangnguyen30192/cmp-nvim-tags",
     -- 'lukas-reineke/cmp-rg',
     -- {'tzachar/cmp-tabnine', build='./install.sh' },
-    { "zbirenbaum/copilot.lua", config = true, event = "VeryLazy" },
-    { "zbirenbaum/copilot-cmp", config = true, },
+    { "zbirenbaum/copilot.lua", config = true },
+    { "zbirenbaum/copilot-cmp",
+      config = function ()
+        require("copilot_cmp").setup({
+            formatters = { insert_text = require("copilot_cmp.format").remove_existing }
+        })
+      end
+    },
 
     -- Snippets plugin
     'L3MON4D3/LuaSnip',
@@ -32,6 +38,7 @@ local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
 end
+
 
 
 function M.config()
@@ -63,7 +70,7 @@ function M.config()
       },
       ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
+        select = false,
       },
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() and has_words_before() then
@@ -92,16 +99,17 @@ function M.config()
 
     }),
     formatting = {
-      -- fields = { "kind", "abbr", "menu" },
       format = require('lspkind').cmp_format({
-        mode = "symbol_text",
+        mode = "symbol",
         menu = {
           nvim_lsp = "",
           luasnip = "",
           treesitter = "",
           tags = "",
           buffer = "",
+          fuzzy_buffer = "",
           path = "",
+          fuzzy_path = "",
           copilot = "",
           cmp_tabnine = "",
           rg = "",
@@ -113,8 +121,7 @@ function M.config()
       { name = 'nvim_lsp' },
       { name = 'treesitter' },
       { name = 'tags' },
-      {
-        name = 'fuzzy_buffer',
+      { name = 'fuzzy_buffer',
         option = {
           get_bufnrs = function() -- Get all opened buffers
             local bufs = {}
@@ -129,31 +136,32 @@ function M.config()
         },
       },
       { name = 'fuzzy_path' },
-      { name = 'copilot', priority=2, },
+      { name = 'copilot', },
       -- { name = 'cmp_tabnine' },
       -- { name = 'rg' },
     },
-    -- view = {
-    --   entries = {name = 'custom', selection_order = 'near_cursor' }
-    -- },
+    view = {
+      entries = {name = 'custom', selection_order = 'near_cursor' }
+    },
     experimental = {
       ghost_text = true,
     },
-    -- sorting = {
-    --   priority_weight = 2,
-    --   comparators = {
-    --     require('cmp_fuzzy_buffer.compare'),
-    --     require('cmp_fuzzy_path.compare'),
-    --     compare.offset,
-    --     compare.exact,
-    --     compare.score,
-    --     compare.recently_used,
-    --     compare.kind,
-    --     compare.sort_text,
-    --     compare.length,
-    --     compare.order,
-    --   }
-    -- }
+    sorting = {
+      priority_weight = 2,
+      comparators = {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        compare.recently_used,
+        compare.kind,
+        compare.sort_text,
+        compare.length,
+        compare.order,
+        require('cmp_fuzzy_buffer.compare'),
+        require('cmp_fuzzy_path.compare'),
+        require("copilot_cmp.comparators").prioritize,
+      }
+    }
   }
 
   cmp.setup.cmdline({'/', '?'}, {

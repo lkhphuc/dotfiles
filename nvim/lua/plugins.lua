@@ -1,15 +1,17 @@
 return {
   'nvim-lua/plenary.nvim', -- Lua utility helpers
-  'folke/which-key.nvim',
   {'williamboman/mason.nvim', config = true, lazy = false },
-  'yioneko/nvim-yati',
 
   { "ThePrimeagen/refactoring.nvim", config = true, },
 
-  {"aduros/ai.vim"},
+  { "aduros/ai.vim",
+    init = function()
+      vim.g.ai_no_mappings = 1
+    end
+  },
   {"blueyed/semshi",
     branch="handle-ColorScheme",
-    build=":UpdateRemotePlugin",
+    build="UpdateRemotePlugin",
     config = function()
       vim.g["semshi#error_sign"] = false
       vim.g["semshi#simplify_markup"] = false
@@ -45,7 +47,11 @@ return {
         vim.api.nvim_win_set_option(win, "winblend", 20)
       end,
     },
-  }
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    keys = { { "<leader>ls", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+    config = true,
   },
   'kyazdani42/nvim-web-devicons',
 
@@ -56,25 +62,8 @@ return {
       }
     }
   },
-  { "glepnir/lspsaga.nvim",
-    branch = "main",
-    config = function()
-      require("lspsaga").init_lsp_saga({
-        code_action_icon ='',
-        code_action_lightbulb = {enable_in_insert = false, virtual_text = false,},
-        symbol_in_winbar = { in_custom = true, show_file = false},
-        definition_action_keys = {
-          edit   = '<C-w>o',
-          vsplit = '<C-w>v',
-          split  = '<C-w>s',
-          tabe   = '<C-w><tab>',
-          quit   = 'q',
-        },
-      })
-    end,
-  },
   {'vimpostor/vim-tpipeline',
-    config = function()
+    init = function()
       vim.g.tpipeline_usepane = 1
       vim.g.tpipeline_clearstl = 1
     end
@@ -95,7 +84,7 @@ return {
     event = "BufReadPost",
     cmd = { "TodoTrouble", "TodoTelescope" },
     keys = {
-      "<leader>xt", "<cmd>TodoTrouble<cr>", {desc = "TODO" },
+      "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "TODO",
     },
   },
   { "folke/twilight.nvim", config = true },
@@ -113,9 +102,6 @@ return {
   },
 
 
-  {"delphinus/auto-cursorline.nvim",
-    config=function () require("auto-cursorline").setup() end},
-  { "SmiteshP/nvim-navic", config = { highlight = true } },
   {'kevinhwang91/nvim-bqf', ft="qf"},
   { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
     config = function()
@@ -139,15 +125,8 @@ return {
       end, {expr = true})
     end,
   },
-  -- {'joeytwiddle/sexy_scroller.vim',},
-  { "NvChad/nvim-colorizer.lua", event = "BufRead",
-    config = function() require("colorizer").setup({}) end
-  },
 
-  -- Folding
-  { "nacro90/numb.nvim", event = "BufRead", --Peeking line before jump
-    config = function() require("numb").setup() end,
-  },
+  { "nacro90/numb.nvim", event = "BufRead", config = true, }, --Peeking line before jump
   {'m-demare/hlargs.nvim',
     config = function() require("hlargs").setup({
       excluded_filetypes = {"python"},
@@ -184,8 +163,9 @@ return {
   --   end,
   -- }
   { "mattboehm/vim-unstack",
-    config = function() vim.g.unstack_mapkey = "<leader>us" end, },
-  'jubnzv/virtual-types.nvim', -- TODO: need codelen
+    init = function() vim.g.unstack_mapkey = "<leader>us" end,
+    keys = "<leader>us",
+  },
 
   -- Git
   'tpope/vim-fugitive', -- Git commands in nvim
@@ -193,16 +173,15 @@ return {
   { "sindrets/diffview.nvim", event = "CmdlineEnter" },
 
   -- Terminal
-  {
-    'numToStr/Navigator.nvim',
-    config = function()
-      require('Navigator').setup({})
+  { 'numToStr/Navigator.nvim',
+    init = function()
       vim.keymap.set('n', '<C-h>', '<CMD>NavigatorLeft<CR>')
       vim.keymap.set('n', '<C-l>', '<CMD>NavigatorRight<CR>')
       vim.keymap.set('n', '<C-k>', '<CMD>NavigatorUp<CR>')
       vim.keymap.set('n', '<C-j>', '<CMD>NavigatorDown<CR>')
       vim.keymap.set('n', '<C-p>', '<CMD>NavigatorPrevious<CR>')
-    end
+    end,
+    config = true,
   },
   { "nikvdp/neomux",
     init = function()
@@ -225,6 +204,7 @@ return {
   -- end},
 
   { "jpalardy/vim-slime",
+    event = "TermOpen",
     config = function()
       vim.g.slime_target = "neovim"
       vim.g.slime_no_mapping = 1
@@ -307,24 +287,9 @@ return {
       vim.keymap.set("o", "gs", "<Cmd>Pounce<CR>")
     end
   },
-  { "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({
-        highlight = {
-          duration = 1000,
-        },
-      })
-    end
-  },
   "tpope/vim-repeat",
   "tpope/vim-sleuth", --One plugin everything tab indent
   "tpope/vim-unimpaired",
-  -- {"andymass/vim-matchup",
-  --   config = function ()
-  --     vim.g.matchup_matchparen_offscreen = {method= 'popup', position='cursor'},
-  --     vim.g.matchup_matchparen_deferred = 1
-  --   end
-  -- },
   "AndrewRadev/splitjoin.vim", -- gS and gJ
   { 'Wansmer/treesj', config = true },
   "kana/vim-textobj-user",
@@ -332,15 +297,16 @@ return {
   'nvim-treesitter/nvim-treesitter-textobjects',
   'RRethy/nvim-treesitter-textsubjects', -- smart
   'mfussenegger/nvim-treehopper',
-  {'monaqa/dial.nvim',
+  { 'monaqa/dial.nvim',
     config = function ()
-      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal, {noremap = true})
-      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal, {noremap = true})
-      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual, {noremap = true})
-      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual, {noremap = true})
-      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual, {noremap = true})
-      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual, {noremap = true})
-    end},
+      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), {noremap = true})
+      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), {noremap = true})
+      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), {noremap = true})
+      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), {noremap = true})
+      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), {noremap = true})
+      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), {noremap = true})
+    end
+  },
 
   {"gbrlsnchs/winpick.nvim",
     config = function()
@@ -368,6 +334,6 @@ return {
   {'sindrets/winshift.nvim',
     config = { highlight_moving_win = true }
   },
-  {'anuvyklack/hydra.nvim', },
+{'anuvyklack/hydra.nvim', },
 
 }

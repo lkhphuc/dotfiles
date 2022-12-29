@@ -3,9 +3,7 @@ vim.opt.clipboard = "unnamedplus" -- sync with system clipboard
 vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
 vim.opt.confirm = true -- confirm to save changes before exiting modified buffer
 vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.backup = true
 
-vim.opt.termguicolors = true
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.ignorecase = true
 vim.wo.number = true --Make line numbers default
@@ -35,11 +33,11 @@ vim.opt.showtabline = 0
 vim.opt.swapfile = false
 vim.opt.showmode = false
 vim.opt.splitkeep = "screen"
+vim.opt.virtualedit = "block,onemore" -- cursor can move anywhere
 
 if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.splitkeep = "screen"
   vim.o.shortmess = "filnxtToOFWIcC"
 end
 
-vim.g.python3_host_prog = "/usr/bin/python3"
--- Can not put this inside neomux config for some reason
+vim.g.python3_host_prog = "/usr/bin/python3" -- pynvim is only needed for this
