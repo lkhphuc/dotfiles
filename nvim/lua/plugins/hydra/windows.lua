@@ -9,6 +9,7 @@ function M.setup()
     name = 'Side scroll',
     mode = 'n',
     body = 'z',
+    hint = "Side scroll",
     heads = {
       { 'h', '5zh' },
       { 'l', '5zl', { desc = '←/→' } },
@@ -17,40 +18,47 @@ function M.setup()
     }
   })
 
-  local buffer_hydra = hydra({
-    name = 'Barbar',
+  local buffer_hint = [[
+         ^<-^  ^-> ^       
+  Cycle  ^_h_^ ^_l_^
+  Move   ^_H_^ ^_L_^
+  ]]
+  require("mini.bufremove")
+  hydra({
+    name = 'Buffers',
+    body = '<leader>b',
+    hint = buffer_hint,
     config = {
+      hint = {type='window', border = 'single'},
+      invoke_on_body = true,
       on_key = function()
         -- Preserve animation
         vim.wait(200, function() vim.cmd 'redraw' end, 30, false)
       end
     },
     heads = {
-      { 'h', function() vim.cmd('BufferPrevious') end, { on_key = false } },
-      { 'l', function() vim.cmd('BufferNext') end, { desc = 'choose', on_key = false } },
+      { 'h', function() vim.cmd('BufferLineCyclePrev') end, { desc = "choose left", on_key = false } },
+      { 'l', function() vim.cmd('BufferLineCycleNext') end, { desc = 'choose right', on_key = false } },
 
-      { 'H', function() vim.cmd('BufferMovePrevious') end },
-      { 'L', function() vim.cmd('BufferMoveNext') end, { desc = 'move' } },
+      { 'H', function() vim.cmd('BufferLineMovePrev') end, { desc = "move left" }},
+      { 'L', function() vim.cmd('BufferLineMoveNext') end, { desc = 'move right' }},
 
-      { 'p', function() vim.cmd('BufferPin') end, { desc = 'pin' } },
+      { 'p', function() vim.cmd('BufferLinePick') end, { desc = 'Pick' } },
 
-      { 'd', function() vim.cmd('BufferClose') end, { desc = 'close' } },
-      { 'c', function() vim.cmd('BufferClose') end, { desc = false } },
-      { 'q', function() vim.cmd('BufferClose') end, { desc = false } },
+      { 'P', function() vim.cmd('BufferLineTogglePin') end, { desc = 'pin' } },
 
-      { 'od', function() vim.cmd('BufferOrderByDirectory') end, { desc = 'by directory' } },
-      { 'ol', function() vim.cmd('BufferOrderByLanguage') end, { desc = 'by language' } },
+      { 'd', MiniBufremove.delete, { desc = 'close' } },
+      { 'q', MiniBufremove.unshow, { desc = 'unshow' } },
+      { 'c', function() vim.cmd('BufferLinePickClose') end, { desc = 'Pick close' } },
+
+      { 'sd', function() vim.cmd('BufferLineSortByDirectory') end, { desc = 'by directory' } },
+      { 'se', function() vim.cmd('BufferLineSortByExtension') end, { desc = 'by extension' } },
+      { 'st', function() vim.cmd('BufferLineSortByTabs') end, { desc = 'by tab' } },
       { '<Esc>', nil, { exit = true } }
     }
   })
 
-  local function choose_buffer()
-    if #vim.fn.getbufinfo({ buflisted = true }) > 1 then
-      buffer_hydra:activate()
-    end
-  end
-
-  vim.keymap.set('n', 'gb', choose_buffer)
+  vim.keymap.set('n', 'gb', "<CR>BufferLinePick<CR>")
 
   local window_hint = [[
    ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
@@ -67,6 +75,7 @@ function M.setup()
     name = 'Windows',
     hint = window_hint,
     config = {
+      on_key = function() vim.wait(50) end,
       invoke_on_body = true,
       hint = {
         border = 'rounded',
@@ -78,7 +87,7 @@ function M.setup()
     heads = {
       { 'h', '<C-w>h' },
       { 'j', '<C-w>j' },
-      { 'k', vim.cmd [[try | wincmd k | catch /^Vim\%((\a\+)\)\=:E11:/ | close | endtry]] },
+      { 'k', '<C-w>k' },
       { 'l', '<C-w>l' },
 
       { 'H', require('winshift').cmd_winshift('left') },
@@ -98,13 +107,13 @@ function M.setup()
       { 'w', '<C-w>w', { exit = true, desc = false } },
       { '<C-w>', '<C-w>w', { exit = true, desc = false } },
 
-      { 'z', require('true-zen.ataraxis').toggle, { desc = 'maximize' } },
-      { '<C-z>', require('true-zen.ataraxis').off, { exit = true, desc = false } },
+      { 'z', require('zen-mode').toggle, { desc = 'Zen' } },
+      -- { '<C-z>', require('true-zen.ataraxis').off, { exit = true, desc = false } },
 
       { 'o', '<C-w>o', { exit = true, desc = 'remain only' } },
       { '<C-o>', '<C-w>o', { exit = true, desc = false } },
 
-      { 'b', choose_buffer, { exit = true, desc = 'choose buffer' } },
+      { 'b', "<CMD>BufferLinePick<CR>", { exit = true, desc = 'choose buffer' } },
 
       { 'c', vim.cmd [[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]] },
       { 'q', vim.cmd [[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]], { desc = 'close window' } },

@@ -11,8 +11,9 @@ return {
   },
   {"blueyed/semshi",
     branch="handle-ColorScheme",
+    ft = "python",
     build="UpdateRemotePlugin",
-    config = function()
+    init = function()
       vim.g["semshi#error_sign"] = false
       vim.g["semshi#simplify_markup"] = false
       vim.g["semshi#mark_selected_nodes"] = false
@@ -68,18 +69,7 @@ return {
       vim.g.tpipeline_clearstl = 1
     end
   },
-  { "Pocco81/true-zen.nvim",
-    config = function()
-      local truezen = require('true-zen')
-      truezen.setup()
-      vim.keymap.set('n', '<leader>zn', function() truezen.narrow(0, vim.api.nvim_buf_line_count(0)) end, {})
-      vim.keymap.set('v', '<leader>zn', function() truezen.narrow(vim.fn.line('v'), vim.fn.line('.')) end, {})
-      vim.keymap.set('n', '<leader>zf', truezen.focus, {})
-      vim.keymap.set('n', '<leader>zm', truezen.minimalist, {})
-      vim.keymap.set('n', '<leader>za', truezen.ataraxis, {})
-    end,
-  },
-
+  { "folke/zen-mode.nvim", config = true, cmd="ZenMode" },
   { "folke/todo-comments.nvim",
     event = "BufReadPost",
     cmd = { "TodoTrouble", "TodoTelescope" },

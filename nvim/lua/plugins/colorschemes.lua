@@ -42,7 +42,7 @@ return {
 			require("styler").setup({
 				themes = {
 					markdown = { colorscheme = "kanagawa" },
-					help = { colorscheme = "catppuccin-mocha", background = "dark" },
+					help = { colorscheme = "kanagawa", background = "dark" },
 				},
 			})
 
@@ -79,8 +79,8 @@ return {
 					mod_hl({ italic = true }, "@parameter")
 					mod_hl({ italic = true }, "@method.call")
 
-					-- Semshi
-					mod_hl({ gui = 'combine'}, "semshiGlobal")
+					-- Semshi  #TODO: semshi not loaded yet
+					-- mod_hl({ gui = 'combine'}, "semshiGlobal")
 
 
 					vim.cmd([[highlight! Folded guibg=NONE]]) --Folded line don't have background, ever

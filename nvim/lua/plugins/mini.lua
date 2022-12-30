@@ -12,21 +12,65 @@ function M.config()
   require("mini.ai").setup({
     n_lines = 500,
     custom_textobjects = {
-      F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
-      C = spec_treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
+      f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
+      c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
       o = spec_treesitter({
         a = { "@conditional.outer", "@loop.outer" },
         i = { "@conditional.inner", "@loop.inner" },
       }, {}),
-      t = spec_treesitter({ a = "@block.outer", i = "@block.inner" }, {}),
+      -- t = spec_treesitter({ a = "@block.outer", i = "@block.inner" }, {}),
+      N = { '%f[%d]%d+' },  -- Numbers
     },
   })
 
+  local map_navigate = function(text_obj, desc)
+    for _, side in ipairs({ "left", "right" }) do
+      for dir, d in pairs({ prev = "[", next = "]" }) do
+        local lhs = d .. (side == "right" and text_obj:upper() or text_obj:lower())
+        for _, mode in ipairs({ "n", "x", "o" }) do
+          vim.keymap.set(mode, lhs, function()
+            require("mini.ai").move_cursor(side, "a", text_obj, { search_method = dir })
+          end, {
+            desc = dir .. " " .. desc,
+          })
+        end
+      end
+    end
+  end
+  map_navigate("f", "function")
+  map_navigate("c", "class")
+  map_navigate("o", "block")
 
   require("mini.align").setup({})
 
 
-  require("mini.animate").setup()
+  -- require("mini.animate").setup()
+  local mouse_scrolled = false
+  for _, scroll in ipairs({ "Up", "Down" }) do
+    local key = "<ScrollWheel" .. scroll .. ">"
+    vim.keymap.set("", key, function()
+      mouse_scrolled = true
+      return key
+    end, { remap = true, expr = true })
+  end
+
+  local animate = require("mini.animate")
+  vim.go.winwidth = 20
+  vim.go.winminwidth = 5
+  animate.setup({
+    scroll = {
+      timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+      subscroll = animate.gen_subscroll.equal({
+        predicate = function(total_scroll)
+          if mouse_scrolled then
+            mouse_scrolled = false
+            return false
+          end
+          return total_scroll > 1
+        end,
+      }),
+    },
+  })
 
 
   require("mini.bufremove").setup({})
@@ -82,7 +126,7 @@ function M.config()
     items = {
       starter.sections.builtin_actions(),
       starter.sections.telescope(),
-      starter.sections.recent_files(),
+      starter.sections.recent_files(5, true, true),
       starter.sections.sessions(),
     },
     content_hooks = {

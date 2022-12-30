@@ -7,7 +7,7 @@ function M.config()
   local noice = require("noice")
   noice.setup({
     presets = {
-      bottom_search = true, -- a classic bottom cmdline for search
+      -- bottom_search = true, -- a classic bottom cmdline for search
       command_palette = true, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
       inc_rename = true, -- enables an input dialog for inc-rename.nvim
@@ -15,38 +15,18 @@ function M.config()
     },
     lsp = {
       override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
+	["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+	["vim.lsp.util.stylize_markdown"] = true,
+	["cmp.entry.get_documentation"] = true,
       },
       signature = {
-        enabled = true, -- lsp_signature
-      }
+	enabled = true, -- lsp_signature
+      },
     },
     routes = {
-      {
-        filter = {
-          event = "msg_show",
-          kind = "search_count",
-        },
-        opts = { skip = true },
-      },
-      {
-        filter = {
-          event = "msg_show",
-          kind = "",
-          find = "written",
-        },
-        opts = { skip = true },
-      },
+      { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
+      { filter = { event = "msg_show", find = "E486" }, opts = { skip = true } },
     },
-    {
-      filter = {
-        event = "msg_show",
-        find = "which",
-      },
-      opts = { skip = true },
-    }
   })
   vim.keymap.set("n", "<leader>ml", function() noice.cmd("last") end, { desc = "Message last" })
   vim.keymap.set("n", "<leader>mh", function() noice.cmd("history") end, { desc = "Message history" })
