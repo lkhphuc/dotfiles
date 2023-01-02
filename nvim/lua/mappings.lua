@@ -6,18 +6,9 @@ vim.keymap.set({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w>j")
 vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l")
 
-
--- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true })
-vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true })
-vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true })
-
 --Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 -- Tab pages
 vim.keymap.set("n", "]<TAB>", ":tabnext<CR>", { silent = true })
 vim.keymap.set("n", "[<TAB>", ":tabprev<CR>", { silent = true })
@@ -28,16 +19,15 @@ vim.keymap.set("n", "<leader>q", ":q!<cr>", { desc = "Force Quit" })
 
 vim.keymap.set("n", "<leader>F", ":tabnew term://lf<CR>", { desc = "File manager" })
 
-vim.keymap.set("n", "H", "_", { desc = "First character of line"})
-vim.keymap.set("n", "L", "$", { desc = "Last character of line"})
+vim.keymap.set("n", "H", "_", { desc = "First character of line" })
+vim.keymap.set("n", "L", "$", { desc = "Last character of line" })
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line w/o cursor moing" })
 
-vim.keymap.set("v", "<", "<gv")
-vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv", { desc = "Dedent and stay in visual mode." })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent and stay in visual mode." })
 -- Move text up and down
-vim.keymap.set("v", "<A-j>", ":m .+1<CR>==", { silent = true })
-vim.keymap.set("v", "<A-k>", ":m .-2<CR>==", { silent = true })
-vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", { silent = true })
-vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", { silent = true })
+vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move text and align" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text and align" })
 
 -- Misc mode
 vim.keymap.set({ "o", "v" }, "m", "<cmd>lua require('tsht').nodes()<CR>")
@@ -45,19 +35,7 @@ vim.keymap.set({ "n", "i" }, "<C-s>", "<Esc>:w<CR>", { silent = true }) -- Save 
 vim.keymap.set({ "t" }, "<C-s>", "<C-\\><C-n>", { silent = true }) -- Escape in terminal
 vim.keymap.set("t", "<C-^>", "<C-\\><C-N><C-^>")
 
--- Yank to system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { remap = true })
-vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { remap = true })
-
--- Don't yank empty line to clipboard
-vim.keymap.set("n", "dd", function()
-    local is_empty_line = vim.api.nvim_get_current_line():match("^%s*$")
-    if is_empty_line then return '"_dd' else return "dd" end
-  end, { noremap = true, expr = true })
-vim.api.nvim_create_autocmd("TextYankPost", { callback = vim.highlight.on_yank })
-vim.keymap.set("v", "p", '"_dP') -- In selection mode, paste over but don't yank
-
-vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>")  -- Exit terminal when scroll up
+vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>") -- Exit terminal when scroll up
 vim.api.nvim_create_autocmd("TermOpen", {
 	command = " setlocal listchars= nonumber norelativenumber",
 })
@@ -101,5 +79,16 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
+
+-- Return to last cursor position on buffer open
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
   end,
 })

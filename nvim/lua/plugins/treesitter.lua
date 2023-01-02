@@ -1,15 +1,17 @@
 return {
-  { 'nvim-treesitter/nvim-treesitter',
+  {
+    "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = "BufReadPost",
     dependencies = {
-      { 'yioneko/nvim-yati', },
-      { 'RRethy/nvim-treesitter-textsubjects' }, -- smart
+      "yioneko/nvim-yati",
+      "RRethy/nvim-treesitter-textsubjects",
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
     config = function()
       -- Treesitter configuration
       -- Parsers must be installed manually via :TSInstall
-      require('nvim-treesitter.configs').setup({
+      require("nvim-treesitter.configs").setup({
         ensure_installed = { "python", "lua", "bash", "vim", "make", "regex", "yaml", "toml" },
         highlight = { -- Consistent syntax highlighting
           enable = true,
@@ -26,17 +28,17 @@ return {
         -- },
         textsubjects = {
           enable = true,
-          prev_selection = '_', -- (Optional) keymap to select the previous selection
+          prev_selection = "_", -- (Optional) keymap to select the previous selection
           keymaps = {
-            ['+'] = 'textsubjects-smart',
-            ['a;'] = 'textsubjects-container-outer',
-            ['i;'] = 'textsubjects-container-inner',
+            ["+"] = "textsubjects-smart",
+            ["a;"] = "textsubjects-container-outer",
+            ["i;"] = "textsubjects-container-inner",
           },
         },
-        indent = { enable = false, },
-        yati = { enable = true, default_lazy = true, },
+        indent = { enable = false },
+        yati = { enable = true, default_lazy = true },
         autopair = { enable = true },
-        rainbow = { enable = true, },
+        rainbow = { enable = true },
 
         textobjects = {
           move = {
@@ -70,7 +72,7 @@ return {
           },
           lsp_interop = {
             enable = true,
-            border = 'double',
+            border = "double",
             peek_definition_code = {
               ["<leader>k"] = "@function.outer",
               ["<leader>K"] = "@class.outer",
@@ -89,10 +91,11 @@ return {
         pyfold = {
           enable = true,
           custom_foldtext = true,
-        }
+        },
       })
     end,
   },
-  { "p00f/nvim-ts-rainbow", }, --Rainbow paranetheses,
+  { "p00f/nvim-ts-rainbow" }, --Rainbow paranetheses,
   { "romgrk/nvim-treesitter-context" },
+  { "nvim-treesitter/playground" },
 }

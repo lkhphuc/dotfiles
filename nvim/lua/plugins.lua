@@ -93,28 +93,6 @@ return {
 
 
   {'kevinhwang91/nvim-bqf', ft="qf"},
-  { "kevinhwang91/nvim-hlslens", -- show number beside search highlight
-    config = function()
-      local hlslens = require("hlslens")
-      hlslens.setup({ calm_down = true, })
-      vim.keymap.set('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]])
-      vim.keymap.set('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]])
-      vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]])
-      vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]])
-      vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]])
-      vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]])
-      -- run `:nohlsearch` and export results to quickfix
-      -- if Neovim is 0.8.0 before, remap yourself.
-      vim.keymap.set({'n', 'x'}, '<leader>L', function()
-        vim.schedule(function()
-          if require('hlslens').exportLastSearchToQuickfix() then
-            vim.cmd('cw')
-          end
-        end)
-        return ':noh<CR>'
-      end, {expr = true})
-    end,
-  },
 
   { "nacro90/numb.nvim", event = "BufRead", config = true, }, --Peeking line before jump
   {'m-demare/hlargs.nvim',
@@ -227,24 +205,7 @@ return {
     end
   },
   { "goerz/jupytext.vim" },
-  {'ojroques/nvim-osc52',
-    config = function ()
-      local function copy(lines, _)
-        require('osc52').copy(table.concat(lines, '\n'))
-      end
-      local function paste()
-        return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
-      end
-      vim.g.clipboard = {
-        name = 'osc52',
-        copy = {['+'] = copy, ['*'] = copy},
-        paste = {['+'] = paste, ['*'] = paste},
-      }
-      -- Now the '+' register will copy to system clipboard using OSC52
-    end
-  },
   { "lambdalisue/suda.vim" },
-  { "nvim-treesitter/playground", event = "BufRead", },
 
   -- Text Editting
   -- {"Dkendal/nvim-treeclimber",
@@ -272,20 +233,24 @@ return {
     end
   },
   {"rlane/pounce.nvim",
-    config = function ()
-      vim.keymap.set({"n", "v"}, "s", "<Cmd>Pounce<CR>")
-      vim.keymap.set("o", "gs", "<Cmd>Pounce<CR>")
-    end
+    cmd = "Pounce",
+    keys = {
+      {"s", "<Cmd>Pounce<CR>", mode={"n", "v"}},
+      {"S", "<Cmd>PounceRepeat<CR>", mode={"n", "v"}},
+      {"gs", "<Cmd>Pounce<CR>", mode="o"},
+      {"gS", "<Cmd>PounceRepeat<CR>", mode="o"},
+    },
   },
   "tpope/vim-repeat",
   "tpope/vim-sleuth", --One plugin everything tab indent
   "tpope/vim-unimpaired",
-  "AndrewRadev/splitjoin.vim", -- gS and gJ
-  { 'Wansmer/treesj', config = true },
-  "kana/vim-textobj-user",
+  { 'Wansmer/treesj',
+    config = { use_default_keymaps = false },
+    keys = {
+      { "gS", "<CMD>TSJToggle<CR>", desc = "Split/Join"},
+    }
+  },
   "chaoren/vim-wordmotion",  -- w handles Snake/camelCase, etc
-  'nvim-treesitter/nvim-treesitter-textobjects',
-  'RRethy/nvim-treesitter-textsubjects', -- smart
   'mfussenegger/nvim-treehopper',
   { 'monaqa/dial.nvim',
     config = function ()

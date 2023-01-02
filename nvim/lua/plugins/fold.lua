@@ -34,6 +34,7 @@ end
 local ftMap = {
   vim = { "treesitter", "indent" },
   python = { "treesitter", "indent" },
+  bash = { "treesitter", "indent" }
   -- git = '',
 }
 

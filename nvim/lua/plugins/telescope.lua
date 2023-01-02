@@ -1,6 +1,6 @@
 local M = {
   'nvim-telescope/telescope.nvim',
-  lazy = false,
+  event = "VeryLazy",
   dependencies = {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     { "nvim-telescope/telescope-file-browser.nvim" },
@@ -45,8 +45,8 @@ function M.config()
           ["<PageUp>"]   = actions.results_scrolling_up,
           ["<PageDown>"] = actions.results_scrolling_down,
 
-          ["<Tab>"]   = actions.toggle_selection + actions.move_selection_worse,
-          ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+          -- ["<Tab>"]   = actions.toggle_selection + actions.move_selection_worse,
+          -- ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
           ["<C-x>"]   = trouble.open_with_trouble,
           ["<C-q>"]   = actions.send_to_qflist + actions.open_qflist,
           ["<M-q>"]   = actions.send_selected_to_qflist + actions.open_qflist,
@@ -123,8 +123,8 @@ function M.config()
   require("which-key").register({ ["<leader>s"] = { name = "Search" } })
   vim.keymap.set("n", "<leader>*", builtin.grep_string, { desc = "Cursor word" })
   vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Buffers" })
-  vim.keymap.set("n", "<leader>f", fb.file_browser, { desc = "Browse files" })
-  vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Files" })
+  vim.keymap.set("n", "<leader>sf", fb.file_browser, { desc = "Browse files" })
+  vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "Files" })
   vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Grep [T]ext workspace" })
 	vim.keymap.set("n", "<leader>st",
 		"<cmd>Telescope grep_string search= theme=ivy <CR>", { desc = "Fuzzy grep workspace" }

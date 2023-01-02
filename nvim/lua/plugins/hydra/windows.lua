@@ -5,29 +5,16 @@ function M.setup()
   -- local winshift = require("winshift")
   -- local tz = require("true-zen")
 
-  hydra({
-    name = 'Side scroll',
-    mode = 'n',
-    body = 'z',
-    hint = "Side scroll",
-    heads = {
-      { 'h', '5zh' },
-      { 'l', '5zl', { desc = '←/→' } },
-      { 'H', 'zH' },
-      { 'L', 'zL', { desc = 'half screen ←/→' } },
-    }
-  })
-
-  local buffer_hint = [[
-         ^<-^  ^-> ^       
-  Cycle  ^_h_^ ^_l_^
-  Move   ^_H_^ ^_L_^
-  ]]
+  -- local buffer_hint = [[
+  --        ^<-^  ^-> ^
+  -- Cycle  ^_h_^ ^_l_^
+  -- Move   ^_H_^ ^_L_^
+  -- ]]
   require("mini.bufremove")
   hydra({
     name = 'Buffers',
     body = '<leader>b',
-    hint = buffer_hint,
+    -- hint = buffer_hint,
     config = {
       hint = {type='window', border = 'single'},
       invoke_on_body = true,
@@ -46,6 +33,8 @@ function M.setup()
       { 'p', function() vim.cmd('BufferLinePick') end, { desc = 'Pick' } },
 
       { 'P', function() vim.cmd('BufferLineTogglePin') end, { desc = 'pin' } },
+
+      { 'b', require("telescope.builtin").buffers, { desc = 'fuzzy pick '} },
 
       { 'd', MiniBufremove.delete, { desc = 'close' } },
       { 'q', MiniBufremove.unshow, { desc = 'unshow' } },

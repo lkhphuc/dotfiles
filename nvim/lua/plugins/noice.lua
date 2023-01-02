@@ -15,13 +15,11 @@ function M.config()
     },
     lsp = {
       override = {
-	["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-	["vim.lsp.util.stylize_markdown"] = true,
-	["cmp.entry.get_documentation"] = true,
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ["vim.lsp.util.stylize_markdown"] = true,
+        ["cmp.entry.get_documentation"] = true,
       },
-      signature = {
-	enabled = true, -- lsp_signature
-      },
+      signature = { enabled = true, },
     },
     routes = {
       { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
@@ -33,14 +31,10 @@ function M.config()
   vim.keymap.set("n", "<leader>md", require("notify").dismiss, { desc = "Dimiss notification" })
   -- Noice intergration lsp doc hover scrolling
   vim.keymap.set("n", "<c-f>", function()
-    if not require("noice.lsp").scroll(4) then
-      return "<c-f>"
-    end
+    if not require("noice.lsp").scroll(4) then return "<c-f>" end
   end, { silent = true, expr = true })
   vim.keymap.set("n", "<c-b>", function()
-    if not require("noice.lsp").scroll(-4) then
-      return "<c-b>"
-    end
+    if not require("noice.lsp").scroll(-4) then return "<c-b>" end
   end, { silent = true, expr = true })
 end
 

@@ -32,7 +32,13 @@ function M.config()
         end
       }),
       formatting.reorder_python_imports,
-      formatting.stylua,
+      formatting.stylua.with({
+        extra_args = function(params)
+          return params and {
+            "indent-type=Spaces, indent-width="..vim.fn.shiftwidth(),"
+          }
+        end
+      }),
 
       code_actions.shellcheck,
 
