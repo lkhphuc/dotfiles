@@ -1,5 +1,4 @@
 return {
-  'nvim-lua/plenary.nvim', -- Lua utility helpers
   {'williamboman/mason.nvim', config = true, lazy = false },
 
   { "ThePrimeagen/refactoring.nvim", config = true, },
@@ -12,7 +11,7 @@ return {
   {"blueyed/semshi",
     branch="handle-ColorScheme",
     ft = "python",
-    build="UpdateRemotePlugin",
+    build="UpdateRemotePlugins",
     init = function()
       vim.g["semshi#error_sign"] = false
       vim.g["semshi#simplify_markup"] = false
@@ -29,33 +28,6 @@ return {
     }
   },
   { "nvim-zh/colorful-winsep.nvim", config = true },
-  'nvim-lua/popup.nvim',
-  'stevearc/dressing.nvim',
-  "MunifTanjim/nui.nvim",
-  {'rcarriga/nvim-notify',
-    event = "VeryLazy",
-    config = {
-      timeout = 3000,
-      level = vim.log.levels.INFO,
-      fps = 20,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-      on_open = function(win)
-        vim.api.nvim_win_set_option(win, "winblend", 20)
-      end,
-    },
-  },
-  {
-    "simrat39/symbols-outline.nvim",
-    keys = { { "<leader>ls", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-    config = true,
-  },
-  'kyazdani42/nvim-web-devicons',
-
   { "smjonas/live-command.nvim",
     config = {
       commands = {
@@ -79,19 +51,6 @@ return {
   },
   { "folke/twilight.nvim", config = true },
 
-  -- SideBars
-  {'kyazdani42/nvim-tree.lua',
-    config = function()
-      require("nvim-tree").setup({
-        diagnostics = { enable = true }
-      })
-      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {desc = "Explorer" })
-    end },
-  {"simnalamburt/vim-mundo",
-    keys = {{"<leader>uu", "<cmd>MundoToggle<CR>", desc = "Mundo"}},
-  },
-
-
   {'kevinhwang91/nvim-bqf', ft="qf"},
 
   { "nacro90/numb.nvim", event = "BufRead", config = true, }, --Peeking line before jump
@@ -109,7 +68,7 @@ return {
       },
     }) end
   },
-  { "smjonas/inc-rename.nvim", config = true, },
+  { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
   { "mizlan/iswap.nvim"},
   { "folke/trouble.nvim",
     config = function()
@@ -151,12 +110,13 @@ return {
     end,
     config = true,
   },
-  { "nikvdp/neomux",
+  { "nikvdp/neomux", event = "VeryLazy",
     init = function()
       vim.g.neomux_win_num_status = ""
     end
   },
   { "voldikss/vim-floaterm",
+    event = "VeryLazy",
     init = function()
       vim.g.floaterm_keymap_next   = '<End>' -- Hyper+o
       vim.g.floaterm_keymap_prev   = '<S-End>' -- Hyper+Command+o
@@ -251,7 +211,6 @@ return {
     }
   },
   "chaoren/vim-wordmotion",  -- w handles Snake/camelCase, etc
-  'mfussenegger/nvim-treehopper',
   { 'monaqa/dial.nvim',
     config = function ()
       vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), {noremap = true})
@@ -263,19 +222,6 @@ return {
     end
   },
 
-  {"gbrlsnchs/winpick.nvim",
-    config = function()
-      local winpick = require("winpick")
-      local function filter (winid, bufid)
-        return vim.api.nvim_win_get_config(winid).relative == ""
-      end
-      winpick.setup({filter=filter})
-      vim.keymap.set("n", "<C-w>0", function ()
-        local winid = winpick.select()
-        if winid then vim.api.nvim_set_current_win(winid) end
-      end)
-    end
-  },
   { 'mrjones2014/smart-splits.nvim',
     dependencies = {"kwkarlwang/bufresize.nvim", config = true, },
     config = function()
@@ -289,6 +235,5 @@ return {
   {'sindrets/winshift.nvim',
     config = { highlight_moving_win = true }
   },
-{'anuvyklack/hydra.nvim', },
 
 }

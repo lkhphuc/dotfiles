@@ -12,17 +12,17 @@ local hint = [[
 local M = {}
 function M.setup(buffer)
   Hydra({
-    name = 'Git',
+    name = "Git",
     hint = hint,
     config = {
       buffer = buffer,
-      color = 'pink',
+      color = "pink",
       invoke_on_body = true,
       hint = {
-        border = 'rounded'
+        border = "rounded",
       },
       on_enter = function()
-        vim.cmd('silent! %foldopen!')
+        vim.cmd("silent! %foldopen!")
         vim.bo.modifiable = false
         gitsigns.toggle_linehl(true)
         gitsigns.toggle_numhl(true)
@@ -37,34 +37,51 @@ function M.setup(buffer)
         gitsigns.toggle_deleted(false)
       end,
     },
-    mode = { 'n', 'x' },
-    body = '<leader>g',
+    mode = { "n", "x" },
+    body = "<leader>g",
     heads = {
-      { 'J',
+      {
+        "J",
         function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gitsigns.next_hunk() end)
-          return '<Ignore>'
+          if vim.wo.diff then
+            return "]c"
+          end
+          vim.schedule(function()
+            gitsigns.next_hunk()
+          end)
+          return "<Ignore>"
         end,
-        { expr = true, desc = 'next hunk' } },
-      { 'K',
+        { expr = true, desc = "next hunk" },
+      },
+      {
+        "K",
         function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gitsigns.prev_hunk() end)
-          return '<Ignore>'
+          if vim.wo.diff then
+            return "[c"
+          end
+          vim.schedule(function()
+            gitsigns.prev_hunk()
+          end)
+          return "<Ignore>"
         end,
-        { expr = true, desc = 'prev hunk' } },
-      { 's', ':Gitsigns stage_hunk<CR>', { silent = true, desc = 'stage hunk' } },
-      { 'u', gitsigns.undo_stage_hunk, { desc = 'undo last stage' } },
-      { 'S', gitsigns.stage_buffer, { desc = 'stage buffer' } },
-      { 'p', gitsigns.preview_hunk, { desc = 'preview hunk' } },
-      { 'd', gitsigns.toggle_deleted, { nowait = true, desc = 'toggle deleted' } },
-      { 'b', gitsigns.blame_line, { desc = 'blame' } },
-      { 'B', function() gitsigns.blame_line { full = true } end, { desc = 'blame show full' } },
-      { '/', gitsigns.show, { exit = true, desc = 'show base file' } }, -- show the base of the file
-      { '<Enter>', ':tabnew term://lazygit<CR>', { exit = true, desc = 'LazyGit' } },
-      { '<Esc>', nil, { exit = true, nowait = true, desc = 'exit' } },
-    }
+        { expr = true, desc = "prev hunk" },
+      },
+      { "s", gitsigns.stage_hunk, { desc = "stage hunk" } },
+      { "u", gitsigns.undo_stage_hunk, { desc = "undo last stage" } },
+      { "S", gitsigns.stage_buffer, { desc = "stage buffer" } },
+      { "p", gitsigns.preview_hunk, { desc = "preview hunk" } },
+      { "d", gitsigns.toggle_deleted, { nowait = true, desc = "toggle deleted" } },
+      { "b", gitsigns.blame_line, { desc = "blame" } },
+      { "B",
+        function()
+          gitsigns.blame_line({ full = true })
+        end,
+        { desc = "blame show full" },
+      },
+      { "/", gitsigns.show, { exit = true, desc = "show base file" } }, -- show the base of the file
+      { "<Enter>", ":tabnew term://lazygit<CR>", { exit = true, desc = "LazyGit" } },
+      { "<Esc>", nil, { exit = true, nowait = true, desc = "exit" } },
+    },
   })
 end
 return M

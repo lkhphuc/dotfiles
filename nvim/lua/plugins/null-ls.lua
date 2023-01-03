@@ -2,7 +2,7 @@ local M = {
   "jose-elias-alvarez/null-ls.nvim",
   dependencies = {
     "jayp0521/mason-null-ls.nvim",
-  }
+  },
 }
 
 function M.config()
@@ -12,39 +12,41 @@ function M.config()
   local code_actions = null_ls.builtins.code_actions
   local hover = null_ls.builtins.hover
 
-  require('mason').setup()
+  require("mason").setup()
   null_ls.setup({
     sources = {
       diagnostics.ruff.with({
         extra_args = function(params)
-          return params and {
-            "--extend-ignore", "E111, E114,E501,F722",
-            -- "--indent-size", vim.fn.shiftwidth(),
-          }
-        end
+          return params
+              and {
+                "--extend-ignore",
+                "E111, E114,E501,F722",
+                -- "--indent-size", vim.fn.shiftwidth(),
+              }
+        end,
       }),
 
       formatting.yapf.with({
         extra_args = function(params)
           return params and {
-            "--style={indent_width:"..vim.fn.shiftwidth().."}",
+            "--style={indent_width:" .. vim.fn.shiftwidth() .. "}",
           }
-        end
+        end,
       }),
       formatting.reorder_python_imports,
       formatting.stylua.with({
         extra_args = function(params)
           return params and {
-            "indent-type=Spaces, indent-width="..vim.fn.shiftwidth(),"
+            "indent-type=Spaces, indent-width=" .. vim.fn.shiftwidth(),
           }
-        end
+        end,
       }),
 
       code_actions.shellcheck,
 
       hover.dictionary,
       hover.printenv,
-    }
+    },
   })
   require("mason-null-ls").setup({
     ensure_installed = nil,

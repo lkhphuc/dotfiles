@@ -1,6 +1,6 @@
 local M = {
   "hrsh7th/nvim-cmp",
-  event = "BufRead",
+  event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     'hrsh7th/cmp-nvim-lsp-document-symbol', -- For / search command
@@ -144,7 +144,7 @@ function M.config()
       entries = {name = 'custom', selection_order = 'near_cursor' }
     },
     experimental = {
-      ghost_text = true,
+      ghost_text = { hl_group = "LspCodeLens" },
     },
     sorting = {
       priority_weight = 2,
