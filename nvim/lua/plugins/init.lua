@@ -43,6 +43,7 @@ return {
   },
   { "folke/zen-mode.nvim", config = true, cmd="ZenMode" },
   { "folke/todo-comments.nvim",
+    config = true,
     event = "BufReadPost",
     cmd = { "TodoTrouble", "TodoTelescope" },
     keys = {
