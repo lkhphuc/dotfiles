@@ -13,7 +13,7 @@ return {
   },
 
   -- file explorer
-  { "stevearc/oil.nvim", config = true},
+  { "stevearc/oil.nvim", cmd = "Oil", config = true},
 
   -- file tree
   { "nvim-neo-tree/neo-tree.nvim",
@@ -34,11 +34,13 @@ return {
 
   -- Undo tree
   { "simnalamburt/vim-mundo",
-    keys = {{"<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo"}},
+    cmd = "MundoToggle",
+    keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
 
   -- Symbol outline
   { "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
     keys = { { "<leader>ls", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
     config = true,
   },
