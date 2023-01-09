@@ -44,7 +44,7 @@ function M.config()
   require("mini.align").setup({})
 
 
-  -- require("mini.animate").setup()
+  local animate = require("mini.animate")
   local mouse_scrolled = false
   for _, scroll in ipairs({ "Up", "Down" }) do
     local key = "<ScrollWheel" .. scroll .. ">"
@@ -54,7 +54,6 @@ function M.config()
     end, { remap = true, expr = true })
   end
 
-  local animate = require("mini.animate")
   vim.go.winwidth = 20
   vim.go.winminwidth = 5
   animate.setup({

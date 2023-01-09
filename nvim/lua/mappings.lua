@@ -1,10 +1,10 @@
 -- vim.keymap.set('v', 'g/', [[y/\V<C-R>=escape(@",'/\')<CR><CR>]])
 
 -- Better window navigation
-vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l")
+-- vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h")
+-- vim.keymap.set({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w>j")
+-- vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w>k")
+-- vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l")
 
 --Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

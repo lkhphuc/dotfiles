@@ -101,20 +101,20 @@ return {
 
   -- Terminal
   { 'numToStr/Navigator.nvim',
-    init = function()
-      vim.keymap.set('n', '<C-h>', '<CMD>NavigatorLeft<CR>')
-      vim.keymap.set('n', '<C-l>', '<CMD>NavigatorRight<CR>')
-      vim.keymap.set('n', '<C-k>', '<CMD>NavigatorUp<CR>')
-      vim.keymap.set('n', '<C-j>', '<CMD>NavigatorDown<CR>')
-      vim.keymap.set('n', '<C-p>', '<CMD>NavigatorPrevious<CR>')
-    end,
+    keys = {
+      {'<C-h>', '<CMD>NavigatorLeft<CR>'},
+      {'<C-l>', '<CMD>NavigatorRight<CR>'},
+      {'<C-k>', '<CMD>NavigatorUp<CR>'  },
+      {'<C-j>', '<CMD>NavigatorDown<CR>'},
+      {'<C-p>', '<CMD>NavigatorPrevious<CR>'},
+    },
     config = true,
   },
-  { "nikvdp/neomux", event = "VeryLazy",
-    init = function()
-      vim.g.neomux_win_num_status = ""
-    end
-  },
+  -- { "nikvdp/neomux", event = "VeryLazy",
+  --   init = function()
+  --     vim.g.neomux_win_num_status = ""
+  --   end
+  -- },
   { "voldikss/vim-floaterm",
     event = "VeryLazy",
     init = function()
@@ -125,11 +125,20 @@ return {
       vim.g.floaterm_position      = 'center'
       vim.g.floaterm_width         = 0.9
       vim.g.floaterm_height        = 0.9
+      vim.g.floaterm_autoinsert = false
     end
   },
   -- {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
   --   require("toggleterm").setup()
   -- end},
+  { "romainchapou/nostalgic-term.nvim",
+    event = "TermOpen",
+    config = {
+      mappings = {
+        {"<C-l>", "l"}, {"<C-h>", "h"}, {"<C-j>", "j"}, {"<C-k>", "k"},
+      }
+    },
+  },
 
   { "jpalardy/vim-slime",
     event = "TermOpen",
