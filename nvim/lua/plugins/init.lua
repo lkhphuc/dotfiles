@@ -70,7 +70,6 @@ return {
     }) end
   },
   { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
-  { "mizlan/iswap.nvim"},
   { "folke/trouble.nvim",
     config = function()
       require("trouble").setup()
@@ -211,15 +210,22 @@ return {
       { "gS", "<CMD>TSJToggle<CR>", desc = "Split/Join"},
     }
   },
+  { 'CKolkey/ts-node-action',
+    dependencies = { 'nvim-treesitter' },
+    config = true,
+    keys = {
+      { "U", function()require("ts-node-action").node_action()end, desc = "Trigger Node Action",  },
+    },
+  },
   "chaoren/vim-wordmotion",  -- w handles Snake/camelCase, etc
   { 'monaqa/dial.nvim',
     config = function ()
-      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), {noremap = true})
-      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), {noremap = true})
-      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), {noremap = true})
-      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), {noremap = true})
-      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), {noremap = true})
-      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), {noremap = true})
+      vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+      vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
+      vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
+      vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
+      vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
+      vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
     end
   },
 

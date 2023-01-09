@@ -15,7 +15,7 @@ vim.wo.relativenumber = true
 vim.opt.mouse = 'a' --Enable mouse mode
 vim.opt.ignorecase = true --Case insensitive searching
 vim.opt.smartcase = true -- UNLESS /C or capital in search
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 50
 
 vim.opt.tabstop = 2  -- If not set by sleuth, a tab is 2 space
 vim.opt.shiftwidth = 2  -- For >>, <<
@@ -39,10 +39,9 @@ vim.opt.listchars = { eol = "↲", trail = "·", nbsp = "␣" }
 vim.opt.scrolloff = 4
 vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
-vim.opt.showtabline = 0
 vim.opt.showmode = false
 vim.opt.virtualedit = "block,onemore" -- cursor can move anywhere
-vim.opt.pumblend = 10
+-- vim.opt.pumblend = 10  -- FIX: bug in neovim, small icons due to blending
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.o.shortmess = "filnxtToOFWIc"

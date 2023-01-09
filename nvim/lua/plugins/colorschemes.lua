@@ -14,6 +14,7 @@ return {
   },
   { "EdenEast/nightfox.nvim", lazy = true },
   { "catppuccin/nvim", lazy = true,
+    name = 'catppuccin',
     init = function()
       vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
     end,
@@ -82,11 +83,12 @@ return {
           -- Semshi  #TODO: semshi not loaded yet
           -- mod_hl({ gui = 'combine'}, "semshiGlobal")
 
-
-          vim.cmd([[highlight! Folded guibg=NONE]]) --Folded line don't have background, ever
-          vim.cmd([[highlight! link MiniIndentscopeSymbol IndentBlanklineChar]])
-          vim.cmd([[highlight! MiniCursorwordCurrent gui=nocombine guibg=NONE]])
-          vim.cmd([[autocmd FileType floaterm setlocal winblend=10]])
+          vim.cmd([[
+            highlight! Folded guibg=NONE
+            highlight! link MiniIndentscopeSymbol IndentBlanklineChar
+            highlight! MiniCursorwordCurrent gui=nocombine guibg=NONE
+            autocmd FileType floaterm setlocal winblend=10
+          ]])
         end,
       })
       vim.cmd([[colorscheme tokyonight-moon]])

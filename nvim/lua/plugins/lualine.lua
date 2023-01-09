@@ -1,8 +1,3 @@
-local M = {
-  'nvim-lualine/lualine.nvim',
-  event = "VeryLazy",
-}
-
 local windows_idx = {
   function()
     return " " .. vim.api.nvim_win_get_number(0)
@@ -118,6 +113,11 @@ local spaces = {
   -- cond = width_gt_than(120),
 }
 
+local M = {
+  'nvim-lualine/lualine.nvim',
+  event = "VeryLazy",
+}
+
 function M.config()
   local noice = require("noice").api.status
 
@@ -149,7 +149,7 @@ function M.config()
         { require('nvim-navic').get_location, cond = require('nvim-navic').is_available, separator = { left = ">"} },
       },
       lualine_x = {
-        { noice.command.get_hl, cond = noice.command.has, },
+        -- { noice.command.get_hl, cond = noice.command.has, },  -- BUG: render messup with which-key <C-W>
         'progress',
       },
       lualine_y = {  dap, lsp, spaces, },
@@ -159,22 +159,6 @@ function M.config()
         { 'hostname', icon = ' ', separator = { right = '' }, },
       },
     },
-    -- tabline = {
-    --   lualine_a = {
-    --     windows_idx,
-    --     terminal_idx,
-    --   },
-    --   lualine_b = {
-    --     {'windows', mode = 2, },
-    --   },
-    --   lualine_y = {
-    --     {'tabs',
-    --       max_length = vim.o.columns,
-    --       mode = 3,
-    --     },
-    --   },
-    --   lualine_z = { tabs_count, },
-    -- },
     extensions = { 'quickfix', 'nvim-tree' }
   }
 end

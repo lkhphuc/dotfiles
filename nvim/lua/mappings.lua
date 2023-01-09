@@ -34,3 +34,6 @@ vim.keymap.set({ "n", "i" }, "<C-s>", "<Esc>:w<CR>", { silent = true }) -- Save 
 vim.keymap.set({ "t" }, "<C-^>", "<C-\\><C-N><C-^>")
 
 vim.keymap.set("t", "<PageUp>", "<C-\\><C-n>") -- Exit terminal when scroll up
+
+-- select last pasted text
+vim.cmd [[nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]']]

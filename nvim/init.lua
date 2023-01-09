@@ -12,7 +12,7 @@ vim.opt.runtimepath:prepend(vim.env.LAZY or lazypath)
 require("options")
 
 require("lazy").setup("plugins", {
-  defaults = { lazy = false },
+  defaults = { lazy = true },
   dev = { path = "~/repos" },
   install = { colorscheme = { "tokyonight-moon" } },
   checker = { enabled = false },

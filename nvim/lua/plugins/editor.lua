@@ -13,8 +13,10 @@ return {
   },
 
   -- file explorer
-  {
-    "nvim-neo-tree/neo-tree.nvim",
+  { "stevearc/oil.nvim", config = true},
+
+  -- file tree
+  { "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
     keys = {
       { "<leader>e", "<CMD>Neotree toggle<CR>", desc = "NeoTree", },

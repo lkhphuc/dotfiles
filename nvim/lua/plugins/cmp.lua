@@ -57,8 +57,13 @@ function M.config()
       end,
     },
     window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+      -- completion = cmp.config.window.bordered(),
+      completion = {
+        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+        border = "shadow",
+        col_offset = -2,
+        -- side_padding = 0,
+      },
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -99,22 +104,32 @@ function M.config()
 
     }),
     formatting = {
-      format = require('lspkind').cmp_format({
-        mode = "symbol",
-        menu = {
-          nvim_lsp = "",
-          luasnip = "",
-          treesitter = "",
-          tags = "",
-          buffer = "",
-          fuzzy_buffer = "",
-          path = "",
-          fuzzy_path = "",
-          copilot = "",
-          cmp_tabnine = "",
-          rg = "",
-        },
-      }),
+      fields = { "kind", "abbr", "menu", },
+      format = function(entry, vim_item)
+        vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+        local item = require("lspkind").cmp_format({
+          maxwidth = 100,
+          mode = "symbol_text",
+          menu = {
+            nvim_lsp = "",
+            luasnip = "",
+            treesitter = "",
+            tags = "",
+            buffer = "",
+            fuzzy_buffer = "",
+            path = "",
+            fuzzy_path = "",
+            copilot = "",
+            cmp_tabnine = "",
+            rg = "",
+          },
+          symbol_map = { Copilot = "" },
+        })(entry, vim_item)
+        local strings = vim.split(item.kind, "%s", { trimempty = false })
+        item.kind = (strings[1] or " ")
+        item.menu = (item.menu or " ") .. " " .. (strings[2] or "")
+        return item
+      end,
     },
     sources = {
       { name = 'luasnip' },
