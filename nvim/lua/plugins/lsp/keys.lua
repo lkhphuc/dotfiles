@@ -27,7 +27,7 @@ function M.setup(client, buffer)
   vim.keymap.set('n', 'gI', tele.lsp_implementations, { buffer = buffer, desc="Implementation" })
   vim.keymap.set('n', 'gt', tele.lsp_type_definitions, { buffer = buffer, desc="Type definition" })
 
-  vim.keymap.set({"n","v"}, "<leader>la", "<cmd>Lspsaga code_action<CR>", { silent = true })
+  vim.keymap.set({"n","v"}, "<leader>la", "<Cmd>CodeActionMenu<CR>", { silent = true })
   vim.keymap.set('n', '<leader>li', tele.lsp_incoming_calls, { buffer = buffer, desc="Incoming calls" })
   vim.keymap.set('n', '<leader>lo', tele.lsp_outgoing_calls, { buffer = buffer, desc="Outgoing calls" })
   vim.keymap.set('n', '<leader>lr', ":IncRename ", { buffer = buffer, desc="Rename symbol" })

@@ -1,7 +1,7 @@
 return {
   { "EtiamNullam/deferred-clipboard.nvim", config = true, lazy = true, },
   { "ojroques/nvim-osc52",
-    config = { silent = true,},
+    opts = { silent = true,},
     init = function ()
       vim.opt.clipboard = "unnamedplus" -- sync with system clipboard
       -- Leader yank to `+` register system clipboard

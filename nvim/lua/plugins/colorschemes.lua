@@ -1,7 +1,7 @@
 return {
   { "rmehri01/onenord.nvim", lazy = true, },
   { "rebelot/kanagawa.nvim",
-    config = {
+    opts = {
       globalStatus = true, dimInactive = true,
     }
   },
@@ -10,7 +10,7 @@ return {
   { "cpea2506/one_monokai.nvim", lazy = true},
   { "folke/tokyonight.nvim",
     priority = 1000,
-    config = { dim_inactive = true, }
+    opts = { dim_inactive = true, }
   },
   { "EdenEast/nightfox.nvim", lazy = true },
   { "catppuccin/nvim", lazy = true,

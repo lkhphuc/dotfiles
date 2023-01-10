@@ -5,7 +5,7 @@ local M = {
   dependencies = {
     'folke/neodev.nvim', -- Dev setup for init.lua and plugin
     'williamboman/mason-lspconfig.nvim',
-    { "SmiteshP/nvim-navic", config = { highlight = true, depth_limit = 5 } },
+    { "SmiteshP/nvim-navic", opts = { highlight = true, depth_limit = 5 } },
     'jubnzv/virtual-types.nvim', -- TODO: need codelen
   },
 }

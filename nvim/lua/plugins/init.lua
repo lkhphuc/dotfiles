@@ -22,19 +22,20 @@ return {
 
   -- UI
   {"xiyaowong/nvim-transparent",
-    config = {
+    cmd = "TransparentToggle",
+    opts = {
       enable = false,
       -- extra_groups = 'all',
     }
   },
   { "nvim-zh/colorful-winsep.nvim", config = true },
-  { "smjonas/live-command.nvim",
-    config = {
-      commands = {
-        Norm = { cmd = "norm" },
-      }
-    }
-  },
+  -- { "smjonas/live-command.nvim",
+  --   opts = {
+  --     commands = {
+  --       Norm = { cmd = "norm" },
+  --     }
+  --   }
+  -- },
   {'vimpostor/vim-tpipeline',
     init = function()
       vim.g.tpipeline_usepane = 1
@@ -83,7 +84,8 @@ return {
       vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", {desc = "Diagnosticss" })
     end
   },
-  { "weilbith/nvim-code-action-menu" },
+  { "weilbith/nvim-code-action-menu" , cmd = "CodeActionMenu"},
+  { 'kosayoda/nvim-lightbulb', opts = { autocmd = { enabled = true } } },
   -- use{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   config = function()
   --     require("lsp_lines").register_lsp_virtual_lines()
@@ -91,7 +93,7 @@ return {
   -- }
   { "mattboehm/vim-unstack",
     init = function() vim.g.unstack_mapkey = "<leader>us" end,
-    keys = "<leader>us",
+    keys = {"<leader>us", "<Cmd> Unstack<CR>"},
   },
 
   -- Git
@@ -133,7 +135,7 @@ return {
   -- end},
   { "romainchapou/nostalgic-term.nvim",
     event = "TermOpen",
-    config = {
+    opts = {
       mappings = {
         {"<C-l>", "l"}, {"<C-h>", "h"}, {"<C-j>", "j"}, {"<C-k>", "k"},
       }
@@ -183,24 +185,24 @@ return {
   --     require('nvim-treeclimber').setup()
   --   end
   -- },
-  {  -- TODO: learn how to use
-    "cshuaimin/ssr.nvim",
-    module = "ssr",
-    -- Calling setup is optional.
-    config = function()
-      require("ssr").setup {
-        min_width = 50,
-        min_height = 5,
-        keymaps = {
-          close = "q",
-          next_match = "n",
-          prev_match = "N",
-          replace_all = "<leader><cr>",
-        },
-      }
-      vim.keymap.set({ "n", "x" }, "<leader>sR", require("ssr").open, {desc = "Structural Search and Replace"})
-    end
-  },
+  -- {  -- TODO: learn how to use
+  --   "cshuaimin/ssr.nvim",
+  --   module = "ssr",
+  --   -- Calling setup is optional.
+  --   config = function()
+  --     require("ssr").setup {
+  --       min_width = 50,
+  --       min_height = 5,
+  --       keymaps = {
+  --         close = "q",
+  --         next_match = "n",
+  --         prev_match = "N",
+  --         replace_all = "<leader><cr>",
+  --       },
+  --     }
+  --     vim.keymap.set({ "n", "x" }, "<leader>sR", require("ssr").open, {desc = "Structural Search and Replace"})
+  --   end
+  -- },
   {"rlane/pounce.nvim",
     cmd = "Pounce",
     keys = {
@@ -213,12 +215,6 @@ return {
   "tpope/vim-repeat",
   "tpope/vim-sleuth", --One plugin everything tab indent
   "tpope/vim-unimpaired",
-  { 'Wansmer/treesj',
-    config = { use_default_keymaps = false },
-    keys = {
-      { "gS", "<CMD>TSJToggle<CR>", desc = "Split/Join"},
-    }
-  },
   { 'CKolkey/ts-node-action',
     dependencies = { 'nvim-treesitter' },
     config = true,
@@ -249,7 +245,7 @@ return {
     end
   },
   {'sindrets/winshift.nvim',
-    config = { highlight_moving_win = true }
+    opts = { highlight_moving_win = true }
   },
 
 }
