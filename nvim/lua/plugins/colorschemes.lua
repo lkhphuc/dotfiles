@@ -1,25 +1,23 @@
 return {
-  { "rmehri01/onenord.nvim", lazy = true, },
-  { "rebelot/kanagawa.nvim",
-    opts = {
-      globalStatus = true, dimInactive = true,
-    }
-  },
-  { "navarasu/onedark.nvim", lazy = true},
-  { "projekt0n/github-nvim-theme", lazy = true },
-  { "cpea2506/one_monokai.nvim", lazy = true},
-  { "folke/tokyonight.nvim",
-    priority = 1000,
-    opts = { dim_inactive = true, }
-  },
-  { "EdenEast/nightfox.nvim", lazy = true },
-  { "catppuccin/nvim", lazy = true,
-    name = 'catppuccin',
+  { "rmehri01/onenord.nvim" },
+  { "rebelot/kanagawa.nvim", opts = {
+    globalStatus = true,
+    dimInactive = true,
+  } },
+  { "navarasu/onedark.nvim" },
+  { "projekt0n/github-nvim-theme" },
+  { "cpea2506/one_monokai.nvim" },
+  { "folke/tokyonight.nvim", priority = 1000, opts = { dim_inactive = true } },
+  { "EdenEast/nightfox.nvim" },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
     init = function()
       vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
     end,
   },
-  { "marko-cerovac/material.nvim", lazy = true,
+  {
+    "marko-cerovac/material.nvim",
     init = function()
       vim.g.material_style = "deep ocean" -- darker lighter oceanic palenight deep ocean
     end,
@@ -27,18 +25,28 @@ return {
   { "bluz71/vim-moonfly-colors", lazy = true },
   { "Yazeed1s/minimal.nvim", lazy = true },
   { "pappasam/papercolor-theme-slim", lazy = true },
-  { "sainnhe/everforest", lazy = true,
-    init = function()
-      vim.g.everforest_background = "hard"
-    end,
+  {
+    "sainnhe/everforest",
+    init = function() vim.g.everforest_background = "hard" end,
   },
   { "sainnhe/sonokai" },
-  { "ray-x/starry.nvim",
+  {
+    "ray-x/starry.nvim",
     init = function()
       vim.g.starry_daylight_switch = false --this allow using brighter color
     end,
   },
-  { "folke/styler.nvim", lazy = false,
+  {
+    "xiyaowong/nvim-transparent",
+    cmd = "TransparentToggle",
+    opts = {
+      enable = false,
+      -- extra_groups = 'all',
+    },
+  },
+  {
+    "folke/styler.nvim",
+    lazy = false,
     config = function()
       require("styler").setup({
         themes = {
@@ -52,11 +60,12 @@ return {
       -- Findout the final highlight group being linked to and update gui option.
       local function mod_hl(opts, hl_name)
         local hl_def = vim.api.nvim_get_hl_by_name(hl_name, true)
-        for k, v in pairs(opts) do hl_def[k] = v end
+        for k, v in pairs(opts) do
+          hl_def[k] = v
+        end
         local ok, _ = pcall(vim.api.nvim_set_hl, 0, hl_name, hl_def)
         if not ok then print("Failed to set highlight " .. hl_name) end
       end
-
 
       vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
         group = vim.api.nvim_create_augroup("Color", {}),
@@ -85,8 +94,6 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
-            highlight! link MiniIndentscopeSymbol IndentBlanklineChar
-            highlight! MiniCursorwordCurrent gui=nocombine guibg=NONE
             autocmd FileType floaterm setlocal winblend=10
           ]])
         end,

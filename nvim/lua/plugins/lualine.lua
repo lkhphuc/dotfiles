@@ -1,166 +1,118 @@
-local windows_idx = {
-  function()
-    return " " .. vim.api.nvim_win_get_number(0)
-  end,
-}
-local function terminal_idx()
-  if vim.o.buftype == "terminal" then
-    return " " .. vim.o.channel
+local icons = require("lazyvim.config").icons
+
+local function fg(name)
+  return function()
+    ---@type {foreground?:number}?
+    local hl = vim.api.nvim_get_hl_by_name(name, true)
+    return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
   end
-  return ""
 end
 
-local function tabs_count()
-  local total_tabs = vim.fn.tabpagenr("$")
-  local tab_id = vim.fn.tabpagenr()
-  return " " .. tab_id .. "/" .. total_tabs
-end
-
-local width_gt_than = function(width)
-  return vim.o.columns > width
-end
-
-local diff = { "diff",
-  symbols = { added = " ", modified = " ", removed = " " },
-  source = function()
-    local gitsigns = vim.b.gitsigns_status_dict
-    if gitsigns then
-      return {
-        added = gitsigns.added,
-        modified = gitsigns.changed,
-        removed = gitsigns.removed,
-      }
+local function get_venv(variable)
+  local venv = os.getenv(variable)
+  if venv ~= nil and string.find(venv, "/") then
+    local orig_venv = venv
+    for w in orig_venv:gmatch("([^/]+)") do
+      venv = w
     end
-  end,
-}
-
-local function _env_cleanup(venv)
-  if string.find(venv, "/") then
-    local final_venv = venv
-    for w in venv:gmatch "([^/]+)" do
-      final_venv = w
-    end
-    venv = final_venv
+    venv = string.format("%s", venv)
   end
-  return string.format("%s", venv)
+  return venv
 end
 
-local python_env = {
-  function()
-    local venv = os.getenv("CONDA_DEFAULT_ENV") or _env_cleanup(os.getenv("VIRTUAL_ENV"))
-    if venv then
-      return " " .. venv
-    end
-  end,
-  -- cond = width_gt_than(120),
-}
-
-local treesitter = {
-  function()
-    local b = vim.api.nvim_get_current_buf()
-    if next(vim.treesitter.highlighter.active[b]) then
-      return ""
-    end
-  end,
-  -- cond = width_gt_than(120),
-}
-
-local lsp = {
-  function(_)
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
-    if next(clients) == nil then
-      return ""
-    end
-    local output = " " .. #clients
-    -- for _, client in pairs(clients) do
-    --   output = output .. ":" .. client.name
-    -- end
-    return output
-  end,
-  -- cond = width_gt_than(120),
-}
-
-local dap = {
-  function()
-    local stat = require("dap").status()
-    if stat == "" then
-      return ""
-    end
-    return " " .. stat
-  end
-}
-
-local diagnostics = {
-  "diagnostics",
-  sources = { "nvim_diagnostic" },
-  sections = { 'error', 'warn', 'info', 'hint' },
-  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ', },
-  colored = true,
-  update_in_insert = false,
-}
-
-local spaces = {
-  function()
-    if not vim.api.nvim_buf_get_option(0, "expandtab") then
-      return vim.api.nvim_buf_get_option(0, "tabstop") .. " "
-    end
-    local size = vim.api.nvim_buf_get_option(0, "shiftwidth")
-    if size == 0 then
-      size = vim.api.nvim_buf_get_option(0, "tabstop")
-    end
-    return size .. ""
-  end,
-  -- cond = width_gt_than(120),
-}
-
-local M = {
-  'nvim-lualine/lualine.nvim',
-  event = "VeryLazy",
-}
-
-function M.config()
-  local noice = require("noice").api.status
-
-  require('lualine').setup {
+return {
+  "nvim-lualine/lualine.nvim",
+  opts = {
     options = {
-      icons_enabled = true,
-      theme = 'auto',
-      component_separators = '┊', --        
-      section_separators = { left = '', right = '' },
+      component_separators = "┊", --        
+      section_separators = { left = "", right = "" },
       disabled_filetypes = {
-        winbar = { "dashboard", "NvimTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff", },
+        winbar = { "dashboard", "NeoTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff" },
       },
-      always_divide_middle = false,
-      globalstatus = true,
+      -- always_divide_middle = false,
     },
 
     sections = {
       lualine_a = {
-        { 'mode', separator = { left = '' }, padding = {left = 0, right = 1} },
+        { "mode", icon = "", separator = { left = "", right = "" }, padding = 0 },
       },
       lualine_b = {
-        { noice.mode.get, cond = noice.mode.has, },
-        { 'branch', color = { gui = "italic" } },
+        { "branch", color = { gui = "italic" }, separator = { left = "", right = "" } },
       },
       lualine_c = {
-        { terminal_idx },
-        { 'filetype', icon_only = true, separator = "", padding = { left = 1, right = 0}},
-        { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" } },
-        { require('nvim-navic').get_location, cond = require('nvim-navic').is_available, separator = { left = ">"} },
+        {
+          "diff",
+          separator = "",
+          symbols = {
+            added = icons.git.added,
+            modified = icons.git.modified,
+            removed = icons.git.removed,
+          },
+        },
+        { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+        { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" }, separator = "" },
+        {
+          function() return require("nvim-navic").get_location() end,
+          cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+        },
       },
       lualine_x = {
-        -- { noice.command.get_hl, cond = noice.command.has, },  -- BUG: render messup with which-key <C-W>
-        'progress',
+        {
+          function() return require("noice").api.status.command.get() end,
+          cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+          color = fg("Statement"),
+        },
+        {
+          function() return require("noice").api.status.mode.get() end,
+          cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+          color = fg("Constant"),
+        },
+        { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
+        {
+          "diagnostics",
+          symbols = {
+            error = icons.diagnostics.Error,
+            warn = icons.diagnostics.Warn,
+            info = icons.diagnostics.Info,
+            hint = icons.diagnostics.Hint,
+          },
+        },
+        { "progress", icon = "", separator = false },
+        { "location", padding = 0 },
       },
-      lualine_y = {  dap, lsp, spaces, },
+      lualine_y = {
+        { -- dap
+          function() return " " .. require("dap").status() end,
+          cond = function() return require("dap").status() ~= "" end,
+          color = fg("Debug"),
+        },
+        { function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end },
+        { -- lsp
+          function() return " " .. #vim.lsp.get_active_clients({ bufnr = 0 }) end,
+          cond = function() return #vim.lsp.get_active_clients({ bufnr = 0 }) ~= 0 end,
+          color = fg("Constant"),
+        },
+        { -- python env
+          function()
+            local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or nil
+            return "🐍" .. venv
+          end,
+          cond = function() return vim.bo.filetype == "python" end,
+          color = fg("Type"),
+        },
+        -- { --window
+        --   function() return " " .. vim.api.nvim_win_get_number(0) end,
+        --   cond = function() return true end,
+        -- },
+        -- { --terminal
+        --   function() return " " .. vim.o.channel end,
+        --   cond = function() return vim.o.buftype == "terminal" end,
+        -- },
+      },
       lualine_z = {
-        python_env,
-        -- tabs_count,
-        { 'hostname', icon = ' ', separator = { right = '' }, },
+        { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
       },
     },
-    extensions = { 'quickfix', 'nvim-tree' }
-  }
-end
-
-return M
+    extensions = { "quickfix", "nvim-tree" },
+  },
+}
