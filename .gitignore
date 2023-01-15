@@ -20,3 +20,8 @@ nvim/site/
 zsh/zshrc.zwc
 mozilla/vpn.moz
 tmux/plugins
+btop
+github-copilot
+nvim/.neoconf.json
+pudb/internal-cmdline-history.txt
+.luarc.json
