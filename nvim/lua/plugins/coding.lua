@@ -78,9 +78,8 @@ return {
     keys = { "f", "F", "t", "T", ";" },
     config = function(_, opts) require("mini.jump").setup(opts) end,
   },
-  { "abecodes/tabout.nvim", event = "InsertEnter", config = true },
-  "tpope/vim-sleuth", --One plugin everything tab indent
-  "tpope/vim-unimpaired",
+  { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
+  { "tpope/vim-unimpaired", event = "VeryLazy" },
   {
     "CKolkey/ts-node-action",
     dependencies = { "nvim-treesitter" },
