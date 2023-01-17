@@ -1,8 +1,4 @@
 return {
-  { "mrjones2014/nvim-ts-rainbow" }, --paranetheses,
-  { "romgrk/nvim-treesitter-context" },
-  { "nvim-treesitter/playground", name = "ts-playground" },
-  -- { "andymass/vim-matchup", lazy = false },  -- BUG: not work with lua
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
@@ -66,6 +62,20 @@ return {
         enable = true,
         custom_foldtext = true,
       },
+    },
+  },
+  { "mrjones2014/nvim-ts-rainbow", event = "BufReadPost" }, --paranetheses,
+  { "romgrk/nvim-treesitter-context", event = "BufReadPost", config = true },
+  {
+    "nvim-treesitter/playground",
+    name = "ts-playground",
+    cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
+  },
+  {
+    "mfussenegger/nvim-treehopper",
+    keys = {
+      { "m", ":<C-U>lua require('tsht').nodes()<CR>", mode = "o", silent = true, remap = true },
+      { "m", function() require("tsht").nodes() end, mode = "x", silent = true, remap = false },
     },
   },
 }
