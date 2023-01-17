@@ -4,6 +4,7 @@ return {
     "ojroques/nvim-osc52",
     opts = { silent = true },
     init = function()
+      vim.o.clipboard = ""
       -- Leader yank to `+` register system clipboard
       vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { remap = true })
       vim.keymap.set({ "n", "v" }, "<leader>Y", '"+y', { remap = true })
