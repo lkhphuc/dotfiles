@@ -70,13 +70,6 @@ return {
   { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
   { "NvChad/nvim-colorizer.lua", event = "BufReadPost", config = true },
 
-  -- {'vimpostor/vim-tpipeline', -- tmux + nvim global statusline
-  --   init = function()
-  --     vim.g.tpipeline_usepane = 1
-  --     vim.g.tpipeline_clearstl = 1
-  --   end
-  -- },
-
   {
     "folke/zen-mode.nvim",
     config = true,
@@ -87,6 +80,18 @@ return {
   { "kevinhwang91/nvim-bqf", ft = "qf" },
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump
   { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
+  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
+  {
+    "kosayoda/nvim-lightbulb",
+    event = "LspAttach",
+    init = function()
+      vim.fn.sign_define(
+        "LightBulbSign",
+        { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "DiagnosticSignHint" }
+      )
+    end,
+    opts = { autocmd = { enabled = true }, sign = { enabled = true, priority = 50 } },
+  },
   {
     "m-demare/hlargs.nvim",
     opts = {

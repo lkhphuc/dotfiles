@@ -51,10 +51,11 @@ return {
           --   },
           -- },
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-          { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" }, separator = "" },
+          { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" }, separator = false },
           {
             function() return require("nvim-navic").get_location() end,
             cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+            padding = { left = 0, right = 1 },
           },
         },
         lualine_x = {
@@ -69,24 +70,24 @@ return {
             color = fg("Constant"),
           },
           { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
-          {
-            "diagnostics",
-            symbols = {
-              error = icons.diagnostics.Error,
-              warn = icons.diagnostics.Warn,
-              info = icons.diagnostics.Info,
-              hint = icons.diagnostics.Hint,
-            },
-          },
+          -- {
+          --   "diagnostics",
+          --   symbols = {
+          --     error = icons.diagnostics.Error,
+          --     warn = icons.diagnostics.Warn,
+          --     info = icons.diagnostics.Info,
+          --     hint = icons.diagnostics.Hint,
+          --   },
+          -- },
           { "progress", icon = "", separator = false },
-          { "location", padding = 0 },
+          { "location", padding = { left = 0, right = 1 } },
         },
         lualine_y = {
-          { -- dap
-            function() return " " .. require("dap").status() end,
-            cond = function() return require("dap").status() ~= "" end,
-            color = fg("Debug"),
-          },
+          -- { -- dap
+          --   function() return " " .. require("dap").status() end,
+          --   cond = function() return require("dap").status() ~= "" end,
+          --   color = fg("Debug"),
+          -- },
           { function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end },
           { -- lsp
             function() return " " .. #vim.lsp.get_active_clients({ bufnr = 0 }) end,
@@ -120,11 +121,6 @@ return {
 
   {
     "akinsho/nvim-bufferline.lua",
-    opts = {
-      options = {
-        separator_style = "slant",
-      },
-    },
     keys = {
       { "<leader>bc", "<Cmd>BufferLinePickClose<CR>", desc = "Pick buffer close" },
       { "<leader>bp", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
@@ -134,6 +130,12 @@ return {
     "b0o/incline.nvim",
     event = "BufReadPre",
     opts = {
+      highlight = {
+        groups = {
+          InclineNormal = "CursorLine",
+          InclineNormalNC = "CursorLine",
+        },
+      },
       render = function(props)
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
@@ -176,4 +178,10 @@ return {
       end,
     },
   },
+  -- {'vimpostor/vim-tpipeline', -- tmux + nvim global statusline
+  --   init = function()
+  --     vim.g.tpipeline_usepane = 1
+  --     vim.g.tpipeline_clearstl = 1
+  --   end
+  -- },
 }
