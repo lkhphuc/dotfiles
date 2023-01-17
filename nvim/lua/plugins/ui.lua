@@ -8,7 +8,7 @@ return {
         long_message_to_split = true, -- long messages will be sent to a split
         inc_rename = true, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = { -- add a border to hover docs and signature help
-          views = { hover = { border = { style = "shadow" } } },
+          views = { hover = { border = { style = "shadow" }, position = { row = 1, col = 1 } } },
         },
       },
       routes = {

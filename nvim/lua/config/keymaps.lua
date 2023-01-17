@@ -28,7 +28,7 @@ vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move text and align" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text and align" })
 
 -- select last pasted text
-vim.cmd([[nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]']])
+vim.keymap.set("n", "vp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { desc = "select pasted text", expr = true })
 
 -- Tab pages
 -- there are also LazyVim's default keymap with leader
