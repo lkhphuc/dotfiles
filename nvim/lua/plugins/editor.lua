@@ -100,13 +100,6 @@ return {
     keys = { { "<leader>uS", "<Cmd>Unstack<CR>", desc = "Un-stack trace" } },
   },
 
-  {
-    "weilbith/nvim-code-action-menu",
-    dependencies = "nvim-lspconfig",
-    keys = { { "<leader>ca", "<Cmd>CodeActionMenu<CR>", mode = { "n", "x" } } },
-  },
-  { "kosayoda/nvim-lightbulb", event = "LspAttach", opts = { autocmd = { enabled = true } } },
-
   -- Terminal
   {
     "jpalardy/vim-slime",

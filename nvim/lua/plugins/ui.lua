@@ -79,25 +79,6 @@ return {
   },
   { "kevinhwang91/nvim-bqf", ft = "qf" },
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump
-  { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
-  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
-  {
-    "kosayoda/nvim-lightbulb",
-    event = "LspAttach",
-    init = function()
-      vim.fn.sign_define(
-        "LightBulbSign",
-        { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "DiagnosticSignHint" }
-      )
-    end,
-    opts = { autocmd = { enabled = true }, sign = { enabled = true, priority = 50 } },
-  },
-  {
-    "m-demare/hlargs.nvim",
-    opts = {
-      -- excluded_filetypes = { "python" },
-    },
-  },
   {
     "mrjones2014/smart-splits.nvim",
     dependencies = { "kwkarlwang/bufresize.nvim", config = true },
