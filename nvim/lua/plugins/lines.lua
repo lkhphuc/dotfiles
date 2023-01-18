@@ -128,7 +128,8 @@ return {
   },
   {
     "b0o/incline.nvim",
-    event = "BufReadPre",
+    branch = "main",
+    event = "BufReadPost",
     opts = {
       highlight = {
         groups = {
@@ -136,9 +137,8 @@ return {
           InclineNormalNC = "CursorLine",
         },
       },
-      window = {
-        zindex = 20,
-      },
+      window = { zindex = 20 },
+      hide = { cursorline = true },
       render = function(props)
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
