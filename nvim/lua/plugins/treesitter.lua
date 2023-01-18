@@ -78,4 +78,5 @@ return {
       { "m", function() require("tsht").nodes() end, mode = "x", silent = true, remap = false },
     },
   },
+  { "andymass/vim-matchup", branch = "master", event = "BufReadPost" },
 }
