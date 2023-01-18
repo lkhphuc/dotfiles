@@ -2,10 +2,10 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.keymap.set({ "n", "t" }, "<C-h>", function() require("smart-splits").move_cursor_left() end)
-vim.keymap.set({ "n", "t" }, "<C-j>", function() require("smart-splits").move_cursor_down() end)
-vim.keymap.set({ "n", "t" }, "<C-k>", function() require("smart-splits").move_cursor_up() end)
-vim.keymap.set({ "n", "t" }, "<C-l>", function() require("smart-splits").move_cursor_right() end)
+vim.keymap.set("n", "<C-h>", function() require("smart-splits").move_cursor_left() end)
+vim.keymap.set("n", "<C-j>", function() require("smart-splits").move_cursor_down() end)
+vim.keymap.set("n", "<C-k>", function() require("smart-splits").move_cursor_up() end)
+vim.keymap.set("n", "<C-l>", function() require("smart-splits").move_cursor_right() end)
 vim.keymap.set("n", "<A-h>", function() require("smart-splits").resize_left() end)
 vim.keymap.set("n", "<A-j>", function() require("smart-splits").resize_down() end)
 vim.keymap.set("n", "<A-k>", function() require("smart-splits").resize_up() end)

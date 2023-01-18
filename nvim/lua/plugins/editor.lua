@@ -116,7 +116,14 @@ return {
   {
     "romainchapou/nostalgic-term.nvim",
     event = "TermOpen",
-    config = true,
+    opts = { -- this extension doesn't override terminal app mapping
+      mappings = {
+        { "<C-l>", "l" },
+        { "<C-h>", "h" },
+        { "<C-j>", "j" },
+        { "<C-k>", "k" },
+      },
+    },
   },
   -- {  -- NOTE: currently use smart-splits
   --   "numToStr/Navigator.nvim",

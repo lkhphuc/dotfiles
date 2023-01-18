@@ -6,3 +6,13 @@
 vim.api.nvim_create_autocmd("TermOpen", {
   command = [[setlocal listchars= nonumber norelativenumber]],
 })
+
+vim.api.nvim_create_autocmd("TermEnter", {
+  command = [[startinsert ]],
+})
+
+vim.api.nvim_create_autocmd("TermClose", {
+  callback = function()
+    if vim.v.event.status == 0 and vim.bo.filetype ~= "floaterm" then vim.api.nvim_buf_delete(0, {}) end
+  end,
+})
