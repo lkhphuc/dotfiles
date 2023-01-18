@@ -61,6 +61,5 @@ return {
     hydra(side_scroll)
     hydra(buffers)
     hydra(require("plugins.hydra.options"))
-    hydra(require("plugins.hydra.windows"))
   end,
 }

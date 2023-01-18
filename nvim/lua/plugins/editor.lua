@@ -113,29 +113,22 @@ return {
       -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
     end,
   },
-  -- {
-  -- 		"romainchapou/nostalgic-term.nvim",
-  -- 		event = "TermOpen",
-  -- 		opts = {
-  -- 			mappings = {
-  -- 				{ "<C-l>", "l" },
-  -- 				{ "<C-h>", "h" },
-  -- 				{ "<C-j>", "j" },
-  -- 				{ "<C-k>", "k" },
-  -- 			},
-  -- 		},
-  -- 	},
   {
-    "numToStr/Navigator.nvim",
-    keys = {
-      { "<C-h>", "<CMD>NavigatorLeft<CR>" },
-      { "<C-l>", "<CMD>NavigatorRight<CR>" },
-      { "<C-k>", "<CMD>NavigatorUp<CR>" },
-      { "<C-j>", "<CMD>NavigatorDown<CR>" },
-      { "<C-p>", "<CMD>NavigatorPrevious<CR>" },
-    },
+    "romainchapou/nostalgic-term.nvim",
+    event = "TermOpen",
     config = true,
   },
+  -- {  -- NOTE: currently use smart-splits
+  --   "numToStr/Navigator.nvim",
+  --   keys = {
+  --     { "<C-h>", "<CMD>NavigatorLeft<CR>" },
+  --     { "<C-l>", "<CMD>NavigatorRight<CR>" },
+  --     { "<C-k>", "<CMD>NavigatorUp<CR>" },
+  --     { "<C-j>", "<CMD>NavigatorDown<CR>" },
+  --     { "<C-p>", "<CMD>NavigatorPrevious<CR>" },
+  --   },
+  --   config = true,
+  -- },
   -- { "nikvdp/neomux", event = "VeryLazy",
   --   init = function()
   --     vim.g.neomux_win_num_status = ""

@@ -67,28 +67,10 @@ return {
       })
     end,
   },
-  { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
   { "NvChad/nvim-colorizer.lua", event = "BufReadPost", config = true },
 
-  {
-    "folke/zen-mode.nvim",
-    config = true,
-    cmd = "ZenMode",
-    keys = { { "<leader>uz", "<Cmd>ZenMode<CR>", desc = "Zen Mode" } },
-    dependencies = { "folke/twilight.nvim", config = true },
-  },
   { "kevinhwang91/nvim-bqf", ft = "qf" },
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump
-  {
-    "mrjones2014/smart-splits.nvim",
-    dependencies = { "kwkarlwang/bufresize.nvim", config = true },
-    opts = {
-      resize_mode = {
-        hooks = { on_leave = function() require("bufresize").register() end },
-      },
-    },
-  },
-  { "sindrets/winshift.nvim", cmd = "WinShift", opts = { highlight_moving_win = true } },
 
   -- use{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   --   config = function()
