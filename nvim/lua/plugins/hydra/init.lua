@@ -62,6 +62,5 @@ return {
     hydra(buffers)
     hydra(require("plugins.hydra.options"))
     hydra(require("plugins.hydra.windows"))
-    hydra(require("plugins.hydra.git"))
   end,
 }
