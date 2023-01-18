@@ -51,15 +51,14 @@ local buffers = {
   },
 }
 
-vim.keymap.set("n", "gb", "<CR>BufferLinePick<CR>")
 return {
   "anuvyklack/hydra.nvim",
   event = "VeryLazy",
   dependencies = "anuvyklack/vim-smartword",
-  config = function()
-    local hydra = require("hydra")
-    hydra(side_scroll)
-    hydra(buffers)
-    hydra(require("plugins.hydra.options"))
+  opts = { buffers, side_scroll },
+  config = function(_, opts)
+    for _, head in ipairs(opts) do
+      require("hydra")(head)
+    end
   end,
 }
