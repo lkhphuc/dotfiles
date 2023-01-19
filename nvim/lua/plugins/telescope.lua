@@ -34,7 +34,10 @@ return {
           },
         },
         layout_strategies = "flex",
-        layout_config = {},
+        layout_config = {
+          prompt_position = "top",
+        },
+        sorting_strategy = "ascending",
       },
       pickers = {
         grep_string = { theme = "dropdown" },

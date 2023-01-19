@@ -94,6 +94,24 @@ return {
   },
   "chaoren/vim-wordmotion", -- w handles Snake/camelCase, etc
   { "ThePrimeagen/refactoring.nvim", config = true },
+  {
+    "Wansmer/sibling-swap.nvim",
+    opts = { use_default_keymaps = false },
+    keys = {
+      { "gs[", function() require("sibling-swap").swap_with_left() end, desc = "Swap with previous sibling" },
+      { "gs]", function() require("sibling-swap").swap_with_right() end, desc = "Swap with next sibling" },
+      {
+        "gS[",
+        function() require("sibling-swap").swap_with_left() end,
+        desc = "Swap with previous sibling and operator",
+      },
+      {
+        "gS]",
+        function() require("sibling-swap").swap_with_right_with_opp() end,
+        desc = "Swap with next sibling and operator",
+      },
+    },
+  },
 
   -- {"Dkendal/nvim-treeclimber",
   --   requires = 'rktjmp/lush.nvim',

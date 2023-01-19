@@ -23,9 +23,9 @@ return {
       },
       textsubjects = {
         enable = true,
-        prev_selection = "_", -- (Optional) keymap to select the previous selection
+        -- prev_selection = "-", -- (Optional) keymap to select the previous selection
         keymaps = {
-          ["+"] = "textsubjects-smart",
+          [";"] = "textsubjects-smart",
           ["a;"] = "textsubjects-container-outer",
           ["i;"] = "textsubjects-container-inner",
         },
@@ -35,11 +35,11 @@ return {
       rainbow = { enable = true },
 
       textobjects = {
-        swap = {
-          enable = true,
-          swap_next = { ["]a"] = "@parameter.inner" },
-          swap_previous = { ["[a"] = "@parameter.inner" },
-        },
+        -- swap = {
+        --   enable = true,
+        --   swap_next = { ["]a"] = "@parameter.inner" },
+        --   swap_previous = { ["[a"] = "@parameter.inner" },
+        -- },
         -- lsp_interop = {
         --   enable = true,
         --   border = "double",
