@@ -23,10 +23,6 @@ vim.keymap.set("n", "H", "_", { desc = "First character of line" })
 vim.keymap.set("n", "L", "$", { desc = "Last character of line" })
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line w/o cursor moing" })
 
--- Move text up and down, also <A-j> <A-k>
-vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move text and align" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text and align" })
-
 -- select last pasted text
 vim.keymap.set("n", "vp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { desc = "select pasted text", expr = true })
 

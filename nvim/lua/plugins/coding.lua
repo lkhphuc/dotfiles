@@ -55,13 +55,6 @@ return {
       { "<leader>mt", function() require("mini.trailspace").trim() end, desc = "Trim white space" },
     },
   },
-  -- {
-  --   "echasnovski/mini.bufremove",
-  --   keys = {
-  --     { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
-  --     { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
-  --   },
-  -- },
 
   { "ggandor/leap.nvim", enabled = false },
   { -- Jump as search, as many character as you like
@@ -79,7 +72,7 @@ return {
     config = function(_, opts) require("mini.jump").setup(opts) end,
   },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
-  { "tpope/vim-unimpaired", event = "VeryLazy" },
+  -- { "tpope/vim-unimpaired", event = "VeryLazy" },
   {
     "CKolkey/ts-node-action",
     dependencies = { "nvim-treesitter" },
@@ -111,6 +104,11 @@ return {
         desc = "Swap with next sibling and operator",
       },
     },
+  },
+  {
+    "echasnovski/mini.move",
+    config = function(_, opts) require("mini.move").setup(opts) end,
+    keys = { { "<M-j>", mode = "x" }, { "<M-k>", mode = "x" }, { "<M-h>", mode = "x" }, { "<M-l>", mode = "x" } },
   },
 
   -- {"Dkendal/nvim-treeclimber",
