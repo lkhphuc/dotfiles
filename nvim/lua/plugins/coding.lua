@@ -34,7 +34,6 @@ return {
   { "echasnovski/mini.align", config = true },
   {
     "echasnovski/mini.surround",
-    event = "InsertEnter",
     opts = {
       mappings = { -- Emulate Tpope's original mapping
         add = "ys",
@@ -43,10 +42,7 @@ return {
         find_left = "[s",
         highlight = "vs",
         replace = "cs",
-        update_n_lines = "",
       },
-      search_method = "cover_or_nearest",
-      n_lines = 50,
     },
   },
   {

@@ -74,7 +74,7 @@ return {
       { "<leader>fF", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
       { "<leader>sb", builtin.buffers, desc = "Buffers" },
       { "<leader>so", builtin.oldfiles, desc = "Recent Old files" },
-      { "<leader>s<Tab>", require("telescope-tabs").list_tabs, desc = "Tabs" },
+      { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
 
       { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
