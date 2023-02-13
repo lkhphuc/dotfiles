@@ -3,16 +3,6 @@ return {
     "neovim/nvim-lspconfig",
     ---@class PluginLspOpts
     opts = {
-      diagnostics = {
-        -- float = {
-        --   focusable = false,
-        --   style = "minimal",
-        --   border = "rounded",
-        --   source = "if_many",
-        --   header = "",
-        --   -- prefix = "",
-        -- },
-      },
       ---@type lspconfig.options
       servers = {
         -- tsserver will be automatically installed with mason and loaded with lspconfig
@@ -31,7 +21,6 @@ return {
         -- Specify * to use this function as a fallback for any server
         ["*"] = function(server, opts)
           require("lazyvim.util").on_attach(function(client, buffer)
-            vim.keymap.set("n", "<leader>ca", "<Cmd>CodeActionMenu<CR>", { buffer = buffer, desc = "Code Action" })
             -- TODO: Keymap for workspace
             -- vim.keymap.set('n', '<leader>li', tele.lsp_incoming_calls, { buffer = buffer, desc="Incoming calls" })
             -- vim.keymap.set('n', '<leader>lo', tele.lsp_outgoing_calls, { buffer = buffer, desc="Outgoing calls" })
@@ -57,15 +46,27 @@ return {
     end,
   },
   { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
-  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
+  {
+    "weilbith/nvim-code-action-menu",
+    cmd = "CodeActionMenu",
+    init = function()
+      require("lazyvim.util").on_attach(
+        function(client, buffer)
+          vim.keymap.set(
+            { "n", "v" },
+            "<leader>ca",
+            "<Cmd>CodeActionMenu<CR>",
+            { buffer = buffer, desc = "Code Action" }
+          )
+        end
+      )
+    end,
+  },
   {
     "kosayoda/nvim-lightbulb",
     event = "LspAttach",
     init = function()
-      vim.fn.sign_define(
-        "LightBulbSign",
-        { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "DiagnosticSignHint" }
-      )
+      vim.fn.sign_define("LightBulbSign", { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" })
     end,
     opts = { autocmd = { enabled = true }, sign = { enabled = true, priority = 50 } },
   },
