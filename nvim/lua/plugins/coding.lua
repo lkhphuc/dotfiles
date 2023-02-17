@@ -4,17 +4,6 @@ return {
   -- mini.bufremove
   -- mini.pairs
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shellcheck",
-        "shfmt",
-        "flake8",
-      },
-    },
-  },
-  {
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {

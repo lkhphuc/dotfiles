@@ -7,7 +7,7 @@ return {
       "RRethy/nvim-treesitter-textsubjects",
     },
     opts = {
-      ensure_installed = { "python", "lua", "bash", "vim", "make", "regex", "yaml", "toml" },
+      ensure_installed = { "python", "lua", "bash", "vim", "make", "regex", "yaml", "toml", "haskell", "rust" },
       highlight = { -- Consistent syntax highlighting
         enable = true,
         additional_vim_regex_highlighting = false,
