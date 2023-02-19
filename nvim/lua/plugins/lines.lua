@@ -120,7 +120,8 @@ return {
   },
 
   {
-    "akinsho/nvim-bufferline.lua",
+    "akinsho/bufferline.nvim",
+    dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
       { "<leader>bc", "<Cmd>BufferLinePickClose<CR>", desc = "Pick buffer close" },
       { "<leader>bp", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },

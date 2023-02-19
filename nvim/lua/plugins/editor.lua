@@ -18,21 +18,6 @@ return {
   -- file explorer
   { "stevearc/oil.nvim", cmd = "Oil", config = true },
 
-  {
-    "s1n7ax/nvim-window-picker",
-    opts = { show_prompt = false, use_winbar = "smart" },
-    keys = {
-      {
-        "<C-w>0",
-        function()
-          local win_id = require("window-picker").pick_window() or vim.api.nvim_get_current_win()
-          vim.api.nvim_set_current_win(win_id)
-        end,
-        { desc = "Pick a window" },
-      },
-    },
-  },
-
   { -- Undo tree
     "simnalamburt/vim-mundo",
     cmd = "MundoToggle",
@@ -44,13 +29,6 @@ return {
     cmd = "SymbolsOutline",
     keys = { { "<leader>co", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
     config = true,
-  },
-
-  { -- search/replace in multiple files
-    "windwp/nvim-spectre",
-    keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
   },
 
   {
