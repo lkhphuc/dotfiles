@@ -10,8 +10,17 @@ return {
   { "sindrets/winshift.nvim", cmd = "WinShift", opts = { highlight_moving_win = true } },
   {
     "mrjones2014/smart-splits.nvim",
-    dependencies = { { "kwkarlwang/bufresize.nvim", config = true }, "anuvyklack/hydra.nvim" },
-    event = "VeryLazy",
+    dependencies = { "kwkarlwang/bufresize.nvim", opts = {} },
+    keys = {
+      { "<C-j>", "<CMD>SmartCursorMoveDown<CR>" },
+      { "<C-k>", "<CMD>SmartCursorMoveUp<CR>" },
+      { "<C-h>", "<CMD>SmartCursorMoveLeft<CR>" },
+      { "<C-l>", "<CMD>SmartCursorMoveRight<CR>" },
+      { "<A-j>", "<CMD>SmartResizeDown<CR>" },
+      { "<A-k>", "<CMD>SmartResizeUp<CR>" },
+      { "<A-h>", "<CMD>SmartResizeLeft<CR>" },
+      { "<A-l>", "<CMD>SmartResizeRight<CR>" },
+    },
     config = function()
       require("smart-splits").setup({
         resize_mode = {
@@ -19,8 +28,7 @@ return {
         },
       })
 
-      local hydra = require("hydra")
-      hydra({
+      require("hydra")({
         name = "Windows",
         hint = [[
   ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split

@@ -1,6 +1,20 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+--
+vim.keymap.set("n", "<leader>L", function()
+  vim.cmd.tabnew()
+  vim.cmd.tcd("$HOME/repos/LazyVim/lua/lazyvim/")
+  vim.cmd.edit("plugins/coding.lua")
+  vim.cmd("Neotree show")
+end, { desc = "LazyVim" })
+
+vim.keymap.set("n", "<leader>C", function()
+  vim.cmd.tabnew()
+  vim.cmd.tcd("$HOME/.config/nvim")
+  vim.cmd.edit("lua/plugins/coding.lua")
+  vim.cmd("Neotree show")
+end, { desc = "Config" })
 
 vim.keymap.set("n", "<C-h>", function() require("smart-splits").move_cursor_left() end)
 vim.keymap.set("n", "<C-j>", function() require("smart-splits").move_cursor_down() end)

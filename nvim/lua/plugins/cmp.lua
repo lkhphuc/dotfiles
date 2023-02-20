@@ -1,13 +1,12 @@
 return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
   dependencies = {
-    "onsails/lspkind.nvim", -- Add pictogram to LSP
     { "abecodes/tabout.nvim", opts = {} },
+    { "lukas-reineke/cmp-under-comparator" },
 
     {
       "L3MON4D3/LuaSnip",
-      keys = function() return {} end, -- cmp suptertab
+      keys = function() return {} end, -- override LazyVim to configure suptertab
       config = function()
         require("luasnip.loaders.from_vscode").lazy_load()
         require("luasnip.loaders.from_snipmate").lazy_load()
@@ -30,7 +29,12 @@ return {
     -- 'lukas-reineke/cmp-rg',
 
     -- {'tzachar/cmp-tabnine', build='./install.sh' },
-    { "zbirenbaum/copilot-cmp", opts = {}, dependencies = { "zbirenbaum/copilot.lua", opts = {} } },
+    { "zbirenbaum/copilot.lua", opts = {} },
+    {
+      "zbirenbaum/copilot-cmp",
+      opts = {},
+      init = function() vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" }) end,
+    },
   },
   opts = function(_, opts)
     opts.window = {
