@@ -126,6 +126,7 @@ return {
       { "<leader>bc", "<Cmd>BufferLinePickClose<CR>", desc = "Pick buffer close" },
       { "<leader>bp", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
+    opts = { options = {  sort_by = "tabs" } },
   },
   {
     "b0o/incline.nvim",

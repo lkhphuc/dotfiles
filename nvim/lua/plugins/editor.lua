@@ -1,22 +1,7 @@
 return {
 
-  { -- file tree
-    "nvim-neo-tree/neo-tree.nvim",
-    cmd = "Neotree",
-    keys = {
-      { "<leader>e", "<CMD>Neotree toggle<CR>", desc = "NeoTree" },
-    },
-    init = function() vim.g.neo_tree_remove_legacy_commands = 1 end,
-    opts = {
-      filesystem = {
-        follow_current_file = true,
-        hijack_netrw_behavior = "open_current",
-      },
-    },
-  },
-
   -- file explorer
-  { "stevearc/oil.nvim", cmd = "Oil", config = true },
+  { "stevearc/oil.nvim", cmd = "Oil", opts = {} },
 
   { -- Undo tree
     "simnalamburt/vim-mundo",
@@ -77,31 +62,11 @@ return {
     init = function() vim.g.unstack_mapkey = "<leader>uS" end,
     keys = { { "<leader>uS", "<Cmd>Unstack<CR>", desc = "Un-stack trace" } },
   },
-
-  -- Terminal
   {
-    "jpalardy/vim-slime",
-    event = "TermOpen",
-    config = function()
-      vim.g.slime_target = "neovim"
-      vim.g.slime_no_mapping = 1
-      vim.keymap.set("n", "<S-CR>", "<Plug>SlimeSend")
-      vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend")
-      -- vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
-      -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
-    end,
-  },
-  {
-    "romainchapou/nostalgic-term.nvim",
-    event = "TermOpen",
-    opts = { -- this extension doesn't override terminal app mapping
-      mappings = {
-        { "<C-l>", "l" },
-        { "<C-h>", "h" },
-        { "<C-j>", "j" },
-        { "<C-k>", "k" },
-      },
-    },
+    "echasnovski/mini.bracketed",
+    opts = { comment = { suffix = "gc" } },
+    event = "VeryLazy",
+    config = function(_, opts) require("mini.bracketed").setup(opts) end,
   },
   -- {  -- NOTE: currently use smart-splits
   --   "numToStr/Navigator.nvim",
@@ -114,26 +79,4 @@ return {
   --   },
   --   config = true,
   -- },
-  -- { "nikvdp/neomux", event = "VeryLazy",
-  --   init = function()
-  --     vim.g.neomux_win_num_status = ""
-  --   end
-  -- },
-  {
-    "voldikss/vim-floaterm",
-    event = "VeryLazy",
-    init = function()
-      vim.g.floaterm_keymap_next = "<End>" -- Hyper+o
-      vim.g.floaterm_keymap_prev = "<S-End>" -- Hyper+Command+o
-      vim.g.floaterm_keymap_new = "<S-Home>" -- Hyper+Command+i
-      vim.g.floaterm_keymap_toggle = "<Home>" -- Hyper+i
-      vim.g.floaterm_position = "center"
-      vim.g.floaterm_width = 0.9
-      vim.g.floaterm_height = 0.9
-      vim.g.floaterm_autoinsert = false
-    end,
-  },
-  -- {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
-  --   require("toggleterm").setup()
-  -- end},
 }

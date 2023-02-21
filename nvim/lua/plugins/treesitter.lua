@@ -35,24 +35,37 @@ return {
           node_decremental = "_", -- or decrease selection per node,
           -- scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
         },
-      },
-      textsubjects = {
-        enable = true,
-        -- prev_selection = "-", -- (Optional) keymap to select the previous selection
-        keymaps = {
-          [";"] = "textsubjects-smart",
-          ["a;"] = "textsubjects-container-outer",
-          ["i;"] = "textsubjects-container-inner",
+        highlight = { -- Consistent syntax highlighting
+          enable = true,
+          additional_vim_regex_highlighting = false,
         },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "+", -- Hold Shift with 2 keys next to Del
+            node_incremental = "+", -- to start and increase selection
+            node_decremental = "_", -- or decrease selection per node,
+            -- scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
+          },
+        },
+        textsubjects = {
+          enable = true,
+          -- prev_selection = "-", -- (Optional) keymap to select the previous selection
+          keymaps = {
+            [";"] = "textsubjects-smart",
+            ["a;"] = "textsubjects-container-outer",
+            ["i;"] = "textsubjects-container-inner",
+          },
+        },
+
+        indent = { enabled = false },
+        yati = { enable = true, default_lazy = true },
+
+        rainbow = { enable = true },
+        matchup = { enable = true, include_match_words = true },
+
+        pyfold = { enable = true, custom_foldtext = true },
       },
-
-      indent = { enable = false },
-      yati = { enable = true, default_lazy = true },
-
-      rainbow = { enable = true },
-      matchup = { enable = true, include_match_words = true },
-
-      pyfold = { enable = true, custom_foldtext = true },
     },
   },
   { "mrjones2014/nvim-ts-rainbow", event = "BufReadPost" }, --paranetheses,

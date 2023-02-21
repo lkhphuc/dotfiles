@@ -1,8 +1,3 @@
-local actions = require("telescope.actions")
-local builtin = require("telescope.builtin")
-local trouble = require("trouble.providers.telescope")
-local Util = require("lazyvim.util")
-
 return {
   "nvim-telescope/telescope.nvim",
   event = "VeryLazy",
@@ -10,6 +5,7 @@ return {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     { "nvim-telescope/telescope-file-browser.nvim", config = true },
     { "LukasPietzschmann/telescope-tabs", config = true },
+    { "molecule-man/telescope-menufacture" },
   },
   opts = function()
     return {
@@ -19,18 +15,18 @@ return {
 
         mappings = {
           i = {
-            ["<C-s>"] = actions.select_horizontal,
-            ["<C-v>"] = actions.select_vertical,
-            ["<C-t>"] = actions.select_tab,
-            ["<C-x>"] = trouble.open_with_trouble,
+            ["<C-s>"] = require("telescope.actions").select_horizontal,
+            ["<C-v>"] = require("telescope.actions").select_vertical,
+            ["<C-t>"] = require("telescope.actions").select_tab,
+            ["<C-x>"] = require("trouble.providers.telescope").open_with_trouble,
 
-            ["<C-f>"] = actions.to_fuzzy_refine,
+            ["<C-f>"] = require("telescope.actions").to_fuzzy_refine,
           },
           n = {
-            ["<C-s>"] = actions.select_horizontal,
-            ["<C-v>"] = actions.select_vertical,
-            ["<C-t>"] = actions.select_tab,
-            ["<C-x>"] = trouble.open_with_trouble,
+            ["<C-s>"] = require("telescope.actions").select_horizontal,
+            ["<C-v>"] = require("telescope.actions").select_vertical,
+            ["<C-t>"] = require("telescope.actions").select_tab,
+            ["<C-x>"] = require("trouble.providers.telescope").open_with_trouble,
           },
         },
         layout_strategies = "flex",
@@ -47,7 +43,7 @@ return {
           theme = "dropdown",
           mappings = {
             i = {
-              ["<c-d>"] = actions.delete_buffer,
+              ["<c-d>"] = require("telescope.actions").delete_buffer,
             },
           },
         },
@@ -64,11 +60,15 @@ return {
     }
   end,
   keys = function()
+    local builtin = require("telescope.builtin")
+    local Util = require("lazyvim.util")
+    local menufacture = require("telescope").extensions.menufacture
+
     return {
       { "<leader>/", builtin.current_buffer_fuzzy_find, desc = "Fuzzy search in buffer" },
-      { "<leader>*", builtin.grep_string, desc = "Search word under cursor" },
+      { "<leader>*", menufacture.grep_string, desc = "Search word under cursor" },
 
-      { "<leader>sf", Util.telescope("files"), desc = "Search Files (root dir)" },
+      { "<leader>sf", menufacture.find_files, desc = "Search Files (root dir)" },
       { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" }, -- FIX: old habit
       { "<leader>sF", Util.telescope("files", { cwd = false }), desc = "Search Files (cwd)" },
       { "<leader>fF", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
@@ -76,7 +76,7 @@ return {
       { "<leader>so", builtin.oldfiles, desc = "Recent Old files" },
       { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
 
-      { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>sg", menufacture.live_grep, desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<leader>st", "<cmd>Telescope grep_string search= theme=ivy <CR>", desc = "Fuzzy search workspace" },
 
@@ -97,6 +97,7 @@ return {
 
       { "<leader>gc", builtin.git_commits, desc = "git commits" },
       { "<leader>gs", builtin.git_status, desc = "git status" },
+      { "<leader>gf", menufacture.git_files, desc = "git files" },
 
       { "<leader>ss", builtin.resume, desc = "Resume last search" },
     }
@@ -106,5 +107,6 @@ return {
     telescope.setup(opts)
     telescope.load_extension("fzf")
     telescope.load_extension("file_browser")
+    telescope.load_extension("menufacture")
   end,
 }

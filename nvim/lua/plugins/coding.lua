@@ -31,6 +31,7 @@ return {
         find_left = "[s",
         highlight = "vs",
         replace = "cs",
+        update_n_lines = "",
       },
     },
   },

@@ -7,12 +7,12 @@ vim.api.nvim_create_autocmd("TermOpen", {
   command = [[setlocal listchars= nonumber norelativenumber]],
 })
 
-vim.api.nvim_create_autocmd("TermEnter", {
-  command = [[startinsert ]],
-})
-
 vim.api.nvim_create_autocmd("TermClose", {
   callback = function()
-    if vim.v.event.status == 0 and vim.bo.filetype ~= "floaterm" then vim.api.nvim_buf_delete(0, {}) end
+    if vim.v.event.status == 0 then
+      -- Weird behaviors for each of these plugins
+      if vim.bo.filetype ~= "floaterm" then vim.api.nvim_buf_delete(0, {}) end
+      vim.cmd("ToggleTerm")
+    end
   end,
 })

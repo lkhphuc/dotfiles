@@ -11,7 +11,7 @@ return {
   {
     "mrjones2014/smart-splits.nvim",
     dependencies = { "kwkarlwang/bufresize.nvim", opts = {} },
-    keys = {
+    keys = { -- Combine with nostalgic-term.nvim for terminal mapping
       { "<C-j>", "<CMD>SmartCursorMoveDown<CR>" },
       { "<C-k>", "<CMD>SmartCursorMoveUp<CR>" },
       { "<C-h>", "<CMD>SmartCursorMoveLeft<CR>" },

@@ -2,23 +2,26 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local g, o, opt = vim.g, vim.o, vim.opt
 
-vim.opt.termguicolors = true
+g.mapleader = " "
+g.maplocalleader = " "
 
-vim.opt.linebreak = true -- wrap at specific char rather than last one
-vim.opt.breakat = " ^I!@*;:,./?(="
-vim.opt.showbreak = "|>"
-vim.opt.breakindent = true -- to indent on wrap
-vim.opt.breakindentopt = "min:60"
+o.breakindent = true -- Indent wrapped lines to match line start
+o.showbreak = "|>" -- character show in front of wrapped lines
+o.breakindentopt = "shift:-2" -- dedent showbreak
+o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
-vim.opt.path:append("**")
+opt.path:append("**")
 
-vim.opt.list = false
-vim.opt.listchars = { eol = "↲", trail = "·", nbsp = "␣" }
+o.ignorecase = true -- Ignore case when searching (use `\C` to force not doing that)
+o.incsearch = true -- Show search results while typing
+o.infercase = true -- Infer letter cases for a richer built-in keyword completion
+o.smartcase = true -- Don't ignore case when searching if pattern has upper case
+o.smartindent = true -- Make indenting smart
 
-vim.opt.virtualedit = "block,onemore" -- cursor can move anywhere
-vim.opt.pumblend = 0 -- FIX: bug in neovim, small icons due to blending
+o.virtualedit = "block" -- Allow going past the end of line in visual block mode
 
-vim.g.python3_host_prog = "/usr/bin/python3" -- pynvim is only needed for this
+o.listchars = "extends:…,precedes:…,nbsp:␣" -- Define which helper symbols to show
+--     -- Appearance
+vim.g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"
