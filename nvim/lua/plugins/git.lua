@@ -60,7 +60,6 @@ return {
               b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
               c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
             },
-            ["<leader>gg"] = { "<cmd>tabnew term://lazygit<CR>", "LazyGit" },
           }, { buffer = bufnr })
 
           require("hydra")({
@@ -116,7 +115,11 @@ return {
                 { desc = "blame show full" },
               },
               { "/", gs.show, { exit = true, desc = "show base file" } }, -- show the base of the file
-              { "<Enter>", ":tabnew term://lazygit<CR>", { exit = true, desc = "LazyGit" } },
+              {
+                "<Enter>",
+                function() require("lazyvim.util").float_term("lazygit") end,
+                { exit = true, desc = "LazyGit" },
+              },
               { "D", "<Cmd>DiffviewOpen<CR>", { exit = true, desc = "Open Diffview" } },
               { "<Esc>", nil, { exit = true, nowait = true, desc = "exit" } },
             },

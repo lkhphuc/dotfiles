@@ -16,3 +16,5 @@ vim.api.nvim_create_autocmd("TermClose", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd("BufReadPost", { command = "TSEnable rainbow" })

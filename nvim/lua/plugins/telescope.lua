@@ -6,6 +6,11 @@ return {
     { "nvim-telescope/telescope-file-browser.nvim", config = true },
     { "LukasPietzschmann/telescope-tabs", config = true },
     { "molecule-man/telescope-menufacture" },
+    {
+      "danielfalk/smart-open.nvim",
+      branch = "0.1.x",
+      dependencies = { "kkharji/sqlite.lua" },
+    },
   },
   opts = function()
     return {
@@ -56,6 +61,7 @@ return {
       extensions = {
         fzf = {},
         file_browser = { theme = "ivy" },
+        menufacture = { mappings = { main_menu = { [{ "i", "n" }] = "<C-o>" } } },
       },
     }
   end,
@@ -68,10 +74,10 @@ return {
       { "<leader>/", builtin.current_buffer_fuzzy_find, desc = "Fuzzy search in buffer" },
       { "<leader>*", menufacture.grep_string, desc = "Search word under cursor" },
 
-      { "<leader>sf", menufacture.find_files, desc = "Search Files (root dir)" },
-      { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" }, -- FIX: old habit
-      { "<leader>sF", Util.telescope("files", { cwd = false }), desc = "Search Files (cwd)" },
+      { "<leader>ff", "<Cmd>Telescope smart_open<CR>", desc = "Open ..." },
       { "<leader>fF", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
+      { "<leader>sf", menufacture.find_files, desc = "Find Files (root dir)" },
+      { "<leader>sF", Util.telescope("files", { cwd = false }), desc = "Search Files (cwd)" },
       { "<leader>sb", builtin.buffers, desc = "Buffers" },
       { "<leader>so", builtin.oldfiles, desc = "Recent Old files" },
       { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
@@ -108,5 +114,6 @@ return {
     telescope.load_extension("fzf")
     telescope.load_extension("file_browser")
     telescope.load_extension("menufacture")
+    telescope.load_extension("smart_open")
   end,
 }

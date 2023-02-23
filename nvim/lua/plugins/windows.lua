@@ -1,5 +1,12 @@
 return {
-  { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
+  -- { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
+  {
+    "tummetott/reticle.nvim",
+    event = "VeryLazy", -- lazyload the plugin if you like
+    opts = {
+      always_highlight_number = true,
+    },
+  },
   {
     "folke/zen-mode.nvim",
     config = true,

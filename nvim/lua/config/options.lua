@@ -22,6 +22,7 @@ o.smartindent = true -- Make indenting smart
 
 o.virtualedit = "block" -- Allow going past the end of line in visual block mode
 
-o.listchars = "extends:…,precedes:…,nbsp:␣" -- Define which helper symbols to show
+o.list = false
+o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
 --     -- Appearance
 vim.g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"

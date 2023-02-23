@@ -25,7 +25,16 @@ return {
       enabled_filetypes = { "toggleterm" },
     },
   },
-  { "nikvdp/neomux", event = "VeryLazy", init = function() vim.g.neomux_win_num_status = "" end },
+  {
+    "nikvdp/neomux",
+    event = "VeryLazy",
+    config = function()
+      vim.g.neomux_win_num_status = ""
+      vim.g.neomux_start_term_map = "<leader>ft" -- FIX:doesn't work
+      vim.g.neomux_winswap_map_prefix = "<leader>ws"
+      vim.g.neomux_term_sizefix_map = "<leader>wf"
+    end,
+  },
   {
     "voldikss/vim-floaterm",
     keys = "<Home>",

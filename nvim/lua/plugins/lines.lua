@@ -1,5 +1,3 @@
-local icons = require("lazyvim.config").icons
-
 local function fg(name)
   return function()
     ---@type {foreground?:number}?
@@ -35,10 +33,14 @@ return {
 
       sections = {
         lualine_a = {
-          { "mode", icon = "", separator = { left = "", right = "" }, padding = 0 },
+          { "mode", icon = "", separator = { left = "" }, padding = 1 },
         },
         lualine_b = {
-          { "branch", color = { gui = "italic" }, separator = { left = "", right = "" } },
+          { "branch", color = { gui = "italic" } },
+          { -- Working directory
+            function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+            color = { gui = "bold" },
+          },
         },
         lualine_c = {
           -- {
@@ -50,12 +52,17 @@ return {
           --     removed = icons.git.removed,
           --   },
           -- },
-          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-          { "filename", path = 1, symbols = { modified = "●", readonly = "", unnamed = "" }, separator = false },
+          {
+            "filename",
+            path = 1,
+            symbols = { modified = "●", readonly = "", unnamed = "" },
+            separator = false,
+            padding = { left = 1, right = 0 },
+          },
+          { "filetype", icon_only = true, separator = "" },
           {
             function() return require("nvim-navic").get_location() end,
             cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-            padding = { left = 0, right = 1 },
           },
         },
         lualine_x = {
@@ -106,13 +113,13 @@ return {
           --   function() return " " .. vim.api.nvim_win_get_number(0) end,
           --   cond = function() return true end,
           -- },
-          -- { --terminal
-          --   function() return " " .. vim.o.channel end,
-          --   cond = function() return vim.o.buftype == "terminal" end,
-          -- },
+          { --terminal
+            function() return " " .. vim.o.channel end,
+            cond = function() return vim.o.buftype == "terminal" end,
+          },
         },
         lualine_z = {
-          { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
+          { "hostname", icon = "", separator = { right = "" }, padding = 1 },
         },
       },
       extensions = { "quickfix", "nvim-tree" },
@@ -123,10 +130,10 @@ return {
     "akinsho/bufferline.nvim",
     dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
-      { "<leader>bc", "<Cmd>BufferLinePickClose<CR>", desc = "Pick buffer close" },
-      { "<leader>bp", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
+      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
+      { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
-    opts = { options = {  sort_by = "tabs" } },
+    opts = { options = { always_show_bufferline = true, separator_style = "slope", enforce_regular_tabs = true } },
   },
   {
     "b0o/incline.nvim",
@@ -139,7 +146,7 @@ return {
           InclineNormalNC = "CursorLine",
         },
       },
-      window = { zindex = 20 },
+      window = { zindex = 50 },
       hide = { cursorline = true },
       render = function(props)
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
@@ -175,9 +182,9 @@ return {
         local buffer = {
           { get_diagnostic_label() },
           { get_git_diff() },
-          { ft_icon, guifg = ft_color, guibg = "none" },
-          { " " },
-          { filename, gui = modified },
+          { ft_icon .. " ", guifg = ft_color, guibg = "none" },
+          { filename .. " ", gui = modified },
+          { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
         }
         return buffer
       end,

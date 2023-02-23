@@ -1,6 +1,12 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "mrjones2014/nvim-ts-rainbow" }, --paranetheses,
+      { "RRethy/nvim-treesitter-textsubjects" },
+      { "andymass/vim-matchup", branch = "master" },
+      { "romgrk/nvim-treesitter-context", opts = {} },
+    },
     opts = {
       ensure_installed = {
         "bash",
@@ -48,28 +54,23 @@ return {
             -- scope_incremental = "`-",  -- or per scope TODO disable this to nomapping
           },
         },
-        textsubjects = {
+        textsubjects = { -- FIX: doesn't work
           enable = true,
-          -- prev_selection = "-", -- (Optional) keymap to select the previous selection
+          prev_selection = ",", -- (Optional) keymap to select the previous selection
           keymaps = {
-            [";"] = "textsubjects-smart",
-            ["a;"] = "textsubjects-container-outer",
-            ["i;"] = "textsubjects-container-inner",
+            ["<CR>"] = "textsubjects-smart",
+            ["a<CR>"] = "textsubjects-container-outer",
+            ["i<CR>"] = "textsubjects-container-inner",
           },
         },
 
-        indent = { enabled = false },
-        yati = { enable = true, default_lazy = true },
-
-        rainbow = { enable = true },
+        rainbow = { enable = true }, -- BUG: doesn't work, need autocmd to reenabled
         matchup = { enable = true, include_match_words = true },
 
         pyfold = { enable = true, custom_foldtext = true },
       },
     },
   },
-  { "mrjones2014/nvim-ts-rainbow", event = "BufReadPost" }, --paranetheses,
-  { "romgrk/nvim-treesitter-context", event = "BufReadPost", opts = {} },
   {
     "nvim-treesitter/playground",
     name = "ts-playground",
@@ -82,7 +83,4 @@ return {
   --     { "m", function() require("tsht").nodes() end, mode = "x", silent = true, remap = false },
   --   },
   -- },
-  { "andymass/vim-matchup", branch = "master", event = "BufReadPost" },
-  { "yioneko/nvim-yati" },
-  { "RRethy/nvim-treesitter-textsubjects" },
 }

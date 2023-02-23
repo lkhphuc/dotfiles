@@ -54,7 +54,6 @@ local buffers = {
 return {
   "anuvyklack/hydra.nvim",
   event = "VeryLazy",
-  dependencies = "anuvyklack/vim-smartword",
   opts = { buffers, side_scroll },
   config = function(_, opts)
     for _, head in ipairs(opts) do

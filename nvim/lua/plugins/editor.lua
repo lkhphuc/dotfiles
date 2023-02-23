@@ -64,8 +64,12 @@ return {
   },
   {
     "echasnovski/mini.bracketed",
-    opts = { comment = { suffix = "gc" } },
     event = "VeryLazy",
+    opts = {
+      comment = { suffix = "gc" },
+      indent = { options = { change_type = "diff" } },
+      treesitter = { suffix = "n" },
+    },
     config = function(_, opts) require("mini.bracketed").setup(opts) end,
   },
   -- {  -- NOTE: currently use smart-splits

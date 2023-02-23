@@ -43,6 +43,7 @@ return {
   },
 
   { "ggandor/leap.nvim", enabled = false },
+  { "ggandor/flit.nvim", enabled = false },
   { -- Jump as search, as many character as you like
     "rlane/pounce.nvim",
     keys = {
@@ -57,6 +58,7 @@ return {
     keys = { "f", "F", "t", "T", ";" },
     config = function(_, opts) require("mini.jump").setup(opts) end,
   },
+  { "mini.indentscope", opts = { mappings = { goto_top = "[ai", goto_bottom = "]ai" } } },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
   -- { "tpope/vim-unimpaired", event = "VeryLazy" },
   {
@@ -71,7 +73,7 @@ return {
       },
     },
   },
-  "chaoren/vim-wordmotion", -- w handles Snake/camelCase, etc
+  { "chaoren/vim-wordmotion", event = "VeryLazy" }, -- w handles Snake/camelCase, etc
   { "ThePrimeagen/refactoring.nvim", config = true },
   {
     "Wansmer/sibling-swap.nvim",
@@ -81,7 +83,7 @@ return {
       { "gs]", function() require("sibling-swap").swap_with_right() end, desc = "Swap with next sibling" },
       {
         "gS[",
-        function() require("sibling-swap").swap_with_left() end,
+        function() require("sibling-swap").swap_with_left_with_opp() end,
         desc = "Swap with previous sibling and operator",
       },
       {

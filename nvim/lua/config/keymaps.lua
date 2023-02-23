@@ -82,3 +82,30 @@ map_toggle("n", "<Cmd>setlocal number! number?<CR>", "Toggle 'number'")
 map_toggle("r", "<Cmd>setlocal relativenumber! relativenumber?<CR>", "Toggle 'relativenumber'")
 map_toggle("s", "<Cmd>setlocal spell! spell?<CR>", "Toggle 'spell'")
 map_toggle("w", "<Cmd>setlocal wrap! wrap?<CR>", "Toggle 'wrap'")
+
+vim.api.nvim_create_user_command("DiffOrig", function()
+  -- Get start buffer
+  local start = vim.api.nvim_get_current_buf()
+
+  -- `vnew` - Create empty vertical split window
+  -- `set buftype=nofile` - Buffer is not related to a file, will not be written
+  -- `0d_` - Remove an extra empty start row
+  -- `diffthis` - Set diff mode to a new vertical split
+  vim.cmd("vnew | set buftype=nofile | read ++edit # | 0d_ | diffthis")
+
+  -- Get scratch buffer
+  local scratch = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_option(scratch, "filetype", vim.api.nvim_buf_get_option(start, "filetype"))
+
+  -- `wincmd p` - Go to the start window
+  -- `diffthis` - Set diff mode to a start window
+  vim.cmd("wincmd p | diffthis")
+
+  -- Map `q` for both buffers to exit diff view and delete scratch buffer
+  for _, buf in ipairs({ scratch, start }) do
+    vim.keymap.set("n", "q", function()
+      vim.api.nvim_buf_delete(scratch, { force = true })
+      vim.keymap.del("n", "q", { buffer = start })
+    end, { buffer = buf })
+  end
+end, {})
