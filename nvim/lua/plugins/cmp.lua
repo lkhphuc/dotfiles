@@ -36,6 +36,7 @@ return {
       opts = {},
       init = function() vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" }) end,
     },
+    { "lkhphuc/jupyter-kernel.nvim" },
   },
   opts = function(_, opts)
     local luasnip = require("luasnip")
@@ -107,6 +108,7 @@ return {
           rg = "",
           cmdline = "",
           cmdline_history = "",
+          jupyter = "",
         }
         item.menu = source_icons[entry.source.name] or entry.source.name
         item.menu = item.menu .. " " .. item.kind
@@ -115,6 +117,7 @@ return {
       end,
     }
     opts.sources = cmp.config.sources({
+      { name = "jupyter", priority = 1000 },
       { name = "nvim_lsp" },
       { name = "luasnip" },
       -- { name = "buffer", keyword_length = 5 },

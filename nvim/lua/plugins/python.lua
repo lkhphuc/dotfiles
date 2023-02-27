@@ -1,16 +1,17 @@
 return {
+  -- "AckslD/swenv.nvim",
+
   {
     "blueyed/semshi",
     branch = "handle-ColorScheme",
     ft = "python",
-    build = "<Cmd>UpdateRemotePlugins<CR>",
+    build = ":UpdateRemotePlugins",
     init = function()
       vim.g["semshi#error_sign"] = false
       vim.g["semshi#simplify_markup"] = false
       vim.g["semshi#mark_selected_nodes"] = false
     end,
   },
-  -- 'AckslD/swenv.nvim',
   {
     "hanschen/vim-ipython-cell",
     ft = "python",
@@ -45,4 +46,12 @@ return {
     end,
   },
   { "goerz/jupytext.vim" },
+  {
+    "lkhphuc/jupyter-kernel.nvim",
+    dev = true,
+    opts = { timeout = 5 },
+    build = ":UpdateRemotePlugins",
+    cmd = "JupyterAttach",
+    keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel" } },
+  },
 }
