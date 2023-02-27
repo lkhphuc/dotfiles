@@ -1,5 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
+  event = { "CmdlineEnter" },
   dependencies = {
     { "abecodes/tabout.nvim", opts = {} },
     { "lukas-reineke/cmp-under-comparator" },
@@ -20,7 +21,7 @@ return {
     "hrsh7th/cmp-emoji",
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
-    "ray-x/cmp-treesitter",
+    -- "ray-x/cmp-treesitter",
     -- "quangnguyen30192/cmp-nvim-tags",
 
     "tzachar/fuzzy.nvim",
@@ -37,13 +38,14 @@ return {
     },
   },
   opts = function(_, opts)
+    local luasnip = require("luasnip")
+    local cmp = require("cmp")
+    local compare = require("cmp.config.compare")
+
+    opts.completion = { completeopt = "menu,menuone,noselect" }
     opts.window = {
-      -- completion = cmp.config.window.bordered(),
       completion = {
-        -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-        -- border = "none",
-        col_offset = -4, -- to align text when 2 icons are prepended
-        -- padding = 0,
+        col_offset = -2, -- to align text when 2 icons are prepended
       },
     }
 
@@ -53,16 +55,10 @@ return {
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
       return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
     end
-
-    local luasnip = require("luasnip")
-    local cmp = require("cmp")
-    local compare = require("cmp.config.compare")
     opts.mapping = vim.tbl_extend("force", opts.mapping, {
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() and has_words_before() then
           cmp.select_next_item()
-        -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-        -- they way you will only jump inside the snippet region
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
         else
@@ -78,81 +74,86 @@ return {
           fallback()
         end
       end, { "i", "s" }),
+      ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+      ["<C-Space>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.close()
+        else
+          cmp.complete()
+        end
+      end),
+      ["<C-l>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then return cmp.complete_common_string() end
+        fallback()
+      end),
     })
+
     opts.formatting = {
-      fields = { "menu", "kind", "abbr" },
-      format = function(entry, vim_item)
-        vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-        local item = require("lspkind").cmp_format({
-          mode = "symbol",
-          preset = "codicons",
-          menu = {
-            nvim_lsp = "",
-            luasnip = "",
-            treesitter = "",
-            tags = "",
-            buffer = "",
-            fuzzy_buffer = "",
-            path = "",
-            fuzzy_path = "",
-            copilot = "",
-            cmp_tabnine = "9",
-            rg = "",
-          },
-          symbol_map = { Copilot = "" },
-        })(entry, vim_item)
-        return vim_item
+      fields = { "kind", "abbr", "menu" },
+      format = function(entry, item)
+        local kind_icons = require("lazyvim.config").icons.kinds
+        local source_icons = {
+          nvim_lsp = "",
+          luasnip = "",
+          treesitter = "",
+          tags = "",
+          buffer = "",
+          fuzzy_buffer = "󱔘",
+          path = "",
+          fuzzy_path = "󰉓",
+          omni = "",
+          copilot = "",
+          cmp_tabnine = "󰌒",
+          rg = "",
+          cmdline = "",
+          cmdline_history = "",
+        }
+        item.menu = source_icons[entry.source.name] or entry.source.name
+        item.menu = item.menu .. " " .. item.kind
+        item.kind = kind_icons[item.kind]:sub(1, -2) or " "
+        return item
       end,
     }
     opts.sources = cmp.config.sources({
       { name = "nvim_lsp" },
       { name = "luasnip" },
-      { name = "treesitter" },
-      { name = "buffer" },
+      -- { name = "buffer", keyword_length = 5 },
+      {
+        name = "fuzzy_buffer",
+        keyword_length = 5, -- all buffers
+        option = { get_bufnrs = vim.api.nvim_list_bufs },
+      },
       { name = "fuzzy_path" },
-      { name = "tags" },
-      { name = "copilot" },
-      -- { name = 'cmp_tabnine' },
-      -- { name = 'rg' },
+      { name = "copilot", keyword_length = 5 },
     })
-    -- opts.sorting = {
-    --   priority_weight = 2,
-    --   comparators = {
-    --     -- require("cmp_fuzzy_buffer.compare"),
-    --     -- require("cmp_fuzzy_path.compare"),
-    --     compare.offset,
-    --     compare.exact,
-    --     compare.score,
-    --     compare.recently_used,
-    --     compare.kind,
-    --     compare.sort_text,
-    --     compare.length,
-    --     compare.order,
-    --     require("copilot_cmp.comparators").prioritize,
-    --     require("copilot_cmp.comparators").score,
-    --   },
-    -- }
+    opts.sorting = {
+      priority_weight = 2,
+      comparators = {
+        compare.offset,
+        compare.exact,
+        compare.score,
+        require("cmp-under-comparator").under,
+        compare.recently_used,
+        compare.kind,
+        compare.sort_text,
+        compare.length,
+        compare.order,
+        require("copilot_cmp.comparators").prioritize,
+        require("copilot_cmp.comparators").score,
+        require("cmp_fuzzy_buffer.compare"),
+        require("cmp_fuzzy_path.compare"),
+      },
+    }
   end,
+
   config = function(_, opts)
     local cmp = require("cmp")
-    cmp.setup(opts)
+    cmp.setup(opts) -- normal completion
     cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = "treesitter" },
-        {
-          name = "fuzzy_buffer",
-          option = {
-            get_bufnrs = function() -- Get all opened buffers
-              local bufs = {}
-              for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-                if buftype ~= "nofile" and buftype ~= "prompt" then bufs[#bufs + 1] = buf end
-              end
-              return bufs
-            end,
-          },
-        },
+        -- { name = "treesitter" },
+        { name = "fuzzy_buffer" },
       },
     })
 
