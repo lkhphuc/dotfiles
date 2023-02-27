@@ -33,33 +33,30 @@ return {
 
       sections = {
         lualine_a = {
-          { "mode", icon = "", separator = { left = "" }, padding = 1 },
+          {
+            "mode",
+            icon = "",
+            fmt = function(str) return str:sub(1, 1) end,
+            separator = { left = "", right = "" },
+            padding = 0,
+          },
+          { "branch", color = { gui = "italic" } },
         },
         lualine_b = {
-          { "branch", color = { gui = "italic" } },
           { -- Working directory
             function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
             color = { gui = "bold" },
           },
         },
         lualine_c = {
-          -- {
-          --   "diff",
-          --   separator = "",
-          --   symbols = {
-          --     added = icons.git.added,
-          --     modified = icons.git.modified,
-          --     removed = icons.git.removed,
-          --   },
-          -- },
+          { "filetype", icon_only = true, separator = "" },
           {
             "filename",
             path = 1,
             symbols = { modified = "●", readonly = "", unnamed = "" },
             separator = false,
-            padding = { left = 1, right = 0 },
+            padding = 0,
           },
-          { "filetype", icon_only = true, separator = "" },
           {
             function() return require("nvim-navic").get_location() end,
             cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
@@ -77,15 +74,6 @@ return {
             color = fg("Constant"),
           },
           { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
-          -- {
-          --   "diagnostics",
-          --   symbols = {
-          --     error = icons.diagnostics.Error,
-          --     warn = icons.diagnostics.Warn,
-          --     info = icons.diagnostics.Info,
-          --     hint = icons.diagnostics.Hint,
-          --   },
-          -- },
           { "progress", icon = "", separator = false },
           { "location", padding = { left = 0, right = 1 } },
         },
@@ -148,7 +136,15 @@ return {
       },
       window = { zindex = 40 },
       hide = { cursorline = true },
+      ignore = { buftypes = function(bufnr, buftype) return false end },
       render = function(props)
+        if vim.bo[props.buf].buftype == "terminal" then
+          return {
+            { " " .. vim.bo[props.buf].channel .. " ", group = "DevIconTerminal" },
+            { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
+          }
+        end
+
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
         local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"

@@ -1,8 +1,6 @@
 return {
   -- "AckslD/swenv.nvim",
-  { "nvim-lspconfig", opts = {
-    servers = { pyright = {}, ruff_lsp = {} },
-  } },
+  { "nvim-lspconfig", opts = { servers = { pyright = {}, ruff_lsp = {} } } },
 
   { -- semantic hightlight
     "blueyed/semshi",
