@@ -28,7 +28,7 @@ return {
   {
     "nikvdp/neomux",
     event = "VeryLazy",
-    config = function()
+    int = function()
       vim.g.neomux_win_num_status = ""
       vim.g.neomux_start_term_map = "<leader>ft" -- FIX:doesn't work
       vim.g.neomux_winswap_map_prefix = "<leader>ws"

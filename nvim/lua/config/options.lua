@@ -7,9 +7,11 @@ local g, o, opt = vim.g, vim.o, vim.opt
 g.mapleader = " "
 g.maplocalleader = " "
 
+o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
+
 o.breakindent = true -- Indent wrapped lines to match line start
 o.showbreak = "|>" -- character show in front of wrapped lines
-o.breakindentopt = "shift:-2" -- dedent showbreak
+-- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
 opt.path:append("**")

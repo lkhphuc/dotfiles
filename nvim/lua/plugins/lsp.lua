@@ -8,6 +8,9 @@ return {
         -- tsserver will be automatically installed with mason and loaded with lspconfig
         tsserver = {},
         pyright = {},
+        ruff_lsp = {},
+        hls = {},
+        rust_analyzer = {},
       },
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
@@ -45,7 +48,7 @@ return {
       end)
     end,
   },
-  { "smjonas/inc-rename.nvim", config = true, cmd = "IncRename" },
+  { "smjonas/inc-rename.nvim", opts = {}, cmd = "IncRename" },
   {
     "weilbith/nvim-code-action-menu",
     cmd = "CodeActionMenu",

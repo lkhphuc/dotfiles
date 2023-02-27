@@ -66,7 +66,7 @@ return {
     "echasnovski/mini.bracketed",
     event = "VeryLazy",
     opts = {
-      comment = { suffix = "gc" },
+      comment = { suffix = "gc" }, -- ]c is for git/diff change
       indent = { options = { change_type = "diff" } },
       treesitter = { suffix = "n" },
     },

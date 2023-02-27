@@ -1,13 +1,6 @@
 return {
   -- { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
   {
-    "tummetott/reticle.nvim",
-    event = "VeryLazy", -- lazyload the plugin if you like
-    opts = {
-      always_highlight_number = true,
-    },
-  },
-  {
     "folke/zen-mode.nvim",
     config = true,
     cmd = "ZenMode",
@@ -17,7 +10,7 @@ return {
   { "sindrets/winshift.nvim", cmd = "WinShift", opts = { highlight_moving_win = true } },
   {
     "mrjones2014/smart-splits.nvim",
-    dependencies = { "kwkarlwang/bufresize.nvim", opts = {} },
+    dependencies = { "kwkarlwang/bufresize.nvim", opts = {} }, -- on terminal size
     keys = { -- Combine with nostalgic-term.nvim for terminal mapping
       { "<C-j>", "<CMD>SmartCursorMoveDown<CR>" },
       { "<C-k>", "<CMD>SmartCursorMoveUp<CR>" },

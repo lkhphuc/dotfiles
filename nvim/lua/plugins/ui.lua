@@ -96,4 +96,11 @@ return {
     },
   },
   { "m4xshen/smartcolumn.nvim", opts = {}, event = "BufReadPost" },
+  {
+    "tummetott/reticle.nvim",
+    event = "VeryLazy", -- lazyload the plugin if you like
+    opts = {
+      always = { cursorline = { "neo-tree" } },
+    },
+  },
 }

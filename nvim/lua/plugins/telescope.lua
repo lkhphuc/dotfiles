@@ -68,21 +68,20 @@ return {
   keys = function()
     local builtin = require("telescope.builtin")
     local Util = require("lazyvim.util")
-    local menufacture = require("telescope").extensions.menufacture
 
     return {
       { "<leader>/", builtin.current_buffer_fuzzy_find, desc = "Fuzzy search in buffer" },
-      { "<leader>*", menufacture.grep_string, desc = "Search word under cursor" },
+      { "<leader>*", "<CMD>Telescope menufacture grep_string<CR>", desc = "Search word under cursor" },
 
       { "<leader>ff", "<Cmd>Telescope smart_open<CR>", desc = "Open ..." },
       { "<leader>fF", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
-      { "<leader>sf", menufacture.find_files, desc = "Find Files (root dir)" },
+      { "<leader>sf", "<CMD>Telescope menufacture find_files<CR>", desc = "Find Files (root dir)" },
       { "<leader>sF", Util.telescope("files", { cwd = false }), desc = "Search Files (cwd)" },
       { "<leader>sb", builtin.buffers, desc = "Buffers" },
       { "<leader>so", builtin.oldfiles, desc = "Recent Old files" },
       { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
 
-      { "<leader>sg", menufacture.live_grep, desc = "Grep (root dir)" },
+      { "<leader>sg", "<CMD>Telescope menufacture live_grep<CR>", desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<leader>st", "<cmd>Telescope grep_string search= theme=ivy <CR>", desc = "Fuzzy search workspace" },
 
@@ -103,7 +102,7 @@ return {
 
       { "<leader>gc", builtin.git_commits, desc = "git commits" },
       { "<leader>gs", builtin.git_status, desc = "git status" },
-      { "<leader>gf", menufacture.git_files, desc = "git files" },
+      { "<leader>gf", "<CMD>Telescope menufacture git_files<CR>", desc = "git files" },
 
       { "<leader>ss", builtin.resume, desc = "Resume last search" },
     }

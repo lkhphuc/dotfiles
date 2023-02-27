@@ -26,12 +26,8 @@ map("n", "L", "$", { desc = "Last character of line" })
 map("n", "]<TAB>", ":tabnext<CR>", { silent = true })
 map("n", "[<TAB>", ":tabprev<CR>", { silent = true })
 
--- Terminal
--- map({ "t" }, "<C-^>", "<C-\\><C-N><C-^>")
 map("t", "<PageUp>", "<C-\\><C-n>") -- Exit terminal when scroll up
 
--- Reselect latest changed, put, or yanked text
-map("n", "vp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { desc = "Visually select changed text", expr = true })
 -- Don't yank empty line to clipboard
 map("n", "dd", function()
   local is_empty_line = vim.api.nvim_get_current_line():match("^%s*$")
@@ -41,11 +37,25 @@ map("n", "dd", function()
     return "dd"
   end
 end, { noremap = true, expr = true })
+
+-- mini.bascis mappings
+map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
+map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true })
+
+-- Add empty lines before and after cursor line
+map("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Put empty line above" })
+map("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Put empty line below" })
+
 -- Copy/paste with system clipboard
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
 map("n", "gp", '"+p', { desc = "Paste from system clipboard" })
 -- - Paste in Visual with `P` to not copy selected text (`:h v_P`)
 map("x", "gp", '"+P', { desc = "Paste from system clipboard" })
+
+-- gv: Reselect visual selection by default
+-- Reselect latest changed, put, or yanked text
+map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', { expr = true, desc = "Visually select changed text" })
+
 -- Search inside visually highlighted text. Use `silent = false` for it to
 -- make effect immediately.
 map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })
@@ -54,7 +64,12 @@ map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual sele
 map("x", "*", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]])
 map("x", "#", [[y?\V<C-R>=escape(@", '?\')<CR><CR>]])
 
--- Toggling options from mini.basic
+-- Alternative way to save and exit in Normal mode.
+-- NOTE: Adding `redraw` helps with `cmdheight=0` if buffer is not modified
+map("n", "<C-S>", "<Cmd>silent! update | redraw<CR>", { desc = "Save" })
+map({ "i", "x" }, "<C-S>", "<Esc><Cmd>silent! update | redraw<CR>", { desc = "Save and go to Normal mode" })
+
+-- mini.basics toggles
 local toggle_prefix = [[\]]
 local map_toggle = function(lhs, rhs, desc) map("n", toggle_prefix .. lhs, rhs, { desc = desc }) end
 map_toggle(
@@ -62,7 +77,7 @@ map_toggle(
   '<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>',
   "Toggle 'background'"
 )
-map_toggle("c", "<Cmd>setlocal cursorline! cursorline?<CR>", "Toggle 'cursorline'")
+map_toggle("c", function() require("reticle").toggle_cursorline() end, "Toggle 'cursorline'")
 map_toggle("C", "<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>", "Toggle 'cursorcolumn'")
 map_toggle("d", function()
   if vim.o.diff then
@@ -108,4 +123,4 @@ vim.api.nvim_create_user_command("DiffOrig", function()
       vim.keymap.del("n", "q", { buffer = start })
     end, { buffer = buf })
   end
-end, {})
+end, { desc = "Diff with last saved." })
