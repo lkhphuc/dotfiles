@@ -1,7 +1,10 @@
 return {
   -- "AckslD/swenv.nvim",
+  { "nvim-lspconfig", opts = {
+    servers = { pyright = {}, ruff_lsp = {} },
+  } },
 
-  {
+  { -- semantic hightlight
     "blueyed/semshi",
     branch = "handle-ColorScheme",
     ft = "python",
@@ -45,7 +48,7 @@ return {
       vim.keymap.set("n", "<leader>ca", "<Cmd>IPythonCellNextCell<CR>i", { desc = "Insert new cell below" })
     end,
   },
-  { "goerz/jupytext.vim" },
+  -- { "goerz/jupytext.vim" },
   {
     "lkhphuc/jupyter-kernel.nvim",
     dev = true,

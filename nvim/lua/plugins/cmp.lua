@@ -117,7 +117,7 @@ return {
       end,
     }
     opts.sources = cmp.config.sources({
-      { name = "jupyter", priority = 1000 },
+      { name = "jupyter", priority = 750 },
       { name = "nvim_lsp" },
       { name = "luasnip" },
       -- { name = "buffer", keyword_length = 5 },
