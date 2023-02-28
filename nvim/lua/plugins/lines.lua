@@ -134,7 +134,7 @@ return {
           InclineNormalNC = "CursorLine",
         },
       },
-      window = { zindex = 40 },
+      window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
       hide = { cursorline = true },
       ignore = { buftypes = function(bufnr, buftype) return false end },
       render = function(props)

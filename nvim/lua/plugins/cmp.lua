@@ -108,7 +108,7 @@ return {
           rg = "",
           cmdline = "",
           cmdline_history = "",
-          jupyter = "",
+          jupyter = "",
         }
         item.menu = source_icons[entry.source.name] or entry.source.name
         item.menu = item.menu .. " " .. item.kind

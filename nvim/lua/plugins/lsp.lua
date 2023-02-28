@@ -54,14 +54,14 @@ return {
       )
     end,
   },
-  {
-    "kosayoda/nvim-lightbulb",
-    event = "LspAttach",
-    init = function()
-      vim.fn.sign_define("LightBulbSign", { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" })
-    end,
-    opts = { autocmd = { enabled = true }, sign = { enabled = true, priority = 50 } },
-  },
+  -- {
+  --   "kosayoda/nvim-lightbulb",
+  --   event = "LspAttach",
+  --   init = function()
+  --     vim.fn.sign_define("LightBulbSign", { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" })
+  --   end,
+  --   opts = { autocmd = { enabled = true }, sign = { enabled = true, priority = 50 } },
+  -- },
   {
     "m-demare/hlargs.nvim",
     event = "LspAttach",

@@ -1,6 +1,6 @@
 local virt_text = function(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
-  local suffix = ("  %d..."):format(endLnum - lnum)
+  local suffix = ("  %d 󰇘 "):format(endLnum - lnum)
   local sufWidth = vim.fn.strdisplaywidth(suffix)
   local targetWidth = width - sufWidth
   local curWidth = 0
@@ -29,7 +29,7 @@ local ftMap = {
   python = { "treesitter", "indent" },
   bash = { "treesitter", "indent" },
   git = "",
-  neotree = "",
+  ["neo-tree"] = "",
 }
 
 return {
@@ -52,22 +52,10 @@ return {
     },
   },
   keys = {
-    {
-      "zR",
-      function() require("ufo").openAllFolds() end,
-    },
-    {
-      "zM",
-      function() require("ufo").closeAllFolds() end,
-    },
-    {
-      "zr",
-      function() require("ufo").openFoldsExceptKinds() end,
-    },
-    {
-      "zm",
-      function() require("ufo").closeFoldsWith() end,
-    },
+    { "zR", function() require("ufo").openAllFolds() end },
+    { "zM", function() require("ufo").closeAllFolds() end },
+    { "zr", function() require("ufo").openFoldsExceptKinds() end },
+    { "zm", function() require("ufo").closeFoldsWith() end },
 
     { -- h to peek fold, because l will usually expand fold
       "h",

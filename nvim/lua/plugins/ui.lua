@@ -27,6 +27,11 @@ return {
       },
     },
   },
+  {
+    "luukvbaal/statuscol.nvim",
+    opts = { foldfunc = "builtin", setopt = true, relculright = true, order = "SNs" },
+    event = "VeryLazy",
+  },
   { "NvChad/nvim-colorizer.lua", event = "BufReadPost", config = true },
 
   { "kevinhwang91/nvim-bqf", ft = "qf" },

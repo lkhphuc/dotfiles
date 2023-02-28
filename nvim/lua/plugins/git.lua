@@ -7,11 +7,11 @@ return {
     opts = function()
       return {
         signs = {
-          add = { text = "▎" },
-          change = { text = "▎" },
-          delete = { text = "契" },
-          topdelete = { text = "契" },
-          changedelete = { text = "▎" },
+          add = { text = "┃" },
+          change = { text = "┃" },
+          delete = { text = "" },
+          topdelete = { text = "" },
+          changedelete = { text = "┃" },
           untracked = { text = "┆" },
         },
         on_attach = function(bufnr)

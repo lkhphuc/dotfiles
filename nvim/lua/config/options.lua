@@ -29,3 +29,5 @@ o.list = false
 o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
 --     -- Appearance
 vim.g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"
+o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
