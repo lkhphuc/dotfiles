@@ -1,5 +1,4 @@
 return {
-  -- { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
   {
     "folke/zen-mode.nvim",
     config = true,

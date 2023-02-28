@@ -3,7 +3,9 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 source $HOME/.zsh/zsh-snap/znap.zsh
 
-znap source romkatv/powerlevel10k
+znap eval starship "starship init zsh --print-full-init"
+znap prompt
+# znap source romkatv/powerlevel10k
 # znap source jeffreytse/zsh-vi-mode
 # function zvm_after_init() {
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
@@ -29,14 +31,22 @@ znap source zsh-users/zsh-completions
 
 znap eval direnv  "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
-znap eval pip 'python3 -m pip completion --zsh'
-znap eval kitty 'kitty + complete setup zsh'
-[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 znap fpath _fuck "$(thefuck --alias)"
-znap eval conda "conda shell.zsh hook"
-znap install conda-incubator/conda-zsh-completion
 znap install ogham/exa
+
+# terminal's shell-integration
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
+# TODO: for wezterm
+# znap eval wezterm "curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh"
+znap fpath _wezterm "wezterm shell-completion --shell zsh"
+
+# python
+znap install conda-incubator/conda-zsh-completion
+znap eval conda "conda shell.zsh hook && conda config --set changeps1 False"
+znap function _pip_completion pip       'eval "$( pip completion --zsh )"'
+compctl -K    _pip_completion pip
 znap fpath _poetry 'poetry completions zsh'
+# package manager
 if type brew &>/dev/null
 then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -45,15 +55,18 @@ fi
 
 export EDITOR="nvim"
 if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
-command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
-alias v="$EDITOR" vimdiff="nvim -d"
+# command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
+alias v="$EDITOR" vimdiff="$EDITOR -d"
 alias g="git" lg="lazygit"
 
 export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000
+
+export RUST_WRAPPER=sccache
 
 source $HOME/.config/lf/lficons.rc
 [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"

@@ -21,13 +21,7 @@ return {
   {
     "folke/which-key.nvim",
     opts = {
-      window = {
-        -- border = "rounded", -- none, single, double, shadow, rounded
-        -- position = "bottom", -- bottom, top
-        -- margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-        -- padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-        winblend = 10,
-      },
+      window = { winblend = 10 },
       layout = {
         align = "center", -- align columns left, center or right
       },
@@ -95,10 +89,11 @@ return {
       },
     },
   },
-  { "m4xshen/smartcolumn.nvim", opts = {}, event = "BufReadPost" },
+  { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
+  { "m4xshen/smartcolumn.nvim", opts = {}, event = "BufReadPost" }, -- vertical
   {
     "tummetott/reticle.nvim",
-    event = "VeryLazy", -- lazyload the plugin if you like
+    event = "VeryLazy", -- one cursorline per tab
     opts = {
       always = { cursorline = { "neo-tree" } },
     },

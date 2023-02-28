@@ -40,15 +40,16 @@ fi
 ###########################
 
 
+brew install starship
 brew install bat
 brew install exa
 brew install git-delta
-brew tap tgotwig/linux-dust && brew install dust
+brew tap tgotwig/linux-dust & brew install dust
 brew install duf
 brew install ripgrep
 brew install thefuck
 brew install fd
-brew tap cantino/mcfly && brew install mcfly
+brew tap cantino/mcfly & brew install mcfly
 brew install zoxide
 brew install neovim
 brew install lazygit
