@@ -15,8 +15,7 @@ o.showbreak = "|>" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
-opt.path:append("**")
-
+o.cursorline = true
 o.ignorecase = true -- Ignore case when searching (use `\C` to force not doing that)
 o.incsearch = true -- Show search results while typing
 o.infercase = true -- Infer letter cases for a richer built-in keyword completion
@@ -27,7 +26,7 @@ o.virtualedit = "block" -- Allow going past the end of line in visual block mode
 
 o.list = false
 o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
---     -- Appearance
-vim.g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"
 o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
+opt.path:append("**")
+opt.shortmess:append("s")

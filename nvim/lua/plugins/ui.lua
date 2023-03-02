@@ -12,8 +12,8 @@ return {
         },
       },
       routes = {
-        { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
-        { filter = { event = "msg_show", find = "E486" }, opts = { skip = true } },
+        -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
+        { filter = { event = "msg_show", find = "E486" }, view = "mini" },
         { filter = { event = "msg_show", find = "%d+L, %d+B" }, view = "mini" },
       },
     },

@@ -46,59 +46,59 @@ return {
   },
   {
     "folke/styler.nvim",
-    lazy = false,
-    config = function()
-      require("styler").setup({
-        themes = {
-          markdown = { colorscheme = "kanagawa" },
-          help = { colorscheme = "kanagawa", background = "dark" },
-        },
-      })
-
+    lazy = "VeryLazy",
+    opts = {
+      themes = {
+        markdown = { colorscheme = "kanagawa" },
+        help = { colorscheme = "kanagawa", background = "dark" },
+      },
+    },
+    init = function()
       -- Due to the way different colorschemes configure different highlights group,
       -- there is no universal way to add gui options to all the desired components.
       -- Findout the final highlight group being linked to and update gui option.
-      local function mod_hl(opts, hl_name)
-        local hl_def = vim.api.nvim_get_hl_by_name(hl_name, true)
-        for k, v in pairs(opts) do
-          hl_def[k] = v
+      local function mod_hl(opts, hl_names)
+        for _, hl in ipairs(hl_names) do
+          local hl_def = vim.api.nvim_get_hl_by_name(hl, true)
+          for k, v in pairs(opts) do
+            hl_def[k] = v
+          end
+          local ok, _ = pcall(vim.api.nvim_set_hl, 0, hl, hl_def)
+          if not ok then vim.pretty_print("Failed to set highlight " .. hl) end
         end
-        local ok, _ = pcall(vim.api.nvim_set_hl, 0, hl_name, hl_def)
-        if not ok then print("Failed to set highlight " .. hl_name) end
       end
 
       vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
         group = vim.api.nvim_create_augroup("Color", {}),
         callback = function()
-          mod_hl({ bold = true, italic = true }, "@keyword.return")
-          mod_hl({ bold = true, italic = true }, "@constant.builtin")
-          mod_hl({ bold = true, italic = true }, "@function.builtin")
-          mod_hl({ bold = true, italic = true }, "@type.builtin")
-          mod_hl({ bold = true, italic = true }, "@boolean")
-
-          mod_hl({ bold = true }, "@type")
-          mod_hl({ bold = true }, "@constructor")
-          mod_hl({ bold = true }, "@operator")
-          mod_hl({ bold = true }, "@keyword")
-
-          mod_hl({ italic = true }, "@include")
-          mod_hl({ italic = true }, "@variable.builtin")
-          mod_hl({ italic = true }, "@conditional")
-          mod_hl({ italic = true }, "@keyword.function")
-          mod_hl({ italic = true }, "@comment")
-          mod_hl({ italic = true }, "@parameter")
-          mod_hl({ italic = true }, "@method.call")
-
-          -- Semshi  #TODO: semshi not loaded yet
-          -- mod_hl({ gui = 'combine'}, "semshiGlobal")
+          mod_hl({ bold = true, italic = true }, {
+            "@keyword.return",
+            "@constant.builtin",
+            "@function.builtin",
+            "@type.builtin",
+            "@boolean",
+          })
+          mod_hl({ bold = true }, {
+            "@type",
+            "@constructor",
+            "@operator",
+            "@keyword",
+          })
+          mod_hl({ italic = true }, {
+            "@include",
+            "@variable.builtin",
+            "@conditional",
+            "@keyword.function",
+            "@comment",
+            "@parameter",
+            "@method.call",
+          })
 
           vim.cmd([[
             highlight! Folded guibg=NONE
-            autocmd FileType floaterm setlocal winblend=10
           ]])
         end,
       })
-      vim.cmd([[colorscheme tokyonight-moon]])
     end,
   },
 }

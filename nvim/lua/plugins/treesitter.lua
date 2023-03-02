@@ -2,10 +2,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      { "mrjones2014/nvim-ts-rainbow" }, --paranetheses,
       { "RRethy/nvim-treesitter-textsubjects" },
       { "andymass/vim-matchup", branch = "master" },
       { "romgrk/nvim-treesitter-context", opts = {} },
+      { "m-demare/hlargs.nvim", opts = { excluded_filetypes = { "python" } } },
     },
     opts = {
       ensure_installed = {
@@ -73,9 +73,9 @@ return {
   },
   {
     "nvim-treesitter/playground",
-    name = "ts-playground",
     cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
   },
+  { "mrjones2014/nvim-ts-rainbow", config = function() vim.cmd("TSEnable rainbow") end, event = "BufReadPost" }, --paranetheses,
   -- {
   --   "mfussenegger/nvim-treehopper",
   --   keys = {

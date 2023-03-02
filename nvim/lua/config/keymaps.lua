@@ -7,11 +7,7 @@ local map = vim.keymap.set
 map("n", "<leader><space>", "za", { desc = "Toggle fold" })
 
 -- Open Shortcuts
-map("n", "<leader>L", function()
-  vim.cmd.tabnew()
-  vim.cmd.tcd("$HOME/.config/nvim")
-  require("persistence").load()
-end, { desc = "Config with LazyVim" })
+map("n", "<leader>L", "<CMD>Telescope lazy<CR>", { desc = "Plugins" })
 
 map("n", "<leader>fm", ":tabnew term://lf<CR>", { desc = "File manager" })
 

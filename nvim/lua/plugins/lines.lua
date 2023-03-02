@@ -35,7 +35,7 @@ return {
         lualine_a = {
           {
             "mode",
-            icon = "",
+            icon = "",
             fmt = function(str) return str:sub(1, 1) end,
             separator = { left = "", right = "" },
             padding = 0,
@@ -121,7 +121,6 @@ return {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
       { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
-    opts = { options = { always_show_bufferline = true, separator_style = "slope", enforce_regular_tabs = true } },
   },
   {
     "b0o/incline.nvim",

@@ -1,6 +1,13 @@
 return {
 
   -- file explorer
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      window = { width = 30 },
+      -- source_selector = { winbar = true },
+    },
+  },
   { "stevearc/oil.nvim", cmd = "Oil", opts = {} },
 
   { -- Undo tree
