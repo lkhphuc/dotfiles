@@ -1,6 +1,6 @@
-local virt_text = function(virtText, lnum, endLnum, width, truncate)
+local virt_text = function(virtText, lnum, endLnum, width, truncate, ctx)
   local newVirtText = {}
-  local suffix = ("  %d 󰇘 "):format(endLnum - lnum)
+  local suffix = ("  %d "):format(endLnum - lnum)
   local sufWidth = vim.fn.strdisplaywidth(suffix)
   local targetWidth = width - sufWidth
   local curWidth = 0
@@ -15,12 +15,20 @@ local virt_text = function(virtText, lnum, endLnum, width, truncate)
       table.insert(newVirtText, { chunkText, hlGroup })
       chunkWidth = vim.fn.strdisplaywidth(chunkText)
       -- str width returned from truncate() may less than 2nd argument, need padding
-      if curWidth + chunkWidth < targetWidth then suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth) end
+      if curWidth + chunkWidth < targetWidth then
+        suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+      end
       break
     end
     curWidth = curWidth + chunkWidth
   end
+
   table.insert(newVirtText, { suffix, "UfoPreviewThumb" })
+
+  local end_virt_text = ctx.get_fold_virt_text(endLnum)
+  for i, v in ipairs(end_virt_text) do
+    table.insert(newVirtText, v)
+  end
   return newVirtText
 end
 
@@ -37,19 +45,23 @@ return {
   event = "VeryLazy",
   dependencies = { "kevinhwang91/promise-async" },
   init = function()
-    vim.o.foldcolumn = "0"
+    vim.o.foldcolumn = "1"
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
+    vim.g.indent_blankline_char_priority = 11
   end,
   opts = {
     fold_virt_text_handler = virt_text,
-    provider_selector = function(bufnr, filetype, buftype) return ftMap[filetype] end,
+    provider_selector = function(bufnr, filetype, buftype)
+      return ftMap[filetype] or { "treesitter", "indent" }
+    end,
     preview = {
       win_config = {
         border = "shadow",
       },
     },
+    enable_get_fold_virt_text = true,
   },
   keys = {
     { "zR", function() require("ufo").openAllFolds() end },

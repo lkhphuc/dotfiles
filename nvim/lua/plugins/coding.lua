@@ -58,7 +58,13 @@ return {
     keys = { "f", "F", "t", "T", ";" },
     config = function(_, opts) require("mini.jump").setup(opts) end,
   },
-  { "mini.indentscope", opts = { mappings = { goto_top = "[ai", goto_bottom = "]ai" } } },
+  {
+    "mini.indentscope",
+    opts = {
+      mappings = { goto_top = "[ai", goto_bottom = "]ai" },
+      draw = { priority = 12 },
+    },
+  },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
   -- { "tpope/vim-unimpaired", event = "VeryLazy" },
   {
@@ -67,7 +73,7 @@ return {
     config = true,
     keys = {
       {
-        "U",
+        "ga",
         function() require("ts-node-action").node_action() end,
         desc = "Node Action",
       },
@@ -79,8 +85,16 @@ return {
     "Wansmer/sibling-swap.nvim",
     opts = { use_default_keymaps = false },
     keys = {
-      { "gs[", function() require("sibling-swap").swap_with_left() end, desc = "Swap with previous sibling" },
-      { "gs]", function() require("sibling-swap").swap_with_right() end, desc = "Swap with next sibling" },
+      {
+        "gs[",
+        function() require("sibling-swap").swap_with_left() end,
+        desc = "Swap with previous sibling",
+      },
+      {
+        "gs]",
+        function() require("sibling-swap").swap_with_right() end,
+        desc = "Swap with next sibling",
+      },
       {
         "gS[",
         function() require("sibling-swap").swap_with_left_with_opp() end,
@@ -96,7 +110,12 @@ return {
   {
     "echasnovski/mini.move",
     config = function(_, opts) require("mini.move").setup(opts) end,
-    keys = { { "<M-j>", mode = "x" }, { "<M-k>", mode = "x" }, { "<M-h>", mode = "x" }, { "<M-l>", mode = "x" } },
+    keys = {
+      { "<M-j>", mode = "x" },
+      { "<M-k>", mode = "x" },
+      { "<M-h>", mode = "x" },
+      { "<M-l>", mode = "x" },
+    },
   },
 
   -- {"Dkendal/nvim-treeclimber",

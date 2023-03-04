@@ -29,7 +29,26 @@ return {
   },
   {
     "luukvbaal/statuscol.nvim",
-    opts = { foldfunc = "builtin", setopt = true, relculright = true, order = "SNs" },
+    config = function(_, opts)
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true,
+        setopt = true,
+        segments = {
+          {
+            text = { builtin.lnumfunc },
+            condition = { builtin.not_empty },
+            click = "v:lua.ScLa",
+          },
+          { text = { "%s" }, click = "v:lua.ScSa" },
+          {
+            text = { builtin.foldfunc },
+            condition = { builtin.not_empty },
+            click = "v:lua.ScFa",
+          },
+        },
+      })
+    end,
     event = "VeryLazy",
   },
   { "NvChad/nvim-colorizer.lua", event = "BufReadPost", config = true },
@@ -73,7 +92,11 @@ return {
         body = "<leader>U",
         heads = {
           { "n", function() vim.o.number = not vim.o.number end, { desc = "number" } },
-          { "r", function() vim.o.relativenumber = not vim.o.relativenumber end, { desc = "relativenumber" } },
+          {
+            "r",
+            function() vim.o.relativenumber = not vim.o.relativenumber end,
+            { desc = "relativenumber" },
+          },
           {
             "v",
             function()

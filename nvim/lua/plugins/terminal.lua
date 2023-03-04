@@ -66,4 +66,9 @@ return {
     cmd = "ToggleTerm",
     keys = { [[<C-\>]] },
   },
+  {
+    "chomosuke/term-edit.nvim",
+    event = "TermOpen",
+    version = "1.*",
+  },
 }

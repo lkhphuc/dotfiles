@@ -75,7 +75,7 @@ return {
     "nvim-treesitter/playground",
     cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
   },
-  { "mrjones2014/nvim-ts-rainbow", config = function() vim.cmd("TSEnable rainbow") end, event = "BufReadPost" }, --paranetheses,
+  { "mrjones2014/nvim-ts-rainbow", config = function() vim.cmd.TSEnable("rainbow") end, event = "VeryLazy" }, --paranetheses,
   -- {
   --   "mfussenegger/nvim-treehopper",
   --   keys = {

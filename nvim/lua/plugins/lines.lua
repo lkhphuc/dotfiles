@@ -59,21 +59,31 @@ return {
           },
           {
             function() return require("nvim-navic").get_location() end,
-            cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+            cond = function()
+              return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+            end,
           },
         },
         lualine_x = {
           {
             function() return require("noice").api.status.command.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            cond = function()
+              return package.loaded["noice"] and require("noice").api.status.command.has()
+            end,
             color = fg("Statement"),
           },
           {
             function() return require("noice").api.status.mode.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+            cond = function()
+              return package.loaded["noice"] and require("noice").api.status.mode.has()
+            end,
             color = fg("Constant"),
           },
-          { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = fg("Special"),
+          },
           { "progress", icon = "", separator = false },
           { "location", padding = { left = 0, right = 1 } },
         },
@@ -121,6 +131,13 @@ return {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
       { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
+    opts = {
+      options = {
+        always_show_bufferline = true,
+        separator_style = "slope",
+        -- enforce_regular_tabs = true,
+      },
+    },
   },
   {
     "b0o/incline.nvim",
@@ -146,7 +163,8 @@ return {
 
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "bold"
+        local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic"
+          or "bold"
 
         local function get_git_diff()
           local icons = require("lazyvim.config").icons.git
@@ -167,8 +185,13 @@ return {
           local label = {}
 
           for severity, icon in pairs(icons) do
-            local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
-            if n > 0 then table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity }) end
+            local n = #vim.diagnostic.get(
+              props.buf,
+              { severity = vim.diagnostic.severity[string.upper(severity)] }
+            )
+            if n > 0 then
+              table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity })
+            end
           end
           if #label > 0 then table.insert(label, { "┊ " }) end
           return label

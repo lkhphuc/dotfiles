@@ -15,7 +15,11 @@ o.showbreak = "|>" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
+o.number = true
+o.relativenumber = true
+o.numberwidth = 3
 o.cursorline = true
+
 o.ignorecase = true -- Ignore case when searching (use `\C` to force not doing that)
 o.incsearch = true -- Show search results while typing
 o.infercase = true -- Infer letter cases for a richer built-in keyword completion
@@ -30,3 +34,5 @@ o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 opt.path:append("**")
 opt.shortmess:append("s")
+
+g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"
