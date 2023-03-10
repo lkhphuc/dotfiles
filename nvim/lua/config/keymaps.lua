@@ -16,6 +16,7 @@ map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 map("n", "H", "_", { desc = "First character of line" })
 map("n", "L", "$", { desc = "Last character of line" })
 -- map("n", "J", "mzJ`z", { desc = "Join line w/o cursor moing" })
+--
 
 -- Tab pages
 -- there are also LazyVim's default keymap with leader

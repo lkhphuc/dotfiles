@@ -73,7 +73,7 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-printf "source '$HOME/.config/zsh/zshrc'" >> "$HOME"/.zshrc
+printf "source '$HOME/.config/zsh/zshrc.zsh'" >> "$HOME"/.zshrc
 
 echo
 echo "Please log out and log back in for default shell to be initialized."

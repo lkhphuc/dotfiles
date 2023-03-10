@@ -33,6 +33,7 @@ znap eval direnv  "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
 znap fpath _fuck "$(thefuck --alias)"
 znap install ogham/exa
+znap source not-poma/lazyshell  # GPT
 
 # terminal's shell-integration
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
@@ -74,3 +75,5 @@ source $HOME/.config/lf/lficons.rc
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
+
+# vim:ft=bash

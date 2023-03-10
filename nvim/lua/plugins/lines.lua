@@ -62,6 +62,7 @@ return {
             cond = function()
               return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
             end,
+            color = { guibg = "none" },
           },
         },
         lualine_x = {
@@ -88,11 +89,17 @@ return {
           { "location", padding = { left = 0, right = 1 } },
         },
         lualine_y = {
-          -- { -- dap
-          --   function() return " " .. require("dap").status() end,
-          --   cond = function() return require("dap").status() ~= "" end,
-          --   color = fg("Debug"),
-          -- },
+          { -- dap
+            function()
+              local stat = require("dap").status()
+              if stat == "" then
+                return ""
+              else
+                return " " .. stat
+              end
+            end,
+            color = fg("Debug"),
+          },
           { function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end },
           { -- lsp
             function() return " " .. #vim.lsp.get_active_clients({ bufnr = 0 }) end,
@@ -123,9 +130,9 @@ return {
       extensions = { "quickfix", "nvim-tree" },
     },
   },
-
   {
     "akinsho/bufferline.nvim",
+    enabled = false,
     dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
@@ -138,6 +145,20 @@ return {
         -- enforce_regular_tabs = true,
       },
     },
+  },
+  {
+    "nanozuki/tabby.nvim",
+    event = "VeryLazy",
+    config = function()
+      vim.o.showtabline = 2
+      require("tabby.tabline").use_preset("active_wins_at_tail", {
+        tab_name = {
+          name_fallback = function(tabid)
+            return " " .. vim.fn.fnamemodify(vim.fn.getcwd(-1, tabid), ":~")
+          end,
+        },
+      })
+    end,
   },
   {
     "b0o/incline.nvim",

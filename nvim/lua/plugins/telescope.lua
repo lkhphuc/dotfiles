@@ -80,45 +80,56 @@ return {
     }
   end,
   keys = function()
-    local builtin = require("telescope.builtin")
     local Util = require("lazyvim.util")
 
     return {
-      { "<leader>/", builtin.current_buffer_fuzzy_find, desc = "Fuzzy search in buffer" },
-      { "<leader>*", "<CMD>Telescope menufacture grep_string<CR>", desc = "Search word under cursor" },
+      {
+        "<leader>/",
+        "Telescope current_buffer_fuzzy_find",
+        desc = "Fuzzy search in buffer",
+      },
+      {
+        "<leader>*",
+        "<CMD>Telescope menufacture grep_string<CR>",
+        desc = "Search word under cursor",
+      },
 
       { "<leader>ff", "<Cmd>Telescope smart_open<CR>", desc = "Open ..." },
       { "<leader>fF", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
       { "<leader>sf", "<CMD>Telescope menufacture find_files<CR>", desc = "Find Files (root dir)" },
       { "<leader>sF", Util.telescope("files", { cwd = false }), desc = "Search Files (cwd)" },
-      { "<leader>sb", builtin.buffers, desc = "Buffers" },
-      { "<leader>so", builtin.oldfiles, desc = "Recent Old files" },
+      { "<leader>sb", "<Cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "<leader>so", "<Cmd>Telescope oldfiles<CR>", desc = "Recent Old files" },
       { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
 
       { "<leader>sg", "<CMD>Telescope menufacture live_grep<CR>", desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-      { "<leader>st", "<cmd>Telescope grep_string search= theme=ivy <CR>", desc = "Fuzzy search workspace" },
+      {
+        "<leader>st",
+        "<cmd>Telescope grep_string search= theme=ivy <CR>",
+        desc = "Fuzzy search workspace",
+      },
 
-      { "<leader>sM", builtin.man_pages, desc = "[M]an Page" },
+      { "<leader>sM", "<Cmd>Telescope man_pages<CR>", desc = "[M]an Page" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
 
       { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-      { "<leader>s'", builtin.registers, desc = "Registers" },
-      { "<leader>sk", builtin.keymaps, desc = "Keymaps" },
-      { "<leader>sj", builtin.jumplist, desc = "Jumplist" },
-      { "<leader>sm", builtin.marks, desc = "Marks" },
-      { "<leader>sp", builtin.builtin, desc = "Pickers" },
-      { "<leader>s/", builtin.search_history, desc = "Search history" },
-      { "<leader>s;", builtin.command_history, desc = "Command history" },
-      { "<leader>sP", builtin.projects, desc = "Projects" },
-      { "<leader>sO", builtin.vim_options, desc = "Vim options" },
-      { "<leader>sa", builtin.autocommands, desc = "Auto Commands" },
+      { "<leader>s'", "<Cmd>Telescope registers<CR>", desc = "Registers" },
+      { "<leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Keymaps" },
+      { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
+      { "<leader>sm", "<Cmd>Telescope marks<CR>", desc = "Marks" },
+      { "<leader>sp", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
+      { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
+      { "<leader>s;", "<Cmd>Telescope command_history<CR>", desc = "Command history" },
+      { "<leader>sP", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+      { "<leader>sO", "<Cmd>Telescope vim_options<CR>", desc = "Vim options" },
+      { "<leader>sa", "<Cmd>Telescope autocommands<CR>", desc = "Auto Commands" },
 
-      { "<leader>gc", builtin.git_commits, desc = "git commits" },
-      { "<leader>gs", builtin.git_status, desc = "git status" },
+      { "<leader>gc", "<Cmd>Telescope git_commits<CR>", desc = "git commits" },
+      { "<leader>gs", "<Cmd>Telescope git_status<CR>", desc = "git status" },
       { "<leader>gf", "<CMD>Telescope menufacture git_files<CR>", desc = "git files" },
 
-      { "<leader>ss", builtin.resume, desc = "Resume last search" },
+      { "<leader>ss", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
     }
   end,
   config = function(_, opts)

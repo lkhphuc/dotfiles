@@ -1,39 +1,23 @@
 return {
   { "rmehri01/onenord.nvim" },
-  { "rebelot/kanagawa.nvim", opts = {
-    globalStatus = true,
-    dimInactive = true,
-  } },
+  { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
   { "navarasu/onedark.nvim" },
   { "projekt0n/github-nvim-theme" },
   { "cpea2506/one_monokai.nvim" },
-  { "folke/tokyonight.nvim", priority = 1000, opts = { dim_inactive = true } },
+  { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
   { "EdenEast/nightfox.nvim" },
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    init = function()
-      vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-    end,
+    opts = {
+      flavour = "macchiato", -- latte, frappe, macchiato, mocha
+      dim_inactive = { enabled = true },
+    },
   },
   {
     "marko-cerovac/material.nvim",
     init = function()
       vim.g.material_style = "deep ocean" -- darker lighter oceanic palenight deep ocean
-    end,
-  },
-  { "bluz71/vim-moonfly-colors", lazy = true },
-  { "Yazeed1s/minimal.nvim", lazy = true },
-  { "pappasam/papercolor-theme-slim", lazy = true },
-  {
-    "sainnhe/everforest",
-    init = function() vim.g.everforest_background = "hard" end,
-  },
-  { "sainnhe/sonokai" },
-  {
-    "ray-x/starry.nvim",
-    init = function()
-      vim.g.starry_daylight_switch = false --this allow using brighter color
     end,
   },
   {
@@ -46,11 +30,13 @@ return {
   },
   {
     "folke/styler.nvim",
-    lazy = "VeryLazy",
+    event = "VeryLazy",
     opts = {
       themes = {
-        markdown = { colorscheme = "kanagawa" },
-        help = { colorscheme = "kanagawa", background = "dark" },
+        json = { colorscheme = "kanagawa" },
+        toml = { colorscheme = "kanagawa" },
+        lua = { colorscheme = "catppuccin" },
+        help = { colorscheme = "one_monokai" },
       },
     },
     init = function()
@@ -96,6 +82,14 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
+            highlight! semshiImported gui=bold,italic
+            highlight! semshiGlobal gui=bold
+            highlight! link semshiParameter @parameter
+            highlight! link semshiParameterUnused @parameter
+            highlight! semshiParameterUnused gui=undercurl
+            highlight! link semshiAttribute @attribute
+            highlight! link semshiBuiltin @function.builtin
+            highlight! link semshiUnresolved @text.warning
           ]])
         end,
       })
