@@ -33,9 +33,9 @@ return {
     event = "VeryLazy",
     opts = {
       themes = {
-        json = { colorscheme = "kanagawa" },
+        json = { colorscheme = "catppuccin" },
         toml = { colorscheme = "kanagawa" },
-        lua = { colorscheme = "catppuccin" },
+        yaml = { colorscheme = "kanagawa" },
         help = { colorscheme = "one_monokai" },
       },
     },

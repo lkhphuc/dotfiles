@@ -1,30 +1,39 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    init = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] =
+        { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
+      keys[#keys + 1] =
+        { "<leader>lo", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
+      keys[#keys + 1] = { "<leader>cL", vim.lsp.codelens.run, desc = "CodeLens" }
+
+      keys[#keys + 1] = { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" }
+      keys[#keys + 1] =
+        { "<leader>wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" }
+      keys[#keys + 1] = {
+        "<leader>wl",
+        function() vim.pretty_print(vim.lsp.buf.list_workspace_folders()) end,
+        desc = "List workspace folder",
+      }
+    end,
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
       servers = {},
+
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-      -- setup = {
-      --   ["*"] = function(server, opts) -- fallback for all
-      --     require("lazyvim.util").on_attach(function(client, buffer)
-      --       -- TODO: Keymap for workspace
-      --       vim.keymap.set('n', '<leader>li', tele.lsp_incoming_calls, { buffer = buffer, desc="Incoming calls" })
-      --       vim.keymap.set('n', '<leader>lo', tele.lsp_outgoing_calls, { buffer = buffer, desc="Outgoing calls" })
-      --       vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, { buffer = buffer, desc = "Run CodeLens Action"})
-      --
-      --       vim.keymap.set( 'n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = buffer, desc="Add workspace" } )
-      --       vim.keymap.set( 'n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = buffer, desc="Remove workspace" } )
-      --       vim.keymap.set( 'n', '<leader>wl', function()
-      --         vim.inspect(vim.lsp.buf.list_workspace_folders())
-      --       end, { buffer = buffer, desc="List workspace folder" } )
-      --       vim.keymap.set('n', '<leader>ws', tele.lsp_dynamic_workspace_symbols, { buffer = buffer, desc="Workspace Symbol" })
-      --     end)
-      --   end,
-      -- },
+      setup = {
+        ["*"] = function(server, opts) -- fallback for all
+          opts.capabilities.textDocument.foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+          }
+        end,
+      },
     },
     dependencies = {
       {

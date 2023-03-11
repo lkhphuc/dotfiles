@@ -8,7 +8,7 @@ return {
         long_message_to_split = true, -- long messages will be sent to a split
         inc_rename = true, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = { -- add a border to hover docs and signature help
-          views = { hover = { border = { style = "shadow" }, position = { row = 1, col = 1 } } },
+          views = { hover = { border = { style = "shadow" }, position = { row = 1, col = 0 } } },
         },
       },
       routes = {
@@ -30,22 +30,15 @@ return {
   {
     "luukvbaal/statuscol.nvim",
     config = function(_, opts)
+      vim.o.foldcolumn = "0"
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
-        relculright = true,
+        -- relculright = true,
         setopt = true,
         segments = {
-          {
-            text = { builtin.lnumfunc },
-            condition = { builtin.not_empty },
-            click = "v:lua.ScLa",
-          },
+          { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
           { text = { "%s" }, click = "v:lua.ScSa" },
-          {
-            text = { builtin.foldfunc },
-            condition = { builtin.not_empty },
-            click = "v:lua.ScFa",
-          },
+          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
         },
       })
     end,
@@ -117,7 +110,7 @@ return {
       },
     },
   },
-  { "nvim-zh/colorful-winsep.nvim", config = true, event = "WinNew" },
+  { "nvim-zh/colorful-winsep.nvim", opts = { highlight = { bg = "none" } }, event = "WinNew" },
   { "m4xshen/smartcolumn.nvim", opts = {}, event = "BufReadPost" }, -- vertical
   {
     "tummetott/reticle.nvim",

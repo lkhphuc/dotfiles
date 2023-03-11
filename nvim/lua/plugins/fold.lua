@@ -26,26 +26,24 @@ local virt_text = function(virtText, lnum, endLnum, width, truncate, ctx)
   table.insert(newVirtText, { suffix, "UfoPreviewThumb" })
 
   local end_virt_text = ctx.get_fold_virt_text(endLnum)
-  for i, v in ipairs(end_virt_text) do
-    table.insert(newVirtText, v)
+  for _, chunk in ipairs(end_virt_text) do
+    local chunkText = chunk[1]
+    local chunkHL = chunk[2]
+    if chunkText:match("^%s+$") then
+      chunkText = " "
+      table.insert(newVirtText, { chunkText, chunkHL })
+    else
+      table.insert(newVirtText, chunk)
+    end
   end
   return newVirtText
 end
-
-local ftMap = {
-  vim = { "treesitter", "indent" },
-  python = { "treesitter", "indent" },
-  bash = { "treesitter", "indent" },
-  git = "",
-  ["neo-tree"] = "",
-}
 
 return {
   "kevinhwang91/nvim-ufo",
   event = "VeryLazy",
   dependencies = { "kevinhwang91/promise-async" },
   init = function()
-    vim.o.foldcolumn = "1"
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
@@ -54,12 +52,18 @@ return {
   opts = {
     fold_virt_text_handler = virt_text,
     provider_selector = function(bufnr, filetype, buftype)
-      return ftMap[filetype] or { "treesitter", "indent" }
+      local ftMap = {
+        lua = { "treesitter", "indent" },
+        vim = { "treesitter", "indent" },
+        python = { "treesitter", "indent" },
+        bash = { "treesitter", "indent" },
+        git = "",
+        ["neo-tree"] = "",
+      }
+      return ftMap[filetype]
     end,
     preview = {
-      win_config = {
-        border = "shadow",
-      },
+      win_config = { border = "shadow" },
     },
     enable_get_fold_virt_text = true,
   },
@@ -81,11 +85,4 @@ return {
       end,
     },
   },
-  -- NOTE: Not sure how to add capabilities in LazyVim yet, but it seems not needed for UFO anymore
-  -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-  -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-  -- capabilities.textDocument.foldingRange = {
-  -- 	dynamicRegistration = false,
-  -- 	lineFoldingOnly = true,
-  -- }
 }
