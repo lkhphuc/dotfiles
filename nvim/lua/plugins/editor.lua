@@ -57,8 +57,16 @@ return {
       { "<leader>xx", "<cmd>TroubleToggle<CR>", desc = "Trouble Toggle" },
       { "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", desc = "References (Trouble)" },
       { "<leader>xf", "<cmd>TroubleToggle lsp_definitions<cr>", desc = "Definitions (Trouble)" },
-      { "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Diagnostics (Trouble)" },
-      { "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      {
+        "<leader>xd",
+        "<cmd>TroubleToggle document_diagnostics<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xw",
+        "<cmd>TroubleToggle workspace_diagnostics<cr>",
+        desc = "Workspace Diagnostics (Trouble)",
+      },
       { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "QuickFix (Trouble)" },
       { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "LocationList (Trouble)" },
     },

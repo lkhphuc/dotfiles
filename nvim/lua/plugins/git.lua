@@ -17,7 +17,12 @@ return {
         on_attach = function(bufnr)
           local gs = package.loaded.gitsigns
           -- Text object
-          vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "git hunk", buffer = bufnr })
+          vim.keymap.set(
+            { "o", "x" },
+            "ih",
+            ":<C-U>Gitsigns select_hunk<CR>",
+            { desc = "git hunk", buffer = bufnr }
+          )
 
           -- Navigation
           local next_hunk = function()
@@ -42,10 +47,19 @@ return {
               p = { gs.preview_hunk, "preview" },
               S = { gs.stage_buffer, "stage buffer" },
               R = { gs.reset_buffer, "reset buffer" },
-              b = { function() gs.blame_line({ full = false }) end, "blame message" },
-              B = { function() gs.blame_line({ full = true }) end, "blame full" },
+              b = {
+                function() gs.blame_line({ full = false }) end,
+                "blame message",
+              },
+              B = {
+                function() gs.blame_line({ full = true }) end,
+                "blame full",
+              },
               d = { gs.diffthis, "diff with index" },
-              D = { function() gs.diffthis("~") end, "diff with last commit" },
+              D = {
+                function() gs.diffthis("~") end,
+                "diff with last commit",
+              },
               h = { "<Cmd>DiffviewFileHistory %<CR>", "file history" },
               H = { "<Cmd>DiffviewFileHistory <CR>", "Commit history" },
             },

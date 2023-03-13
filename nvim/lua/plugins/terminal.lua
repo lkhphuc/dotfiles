@@ -2,14 +2,25 @@ return {
 
   {
     "jpalardy/vim-slime",
+    enabled = false,
     event = "TermOpen",
     config = function()
       vim.g.slime_target = "neovim"
       vim.g.slime_no_mapping = 1
+      -- vim.g.slime_python_ipython = 1
       vim.keymap.set("n", "<S-CR>", "<Plug>SlimeSend")
       vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend")
       -- vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
       -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
+    end,
+  },
+  {
+    "mtikekar/nvim-send-to-term",
+    cmd = "SendHere",
+    init = function()
+      vim.g.send_disable_mapping = true
+      vim.keymap.set({ "n", "v" }, "<CR>", "<Plug>Send", { desc = "Send", remap = true })
+      vim.keymap.set({ "n" }, "<S-CR>", "<Plug>SendLine", { desc = "Send" })
     end,
   },
   {

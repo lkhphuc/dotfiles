@@ -44,7 +44,9 @@ function M.config()
       -- Keep original functionality of `automatic_setup = true`
       require("mason-nvim-dap.automatic_setup")(source_name)
     end,
-    python = function(source_name) dappy.setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3") end,
+    python = function(source_name)
+      dappy.setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3")
+    end,
   })
 
   -- TODO: create a Hydra for DAP

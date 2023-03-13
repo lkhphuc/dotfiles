@@ -23,7 +23,9 @@ return {
     config = function()
       require("smart-splits").setup({
         resize_mode = {
-          hooks = { on_leave = function() require("bufresize").register() end },
+          hooks = {
+            on_leave = function() require("bufresize").register() end,
+          },
         },
       })
 
@@ -82,9 +84,21 @@ return {
           { "<Space>", "<CMD>BufferLinePick<CR>", { exit = true, desc = "choose buffer" } },
 
           { "c", vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]) },
-          { "q", vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]), { desc = "close window" } },
-          { "<C-q>", vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]), { desc = false } },
-          { "<C-c>", vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]), { desc = false } },
+          {
+            "q",
+            vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
+            { desc = "close window" },
+          },
+          {
+            "<C-q>",
+            vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
+            { desc = false },
+          },
+          {
+            "<C-c>",
+            vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
+            { desc = false },
+          },
 
           { "<Esc>", nil, { exit = true, desc = false } },
         },

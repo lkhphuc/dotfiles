@@ -33,7 +33,8 @@ return {
     event = "VeryLazy",
     opts = {
       themes = {
-        json = { colorscheme = "catppuccin" },
+        markdown = { colorscheme = "catppuccin" },
+        json = { colorscheme = "kanagawa" },
         toml = { colorscheme = "kanagawa" },
         yaml = { colorscheme = "kanagawa" },
         help = { colorscheme = "one_monokai" },

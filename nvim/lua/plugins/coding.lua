@@ -38,7 +38,11 @@ return {
   {
     "echasnovski/mini.trailspace",
     keys = {
-      { "<leader>mt", function() require("mini.trailspace").trim() end, desc = "Trim white space" },
+      {
+        "<leader>mt",
+        function() require("mini.trailspace").trim() end,
+        desc = "Trim white space",
+      },
     },
   },
 

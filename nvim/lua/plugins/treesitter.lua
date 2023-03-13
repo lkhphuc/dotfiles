@@ -23,6 +23,7 @@ return {
         "query",
         "regex",
         "rust",
+        "rst",
         "toml",
         "tsx",
         "typescript",
@@ -55,7 +56,7 @@ return {
           },
         },
         textsubjects = { -- FIX: doesn't work
-          enable = true,
+          enable = false,
           prev_selection = ",", -- (Optional) keymap to select the previous selection
           keymaps = {
             ["<CR>"] = "textsubjects-smart",
@@ -75,7 +76,11 @@ return {
     "nvim-treesitter/playground",
     cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
   },
-  { "mrjones2014/nvim-ts-rainbow", config = function() vim.cmd.TSEnable("rainbow") end, event = "VeryLazy" }, --paranetheses,
+  { --rainbow paranetheses
+    "mrjones2014/nvim-ts-rainbow",
+    config = function() vim.cmd.TSEnable("rainbow") end,
+    event = "VeryLazy",
+  },
   -- {
   --   "mfussenegger/nvim-treehopper",
   --   keys = {

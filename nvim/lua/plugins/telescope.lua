@@ -1,3 +1,5 @@
+local Util = require("lazyvim.util")
+
 return {
   "nvim-telescope/telescope.nvim",
   event = "VeryLazy",
@@ -80,8 +82,6 @@ return {
     }
   end,
   keys = function()
-    local Util = require("lazyvim.util")
-
     return {
       {
         "<leader>/",

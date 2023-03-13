@@ -15,6 +15,7 @@ return {
         -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
         { filter = { event = "msg_show", find = "E486" }, view = "mini" },
         { filter = { event = "msg_show", find = "%d+L, %d+B" }, view = "mini" },
+        { filter = { event = "msg_show", find = "osc52" }, view = "mini" },
       },
     },
   },
@@ -104,14 +105,17 @@ return {
           { "i", function() vim.o.list = not vim.o.list end, { desc = "show invisible" } },
           { "s", function() vim.o.spell = not vim.o.spell end, { exit = true, desc = "spell" } },
           { "w", function() vim.o.wrap = not vim.o.wrap end, { desc = "wrap" } },
-          { "c", function() vim.o.cursorline = not vim.o.cursorline end, { desc = "cursor line" } },
+          {
+            "c",
+            function() vim.o.cursorline = not vim.o.cursorline end,
+            { desc = "cursor line" },
+          },
           { "<Esc>", nil, { exit = true } },
         },
       },
     },
   },
   { "nvim-zh/colorful-winsep.nvim", opts = { highlight = { bg = "none" } }, event = "WinNew" },
-  { "m4xshen/smartcolumn.nvim", opts = {}, event = "BufReadPost" }, -- vertical
   {
     "tummetott/reticle.nvim",
     event = "VeryLazy", -- one cursorline per tab

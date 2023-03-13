@@ -26,7 +26,7 @@ o.infercase = true -- Infer letter cases for a richer built-in keyword completio
 o.smartcase = true -- Don't ignore case when searching if pattern has upper case
 o.smartindent = true -- Make indenting smart
 
-o.virtualedit = "block" -- Allow going past the end of line in visual block mode
+o.virtualedit = "block,onemore" -- Allow going past the end of line in visual block mode
 
 o.list = false
 o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show

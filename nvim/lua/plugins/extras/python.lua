@@ -6,6 +6,7 @@ return {
       ---@type lspconfig.options
       servers = {
         pyright = {
+          -- disable hint, which are covered by ruff-lsp
           capabilities = (function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
@@ -45,6 +46,7 @@ return {
   },
   {
     "hanschen/vim-ipython-cell",
+    enabled = false,
     ft = "python",
     init = function()
       vim.g.slime_python_ipython = 1
@@ -138,5 +140,19 @@ return {
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
     keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel" } },
+    dependencies = { "stsewd/sphinx.nvim" },
+  },
+  {
+    "WhiteBlackGoose/magma-nvim-goose",
+    build = ":UpdateRemotePlugins",
+    cmd = "MagmaInit",
+    keys = {
+      { "<leader>r", "<cmd>MagmaEvaluateOperator<CR>", expr = true },
+      { "<leader>rr", "<cmd>MagmaEvaluateLine<CR>" },
+      { "<leader>rc", "<cmd>MagmaReevaluateCell<CR>" },
+      { "<leader>rd", "<cmd>MagmaDelete<CR>" },
+      { "<leader>ro", "<cmd>MagmaShowOutput<CR>" },
+      { "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", mode = "v" },
+    },
   },
 }

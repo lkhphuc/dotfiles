@@ -40,18 +40,33 @@ map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
 map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true })
 
 -- Add empty lines before and after cursor line
-map("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Put empty line above" })
-map("n", "go", "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>", { desc = "Put empty line below" })
+map(
+  "n",
+  "gO",
+  "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>",
+  { desc = "Put empty line above" }
+)
+map(
+  "n",
+  "go",
+  "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>",
+  { desc = "Put empty line below" }
+)
 
 -- Copy/paste with system clipboard
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
 map("n", "gp", '"+p', { desc = "Paste from system clipboard" })
--- - Paste in Visual with `P` to not copy selected text (`:h v_P`)
+-- Paste in Visual with `P` to not copy selected text (`:h v_P`)
 map("x", "gp", '"+P', { desc = "Paste from system clipboard" })
 
 -- gv: Reselect visual selection by default
 -- Reselect latest changed, put, or yanked text
-map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', { expr = true, desc = "Visually select changed text" })
+map(
+  "n",
+  "gV",
+  '"`[" . strpart(getregtype(), 0, 1) . "`]"',
+  { expr = true, desc = "Visually select changed text" }
+)
 
 -- Search inside visually highlighted text. Use `silent = false` for it to
 -- make effect immediately.
@@ -61,10 +76,13 @@ map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual sele
 map("x", "*", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]])
 map("x", "#", [[y?\V<C-R>=escape(@", '?\')<CR><CR>]])
 
--- Alternative way to save and exit in Normal mode.
 -- NOTE: Adding `redraw` helps with `cmdheight=0` if buffer is not modified
-map("n", "<C-S>", "<Cmd>silent! update | redraw<CR>", { desc = "Save" })
-map({ "i", "x" }, "<C-S>", "<Esc><Cmd>silent! update | redraw<CR>", { desc = "Save and go to Normal mode" })
+map(
+  { "n", "i", "x" },
+  "<C-S>",
+  "<Esc><Cmd>silent! update | redraw<CR>",
+  { desc = "Save and go to Normal mode" }
+)
 
 -- mini.basics toggles
 local toggle_prefix = [[\]]
