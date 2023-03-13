@@ -35,4 +35,5 @@ o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 opt.path:append("**")
 opt.shortmess:append("s")
 
-g.python3_host_prog = "/Users/phuc/.local/Caskroom/mambaforge/base/envs/neovim/bin/python"
+g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
+  .. "/envs/neovim/bin/python"

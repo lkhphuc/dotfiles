@@ -43,8 +43,8 @@ znap fpath _wezterm "wezterm shell-completion --shell zsh"
 
 # python
 znap install conda-incubator/conda-zsh-completion
-znap eval conda "conda shell.zsh hook && conda config --set changeps1 False"
-znap function _pip_completion pip       'eval "$( pip completion --zsh )"'
+znap eval conda "conda shell.zsh hook"
+znap function _pip_completion pip 'eval "$( pip completion --zsh )"'
 compctl -K    _pip_completion pip
 znap fpath _poetry 'poetry completions zsh'
 # package manager
@@ -55,7 +55,7 @@ fi
 
 
 export EDITOR="nvim"
-if [[ -v NVIM_LISTEN_ADDRESS ]]; then EDITOR="nvr" fi
+if [[ -v NVIM ]]; then EDITOR="nvr -l" fi
 # command -v floaterm >/dev/null 2>&1 && EDITOR="floaterm"
 alias v="$EDITOR" vimdiff="$EDITOR -d"
 alias g="git" lg="lazygit"
