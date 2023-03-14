@@ -83,11 +83,12 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
+
             highlight! semshiImported gui=bold,italic
             highlight! semshiGlobal gui=bold
             highlight! link semshiParameter @parameter
             highlight! link semshiParameterUnused @parameter
-            highlight! semshiParameterUnused gui=undercurl
+            highlight!      semshiParameterUnused gui=undercurl
             highlight! link semshiAttribute @attribute
             highlight! link semshiBuiltin @function.builtin
             highlight! link semshiUnresolved @text.warning

@@ -30,7 +30,7 @@ return {
   },
   {
     "luukvbaal/statuscol.nvim",
-    config = function(_, opts)
+    config = function()
       vim.o.foldcolumn = "0"
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({

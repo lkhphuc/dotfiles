@@ -38,7 +38,6 @@ return {
     dependencies = {
       {
         "jubnzv/virtual-types.nvim",
-        event = "LspAttach",
         init = function()
           require("lazyvim.util").on_attach(function(client, buffer)
             if client.server_capabilities.codeLensProvider ~= nil then

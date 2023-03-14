@@ -24,8 +24,15 @@ return {
         },
         ruff_lsp = {
           on_attach = function(client, _) client.server_capabilities.hoverProvider = false end,
-          settings = {
-            args = { "--extend-select W,ARG,I,UP,ANN,B,A,C4,T10,ICN,G,RET,SIM,PTH,PD,PL,NPY" },
+          init_options = {
+            settings = {
+              args = {
+                "--extend-select",
+                "W,ARG,I,UP,ANN,B,A,C4,T10,ICN,G,RET,SIM,PTH,PD,PL,NPY",
+                "--ignore",
+                "E501,W291",
+              },
+            },
           },
         },
       },
