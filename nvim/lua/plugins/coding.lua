@@ -17,10 +17,38 @@ return {
           },
           "^().*()$",
         },
+        x = function(ai_mode, _, _) -- Code Cell objects
+          local buf_nlines = vim.api.nvim_buf_line_count(0)
+          local begin_cell = 1 -- First cell from first line to first cell delimeter
+          local res = {}
+          for i = 1, buf_nlines do
+            local cur_line = vim.fn.getline(i)
+            if cur_line:sub(1, 4) == "# %%" then -- NOTE: Cell delimeter
+              local end_cell = i - 1
+              local region = {
+                from = { line = begin_cell, col = 1 },
+                to = { line = end_cell, col = vim.fn.getline(end_cell):len() },
+              }
+              table.insert(res, region)
+              begin_cell = i
+              if ai_mode == "i" then begin_cell = begin_cell + 1 end
+            end
+          end
+          table.insert(res, { -- Last cell from last delimeter to end of file
+            from = { line = begin_cell, col = 1 },
+            to = { line = buf_nlines, col = vim.fn.getline(buf_nlines):len() },
+          })
+          return res
+        end,
       },
     },
   },
-  { "echasnovski/mini.align", config = true },
+  {
+    "echasnovski/mini.align",
+    opts = { mappings = { start = "", start_with_preview = "gA" } },
+    config = function(_, opts) require("mini.align").setup(opts) end,
+    keys = { "gA", desc = "Align with preview" },
+  },
   {
     "echasnovski/mini.surround",
     opts = {
@@ -83,7 +111,7 @@ return {
       },
     },
   },
-  { "chaoren/vim-wordmotion", event = "VeryLazy" }, -- w handles Snake/camelCase, etc
+  -- { "chaoren/vim-wordmotion", event = "VeryLazy" }, -- w handles Snake/camelCase, etc
   { "ThePrimeagen/refactoring.nvim", config = true },
   {
     "Wansmer/sibling-swap.nvim",
