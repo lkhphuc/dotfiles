@@ -1,27 +1,14 @@
 return {
-
-  {
-    "jpalardy/vim-slime",
-    enabled = false,
-    event = "TermOpen",
-    config = function()
-      vim.g.slime_target = "neovim"
-      vim.g.slime_no_mapping = 1
-      -- vim.g.slime_python_ipython = 1
-      vim.keymap.set("n", "<S-CR>", "<Plug>SlimeSend")
-      vim.keymap.set("x", "<S-CR>", "<Plug>SlimeRegionSend")
-      -- vim.keymap.set("n", "<S-CR>", "<Plug>SlimeParagraphSend")
-      -- vim.keymap.set("n", "<leader><CR>", "<Plug>SlimeSendCell '>")
-    end,
-  },
   {
     "mtikekar/nvim-send-to-term",
-    cmd = "SendHere",
+    cmd = { "SendTo", "SendHere" },
     init = function()
-      vim.g.send_disable_mapping = true
-      vim.keymap.set({ "n", "v" }, "<CR>", "<Plug>Send", { desc = "Send", remap = true })
-      vim.keymap.set({ "n" }, "<S-CR>", "<Plug>SendLine", { desc = "Send" })
+      vim.g.send_disable_mapping = true -- dont use default
     end,
+    keys = {
+      { "<CR>", "<Plug>Send", mode = { "n", "v" }, desc = "Send" },
+      { "<S-CR>", "vip<Plug>Send", desc = "Send", mode = "n" },
+    },
   },
   {
     "romainchapou/nostalgic-term.nvim",
@@ -41,7 +28,6 @@ return {
     event = "VeryLazy",
     init = function()
       vim.g.neomux_win_num_status = ""
-      vim.g.neomux_start_term_map = "<Leader>ft" -- FIX:doesn't work
       vim.g.neomux_winswap_map_prefix = "<leader>ws"
       vim.g.neomux_term_sizefix_map = "<leader>wf"
       vim.g.neomux_dont_fix_term_ctrlw_map = 1
@@ -65,7 +51,7 @@ return {
     opts = {
       size = function(term)
         if term.direction == "horizontal" then
-          return 20
+          return vim.o.lines * 0.4
         elseif term.direction == "vertical" then
           return vim.o.columns * 0.4
         end
