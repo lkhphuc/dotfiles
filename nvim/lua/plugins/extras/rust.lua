@@ -1,13 +1,11 @@
 return {
+  {
+    "Saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    opts = {},
+  },
   { -- extend auto completion
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      {
-        "Saecki/crates.nvim",
-        event = { "BufRead Cargo.toml" },
-        config = true,
-      },
-    },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       local cmp = require("cmp")
@@ -36,11 +34,9 @@ return {
       end
     end,
   },
-
-  -- correctly setup lspconfig for Rust 🚀
+  { "simrat39/rust-tools.nvim" },
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "simrat39/rust-tools.nvim" },
     opts = {
       -- make sure mason installs the server
       servers = {

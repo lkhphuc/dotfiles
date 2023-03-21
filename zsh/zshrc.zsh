@@ -44,8 +44,8 @@ znap fpath _wezterm "wezterm shell-completion --shell zsh"
 # python
 znap install conda-incubator/conda-zsh-completion
 znap eval conda "conda shell.zsh hook"
-znap function _pip_completion pip 'eval "$( pip completion --zsh )"'
-compctl -K    _pip_completion pip
+znap eval pipx "register-python-argcomplete pipx"
+znap eval pip 'eval "$(pip completion --zsh)"'
 znap fpath _poetry 'poetry completions zsh'
 # package manager
 if type brew &>/dev/null
@@ -67,10 +67,12 @@ export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000
 
-export RUST_WRAPPER=sccache
+which sccache > /dev/null && export RUST_WRAPPER=sccache
+GO="$HOME/go/bin" && [ -d $GO ] && export PATH="$GO:$PATH"
+HASKELL="$HOME/.ghcup/bin" && [ -d $HASKELL ] && export PATH="$HASKELL:$PATH"
+export JUPYTER_CONFIG_PATH="~/.config/jupyter/:$JUPYTER_CONFIG_PATH"
 
 source $HOME/.config/lf/lficons.rc
-[ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
 autoload -z edit-command-line
 zle -N edit-command-line

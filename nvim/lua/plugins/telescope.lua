@@ -5,7 +5,7 @@ return {
   event = "VeryLazy",
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    { "nvim-telescope/telescope-file-browser.nvim", config = true },
+    { "nvim-telescope/telescope-file-browser.nvim" },
     { "LukasPietzschmann/telescope-tabs", config = true },
     { "molecule-man/telescope-menufacture" },
     {

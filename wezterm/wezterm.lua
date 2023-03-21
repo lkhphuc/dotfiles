@@ -48,12 +48,12 @@ return {
   },
 
   font = wezterm.font_with_fallback({
-    {family="Cascadia Code",
+    { family="Cascadia Code",
       harfbuzz_features={"calt", "ss01", "ss02"},
     },
-    {family="Rec Mono Duotone", },
-    {family="Victor Mono", weight="Medium", },
-    {family = "JetBrains Mono" },
+    { family="Rec Mono Duotone", },
+    { family = "JetBrains Mono" },
+    { family = "Symbols Nerd Font" },
   }),
   allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
   font_size = 14,

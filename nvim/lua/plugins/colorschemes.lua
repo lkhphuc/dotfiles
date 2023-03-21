@@ -23,10 +23,7 @@ return {
   {
     "xiyaowong/nvim-transparent",
     cmd = "TransparentToggle",
-    opts = {
-      enable = false,
-      -- extra_groups = 'all',
-    },
+    opts = {},
   },
   {
     "folke/styler.nvim",

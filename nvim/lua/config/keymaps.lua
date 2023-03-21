@@ -23,6 +23,8 @@ map("n", "L", "$", { desc = "Last character of line" })
 map("n", "]<TAB>", ":tabnext<CR>", { silent = true })
 map("n", "[<TAB>", ":tabprev<CR>", { silent = true })
 
+vim.keymap.del("n", "<leader>ft")
+vim.keymap.del("n", "<leader>fT")
 map("t", "<PageUp>", "<C-\\><C-n>") -- Exit terminal when scroll up
 
 -- Don't yank empty line to clipboard
@@ -55,6 +57,7 @@ map(
 
 -- Copy/paste with system clipboard
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
+map("n", "gY", '"+y$', { desc = "Copy to system clipboard" })
 map("n", "gp", '"+p', { desc = "Paste from system clipboard" })
 -- Paste in Visual with `P` to not copy selected text (`:h v_P`)
 map("x", "gp", '"+P', { desc = "Paste from system clipboard" })

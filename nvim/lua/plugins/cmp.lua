@@ -96,6 +96,8 @@ return {
     opts.sorting = {
       priority_weight = 2,
       comparators = {
+        require("cmp_fuzzy_path.compare"),
+        require("cmp_fuzzy_buffer.compare"),
         compare.offset,
         compare.exact,
         compare.score,
@@ -107,8 +109,6 @@ return {
         compare.order,
         require("copilot_cmp.comparators").prioritize,
         require("copilot_cmp.comparators").score,
-        require("cmp_fuzzy_buffer.compare"),
-        require("cmp_fuzzy_path.compare"),
       },
     }
   end,
