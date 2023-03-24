@@ -4877,7 +4877,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a wezterm"
+                                        "shell_command": "open -a WezTerm1 --args --config 'default_gui_startup_args={\"connect\", \"gpu\"}' --config 'font=require(\"wezterm\").font(\"Iosevka Term\")'"
                                     }
                                 ],
                                 "type": "basic"
@@ -4918,7 +4918,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a kitty"
+                                        "shell_command": "open -a wezterm"
                                     }
                                 ],
                                 "type": "basic"
