@@ -1,8 +1,9 @@
-local wezterm = require 'wezterm';
-local act = wezterm.action;
+local wezterm = require 'wezterm'
+local act = wezterm.action
 
 local function isViProcess(pane)
-  return pane:get_foreground_process_name():find('n?vim') ~= nil
+  local prog = pane:get_user_vars()["WEZTERM_PROG"]
+  return prog:match("^nvim") or prog:match("^v")
 end
 
 local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
@@ -48,23 +49,15 @@ return {
   },
 
   font = wezterm.font_with_fallback({
-    { family="Cascadia Code",
-      harfbuzz_features={"calt", "ss01", "ss02"},
-    },
-    { family="Rec Mono Duotone", },
+    -- { family="Cascadia Code", harfbuzz_features={"calt", "ss01", "ss02"}, },
+    { family = "IBM Plex Mono" },
+    { family = "Rec Mono Duotone", },
     { family = "JetBrains Mono" },
     { family = "Symbols Nerd Font" },
   }),
   allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
-  font_size = 14,
-  color_scheme = "Catppuccin Mocha",
-
-  window_padding = {
-    left   = "0.1cell",
-    right  = "0.1cell",
-    top    = "0.0cell",
-    bottom = "0.0cell",
-  },
+  font_size = 15,
+  color_scheme = "kanagawabones",
   window_decorations = "RESIZE",
 
   keys = {

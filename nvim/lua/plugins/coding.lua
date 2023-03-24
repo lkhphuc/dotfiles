@@ -149,6 +149,7 @@ return {
       { "<M-l>", mode = "x" },
     },
   },
+  {"lervag/vimtex", lazy=false},
 
   -- {"Dkendal/nvim-treeclimber",
   --   requires = 'rktjmp/lush.nvim',

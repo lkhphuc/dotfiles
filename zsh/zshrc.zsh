@@ -37,8 +37,7 @@ znap source not-poma/lazyshell  # GPT
 
 # terminal's shell-integration
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
-# TODO: for wezterm
-# znap eval wezterm "curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh"
+znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
 znap fpath _wezterm "wezterm shell-completion --shell zsh"
 
 # python

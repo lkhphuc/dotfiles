@@ -58,7 +58,7 @@ return {
   {
     "lkhphuc/jupyter-kernel.nvim",
     dev = true,
-    opts = { timeout = 5 },
+    opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
     keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel" } },
