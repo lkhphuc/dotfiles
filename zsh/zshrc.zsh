@@ -14,6 +14,22 @@ znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 # }
 
+# package managers
+[[ -x "$(command -v brew)" ]] &&  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+# terminal's shell-integration
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
+[[ "$TERM_PROGRAM" == "WezTerm" ]] && export TERM=wezterm
+znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
+znap fpath _wezterm "wezterm shell-completion --shell zsh"
+
+# python
+znap install conda-incubator/conda-zsh-completion
+znap eval conda "conda shell.zsh hook"
+znap eval pipx "register-python-argcomplete pipx"
+znap eval pip 'eval "$(pip completion --zsh)"'
+znap fpath _poetry 'poetry completions zsh'
+
 znap source marlonrichert/zsh-autocomplete
   zstyle ':autocomplete:*' min-input 0
   zstyle ':autocomplete:*' insert-unambiguous yes
@@ -29,29 +45,11 @@ znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 
-znap eval direnv  "direnv hook zsh"
+# znap eval direnv  "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
 znap fpath _fuck "$(thefuck --alias)"
 znap install ogham/exa
 znap source not-poma/lazyshell  # GPT
-
-# terminal's shell-integration
-[[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
-znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
-znap fpath _wezterm "wezterm shell-completion --shell zsh"
-
-# python
-znap install conda-incubator/conda-zsh-completion
-znap eval conda "conda shell.zsh hook"
-znap eval pipx "register-python-argcomplete pipx"
-znap eval pip 'eval "$(pip completion --zsh)"'
-znap fpath _poetry 'poetry completions zsh'
-# package manager
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
 
 export EDITOR="nvim"
 if [[ -v NVIM ]]; then EDITOR="nvr -l" fi

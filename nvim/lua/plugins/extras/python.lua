@@ -7,17 +7,17 @@ return {
       servers = {
         pyright = {
           -- disable hint, which are covered by ruff-lsp
-          capabilities = (function()
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-            return capabilities
-          end)(),
+          -- capabilities = (function()
+          --   local capabilities = vim.lsp.protocol.make_client_capabilities()
+          --   capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+          --   return capabilities
+          -- end)(),
           settings = {
+            pyright = {disableOrganizeImports = true},
             python = {
               analysis = {
-                diagnosticSeverityOverrides = {
-                  reportGeneralTypeIssues = "information",
-                },
+                diagnosticSeverityOverrides = { reportGeneralTypeIssues = "information", },
+                useLibraryCodeForTypes = true,
               },
             },
           },
@@ -27,10 +27,8 @@ return {
           init_options = {
             settings = {
               args = {
-                "--extend-select",
-                "W,ARG,I,UP,B,A,C4,T10,ICN,G,RET,SIM,PD,PL,NPY",
-                "--ignore",
-                "E501,W291",
+                "--extend-select", "W,I,UP,B,A,C4,T10,ICN,G,RET,SIM,PD,PL,NPY",
+                "--ignore", "E501,W291,PLR0913",
               },
             },
           },

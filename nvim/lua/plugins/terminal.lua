@@ -12,7 +12,6 @@ return {
   },
   {
     "romainchapou/nostalgic-term.nvim",
-    event = "TermOpen",
     opts = { -- this extension doesn't override terminal app mapping
       mappings = {
         { "<C-l>", "l" },
@@ -26,6 +25,7 @@ return {
   {
     "nikvdp/neomux",
     event = "VeryLazy",
+    dependencies = "nostalgic-term.nvim",
     init = function()
       vim.g.neomux_win_num_status = ""
       vim.g.neomux_winswap_map_prefix = "<leader>ws"

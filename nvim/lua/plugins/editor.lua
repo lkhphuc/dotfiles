@@ -17,13 +17,6 @@ return {
   },
 
   {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
-    keys = { { "<leader>co", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-    config = true,
-  },
-
-  {
     "echasnovski/mini.map",
     config = function()
       local map = require("mini.map")

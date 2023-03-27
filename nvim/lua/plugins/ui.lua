@@ -29,6 +29,12 @@ return {
     },
   },
   {
+    "SmiteshP/nvim-navbuddy",
+    event = "LspAttach",
+    opts = { lsp = { auto_attach = true }, },
+    keys = { {"<leader>cn", "<Cmd>Navbuddy<CR>", desc = "Code breadcrumbs Navigation"}, },
+  },
+  {
     "luukvbaal/statuscol.nvim",
     config = function()
       vim.o.foldcolumn = "0"

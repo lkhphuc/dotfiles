@@ -11,7 +11,7 @@ return {
     keys = { "<leader>wS", "<CMD>WinShift<CR>", desc = "Win Shift/Swap" }
   },
   { "kwkarlwang/bufresize.nvim", opts = {}, event = "WinEnter" }, -- on terminal resize
-  {"numToStr/Navigator.nvim", opts = {},
+  { "numToStr/Navigator.nvim", opts = {},
     keys = {
       { "<C-j>", "<CMD>NavigatorDown<CR>" },
       { "<C-k>", "<CMD>NavigatorUp<CR>" },
