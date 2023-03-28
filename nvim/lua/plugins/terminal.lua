@@ -11,26 +11,15 @@ return {
     },
   },
   {
-    "romainchapou/nostalgic-term.nvim",
-    opts = { -- this extension doesn't override terminal app mapping
-      mappings = {
-        { "<C-l>", "l" },
-        { "<C-h>", "h" },
-        { "<C-j>", "j" },
-        { "<C-k>", "k" },
-      },
-      enabled_filetypes = { "toggleterm" },
-    },
-  },
-  {
     "nikvdp/neomux",
     event = "VeryLazy",
-    dependencies = "nostalgic-term.nvim",
     init = function()
+      vim.g.neomux_start_term_map = ""
       vim.g.neomux_win_num_status = ""
       vim.g.neomux_winswap_map_prefix = "<leader>ws"
       vim.g.neomux_term_sizefix_map = "<leader>wf"
       vim.g.neomux_dont_fix_term_ctrlw_map = 1
+      vim.g.neomux_no_term_autoinsert = 1
     end,
   },
   {
@@ -58,7 +47,7 @@ return {
       end,
       open_mapping = [[<C-\>]],
       terminal_mapping = true,
-      start_in_insert = false, -- nostalgic-term
+      start_in_insert = false,
     },
     cmd = "ToggleTerm",
     keys = { [[<C-\>]] },

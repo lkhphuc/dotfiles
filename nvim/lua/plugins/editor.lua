@@ -80,15 +80,4 @@ return {
     },
     config = function(_, opts) require("mini.bracketed").setup(opts) end,
   },
-  -- {  -- NOTE: currently use smart-splits
-  --   "numToStr/Navigator.nvim",
-  --   keys = {
-  --     { "<C-h>", "<CMD>NavigatorLeft<CR>" },
-  --     { "<C-l>", "<CMD>NavigatorRight<CR>" },
-  --     { "<C-k>", "<CMD>NavigatorUp<CR>" },
-  --     { "<C-j>", "<CMD>NavigatorDown<CR>" },
-  --     { "<C-p>", "<CMD>NavigatorPrevious<CR>" },
-  --   },
-  --   config = true,
-  -- },
 }

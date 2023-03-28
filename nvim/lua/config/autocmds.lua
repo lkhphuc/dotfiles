@@ -4,7 +4,8 @@
 
 -- Plain terminal
 vim.api.nvim_create_autocmd("TermOpen", {
-  command = [[setlocal listchars= nonumber norelativenumber]],
+  pattern = "term://*",
+  command = [[setlocal listchars= nonumber norelativenumber | startinsert]],
 })
 
 vim.api.nvim_create_autocmd("TermClose", {
