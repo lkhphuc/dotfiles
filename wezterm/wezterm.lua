@@ -1,5 +1,6 @@
 ---@diagnostic disable: undefined-field
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 local config = {}
 if wezterm.config_builder then
@@ -8,18 +9,19 @@ end
 
 local function isViProcess(pane)
   local prog = pane:get_user_vars()["WEZTERM_PROG"]
-  return prog:match("^nvim") or prog:match("^v")
+  local isVi = prog:match("^nvim") or prog:match("^v") or prog:match("^vim")
+  return isVi
 end
 
 local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
   if isViProcess(pane) then
     window:perform_action(
       -- This should match the keybinds you set in Neovim.
-      wezterm.action.SendKey({ key = vim_direction, mods = "CTRL" }),
+      act.SendKey({ key = vim_direction, mods = "CTRL" }),
       pane
     )
   else
-    window:perform_action(wezterm.action.ActivatePaneDirection(pane_direction), pane)
+    window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
   end
 end
 
@@ -38,7 +40,7 @@ end)
 
 -- config.window_background_opacity = 0.9,
 -- config.debug_key_events = true,
-config.default_gui_startup_args = { "connect", "unix" }
+-- config.default_gui_startup_args = { "connect", "unix" }
 config.unix_domains = { { name = "unix" } }
 config.ssh_domains = {
   {
@@ -68,26 +70,38 @@ config.window_decorations = "RESIZE"
 config.window_padding = {left=0, right=0, top=0, bottom=0}
 
 config.keys = {
-  {
-    key = "_",
-    mods = "CMD|SHIFT",
-    action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }),
-  },
-  {
-    key = "|",
-    mods = "CMD|SHIFT",
-    action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
-  },
-  { key = "Enter", mods = "SHIFT", action = wezterm.action.DisableDefaultAssignment },
-  { key = "w", mods = "CMD", action = wezterm.action({ CloseCurrentPane = { confirm = true } }) },
+  { key = "_", mods = "CMD|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+  { key = "|", mods = "CMD|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 
-  { key = "h", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-left") },
-  { key = "j", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-down") },
-  { key = "k", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-up") },
-  { key = "l", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-right") },
+  { key = 'X', mods = 'CMD', action = act.ActivateCopyMode },
+  { key = 'Z', mods = 'CMD', action = act.TogglePaneZoomState },
+  { key = 'p', mods = 'CMD', action = act.ActivateCommandPalette },
 
-  { key = "UpArrow", mods = "SHIFT", action = wezterm.action({ ScrollToPrompt = -1 }) },
-  { key = "DownArrow", mods = "SHIFT", action = wezterm.action({ ScrollToPrompt = 1 }) },
+  { key = 'phys:Space', mods = 'CMD|SHIFT', action = act.QuickSelect },
+
+  { key = 'PageUp',   mods = '', action = act.ScrollByPage(-1) },
+  { key = 'PageDown', mods = '', action = act.ScrollByPage(1) },
+
+  { key = '>', mods = 'CMD|SHIFT', action = act.MoveTabRelative(1) },
+  { key = '<', mods = 'CMD|SHIFT', action = act.MoveTabRelative(-1) },
+
+  { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
+
+  { key = "h", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-left") },
+  { key = "l", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-right") },
+  { key = "k", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-up") },
+  { key = "j", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-down") },
+  { key = 'h', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Left' },
+  { key = 'l', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Right' },
+  { key = 'k', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Up' },
+  { key = 'j', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Down' },
+
+  -- NOTE: ALT|SHIFT is not working
+  { key = 'h', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Left',  1 } },
+  { key = 'l', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Right', 1 } },
+  { key = 'k', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Up',    1 } },
+  { key = 'j', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Down',  1 } },
+
 }
 --config.mouse_bindings = {
 --   { event={Down={streak=3, button="Left"}},
