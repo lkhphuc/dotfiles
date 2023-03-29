@@ -441,7 +441,7 @@ c.ZMQTerminalInteractiveShell.include_other_output = True
 #  terminal supports true color, the following command should print 'TRUECOLOR'
 #  in orange: printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 #  Default: False
-# c.ZMQTerminalInteractiveShell.true_color = False
+c.ZMQTerminalInteractiveShell.true_color = True
 
 ## Whether to use the kernel's is_complete message
 #          handling. If False, then the frontend will use its

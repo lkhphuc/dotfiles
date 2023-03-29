@@ -69,10 +69,12 @@ stty $old_stty_cfg
 if echo "$answer" | grep -iq "^y" ;then
 	mv ~/.zshrc ~/.zshrc.old
 	mv ~/.tmux.conf ~/.tmux.conf.old
+	mv ~/.ipython/profile_default/ipython_config.py ~/.ipython/profile_default/ipython_config.py.old
 else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
+ln -s ~/.config/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 printf "source '$HOME/.config/zsh/zshrc.zsh'" >> "$HOME"/.zshrc
 
 echo
