@@ -4,29 +4,26 @@ return {
   { "navarasu/onedark.nvim" },
   { "projekt0n/github-nvim-theme" },
   { "cpea2506/one_monokai.nvim" },
-  { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
+  { "folke/tokyonight.nvim", opts = { transparent = vim.g.transparent_enabled, dim_inactive = true, } },
   { "EdenEast/nightfox.nvim" },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
+  { "catppuccin/nvim", name = "catppuccin",
     opts = {
       flavour = "macchiato", -- latte, frappe, macchiato, mocha
+      transparent_background = vim.g.transparent_enabled,
       dim_inactive = { enabled = true },
     },
   },
-  {
-    "marko-cerovac/material.nvim",
+  { "marko-cerovac/material.nvim",
     init = function()
       vim.g.material_style = "deep ocean" -- darker lighter oceanic palenight deep ocean
     end,
   },
-  {
-    "xiyaowong/nvim-transparent",
+  { "xiyaowong/nvim-transparent",
+    lazy = false,
     cmd = "TransparentToggle",
-    opts = {},
+    opts = { extra_groups = { "CursorLine"}},
   },
-  {
-    "folke/styler.nvim",
+  { "folke/styler.nvim",
     event = "VeryLazy",
     opts = {
       themes = {
@@ -38,7 +35,7 @@ return {
       },
     },
     init = function()
-      -- Due to the way different colorschemes configure different highlights group,
+      -- NOTE: Due to the way different colorschemes configure different highlights group,
       -- there is no universal way to add gui options to all the desired components.
       -- Findout the final highlight group being linked to and update gui option.
       local function mod_hl(opts, hl_names)

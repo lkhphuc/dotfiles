@@ -38,7 +38,8 @@ wezterm.on("ActivatePaneDirection-down", function(window, pane)
   conditionalActivatePane(window, pane, "Down", "j")
 end)
 
--- config.window_background_opacity = 0.9,
+config.window_background_opacity = 0.7
+config.macos_window_background_blur = 20
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
 config.unix_domains = { { name = "unix" } }

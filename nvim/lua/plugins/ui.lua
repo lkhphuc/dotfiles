@@ -1,6 +1,6 @@
 return {
-  {
-    "folke/noice.nvim",
+  { "nvim-notify", opts = {background_colour = "#1a1b26"}},
+  { "folke/noice.nvim",
     opts = {
       presets = {
         bottom_search = false, -- a classic bottom cmdline for search

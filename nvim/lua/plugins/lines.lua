@@ -19,8 +19,7 @@ local function get_venv(variable)
 end
 
 return {
-  {
-    "nvim-lualine/lualine.nvim",
+  { "nvim-lualine/lualine.nvim",
     opts = {
       options = {
         component_separators = "┊", --        
@@ -137,27 +136,23 @@ return {
       extensions = { "quickfix", "nvim-tree" },
     },
   },
-  {
-    "akinsho/bufferline.nvim",
+  { "akinsho/bufferline.nvim",
     enabled = false,
-    dependencies = { "tiagovla/scope.nvim", opts = {} },
+    -- dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
       { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
     opts = {
       options = {
-        always_show_bufferline = true,
-        separator_style = "slope",
-        -- enforce_regular_tabs = true,
+        diagnostics = false,
+        -- separator_style = "slope",
       },
     },
   },
-  {
-    "nanozuki/tabby.nvim",
+  { "nanozuki/tabby.nvim",
     event = "VeryLazy",
     config = function()
-      vim.o.showtabline = 2
       require("tabby.tabline").use_preset("active_wins_at_tail", {
         tab_name = {
           name_fallback = function(tabid)
@@ -167,8 +162,7 @@ return {
       })
     end,
   },
-  {
-    "b0o/incline.nvim",
+  { "b0o/incline.nvim",
     branch = "main",
     event = "BufReadPost",
     opts = {
