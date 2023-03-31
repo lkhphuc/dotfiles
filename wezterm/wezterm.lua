@@ -92,17 +92,15 @@ config.keys = {
   { key = "l", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-right") },
   { key = "k", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-up") },
   { key = "j", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-down") },
-  { key = 'h', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Left' },
-  { key = 'l', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Right' },
-  { key = 'k', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Up' },
-  { key = 'j', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Down' },
+  { key = 'h', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Left' },
+  { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
+  { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
+  { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
 
-  -- NOTE: ALT|SHIFT is not working
   { key = 'h', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Left',  1 } },
   { key = 'l', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Right', 1 } },
   { key = 'k', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Up',    1 } },
   { key = 'j', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Down',  1 } },
-
 }
 --config.mouse_bindings = {
 --   { event={Down={streak=3, button="Left"}},

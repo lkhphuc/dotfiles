@@ -4,9 +4,28 @@ return {
     cmd = { "SendTo", "SendHere" },
     init = function()
       vim.g.send_disable_mapping = true -- dont use default
+      vim.api.nvim_create_user_command("SendToWez", function(opts)
+        local pane_id = opts.args
+        local function send_to_pane(lines)
+          lines = table.concat(lines, "\n")
+          os.execute("wezterm cli send-text --pane-id=" .. pane_id .. " '" .. lines .. "'")
+          os.execute("wezterm cli send-text --pane-id=" .. pane_id .. " --no-paste '\n'")
+        end
+        vim.g.send_target = { send = send_to_pane, }
+      end, { nargs = 1 })
+      vim.api.nvim_create_user_command("SendToJupyter", function(opts)
+        if vim.b.jupyter_attached == nil then
+          vim.notify("No jupyter kernel attached")
+          return
+        end
+        vim.g.send_target = { send = function (lines)
+          lines = table.concat(lines, "\n")
+          vim.fn.JupyterExecute(lines)
+        end}
+      end, {})
     end,
     keys = {
-      { "<CR>", "<Plug>Send", mode = { "n", "v" }, desc = "Send" },
+      { "<CR>",   "<Plug>Send",     desc = "Send", mode = { "n", "v" } },
       { "<S-CR>", "vap<Plug>Send}", desc = "Send", mode = "n" },
     },
   },
@@ -26,31 +45,14 @@ return {
     "voldikss/vim-floaterm",
     keys = "<Home>",
     init = function()
-      vim.g.floaterm_keymap_next = "<End>" -- Hyper+o
-      vim.g.floaterm_keymap_prev = "<S-End>" -- Hyper+Command+o
-      vim.g.floaterm_keymap_new = "<S-Home>" -- Hyper+Command+i
+      vim.g.floaterm_keymap_next = "<End>"    -- Hyper+o
+      vim.g.floaterm_keymap_prev = "<S-End>"  -- Hyper+Command+o
+      vim.g.floaterm_keymap_new = "<S-Home>"  -- Hyper+Command+i
       vim.g.floaterm_keymap_toggle = "<Home>" -- Hyper+i
       vim.g.floaterm_position = "center"
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
     end,
-  },
-  {
-    "akinsho/toggleterm.nvim",
-    opts = {
-      size = function(term)
-        if term.direction == "horizontal" then
-          return vim.o.lines * 0.4
-        elseif term.direction == "vertical" then
-          return vim.o.columns * 0.4
-        end
-      end,
-      open_mapping = [[<C-\>]],
-      terminal_mapping = true,
-      start_in_insert = false,
-    },
-    cmd = "ToggleTerm",
-    keys = { [[<C-\>]] },
   },
   {
     "chomosuke/term-edit.nvim",
