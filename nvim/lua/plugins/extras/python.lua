@@ -27,7 +27,7 @@ return {
           init_options = {
             settings = {
               args = {
-                "--extend-select", "W,I,UP,B,A,C4,T10,ICN,G,RET,SIM,PD,PL,NPY",
+                "--extend-select", "W,UP,B,A,T10,ICN,G,RET,SIM,PD,PL,NPY",
                 "--ignore", "E501,W291,PLR0913",
               },
             },
@@ -55,7 +55,6 @@ return {
   },
   {
     "lkhphuc/jupyter-kernel.nvim",
-    dev = true,
     opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
