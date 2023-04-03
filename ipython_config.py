@@ -38,7 +38,7 @@ c.InteractiveShellApp.exec_files = ["./.ipython.py"]  # Execute a local py file 
 
 ## A list of dotted module names of IPython extensions to load.
 #  Default: []
-c.InteractiveShellApp.extensions = ['autoreload', 'rich']
+c.InteractiveShellApp.extensions = ['autoreload']
 
 ## Dotted module name(s) of one or more IPython extensions to load.
 #  

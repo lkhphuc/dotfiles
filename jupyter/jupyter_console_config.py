@@ -412,7 +412,7 @@ c.ZMQTerminalInteractiveShell.include_other_output = True
 #  
 #          Only relevant if include_other_output is True.
 #  Default: 'Remote '
-# c.ZMQTerminalInteractiveShell.other_output_prefix = 'Remote '
+c.ZMQTerminalInteractiveShell.other_output_prefix = ''
 
 ## Display the current vi mode (when using vi editing mode).
 #  Default: True

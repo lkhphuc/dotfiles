@@ -7,9 +7,9 @@ return {
       vim.api.nvim_create_user_command("SendToWez", function(opts)
         local pane_id = opts.args
         local function send_to_pane(lines)
-          lines = table.concat(lines, "\n")
-          os.execute("wezterm cli send-text --pane-id=" .. pane_id .. " '" .. lines .. "'")
-          os.execute("wezterm cli send-text --pane-id=" .. pane_id .. " --no-paste '\n'")
+          lines = table.concat(lines, "\n"):gsub('"', '\\"') -- Escape double quote since it's used to wrap lines
+          os.execute('wezterm cli send-text --pane-id=' .. pane_id .. ' "' .. lines .. '"')
+          os.execute('wezterm cli send-text --pane-id=' .. pane_id .. ' --no-paste "\n"')
         end
         vim.g.send_target = { send = send_to_pane, }
       end, { nargs = 1 })

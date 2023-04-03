@@ -432,7 +432,7 @@ c.ConsoleWidget.include_other_output = True
 #  
 #          Only relevant if include_other_output is True.
 #  Default: '[remote] '
-# c.ConsoleWidget.other_output_prefix = '[remote] '
+c.ConsoleWidget.other_output_prefix = ''
 
 ## The type of paging to use. Valid values are:
 #  

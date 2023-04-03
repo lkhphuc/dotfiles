@@ -48,8 +48,11 @@ return {
         end
       end),
       ["<C-l>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then return cmp.complete_common_string() end
-        fallback()
+        if cmp.visible() then
+          return cmp.complete_common_string()
+        else
+          cmp.complete()
+        end
       end),
     })
 
