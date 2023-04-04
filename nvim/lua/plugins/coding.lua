@@ -45,10 +45,10 @@ return {
   },
   { "chrisgrieser/nvim-spider", lazy = true,
     keys = {
-      { "w",  function() require("spider").motion("w") end,  mode = { "n", "o", "x" }, desc = "Spider-w" },
-      { "e",  function() require("spider").motion("e") end,  mode = { "n", "o", "x" }, desc = "Spider-e" },
-      { "b",  function() require("spider").motion("b") end,  mode = { "n", "o", "x" }, desc = "Spider-b" },
-      { "ge", function() require("spider").motion("ge") end, mode = { "n", "o", "x" }, desc = "Spider-ge" },
+      { "w",  "<Cmd>lua require('spider').motion('w')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-w" },
+      { "e",  "<Cmd>lua require('spider').motion('e')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-e" },
+      { "b",  "<Cmd>lua require('spider').motion('b')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-b" },
+      { "ge", "<Cmd>lua require('spider').motion('ge')<CR>", mode = { "n", "o", "x" }, desc = "Spider-ge" },
     }
   },
   {

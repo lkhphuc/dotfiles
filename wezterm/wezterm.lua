@@ -13,33 +13,40 @@ local function isViProcess(pane)
   return isVi
 end
 
-local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
-  if isViProcess(pane) then
-    window:perform_action(
-      -- This should match the keybinds you set in Neovim.
-      act.SendKey({ key = vim_direction, mods = "CTRL" }),
-      pane
-    )
-  else
-    window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
-  end
+local direction_keys = {
+  Left = "h",
+  Down = "j",
+  Up = "k",
+  Right = "l", -- reverse lookup
+  h = "Left",
+  j = "Down",
+  k = "Up",
+  l = "Right",
+}
+
+local function split_nav(resize_or_move, key)
+  return {
+    key = key,
+    mods = resize_or_move == "resize" and "META" or "CTRL",
+    action = wezterm.action_callback(function(win, pane)
+      if isViProcess(pane) then
+        -- pass the keys through to vim/nvim
+        win:perform_action({
+          SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },
+        }, pane)
+      else
+        if resize_or_move == "resize" then
+          win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+        else
+          win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+        end
+      end
+    end),
+  }
 end
 
-wezterm.on("ActivatePaneDirection-right", function(window, pane)
-  conditionalActivatePane(window, pane, "Right", "l")
-end)
-wezterm.on("ActivatePaneDirection-left", function(window, pane)
-  conditionalActivatePane(window, pane, "Left", "h")
-end)
-wezterm.on("ActivatePaneDirection-up", function(window, pane)
-  conditionalActivatePane(window, pane, "Up", "k")
-end)
-wezterm.on("ActivatePaneDirection-down", function(window, pane)
-  conditionalActivatePane(window, pane, "Down", "j")
-end)
-
-config.window_background_opacity = 0.7
-config.macos_window_background_blur = 20
+config.window_background_opacity = 0.90
+config.macos_window_background_blur = 15
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
 config.unix_domains = { { name = "unix" } }
@@ -88,19 +95,15 @@ config.keys = {
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
 
-  { key = "h", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-left") },
-  { key = "l", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-right") },
-  { key = "k", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-up") },
-  { key = "j", mods = "CTRL",     action = act.EmitEvent("ActivatePaneDirection-down") },
-  { key = 'h', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Left' },
-  { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
-  { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
-  { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
-
-  { key = 'h', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Left',  1 } },
-  { key = 'l', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Right', 1 } },
-  { key = 'k', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Up',    1 } },
-  { key = 'j', mods = 'CMD|ALT', action = act.AdjustPaneSize{ 'Down',  1 } },
+  split_nav('move', 'h'),
+  split_nav('move', 'j'),
+  split_nav('move', 'k'),
+  split_nav('move', 'l'),
+  -- resize panes
+  split_nav('resize', 'h'),
+  split_nav('resize', 'j'),
+  split_nav('resize', 'k'),
+  split_nav('resize', 'l'),
 }
 --config.mouse_bindings = {
 --   { event={Down={streak=3, button="Left"}},

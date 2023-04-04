@@ -1,7 +1,7 @@
 local function fg(name)
   return function()
     ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl_by_name(name, true)
+    local hl = vim.api.nvim_get_hl(0, {name = name, link = true})
     return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
   end
 end
@@ -174,11 +174,11 @@ return {
       },
       window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
       hide = { cursorline = true },
-      ignore = { buftypes = function(bufnr, buftype) return false end },
+      -- ignore = { buftypes = function(bufnr, buftype) return false end },
       render = function(props)
         if vim.bo[props.buf].buftype == "terminal" then
           return {
-            { " " .. vim.bo[props.buf].channel .. " ", group = "DevIconTerminal" },
+            { " " .. vim.bo[props.buf].channel .. " ",       group = "DevIconTerminal" },
             { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
           }
         end
