@@ -34,7 +34,7 @@ c.InteractiveShellApp.exec_files = ["./.ipython.py"]  # Execute a local py file 
 
 ## lines of code to run at IPython startup.
 #  Default: []
-# c.InteractiveShellApp.exec_lines = []
+c.InteractiveShellApp.exec_lines = ["%xmode Plain"]
 
 ## A list of dotted module names of IPython extensions to load.
 #  Default: []
