@@ -27,7 +27,7 @@ return {
           init_options = {
             settings = {
               args = {
-                "--extend-select", "W,UP,B,A,T10,ICN,G,RET,SIM,PD,PL,NPY",
+                "--extend-select", "W,UP,B,A,T10,ICN,G,SIM,PD,PL,NPY",
                 "--ignore", "E501,W291,PLR0913",
               },
             },

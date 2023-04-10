@@ -26,7 +26,7 @@ return {
     end,
     keys = {
       { "<CR>",   "<Plug>Send",     desc = "Send", mode = { "n", "v" } },
-      { "<S-CR>", "vap<Plug>Send}", desc = "Send", mode = "n" },
+      { "<S-CR>", "vip<Plug>Send}", desc = "Send", mode = "n" },
     },
   },
   {

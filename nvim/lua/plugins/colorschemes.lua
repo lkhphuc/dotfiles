@@ -20,8 +20,10 @@ return {
   },
   { "xiyaowong/nvim-transparent",
     lazy = false,
-    cmd = "TransparentToggle",
-    opts = { extra_groups = { "CursorLine"}},
+    opts = {
+      -- extra_groups = { "CursorLine"}
+    },
+    keys = { {"\\t", "<Cmd>TransparentToggle<CR>", desc = "Toggle Transparent"} },
   },
   { "folke/styler.nvim",
     event = "VeryLazy",
@@ -85,6 +87,8 @@ return {
             highlight! link semshiAttribute @attribute
             highlight! link semshiBuiltin @function.builtin
             highlight! link semshiUnresolved Error
+            
+            highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
           ]])
         end,
       })

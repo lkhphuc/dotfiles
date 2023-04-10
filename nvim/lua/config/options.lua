@@ -8,7 +8,7 @@ g.mapleader = " "
 g.maplocalleader = " "
 
 o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
-o.splitright = false
+o.splitright = true
 
 o.breakindent = true -- Indent wrapped lines to match line start
 o.showbreak = "|>" -- character show in front of wrapped lines

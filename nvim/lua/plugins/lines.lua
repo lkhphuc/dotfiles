@@ -1,7 +1,7 @@
 local function fg(name)
   return function()
     ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl(0, {name = name, link = true})
+    local hl = vim.api.nvim_get_hl(0, { name = name, link = true })
     return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
   end
 end
@@ -18,6 +18,11 @@ local function get_venv(variable)
   return venv
 end
 
+local function is_wide_term(width)
+  width = width or 150
+  return vim.o.columns > width
+end
+
 return {
   { "nvim-lualine/lualine.nvim",
     opts = {
@@ -29,7 +34,6 @@ return {
         },
         -- always_divide_middle = false,
       },
-
       sections = {
         lualine_a = {
           {
@@ -39,10 +43,10 @@ return {
             separator = { left = "", right = "" },
             padding = 0,
           },
-          { "branch", color = { gui = "italic" } },
+          { "branch", color = { gui = "italic" }, cond = is_wide_term },
         },
         lualine_b = {
-          { -- Working directory
+          {
             function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
             color = { gui = "bold" },
           },
@@ -98,23 +102,26 @@ return {
           { -- dap
             function()
               local stat = require("dap").status()
-              if stat == "" then
-                return ""
-              else
-                return " " .. stat
-              end
+              if stat == "" or stat == nil then return "" end
+              return " " .. stat
             end,
             color = fg("Debug"),
           },
-          { function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end },
-          { -- lsp
-            function() return " " .. #vim.lsp.get_active_clients({ bufnr = 0 }) end,
-            cond = function() return #vim.lsp.get_active_clients({ bufnr = 0 }) ~= 0 end,
+          {
+            function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end,
+            cond = is_wide_term,
+          },
+          {
+            function()
+              local num_clients = #vim.lsp.get_active_clients({ bufnr = 0 })
+              if num_clients > 0 then return " " .. num_clients end
+              return ""
+            end,
             color = fg("Constant"),
           },
           { -- python env
             function()
-              local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or nil
+              local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or "NO ENV"
               return "🐍" .. venv
             end,
             cond = function() return vim.bo.filetype == "python" end,
@@ -178,7 +185,7 @@ return {
       render = function(props)
         if vim.bo[props.buf].buftype == "terminal" then
           return {
-            { " " .. vim.bo[props.buf].channel .. " ",       group = "DevIconTerminal" },
+            { " " .. vim.bo[props.buf].channel .. " ", group = "DevIconTerminal" },
             { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
           }
         end

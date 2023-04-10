@@ -6,7 +6,6 @@ return {
       { "andymass/vim-matchup", branch = "master" },
       { "romgrk/nvim-treesitter-context", opts = {} },
       { "mrjones2014/nvim-ts-rainbow" },
-      { "m-demare/hlargs.nvim", opts = { excluded_filetypes = { "python" } } },
     },
     opts = {
       ensure_installed = {
@@ -38,24 +37,14 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "+", -- Hold Shift with 2 keys next to Del
-          node_incremental = "+", -- to start and increase selection
-          node_decremental = "_", -- or decrease selection per node,
-          scope_incremental = "<nop>", -- or per scope TODO disable this to nomapping
+          init_selection = "+",
+          node_incremental = "+",
+          node_decremental = "_",
+          scope_incremental = "<S-CR>",
         },
       },
       rainbow = { enable = true },
       matchup = { enable = true, include_match_words = true },
-      pyfold = { enable = true, custom_foldtext = true },
-      -- textsubjects = { -- FIX: doesn't work
-      --   enable = false,
-      --   prev_selection = ",", -- (Optional) keymap to select the previous selection
-      --   keymaps = {
-      --     ["<CR>"] = "textsubjects-smart",
-      --     ["a<CR>"] = "textsubjects-container-outer",
-      --     ["i<CR>"] = "textsubjects-container-inner",
-      --   },
-      -- },
     },
   },
   {

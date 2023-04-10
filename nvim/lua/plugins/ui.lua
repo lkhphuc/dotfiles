@@ -121,10 +121,9 @@ return {
       },
     },
   },
-  { "nvim-zh/colorful-winsep.nvim", opts = { highlight = { bg = "none" } }, event = "WinNew" },
   {
     "tummetott/reticle.nvim",
-    event = "VeryLazy", -- one cursorline per tab
+    event = "BufReadPost", -- one cursorline per tab
     opts = {
       always = { cursorline = { "neo-tree" } },
     },
