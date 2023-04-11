@@ -1,11 +1,10 @@
 return {
-  { "rmehri01/onenord.nvim" },
   { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
   { "navarasu/onedark.nvim" },
   { "projekt0n/github-nvim-theme" },
   { "cpea2506/one_monokai.nvim" },
   { "folke/tokyonight.nvim", opts = { transparent = vim.g.transparent_enabled, dim_inactive = true, } },
-  { "EdenEast/nightfox.nvim" },
+  { "EdenEast/nightfox.nvim" }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { "catppuccin/nvim", name = "catppuccin",
     opts = {
       flavour = "macchiato", -- latte, frappe, macchiato, mocha
@@ -18,6 +17,7 @@ return {
       vim.g.material_style = "deep ocean" -- darker lighter oceanic palenight deep ocean
     end,
   },
+  { 'rose-pine/neovim', name = 'rose-pine' },
   { "xiyaowong/nvim-transparent",
     lazy = false,
     opts = {

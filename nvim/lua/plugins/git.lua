@@ -1,7 +1,15 @@
 return {
   { "tpope/vim-fugitive", cmd = "G" }, -- Git commands in nvim
   -- 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
-  { "sindrets/diffview.nvim", event = "CmdlineEnter" },
+  {
+    "sindrets/diffview.nvim",
+    event = "BufEnter",
+    keys = {
+      { "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", desc = "file history" },
+      { "<leader>gH", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
+      { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
+    },
+  },
   {
     "lewis6991/gitsigns.nvim",
     opts = function()
@@ -60,8 +68,6 @@ return {
                 function() gs.diffthis("~") end,
                 "diff with last commit",
               },
-              h = { "<Cmd>DiffviewFileHistory %<CR>", "file history" },
-              H = { "<Cmd>DiffviewFileHistory <CR>", "Commit history" },
             },
             ["<leader>gt"] = {
               name = "toggle",

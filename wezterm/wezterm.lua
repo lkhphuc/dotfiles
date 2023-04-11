@@ -95,6 +95,11 @@ config.keys = {
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
 
+  { key = 'h', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Left' },
+  { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
+  { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
+  { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
+
   split_nav('move', 'h'),
   split_nav('move', 'j'),
   split_nav('move', 'k'),
