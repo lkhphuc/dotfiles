@@ -47,10 +47,6 @@ return {
       matchup = { enable = true, include_match_words = true },
     },
   },
-  {
-    "nvim-treesitter/playground",
-    cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor", "TSNodeUnderCursor" },
-  },
   -- {
   --   "mfussenegger/nvim-treehopper",
   --   keys = {

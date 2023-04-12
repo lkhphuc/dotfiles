@@ -4,16 +4,17 @@ return {
     cmd = { "SendTo", "SendHere" },
     init = function()
       vim.g.send_disable_mapping = true -- dont use default
-      vim.api.nvim_create_user_command("SendToWez", function(opts)
+      local function send_to_wez(opts)
         local pane_id = opts.args
         local function send_to_pane(lines)
           lines = table.concat(lines, "\n"):gsub('"', '\\"') -- Escape double quote since it's used to wrap lines
           os.execute('wezterm cli send-text --pane-id=' .. pane_id .. ' "' .. lines .. '"')
-          os.execute('wezterm cli send-text --pane-id=' .. pane_id .. ' --no-paste "\n"')
+          os.execute('wezterm cli send-text --pane-id=' .. pane_id .. ' --no-paste "\r\r"')
         end
         vim.g.send_target = { send = send_to_pane, }
-      end, { nargs = 1 })
-      vim.api.nvim_create_user_command("SendToJupyter", function(opts)
+      end
+      vim.api.nvim_create_user_command("SendToWez", send_to_wez, { nargs = 1 })
+      local function send_to_jupyter(opts)
         if vim.b.jupyter_attached == nil then
           vim.notify("No jupyter kernel attached")
           return
@@ -22,11 +23,12 @@ return {
           lines = table.concat(lines, "\n")
           vim.fn.JupyterExecute(lines)
         end}
-      end, {})
+      end
+      vim.api.nvim_create_user_command("SendToJupyter", send_to_jupyter, {})
     end,
     keys = {
       { "<CR>",   "<Plug>Send",     desc = "Send", mode = { "n", "v" } },
-      { "<S-CR>", "vip<Plug>Send}", desc = "Send", mode = "n" },
+      { "<S-CR>", "vap<Plug>Send}", desc = "Send", mode = "n" },
     },
   },
   {
