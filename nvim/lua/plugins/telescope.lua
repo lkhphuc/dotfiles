@@ -42,9 +42,10 @@ return {
           prompt_position = "top",
         },
         sorting_strategy = "ascending",
+        path_display = { "truncate", shorten = 2 },
       },
       pickers = {
-        grep_string = { theme = "dropdown" },
+        grep_string = { theme = "dropdown", show_line = false },
         find_files = { theme = "dropdown" },
         git_files = { theme = "dropdown" },
         buffers = {
@@ -58,8 +59,26 @@ return {
         current_buffer_fuzzy_find = { theme = "ivy" },
         live_grep = {},
         colorscheme = { theme = "dropdown", enable_preview = true },
-        lsp_references = { theme = "dropdown", show_line = false },
-        lsp_definitions = { theme = "dropdown" },
+        lsp_references = {
+          theme = "cursor",
+          show_line = false,
+          layout_config = { height = 20, width = 100 },
+        },
+        lsp_definitions = {
+          theme = "cursor",
+          show_line = false,
+          layout_config = { height = 20, width = 100 },
+        },
+        lsp_type_definitions = {
+          theme = "cursor",
+          show_line = false,
+          layout_config = { height = 20, width = 100 },
+        },
+        lsp_implementations = {
+          theme = "cursor",
+          show_line = false,
+          layout_config = { height = 20, width = 100 },
+        },
       },
       extensions = {
         fzf = {},
@@ -85,7 +104,7 @@ return {
     return {
       {
         "<leader>/",
-        "Telescope current_buffer_fuzzy_find",
+        "<Cmd>Telescope current_buffer_fuzzy_find<CR>",
         desc = "Fuzzy search in buffer",
       },
       {
@@ -105,8 +124,8 @@ return {
       { "<leader>sg", "<CMD>Telescope menufacture live_grep<CR>", desc = "Grep (root dir)" },
       { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       {
-        "<leader>st",
-        "<cmd>Telescope grep_string search= theme=ivy <CR>",
+        "<leader>sT",
+        "<cmd>Telescope menufacture grep_string search= theme=ivy <CR>",
         desc = "Fuzzy search workspace",
       },
 
