@@ -3,7 +3,11 @@ return {
   { "navarasu/onedark.nvim" },
   { "projekt0n/github-nvim-theme" },
   { "cpea2506/one_monokai.nvim" },
-  { "folke/tokyonight.nvim", opts = { transparent = vim.g.transparent_enabled, dim_inactive = true, } },
+  { "folke/tokyonight.nvim", opts = {
+    transparent = vim.g.transparent_enabled,
+    dim_inactive = true,
+    styles = { floats = "transparent"}
+  } },
   { "EdenEast/nightfox.nvim" }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { "catppuccin/nvim", name = "catppuccin",
     opts = {

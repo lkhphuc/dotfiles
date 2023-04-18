@@ -4,14 +4,14 @@ try:
     import torch
 
     HAVE_TORCH = 1
-except:
+except ImportError:
     HAVE_TORCH = 0
 
 
 try:
     import jax
     HAVE_JAX = 1
-except:
+except ImportError:
     HAVE_JAX = 0
 
 
@@ -34,7 +34,7 @@ def pudb_stringifier(value: Any) -> str:
             params: int = sum([p.numel() for p in value.parameters() if p.requires_grad])
             rep: str = value.__repr__() if len(value.__repr__()) < 55 else type(value).__name__
 
-            return "{}[{}] Params: {}".format(rep, device, params)
+            return f"{rep}[{device}] Params: {params}"
         elif isinstance(value, torch.Tensor):
             return "{}[{}][{}] {}".format(
                 type(value).__name__,
@@ -42,13 +42,12 @@ def pudb_stringifier(value: Any) -> str:
                 str(value.device),
                 str(list(value.shape)),
             )
-    if HAVE_JAX:
-        if hasattr(value, "shape"):
-            out = f"{type(value).__name__}{value.shape}"
-            if hasattr(value, "dtype"):
-                out += f"[{value.dtype}]"
-            if hasattr(value, "client"):
-                out += f"[{value.client.platform}]"
-            return out
+    if HAVE_JAX and hasattr(value, "shape"):
+        out = f"{type(value).__name__}{value.shape}"
+        if hasattr(value, "dtype"):
+            out += f"[{value.dtype}]"
+        if hasattr(value, "client"):
+            out += f"[{value.client.platform}]"
+        return out
 
     return shortened_sfier(value)

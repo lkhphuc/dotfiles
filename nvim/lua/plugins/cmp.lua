@@ -12,6 +12,7 @@ return {
         col_offset = -2, -- to align text when 2 icons are prepended
       },
     }
+    opts.view = { entries = { name = "custom", selection_order = "near_cursor" } }
 
     -- Super tab completion
     local has_words_before = function()
