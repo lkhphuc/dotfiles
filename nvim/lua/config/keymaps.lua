@@ -7,7 +7,8 @@ local map = vim.keymap.set
 map("n", "<leader><space>", "za", { desc = "Toggle fold" })
 
 -- Open Shortcuts
-map("n", "<leader>L", "<CMD>Telescope lazy<CR>", { desc = "Plugins" })
+map("n", "<leader>p", "<CMD>Lazy<CR>", { desc = "Plugins manager" })
+map("n", "<leader>P", "<CMD>Telescope lazy<CR>", { desc = "Plugins search" })
 
 map("n", "<leader>fm", ":tabnew term://lf<CR>", { desc = "File manager" })
 

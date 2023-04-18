@@ -6,7 +6,7 @@ return {
       keys[#keys + 1] =
         { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
       keys[#keys + 1] =
-        { "<leader>lo", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
+        { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
       keys[#keys + 1] = { "<leader>cL", vim.lsp.codelens.run, desc = "CodeLens" }
 
       keys[#keys + 1] = { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" }

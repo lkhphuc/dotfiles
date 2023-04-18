@@ -7,6 +7,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- SmartSplit.nvim
 local function isViProcess(pane)
   local prog = pane:get_user_vars()["WEZTERM_PROG"]
   local isVi = prog:match("^nvim") or prog:match("^v") or prog:match("^vim")
@@ -45,8 +46,33 @@ local function split_nav(resize_or_move, key)
   }
 end
 
-config.window_background_opacity = 0.90
-config.macos_window_background_blur = 15
+
+-- ZenMode.nvim
+wezterm.on('user-var-changed', function(window, pane, name, value)
+    local overrides = window:get_config_overrides() or {}
+    if name == "ZEN_MODE" then
+        local incremental = value:find("+")
+        local number_value = tonumber(value)
+        if incremental ~= nil then
+            while (number_value > 0) do
+                window:perform_action(wezterm.action.IncreaseFontSize, pane)
+                number_value = number_value - 1
+            end
+            overrides.enable_tab_bar = false
+        elseif number_value < 0 then
+            window:perform_action(wezterm.action.ResetFontSize, pane)
+            overrides.font_size = nil
+            overrides.enable_tab_bar = true
+        else
+            overrides.font_size = number_value
+            overrides.enable_tab_bar = false
+        end
+    end
+    window:set_config_overrides(overrides)
+end)
+
+config.window_background_opacity = 0.80
+config.macos_window_background_blur = 10
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
 config.unix_domains = { { name = "unix" } }
@@ -75,7 +101,7 @@ config.font_size = 15
 config.color_scheme = "catppuccin-frappe"
 
 config.window_decorations = "RESIZE"
-config.window_padding = {left=0, right=0, top=0, bottom=0}
+config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
 config.keys = {
   { key = "_", mods = "CMD|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
@@ -100,6 +126,8 @@ config.keys = {
   { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
   { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
 
+  { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },
+  { key = 'Enter', mods = 'CMD|ALT', action = act.ToggleFullScreen, },
   split_nav('move', 'h'),
   split_nav('move', 'j'),
   split_nav('move', 'k'),

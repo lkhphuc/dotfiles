@@ -157,7 +157,13 @@ return {
       { "<M-l>", mode = "x" },
     },
   },
-  {"lervag/vimtex", lazy=false},
+  {
+    "lervag/vimtex",
+    ft = "tex",
+    init = function()
+      require("which-key").register({ ["<leader>l"] = { name = "VimTex" }, })
+    end
+  },
 
   -- {"Dkendal/nvim-treeclimber",
   --   requires = 'rktjmp/lush.nvim',

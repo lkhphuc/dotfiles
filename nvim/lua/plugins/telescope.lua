@@ -42,7 +42,7 @@ return {
           prompt_position = "top",
         },
         sorting_strategy = "ascending",
-        path_display = { "truncate", shorten = 2 },
+        path_display = { "smart", shorten = 10 },
       },
       pickers = {
         grep_string = { theme = "dropdown", show_line = false },
