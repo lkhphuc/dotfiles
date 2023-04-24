@@ -1,10 +1,4 @@
-local function fg(name)
-  return function()
-    ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl(0, { name = name, link = true })
-    return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
-  end
-end
+local fg = require("lazyvim.util").fg
 
 local function get_venv(variable)
   local venv = os.getenv(variable)
@@ -70,6 +64,11 @@ return {
         },
         lualine_x = {
           {
+            function() return "  " .. require("dap").status() end,
+            cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
+            color = fg("Debug"),
+          },
+          {
             function() return require("noice").api.status.search.get() end,
             cond = function()
               return package.loaded["noice"] and require("noice").api.status.search.has()
@@ -99,14 +98,6 @@ return {
           { "location", padding = { left = 0, right = 1 } },
         },
         lualine_y = {
-          { -- dap
-            function()
-              local stat = require("dap").status()
-              if stat == "" or stat == nil then return "" end
-              return " " .. stat
-            end,
-            color = fg("Debug"),
-          },
           {
             function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end,
             cond = is_wide_term,

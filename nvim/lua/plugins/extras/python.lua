@@ -13,17 +13,19 @@ return {
           --   return capabilities
           -- end)(),
           settings = {
-            pyright = {disableOrganizeImports = true},
+            pyright = { disableOrganizeImports = true },
             python = {
               analysis = {
-                diagnosticSeverityOverrides = { reportGeneralTypeIssues = "information", },
+                diagnosticSeverityOverrides = { reportGeneralTypeIssues = "warning" },
                 useLibraryCodeForTypes = true,
               },
             },
           },
         },
         ruff_lsp = {
-          on_attach = function(client, _) client.server_capabilities.hoverProvider = false end,
+          on_attach = function(client, _)
+            client.server_capabilities.hoverProvider = false
+          end,
           init_options = {
             settings = {
               args = {
@@ -35,6 +37,40 @@ return {
         },
       },
     },
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    init = function ()
+      require("which-key").register({ ["<leader>dd"] = {name = "+test"}})
+    end,
+    keys = {
+      {
+        "<leader>ddm",
+        function() require("dap-python").test_method() end,
+        desc = "Test Method",
+      },
+      {
+        "<leader>ddc",
+        function() require("dap-python").test_class() end,
+        desc = "Test Class",
+      },
+      {
+        "<leader>dd",
+        function() require("dap-python").debug_selection() end,
+        desc = "Debug Selection",
+        mode = "v",
+      },
+    },
+  },
+  {
+    "mason-nvim-dap.nvim",
+    opts = {
+      handlers = {
+        python = function(config)
+          require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3")
+        end
+      }
+    }
   },
 
   { -- semantic hightlight
