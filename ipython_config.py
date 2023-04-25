@@ -384,7 +384,7 @@ c.InteractiveShellApp.extensions = ['autoreload']
 #  nodes should be run interactively (displaying output from expressions).
 #  Choices: any of ['all', 'last', 'last_expr', 'none', 'last_expr_or_assign']
 #  Default: 'last_expr'
-# c.InteractiveShell.ast_node_interactivity = 'last_expr'
+c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
