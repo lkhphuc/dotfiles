@@ -87,7 +87,7 @@ return {
             hint = [[
    _J_: next hunk    _s_: stage hunk    _S_: stage buffer  _b_: blame line
    _K_: prev hunk    _r_: reset hunk    _R_: reset buffer  _B_: blame show full
-   _/_: base file    _u_: undo stage    _p_: preview hunk  _d_: show deleted 
+   _/_: base file    _u_: undo stage    _p_: preview hunk  _d_: show deleted
    _h_: file history _H_: files history
    ^
    ^ ^ _D_: Diff View         _<Enter>_: LazyGit         _<Esc>_: exit

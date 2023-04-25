@@ -16,8 +16,32 @@ map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
 map("n", "H", "_", { desc = "First character of line" })
 map("n", "L", "$", { desc = "Last character of line" })
--- map("n", "J", "mzJ`z", { desc = "Join line w/o cursor moing" })
---
+map("n", "J", function()
+  vim.cmd("normal! mzJ")
+  local col = vim.fn.col(".")
+  local context = string.sub(vim.fn.getline("."), col - 1, col + 1)
+  if
+    context == ") ."
+    or context == ") :"
+    or context:match("%( .")
+    or context:match(". ,")
+    or context:match("%w %.")
+  then
+    vim.cmd("undojoin | normal! x")
+  elseif context == ",)" then
+    vim.cmd("undojoin | normal! hx")
+  end
+  vim.cmd("normal! `z")
+end, { desc = "Join line with smart whitespace removal" })
+
+-- properly indent on empty line when "i"
+map("n", "i", function()
+  if #vim.fn.getline(".") == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true })
 
 -- Tab pages
 -- there are also LazyVim's default keymap with leader

@@ -81,10 +81,9 @@ return {
     config = function(_, opts) require("mini.bracketed").setup(opts) end,
   },
   { "RRethy/vim-illuminate", enabled = false },
-  { "echasnovski/mini.cursorword",
-    config = function(_, opts)
-      require("mini.cursorword").setup(opts)
-    end,
-    event = "VeryLazy"
+  {
+    "echasnovski/mini.cursorword",
+    config = function(_, opts) require("mini.cursorword").setup(opts) end,
+    event = "VeryLazy",
   },
 }

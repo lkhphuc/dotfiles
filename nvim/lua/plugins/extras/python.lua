@@ -23,14 +23,14 @@ return {
           },
         },
         ruff_lsp = {
-          on_attach = function(client, _)
-            client.server_capabilities.hoverProvider = false
-          end,
+          on_attach = function(client, _) client.server_capabilities.hoverProvider = false end,
           init_options = {
             settings = {
               args = {
-                "--extend-select", "W,UP,B,A,T10,ICN,G,SIM,PD,PL,NPY",
-                "--ignore", "E501,W291,PLR0913",
+                "--extend-select",
+                "W,UP,B,A,T10,ICN,G,SIM,PD,PL,NPY",
+                "--ignore",
+                "E501,W291,PLR0913",
               },
             },
           },
@@ -40,9 +40,7 @@ return {
   },
   {
     "mfussenegger/nvim-dap-python",
-    init = function ()
-      require("which-key").register({ ["<leader>dd"] = {name = "+test"}})
-    end,
+    init = function() require("which-key").register({ ["<leader>dd"] = { name = "+test" } }) end,
     keys = {
       {
         "<leader>ddm",
@@ -67,10 +65,12 @@ return {
     opts = {
       handlers = {
         python = function(config)
-          require("dap-python").setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3")
-        end
-      }
-    }
+          require("dap-python").setup(
+            vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python3"
+          )
+        end,
+      },
+    },
   },
 
   { -- semantic hightlight

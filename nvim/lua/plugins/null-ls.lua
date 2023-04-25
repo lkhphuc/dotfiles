@@ -4,17 +4,19 @@ return {
     sources = {
       require("null-ls").builtins.formatting.yapf.with({
         extra_args = function(params)
-          return params and {
-            "--style={indent_width:" .. vim.fn.shiftwidth() .. "}",
-          }
+          return params
+            and {
+              "--style={indent_width:" .. vim.fn.shiftwidth() .. "}",
+            }
         end,
       }),
 
       require("null-ls").builtins.formatting.stylua.with({
         extra_args = function(params)
-          return params and {
-            "indent-type=Spaces, indent-width=" .. vim.fn.shiftwidth(),
-          }
+          return params
+            and {
+              "indent-type=Spaces, indent-width=" .. vim.fn.shiftwidth(),
+            }
         end,
       }),
 

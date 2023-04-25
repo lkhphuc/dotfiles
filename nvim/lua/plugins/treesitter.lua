@@ -11,7 +11,6 @@ return {
       ensure_installed = {
         "bash",
         "haskell",
-        "help",
         "html",
         "javascript",
         "json",

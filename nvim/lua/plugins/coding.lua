@@ -1,12 +1,9 @@
 return {
-  -- Configured by from LazyVim
-  -- mini.comment & ts-commentstring
-  -- mini.bufremove
-  -- mini.pairs
   {
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {
+        u = require("mini.ai").gen_spec.function_call(), -- "usage" call of function or class
         N = { "%f[%d]%d+" }, -- Numbers
         e = { -- Word with camel case
           {
@@ -17,6 +14,7 @@ return {
           },
           "^().*()$",
         },
+        -- E = { '()()%f[%w]%w+()[ \t]*()' }, -- Imitate word ignoring digits and punctuation
         x = function(ai_mode, _, _) -- Code Cell objects
           local buf_nlines = vim.api.nvim_buf_line_count(0)
           local begin_cell = 1 -- First cell from first line to first cell delimeter
@@ -40,22 +38,23 @@ return {
           })
           return res
         end,
+        -- Whole buffer
+        g = function()
+          local from = { line = 1, col = 1 }
+          local to = {
+            line = vim.fn.line("$"),
+            col = math.max(vim.fn.getline("$"):len(), 1),
+          }
+          return { from = from, to = to }
+        end,
       },
     },
-  },
-  { "chrisgrieser/nvim-spider", lazy = true,
-    keys = {
-      { "w",  "<Cmd>lua require('spider').motion('w')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-w" },
-      { "e",  "<Cmd>lua require('spider').motion('e')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-e" },
-      { "b",  "<Cmd>lua require('spider').motion('b')<CR>",  mode = { "n", "o", "x" }, desc = "Spider-b" },
-      { "ge", "<Cmd>lua require('spider').motion('ge')<CR>", mode = { "n", "o", "x" }, desc = "Spider-ge" },
-    }
   },
   {
     "echasnovski/mini.align",
     opts = { mappings = { start = "", start_with_preview = "gA" } },
     config = function(_, opts) require("mini.align").setup(opts) end,
-    keys = { "gA", desc = "Align with preview", mode = {"n", "v"}, },
+    keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
     "echasnovski/mini.surround",
@@ -106,7 +105,6 @@ return {
     },
   },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
-  -- { "tpope/vim-unimpaired", event = "VeryLazy" },
   {
     "CKolkey/ts-node-action",
     dependencies = { "nvim-treesitter" },
@@ -160,9 +158,7 @@ return {
   {
     "lervag/vimtex",
     ft = "tex",
-    init = function()
-      require("which-key").register({ ["<leader>l"] = { name = "VimTex" }, })
-    end
+    init = function() require("which-key").register({ ["<leader>l"] = { name = "VimTex" } }) end,
   },
 
   -- {"Dkendal/nvim-treeclimber",

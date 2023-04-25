@@ -4,9 +4,15 @@ return {
     "weilbith/nvim-code-action-menu",
     cmd = "CodeActionMenu",
     init = function()
-      require("lazyvim.util").on_attach(function(client, buffer)
-        vim.keymap.set({ "n", "v" }, "<leader>ca", "<Cmd>CodeActionMenu<CR>", { buffer = buffer, desc = "Code Action" })
-      end
+      require("lazyvim.util").on_attach(
+        function(client, buffer)
+          vim.keymap.set(
+            { "n", "v" },
+            "<leader>ca",
+            "<Cmd>CodeActionMenu<CR>",
+            { buffer = buffer, desc = "Code Action" }
+          )
+        end
       )
     end,
   },
@@ -14,8 +20,10 @@ return {
     "neovim/nvim-lspconfig",
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
-      keys[#keys + 1] = { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
+      keys[#keys + 1] =
+        { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
+      keys[#keys + 1] =
+        { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
       keys[#keys + 1] = { "<leader>cL", vim.lsp.codelens.run, desc = "CodeLens" }
 
       -- keys[#keys + 1] = { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" }
@@ -60,12 +68,15 @@ return {
       {
         "kosayoda/nvim-lightbulb",
         init = function()
-          vim.fn.sign_define("LightBulbSign", { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" })
+          vim.fn.sign_define(
+            "LightBulbSign",
+            { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" }
+          )
         end,
         opts = {
           ignore = { "ruff_lsp" },
           autocmd = { enabled = true },
-          sign = { enabled = true, priority = 50 }
+          sign = { enabled = true, priority = 50 },
         },
       },
     },

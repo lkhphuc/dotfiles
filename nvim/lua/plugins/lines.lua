@@ -18,7 +18,8 @@ local function is_wide_term(width)
 end
 
 return {
-  { "nvim-lualine/lualine.nvim",
+  {
+    "nvim-lualine/lualine.nvim",
     opts = {
       options = {
         component_separators = "┊", --        
@@ -65,7 +66,7 @@ return {
         lualine_x = {
           {
             function() return "  " .. require("dap").status() end,
-            cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = fg("Debug"),
           },
           {
@@ -131,10 +132,11 @@ return {
           { "hostname", icon = "", separator = { right = "" }, padding = 1 },
         },
       },
-      extensions = { "quickfix", "nvim-tree" },
+      extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" },
     },
   },
-  { "akinsho/bufferline.nvim",
+  {
+    "akinsho/bufferline.nvim",
     enabled = false,
     -- dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
@@ -148,7 +150,8 @@ return {
       },
     },
   },
-  { "nanozuki/tabby.nvim",
+  {
+    "nanozuki/tabby.nvim",
     event = "VeryLazy",
     config = function()
       require("tabby.tabline").use_preset("active_wins_at_tail", {
@@ -160,7 +163,8 @@ return {
       })
     end,
   },
-  { "b0o/incline.nvim",
+  {
+    "b0o/incline.nvim",
     branch = "main",
     event = "BufReadPost",
     opts = {
