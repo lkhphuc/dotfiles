@@ -8,10 +8,9 @@ if wezterm.config_builder then
 end
 
 -- SmartSplit.nvim
-local function isViProcess(pane)
-  local prog = pane:get_user_vars()["WEZTERM_PROG"]
-  local isVi = prog:match("^nvim") or prog:match("^v") or prog:match("^vim")
-  return isVi
+local function is_vim(pane)
+  local prog = pane:get_user_vars().WEZTERM_PROG
+  return pane:get_user_vars().IS_NVIM or prog:match("^vim") or prog:match("^nvim") or prog:match("^v ")
 end
 
 local direction_keys = {
@@ -30,7 +29,7 @@ local function split_nav(resize_or_move, key)
     key = key,
     mods = resize_or_move == "resize" and "META" or "CTRL",
     action = wezterm.action_callback(function(win, pane)
-      if isViProcess(pane) then
+      if is_vim(pane) then
         -- pass the keys through to vim/nvim
         win:perform_action({
           SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },

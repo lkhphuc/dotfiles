@@ -21,6 +21,17 @@
                         "description": "CapsLock to Hyper",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "type": "device_unless",
+                                        "identifiers": [
+                                            {
+                                                "vendor_id": 7504,
+                                                "product_id": 24926
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "description": "capslock = esc(click) | hyper(hold)",
                                 "from": {
                                     "key_code": "caps_lock",
@@ -4782,7 +4793,7 @@
                         "description": "Hyper Application",
                         "manipulators": [
                             {
-                                "description": "command + e = finder",
+                                "description": "command + e = mail",
                                 "from": {
                                     "key_code": "e",
                                     "modifiers": {
@@ -4797,13 +4808,13 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a finder"
+                                        "shell_command": "open -a mail"
                                     }
                                 ],
                                 "type": "basic"
                             },
                             {
-                                "description": "option + e = mail",
+                                "description": "option + e = preview",
                                 "from": {
                                     "key_code": "e",
                                     "modifiers": {
@@ -4818,7 +4829,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a mail"
+                                        "shell_command": "open -a preview"
                                     }
                                 ],
                                 "type": "basic"
