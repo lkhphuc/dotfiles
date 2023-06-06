@@ -48,10 +48,6 @@ end, { expr = true })
 map("n", "]<TAB>", ":tabnext<CR>", { silent = true })
 map("n", "[<TAB>", ":tabprev<CR>", { silent = true })
 
-vim.keymap.del("n", "<leader>ft")
-vim.keymap.del("n", "<leader>fT")
-map("t", "<PageUp>", "<C-\\><C-n>") -- Exit terminal when scroll up
-
 -- Don't yank empty line to clipboard
 map("n", "dd", function()
   local is_empty_line = vim.api.nvim_get_current_line():match("^%s*$")
@@ -167,3 +163,5 @@ vim.api.nvim_create_user_command("DiffOrig", function()
     end, { buffer = buf })
   end
 end, { desc = "Diff with last saved." })
+
+vim.keymap.set({ "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })

@@ -45,12 +45,12 @@ return {
   },
   {
     "voldikss/vim-floaterm",
-    keys = "<Home>",
+    keys = "<C-;>",
     init = function()
-      vim.g.floaterm_keymap_next = "<End>"    -- Hyper+o
-      vim.g.floaterm_keymap_prev = "<S-End>"  -- Hyper+Command+o
-      vim.g.floaterm_keymap_new = "<S-Home>"  -- Hyper+Command+i
-      vim.g.floaterm_keymap_toggle = "<Home>" -- Hyper+i
+      vim.g.floaterm_keymap_next = "<Home>"
+      vim.g.floaterm_keymap_prev = "<End>"
+      vim.g.floaterm_keymap_new = "<M-;>"
+      vim.g.floaterm_keymap_toggle = "<C-;>"
       vim.g.floaterm_position = "center"
       vim.g.floaterm_width = 0.9
       vim.g.floaterm_height = 0.9
@@ -59,6 +59,5 @@ return {
   {
     "chomosuke/term-edit.nvim",
     event = "TermOpen",
-    version = "1.*",
   },
 }

@@ -26,6 +26,9 @@ return {
         { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
       keys[#keys + 1] = { "<leader>cL", vim.lsp.codelens.run, desc = "CodeLens" }
 
+      -- disable keymaps
+      keys[#keys + 1] = { "gy", false } -- For gy, gp to system clipboard
+      keys[#keys + 1] = { "gt", "<CMD>Telescope lsp_type_definitions<CR>" }
       -- keys[#keys + 1] = { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" }
       -- keys[#keys + 1] = { "<leader>wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" }
       -- keys[#keys + 1] = {

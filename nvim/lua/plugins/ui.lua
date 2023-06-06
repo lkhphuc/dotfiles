@@ -12,10 +12,16 @@ return {
         },
       },
       routes = {
-        -- { filter = { event = "msg_show", kind = "search_count" }, opts = { skip = true } },
-        { filter = { event = "msg_show", find = "E486" }, view = "mini" },
-        { filter = { event = "msg_show", find = "%d+L, %d+B" }, view = "mini" },
-        { filter = { event = "msg_show", find = "osc52" }, view = "mini" },
+        {
+          filter = {
+            event = "msg_show",
+            any = {
+              { find = "E486" },
+              { find = "osc52" }
+            }
+          },
+          view = "mini"
+        },
       },
     },
   },
@@ -51,7 +57,6 @@ return {
     end,
     event = "VeryLazy",
   },
-  { "NvChad/nvim-colorizer.lua", event = "BufReadPost", config = true },
 
   { "kevinhwang91/nvim-bqf", ft = "qf" },
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump

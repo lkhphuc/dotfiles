@@ -15,6 +15,18 @@ return {
     cmd = "MundoToggle",
     keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
+  
+  {
+    "simrat39/symbols-outline.nvim",
+    opts = {
+      keymaps = {
+        fold_all = "H",
+        unfold_all = "L",
+      }
+    },
+    keys = {
+      { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" } }
+  },
 
   {
     "echasnovski/mini.map",

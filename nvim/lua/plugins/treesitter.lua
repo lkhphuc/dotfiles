@@ -5,7 +5,7 @@ return {
       -- { "RRethy/nvim-treesitter-textsubjects" },
       { "andymass/vim-matchup", branch = "master" },
       { "romgrk/nvim-treesitter-context", opts = {} },
-      { "mrjones2014/nvim-ts-rainbow" },
+      { "HiPhish/nvim-ts-rainbow2"},
     },
     opts = {
       ensure_installed = {
