@@ -1014,9 +1014,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + u = shift + page_up",
+                                "description": "command + i = shift + page_up",
                                 "from": {
-                                    "key_code": "u",
+                                    "key_code": "i",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_command",
@@ -1038,7 +1038,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + command + u = shift + page_up",
+                                "description": "option + command + i = shift + page_up",
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": {
@@ -1204,9 +1204,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": " u = page_up",
+                                "description": " i = page_up",
                                 "from": {
-                                    "key_code": "u",
+                                    "key_code": "i",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
@@ -1224,9 +1224,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + i = shift + home",
+                                "description": "command + y = shift + home",
                                 "from": {
-                                    "key_code": "i",
+                                    "key_code": "y",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_command",
@@ -1248,9 +1248,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + command + i = select whole line to head",
+                                "description": "option + command + y = select whole line to head",
                                 "from": {
-                                    "key_code": "i",
+                                    "key_code": "y",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_option",
@@ -1422,9 +1422,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": " i = home",
+                                "description": " y = home",
                                 "from": {
-                                    "key_code": "i",
+                                    "key_code": "y",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
@@ -1653,9 +1653,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + p = shift + page_down",
+                                "description": "command + u = shift + page_down",
                                 "from": {
-                                    "key_code": "p",
+                                    "key_code": "u",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_command",
@@ -1677,9 +1677,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + command + p = shift + page_down",
+                                "description": "option + command + u = shift + page_down",
                                 "from": {
-                                    "key_code": "p",
+                                    "key_code": "u",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_option",
@@ -1839,9 +1839,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": " p = page_down",
+                                "description": " u = page_down",
                                 "from": {
-                                    "key_code": "p",
+                                    "key_code": "u",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
@@ -4979,9 +4979,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + y = karabiner",
+                                "description": "command + p = karabiner",
                                 "from": {
-                                    "key_code": "y",
+                                    "key_code": "p",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_command",
@@ -5000,9 +5000,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + y = amphetamine",
+                                "description": "option + p = amphetamine",
                                 "from": {
-                                    "key_code": "y",
+                                    "key_code": "p",
                                     "modifiers": {
                                         "mandatory": [
                                             "left_option",
@@ -5021,9 +5021,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "y = Siri",
+                                "description": "p = Siri",
                                 "from": {
-                                    "key_code": "y",
+                                    "key_code": "p",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
