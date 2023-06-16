@@ -29,13 +29,6 @@ return {
       -- disable keymaps
       keys[#keys + 1] = { "gy", false } -- For gy, gp to system clipboard
       keys[#keys + 1] = { "gt", "<CMD>Telescope lsp_type_definitions<CR>" }
-      -- keys[#keys + 1] = { "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace" }
-      -- keys[#keys + 1] = { "<leader>wr", vim.lsp.buf.remove_workspace_folder, desc = "Remove workspace" }
-      -- keys[#keys + 1] = {
-      --   "<leader>wl",
-      --   function() vim.print(vim.lsp.buf.list_workspace_folders()) end,
-      --   desc = "List workspace folder",
-      -- }
     end,
     ---@class PluginLspOpts
     opts = {

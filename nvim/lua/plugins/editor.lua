@@ -5,8 +5,23 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       window = { width = 30 },
-      -- source_selector = { winbar = true },
     },
+    keys = {
+      {
+        "<leader>ge",
+        function()
+          require("neo-tree.command").execute({ source = "git_status", toggle = true })
+        end,
+        desc = "Git status explorer"
+      },
+      {
+        "<leader>be",
+        function()
+          require("neo-tree.command").execute({ source = "buffers", toggle = true })
+        end,
+        desc = "Buffer explorer"
+      }
+    }
   },
   { "stevearc/oil.nvim", cmd = "Oil", opts = {} },
 
@@ -15,7 +30,6 @@ return {
     cmd = "MundoToggle",
     keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
-  
   {
     "simrat39/symbols-outline.nvim",
     opts = {
@@ -24,6 +38,7 @@ return {
         unfold_all = "L",
       }
     },
+    cmd = "SymbolsOutline",
     keys = {
       { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" } }
   },

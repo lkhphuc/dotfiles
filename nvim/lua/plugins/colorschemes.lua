@@ -1,7 +1,7 @@
 return {
   { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
   { "navarasu/onedark.nvim" },
-  { "projekt0n/github-nvim-theme" },
+  { "ribru17/bamboo.nvim" },
   { "cpea2506/one_monokai.nvim" },
   { "folke/tokyonight.nvim", opts = {
     transparent = vim.g.transparent_enabled,
@@ -15,11 +15,6 @@ return {
       transparent_background = vim.g.transparent_enabled,
       dim_inactive = { enabled = true },
     },
-  },
-  { "marko-cerovac/material.nvim",
-    init = function()
-      vim.g.material_style = "deep ocean" -- darker lighter oceanic palenight deep ocean
-    end,
   },
   { 'rose-pine/neovim', name = 'rose-pine' },
   { "xiyaowong/nvim-transparent",
