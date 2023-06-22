@@ -80,23 +80,6 @@ return {
       },
     },
   },
-
-  { "ggandor/leap.nvim", enabled = false },
-  { "ggandor/flit.nvim", enabled = false },
-  { -- Jump as search, as many character as you like
-    "rlane/pounce.nvim",
-    keys = {
-      { "s", "<Cmd>Pounce<CR>", mode = { "n", "v" } },
-      { "S", "<Cmd>PounceRepeat<CR>", mode = { "n", "v" } },
-      { "gs", "<Cmd>Pounce<CR>", mode = "o" },
-      { "gS", "<Cmd>PounceRepeat<CR>", mode = "o" },
-    },
-  },
-  {
-    "echasnovski/mini.jump",
-    keys = { "f", "F", "t", "T", ";" },
-    config = function(_, opts) require("mini.jump").setup(opts) end,
-  },
   {
     "mini.indentscope",
     opts = {
@@ -161,12 +144,6 @@ return {
     init = function() require("which-key").register({ ["<leader>l"] = { name = "VimTex" } }) end,
   },
 
-  -- {"Dkendal/nvim-treeclimber",
-  --   requires = 'rktjmp/lush.nvim',
-  --   config = function()
-  --     require('nvim-treeclimber').setup()
-  --   end
-  -- },
   -- {
   --   "cshuaimin/ssr.nvim",
   --   module = "ssr",

@@ -10,8 +10,6 @@ map("n", "<leader><space>", "za", { desc = "Toggle fold" })
 map("n", "<leader>p", "<CMD>Lazy<CR>", { desc = "Plugins manager" })
 map("n", "<leader>P", "<CMD>Telescope lazy<CR>", { desc = "Plugins search" })
 
-map("n", "<leader>fm", ":tabnew term://lf<CR>", { desc = "File manager" })
-
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
 map("n", "H", "_", { desc = "First character of line" })

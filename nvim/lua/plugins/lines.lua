@@ -100,7 +100,7 @@ return {
         },
         lualine_y = {
           {
-            function() return " " .. vim.api.nvim_buf_get_option(0, "tabstop") end,
+            function() return " " .. vim.api.nvim_get_option_value("tabstop", { buf = 0 }) end,
             cond = is_wide_term,
           },
           {
@@ -187,7 +187,7 @@ return {
 
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic"
+        local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "bold,italic"
           or "bold"
 
         local function get_git_diff()
