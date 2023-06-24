@@ -3,9 +3,6 @@ return {
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      window = { width = 30 },
-    },
     keys = {
       {
         "<leader>ge",
@@ -23,8 +20,6 @@ return {
       }
     }
   },
-  { "stevearc/oil.nvim", cmd = "Oil", opts = {} },
-
   { -- Undo tree
     "simnalamburt/vim-mundo",
     cmd = "MundoToggle",

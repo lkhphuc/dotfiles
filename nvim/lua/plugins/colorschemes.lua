@@ -1,7 +1,6 @@
 return {
   { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
   { "navarasu/onedark.nvim" },
-  { "ribru17/bamboo.nvim" },
   { "cpea2506/one_monokai.nvim" },
   { "folke/tokyonight.nvim", opts = {
     transparent = vim.g.transparent_enabled,
@@ -41,7 +40,7 @@ return {
       -- Findout the final highlight group being linked to and update gui option.
       local function mod_hl(opts, hl_names)
         for _, hl in ipairs(hl_names) do
-          local hl_def = vim.api.nvim_get_hl_by_name(hl, true)
+          local hl_def = vim.api.nvim_get_hl(0, { name = hl })
           for k, v in pairs(opts) do
             hl_def[k] = v
           end

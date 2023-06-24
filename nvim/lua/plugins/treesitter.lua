@@ -36,21 +36,14 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "+",
-          node_incremental = "+",
-          node_decremental = "_",
-          scope_incremental = "<S-CR>",
+          init_selection = "v",
+          node_incremental = "v",
+          node_decremental = "V",
+          scope_incremental = "<M-v>",
         },
       },
       rainbow = { enable = true },
       matchup = { enable = true, include_match_words = true },
     },
   },
-  -- {
-  --   "mfussenegger/nvim-treehopper",
-  --   keys = {
-  --     { "m", ":<C-U>lua require('tsht').nodes()<CR>", mode = "o", silent = true, remap = true },
-  --     { "m", function() require("tsht").nodes() end, mode = "x", silent = true, remap = false },
-  --   },
-  -- },
 }
