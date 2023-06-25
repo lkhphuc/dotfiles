@@ -30,11 +30,13 @@ znap eval pipx "register-python-argcomplete pipx"
 znap eval pip 'eval "$(pip completion --zsh)"'
 znap fpath _poetry 'poetry completions zsh'
 
-znap source marlonrichert/zsh-autocomplete
-  zstyle ':autocomplete:*' min-input 0
-  zstyle ':autocomplete:*' insert-unambiguous yes
-  zstyle ':autocomplete:*' widget-style menu-select
-  zstyle ':autocomplete:*' fzf-completion yes
+znap source Aloxaf/fzf-tab
+znap source Freed-Wu/fzf-tab-source
+  # disable sort when completing `git checkout`
+  zstyle ':completion:*:git-checkout:*' sort false
+  # set list-colors to enable filename colorizing
+  zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
+
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
 znap source zpm-zsh/colors
