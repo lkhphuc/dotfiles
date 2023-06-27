@@ -4,11 +4,8 @@
 local map = vim.keymap.set
 
 -- Fold
-map("n", "<leader><space>", "za", { desc = "Toggle fold" })
+map("n", "z<space>", "za", { desc = "Toggle fold" })
 
--- Open Shortcuts
-map("n", "<leader>p", "<CMD>Lazy<CR>", { desc = "Plugins manager" })
-map("n", "<leader>P", "<CMD>Telescope lazy<CR>", { desc = "Plugins search" })
 
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
