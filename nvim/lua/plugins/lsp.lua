@@ -63,16 +63,10 @@ return {
       },
       {
         "kosayoda/nvim-lightbulb",
-        init = function()
-          vim.fn.sign_define(
-            "LightBulbSign",
-            { text = " ", texthl = "DiagnosticSignHint", linehl = "", numhl = "" }
-          )
-        end,
         opts = {
-          ignore = { "ruff_lsp" },
           autocmd = { enabled = true },
-          sign = { enabled = true, priority = 50 },
+          sign = { enabled = true, text = "" },
+          action_kinds = { "quickfix", "refactor" }
         },
       },
     },

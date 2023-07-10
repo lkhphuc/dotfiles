@@ -16,7 +16,7 @@ return {
 
     -- Super tab completion
     local has_words_before = function()
-      if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+      if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
       return col ~= 0
         and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
@@ -94,13 +94,11 @@ return {
         keyword_length = 5, -- all buffers
         option = { get_bufnrs = vim.api.nvim_list_bufs },
       },
-      { name = "fuzzy_path" },
       { name = "copilot", keyword_length = 5 },
     })
     opts.sorting = {
       priority_weight = 2,
       comparators = {
-        require("cmp_fuzzy_path.compare"),
         require("cmp_fuzzy_buffer.compare"),
         compare.offset,
         compare.exact,
@@ -152,7 +150,6 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     -- "hrsh7th/cmp-nvim-lsp-document-symbol", -- For / search command
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-emoji",
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
     -- "ray-x/cmp-treesitter",
