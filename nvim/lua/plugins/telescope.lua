@@ -62,8 +62,8 @@ return {
 
     { "<leader>F", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
     { "<leader><space>", "<Cmd>Telescope smart_open<CR>", desc = "Open ..." },
-    { "<leader>s<Tab>", "<cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
-    { "<leader>sP", "<cmd>Telescope Lazy<CR>", desc = "Plugins" },
+    { "<leader>s<Tab>", "<Cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
+    { "<leader>sP", "<Cmd>Telescope lazy<CR>", desc = "Plugins" },
   },
   config = function(_, opts)
     local telescope = require("telescope")

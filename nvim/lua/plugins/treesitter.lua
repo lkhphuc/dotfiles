@@ -2,36 +2,13 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      -- { "RRethy/nvim-treesitter-textsubjects" },
       { "andymass/vim-matchup", branch = "master" },
       { "romgrk/nvim-treesitter-context", opts = {} },
       { "HiPhish/nvim-ts-rainbow2"},
     },
     opts = {
       ensure_installed = {
-        "bash",
-        "haskell",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "make",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "rust",
-        "rst",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      },
-      highlight = { -- Consistent syntax highlighting
-        enable = true,
-        additional_vim_regex_highlighting = { "markdown" },
+        "haskell", "make", "rust", "rst", "toml",
       },
       incremental_selection = {
         enable = true,
