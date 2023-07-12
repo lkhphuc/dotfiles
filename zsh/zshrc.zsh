@@ -71,8 +71,6 @@ GO="$HOME/go/bin" && [ -d $GO ] && export PATH="$GO:$PATH"
 HASKELL="$HOME/.ghcup/bin" && [ -d $HASKELL ] && export PATH="$HASKELL:$PATH"
 export JUPYTER_CONFIG_PATH="~/.config/jupyter/:$JUPYTER_CONFIG_PATH"
 
-source $HOME/.config/lf/lficons.rc
-
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
