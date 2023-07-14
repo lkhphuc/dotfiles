@@ -4814,7 +4814,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + e = preview",
+                                "description": "option + e = note",
                                 "from": {
                                     "key_code": "e",
                                     "modifiers": {
@@ -4829,7 +4829,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a preview"
+                                        "shell_command": "open -a notes"
                                     }
                                 ],
                                 "type": "basic"
@@ -4979,12 +4979,12 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + p = karabiner",
+                                "description": "option + p = karabiner",
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_command",
+                                            "left_option",
                                             "right_command",
                                             "right_control",
                                             "right_shift",
@@ -5000,32 +5000,12 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + p = amphetamine",
+                                "description": "command + p = Siri",
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_option",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a amphetamine"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "p = Siri",
-                                "from": {
-                                    "key_code": "p",
-                                    "modifiers": {
-                                        "mandatory": [
+                                            "left_command",
                                             "right_command",
                                             "right_control",
                                             "right_shift",
@@ -5036,6 +5016,26 @@
                                 "to": [
                                     {
                                         "shell_command": "open -a Siri"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "p = preview",
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a preview"
                                     }
                                 ],
                                 "type": "basic"
