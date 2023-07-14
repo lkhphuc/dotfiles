@@ -58,19 +58,11 @@ return {
     event = "VeryLazy",
   },
 
-  { "kevinhwang91/nvim-bqf", ft = "qf" },
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump
 
-  -- use{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --   config = function()
-  --     require("lsp_lines").register_lsp_virtual_lines()
-  --   end,
-  -- }
-  --
-  -- { "nvim-zh/colorful-winsep.nvim", opts = { highlight = { bg = "none" } }, event = "WinNew" },
-    {
+  {  -- one cursorline per tab
     "tummetott/reticle.nvim",
-    event = "BufReadPost", -- one cursorline per tab
+    event = "BufReadPost",
     opts = {
       always = { cursorline = { "neo-tree" } },
     },

@@ -49,7 +49,7 @@ return {
       },
     },
     extensions = {
-      file_browser = { theme = "ivy" },
+      file_browser = { theme = "ivy", match_algorithm = "fzf" },
     },
   },
   keys = {

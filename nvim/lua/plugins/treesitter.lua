@@ -4,7 +4,6 @@ return {
     dependencies = {
       { "andymass/vim-matchup", branch = "master" },
       { "romgrk/nvim-treesitter-context", opts = {} },
-      { "HiPhish/nvim-ts-rainbow2"},
     },
     opts = {
       ensure_installed = {
@@ -13,13 +12,12 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "v",
-          node_incremental = "v",
-          node_decremental = "V",
-          scope_incremental = "<M-v>",
+          init_selection = "+",
+          node_incremental = "+",
+          node_decremental = "-",
+          scope_incremental = "_",
         },
       },
-      rainbow = { enable = true },
       matchup = { enable = true, include_match_words = true },
     },
   },

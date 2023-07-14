@@ -1,24 +1,19 @@
 return {
-
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     keys = {
       {
         "<leader>ge",
-        function()
-          require("neo-tree.command").execute({ source = "git_status", toggle = true })
-        end,
-        desc = "Git status explorer"
+        function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
+        desc = "Git status explorer",
       },
       {
         "<leader>be",
-        function()
-          require("neo-tree.command").execute({ source = "buffers", toggle = true })
-        end,
-        desc = "Buffer explorer"
-      }
-    }
+        function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
+        desc = "Buffer explorer",
+      },
+    },
   },
   { -- Undo tree
     "simnalamburt/vim-mundo",
@@ -31,11 +26,12 @@ return {
       keymaps = {
         fold_all = "H",
         unfold_all = "L",
-      }
+      },
     },
     cmd = "SymbolsOutline",
     keys = {
-      { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" } }
+      { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" },
+    },
   },
 
   {
@@ -69,27 +65,14 @@ return {
   {
     "folke/trouble.nvim",
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle<CR>", desc = "Trouble Toggle" },
       { "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", desc = "References (Trouble)" },
-      { "<leader>xf", "<cmd>TroubleToggle lsp_definitions<cr>", desc = "Definitions (Trouble)" },
-      {
-        "<leader>xd",
-        "<cmd>TroubleToggle document_diagnostics<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xw",
-        "<cmd>TroubleToggle workspace_diagnostics<cr>",
-        desc = "Workspace Diagnostics (Trouble)",
-      },
-      { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "QuickFix (Trouble)" },
-      { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "LocationList (Trouble)" },
+      { "<leader>xd", "<cmd>TroubleToggle lsp_definitions<cr>", desc = "Definitions (Trouble)" },
     },
   },
 
   {
     "mattboehm/vim-unstack",
-    init = function() vim.g.unstack_mapkey = "<leader>uS" end,
+    cmd = { "UnstackFromSelection", "UnstackFromClipboard", "Unstack" },
     keys = { { "<leader>uS", "<Cmd>Unstack<CR>", desc = "Un-stack trace" } },
   },
   {
@@ -107,5 +90,9 @@ return {
     "echasnovski/mini.cursorword",
     config = function(_, opts) require("mini.cursorword").setup(opts) end,
     event = "VeryLazy",
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "BufEnter",
   },
 }
