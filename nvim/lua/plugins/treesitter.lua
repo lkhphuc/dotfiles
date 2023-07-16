@@ -6,9 +6,6 @@ return {
       { "romgrk/nvim-treesitter-context", opts = {} },
     },
     opts = {
-      ensure_installed = {
-        "haskell", "make", "rust", "rst", "toml",
-      },
       incremental_selection = {
         enable = true,
         keymaps = {
