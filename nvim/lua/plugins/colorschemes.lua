@@ -5,7 +5,7 @@ return {
   { "folke/tokyonight.nvim", opts = {
     transparent = vim.g.transparent_enabled,
     dim_inactive = true,
-    styles = { floats = "transparent"}
+    styles = { sidebars = "transparent", floats = "transparent"}
   } },
   { "EdenEast/nightfox.nvim" }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { "catppuccin/nvim", name = "catppuccin",
@@ -77,15 +77,6 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
-
-            highlight! semshiImported gui=bold,italic
-            highlight! semshiGlobal gui=bold
-            highlight! link semshiParameter @parameter
-            highlight! semshiParameterUnused gui=undercurl
-            highlight! link semshiAttribute @attribute
-            highlight! link semshiBuiltin @function.builtin
-            highlight! link semshiUnresolved Error
-            
             highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
           ]])
         end,

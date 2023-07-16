@@ -114,7 +114,7 @@ return {
           { -- python env
             function()
               local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or "NO ENV"
-              return "🐍" .. venv
+              return " " .. venv
             end,
             cond = function() return vim.bo.filetype == "python" end,
             color = fg("Type"),

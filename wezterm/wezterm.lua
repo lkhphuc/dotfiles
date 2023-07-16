@@ -82,11 +82,6 @@ config.ssh_domains = {
     username = "phuc",
     local_echo_threshold_ms = 100,
   },
-  {
-    name = "carles",
-    remote_address = "carles",
-    username = "phuc",
-  },
 }
 
 config.font = wezterm.font_with_fallback({
@@ -96,8 +91,8 @@ config.font = wezterm.font_with_fallback({
   { family = "JetBrains Mono" },
 })
 config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
-config.font_size = 15
-config.color_scheme = "catppuccin-frappe"
+config.font_size = 14
+config.color_scheme = "Tokyo Night"
 
 config.window_decorations = "RESIZE"
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
