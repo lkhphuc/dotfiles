@@ -1,10 +1,15 @@
-set previewer ~/.config/lf/pv.sh
-map i ~/.config/lf/pv.sh $f | less -RX
+# vim:ft=config
+
+set previewer ~/.config/lf/previewer.sh
+set cleaner ~/.config/lf/cleaner.sh
+map i $(less -RX $f)
+
+map f $nvim $(fzf)
 
 set icons
 
 # interpreter for shell commands (needs to be POSIX compatible)
-set shell zsh
+# set shell zsh
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -33,8 +38,8 @@ map x $$f
 map X !$f
 
 # dedicated keys for file opener actions
-map o &mimeopen $f
-map O $mimeopen --ask $f
+map o &open $f
+map O $open --ask $f
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -102,3 +107,21 @@ cmd zip ${{
     zip -r $1.zip $1
     rm -rf $1
 }}
+
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+	lf -remote "send $id cd \"$result\""
+}}
+
+cmd fzf_search ${{
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    res="$(
+        FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
+            fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+            --ansi --layout=reverse --header 'Search in files' \
+            | cut -d':' -f1 | sed 's/\\/\\\\/g;s/"/\\"/g'
+    )"
+    [ -n "$res" ] && lf -remote "send $id select \"$res\""
+}}
+map gs :fzf_search
+
