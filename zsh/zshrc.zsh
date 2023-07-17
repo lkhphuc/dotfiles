@@ -28,7 +28,7 @@ znap install conda-incubator/conda-zsh-completion
 znap eval conda "conda shell.zsh hook"
 znap eval pipx "register-python-argcomplete pipx"
 znap eval pip 'eval "$(pip completion --zsh)"'
-znap fpath _poetry 'poetry completions zsh'
+[[ -x "$(command -v poetry)" ]] && znap fpath _poetry 'poetry completions zsh'
 
 znap source Aloxaf/fzf-tab
 znap source Freed-Wu/fzf-tab-source

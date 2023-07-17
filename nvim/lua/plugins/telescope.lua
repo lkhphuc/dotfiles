@@ -49,7 +49,8 @@ return {
       },
     },
     extensions = {
-      file_browser = { theme = "ivy", match_algorithm = "fzf" },
+      file_browser = { theme = "ivy" },
+      smart_open = { match_algorithm = "fzf" },
     },
   },
   keys = {
