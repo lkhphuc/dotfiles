@@ -11,7 +11,13 @@ znap prompt
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_DEFAULT_OPTS="--layout=reverse"
   # export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-  export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+znap source Aloxaf/fzf-tab
+znap source Freed-Wu/fzf-tab-source
+  # disable sort when completing `git checkout`
+  zstyle ':completion:*:git-checkout:*' sort false
+  # set list-colors to enable filename colorizing
+  zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
+
 # }
 
 # package managers
@@ -25,17 +31,10 @@ znap fpath _wezterm "wezterm shell-completion --shell zsh"
 
 # python
 znap install conda-incubator/conda-zsh-completion
-znap eval conda "conda shell.zsh hook"
-znap eval pipx "register-python-argcomplete pipx"
-znap eval pip 'eval "$(pip completion --zsh)"'
+[[ -x "$(command -v conda)" ]] && znap eval conda "conda shell.zsh hook"
+[[ -x "$(command -v pipx)" ]] && znap eval pipx "register-python-argcomplete pipx"
+[[ -x "$(command -v pip)" ]] && znap eval pip 'eval "$(pip completion --zsh)"'
 [[ -x "$(command -v poetry)" ]] && znap fpath _poetry 'poetry completions zsh'
-
-znap source Aloxaf/fzf-tab
-znap source Freed-Wu/fzf-tab-source
-  # disable sort when completing `git checkout`
-  zstyle ':completion:*:git-checkout:*' sort false
-  # set list-colors to enable filename colorizing
-  zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
@@ -59,6 +58,7 @@ if [[ -v NVIM ]]; then EDITOR="nvr -l" fi
 alias v="$EDITOR" vimdiff="$EDITOR -d"
 alias g="git" lg="lazygit"
 
+export BAT_THEME=OneHalfDark
 export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 

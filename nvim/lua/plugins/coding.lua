@@ -14,7 +14,7 @@ return {
           },
           "^().*()$",
         },
-        -- E = { '()()%f[%w]%w+()[ \t]*()' }, -- Imitate word ignoring digits and punctuation
+        E = { '()()%f[%w]%w+()[ \t]*()' }, -- Imitate word ignoring digits and punctuation
         x = function(ai_mode, _, _) -- Code Cell objects
           local buf_nlines = vim.api.nvim_buf_line_count(0)
           local begin_cell = 1 -- First cell from first line to first cell delimeter
@@ -144,22 +144,4 @@ return {
     init = function() require("which-key").register({ ["<leader>l"] = { name = "VimTex" } }) end,
   },
 
-  -- {
-  --   "cshuaimin/ssr.nvim",
-  --   module = "ssr",
-  --   -- Calling setup is optional.
-  --   config = function()
-  --     require("ssr").setup {
-  --       min_width = 50,
-  --       min_height = 5,
-  --       keymaps = {
-  --         close = "q",
-  --         next_match = "n",
-  --         prev_match = "N",
-  --         replace_all = "<leader><cr>",
-  --       },
-  --     }
-  --     vim.keymap.set({ "n", "x" }, "<leader>sR", require("ssr").open, {desc = "Structural Search and Replace"})
-  --   end
-  -- },
 }

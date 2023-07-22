@@ -66,7 +66,10 @@ return {
         opts = {
           autocmd = { enabled = true },
           sign = { enabled = true, text = "" },
-          action_kinds = { "quickfix", "refactor" }
+          action_kinds = { "quickfix", "refactor" },
+          ignore = {
+            actions_without_kind = true,
+          },
         },
       },
     },
