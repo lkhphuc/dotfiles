@@ -51,6 +51,7 @@ znap eval zoxide "zoxide init zsh"
 znap fpath _fuck "$(thefuck --alias)"
 znap install ogham/exa
 znap source not-poma/lazyshell  # GPT
+source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"
 if [[ -v NVIM ]]; then EDITOR="nvr -l" fi

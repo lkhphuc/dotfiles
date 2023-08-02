@@ -75,14 +75,13 @@ config.macos_window_background_blur = 10
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
 config.unix_domains = { { name = "unix" } }
-config.ssh_domains = {
-  {
+config.ssh_domains = wezterm.default_ssh_domains()
+table.insert(config.ssh_domains, {
     name = "gpu",
     remote_address = "gpu",
     username = "phuc",
     local_echo_threshold_ms = 100,
-  },
-}
+  })
 
 config.font = wezterm.font_with_fallback({
   -- { family="Cascadia Code", harfbuzz_features={"calt", "ss01", "ss02"}, },

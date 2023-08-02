@@ -10,4 +10,4 @@ if [[ "$( file -Lb --mime-type "$file")" =~ ^image ]]; then
     exit 1
 fi
 
-bat -f -p "$1"
+bat -f -n --terminal-width "${w}" "$1"

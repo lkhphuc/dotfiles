@@ -159,4 +159,4 @@ vim.api.nvim_create_user_command("DiffOrig", function()
   end
 end, { desc = "Diff with last saved." })
 
-vim.keymap.set({ "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })
+vim.keymap.set({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })

@@ -8,7 +8,13 @@ return {
           settings = {
             python = {
               analysis = {
-                diagnosticSeverityOverrides = { reportGeneralTypeIssues = "warning" },
+                diagnosticSeverityOverrides = {
+                  reportGeneralTypeIssues = "warning",
+                  reportPrivateImportUsage = "information",
+                  reportOptionalOperand = "warning",
+                  reportOptionalSubscript = "warning",
+                  reportOptionalMemberAccess = "warning",
+                },
               },
             },
           },
@@ -20,7 +26,7 @@ return {
                 "--extend-select",
                 "W,UP,B,A,T10,ICN,G,SIM,PD,PL,NPY",
                 "--ignore",
-                "E501,W291,PLR0913",
+                "E501,W291,PLR0913,W293",
               },
             },
           },

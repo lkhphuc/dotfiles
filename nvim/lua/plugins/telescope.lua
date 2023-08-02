@@ -13,7 +13,7 @@ return {
       selection_caret = " ",
       mappings = {
         i = {
-          ["<C-Space>"] = require("telescope.actions").to_fuzzy_refine,
+          ["<C-g>"] = require("telescope.actions").to_fuzzy_refine,
           ["<C-d>"] = require("telescope.actions").delete_buffer,
         },
       },
@@ -26,26 +26,26 @@ return {
       find_files = { theme = "dropdown" },
       git_files = { theme = "dropdown" },
       buffers = { theme = "dropdown" },
-      current_buffer_fuzzy_find = { theme = "ivy" },
+      -- current_buffer_fuzzy_find = { layout = "vertical" },
       lsp_references = {
         theme = "cursor",
         show_line = false,
-        layout_config = { height = 20, width = 100 },
+        layout_config = { height = 0.5, width = 0.9 },
       },
       lsp_definitions = {
         theme = "cursor",
         show_line = false,
-        layout_config = { height = 20, width = 100 },
+        layout_config = { height = 0.5, width = 0.9 },
       },
       lsp_type_definitions = {
         theme = "cursor",
         show_line = false,
-        layout_config = { height = 20, width = 100 },
+        layout_config = { height = 0.5, width = 0.9 },
       },
       lsp_implementations = {
         theme = "cursor",
         show_line = false,
-        layout_config = { height = 20, width = 100 },
+        layout_config = { height = 0.5, width = 0.9 },
       },
     },
     extensions = {
