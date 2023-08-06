@@ -60,11 +60,4 @@ return {
 
   { "nacro90/numb.nvim", event = "CmdlineEnter", config = true }, --Peeking line before jump
 
-  {  -- one cursorline per tab
-    "tummetott/reticle.nvim",
-    event = "BufReadPost",
-    opts = {
-      always = { cursorline = { "neo-tree" } },
-    },
-  },
 }

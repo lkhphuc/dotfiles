@@ -25,17 +25,6 @@ local virt_text = function(virtText, lnum, endLnum, width, truncate, ctx)
 
   table.insert(newVirtText, { suffix, "UfoPreviewThumb" })
 
-  local end_virt_text = ctx.get_fold_virt_text(endLnum)
-  for _, chunk in ipairs(end_virt_text) do
-    local chunkText = chunk[1]
-    local chunkHL = chunk[2]
-    if chunkText:match("^%s+$") then
-      chunkText = " "
-      table.insert(newVirtText, { chunkText, chunkHL })
-    else
-      table.insert(newVirtText, chunk)
-    end
-  end
   return newVirtText
 end
 

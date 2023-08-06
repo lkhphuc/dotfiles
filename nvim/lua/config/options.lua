@@ -31,7 +31,14 @@ o.virtualedit = "block,onemore" -- Allow going past the end of line in visual bl
 
 o.list = false
 o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
-o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 
 opt.path:append("**")
 opt.shortmess:append("s")
