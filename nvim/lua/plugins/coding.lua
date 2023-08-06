@@ -138,10 +138,4 @@ return {
       { "<M-l>", mode = "x" },
     },
   },
-  {
-    "lervag/vimtex",
-    ft = "tex",
-    init = function() require("which-key").register({ ["<leader>l"] = { name = "VimTex" } }) end,
-  },
-
 }
