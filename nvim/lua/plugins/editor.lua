@@ -1,5 +1,4 @@
 return {
-  -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     keys = {
@@ -33,7 +32,6 @@ return {
       { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" },
     },
   },
-
   {
     "echasnovski/mini.map",
     config = function()
@@ -58,18 +56,6 @@ return {
       { "<leader>ms", "<Cmd>lua MiniMap.toggle_side()<CR>", desc = "MiniMap" },
     },
   },
-  -- { "smjonas/live-command.nvim",
-  --   opts = { commands = { Norm = { cmd = "norm" }, } }
-  -- },
-
-  {
-    "folke/trouble.nvim",
-    keys = {
-      { "<leader>xr", "<cmd>TroubleToggle lsp_references<cr>", desc = "References (Trouble)" },
-      { "<leader>xd", "<cmd>TroubleToggle lsp_definitions<cr>", desc = "Definitions (Trouble)" },
-    },
-  },
-
   {
     "mattboehm/vim-unstack",
     cmd = { "UnstackFromSelection", "UnstackFromClipboard", "Unstack" },
@@ -84,12 +70,6 @@ return {
       treesitter = { suffix = "n" },
     },
     config = function(_, opts) require("mini.bracketed").setup(opts) end,
-  },
-  { "RRethy/vim-illuminate", enabled = false },
-  {
-    "echasnovski/mini.cursorword",
-    config = function(_, opts) require("mini.cursorword").setup(opts) end,
-    event = "VeryLazy",
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
