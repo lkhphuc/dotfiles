@@ -14,8 +14,6 @@ return {
     },
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
-    "tzachar/fuzzy.nvim",
-    "tzachar/cmp-fuzzy-buffer",
   },
   opts = function(_, opts)
     local luasnip = require("luasnip")
@@ -94,11 +92,8 @@ return {
       { name = "jupyter", priority = 750 },
       { name = "nvim_lsp" },
       { name = "luasnip" },
-      -- { name = "buffer", keyword_length = 5 },
-      {
-        name = "fuzzy_buffer",
-        keyword_length = 5, -- all buffers
-        option = { get_bufnrs = vim.api.nvim_list_bufs },
+      { name = "buffer",
+        -- option = { get_bufnrs = function () return vim.api.nvim_list_bufs() end }
       },
       { name = "path" },
     })
@@ -108,17 +103,18 @@ return {
     local cmp = require("cmp")
     cmp.setup(opts) -- insert mode completion
     cmp.setup.cmdline({ "/", "?" }, {
+      completion = { completeopt = "menu,menuone,noselect"},
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = "fuzzy_buffer" },
+        { name = "buffer" },
       },
     })
     cmp.setup.cmdline(":", {
+      completion = { completeopt = "menu,menuone,noselect"},
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "cmdline" },
         { name = "cmdline_history" },
-        { name = "fuzzy_path" },
       }),
     })
   end,

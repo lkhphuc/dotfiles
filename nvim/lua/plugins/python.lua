@@ -1,5 +1,29 @@
 ---@diagnostic disable: missing-fields
+local function get_venv(variable)
+  local venv = os.getenv(variable)
+  if venv ~= nil and string.find(venv, "/") then
+    local orig_venv = venv
+    for w in orig_venv:gmatch("([^/]+)") do
+      venv = w
+    end
+    venv = string.format("%s", venv)
+  end
+  return venv
+end
+
 return {
+  {
+    "lualine.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_y, {
+        function()
+          local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or "NO ENV"
+          return " " .. venv
+        end,
+        cond = function() return vim.bo.filetype == "python" end,
+      })
+    end
+  },
   {
     "nvim-lspconfig",
     opts = {
@@ -10,11 +34,11 @@ return {
             python = {
               analysis = {
                 diagnosticSeverityOverrides = {
-                  reportGeneralTypeIssues = "warning",
+                  reportGeneralTypeIssues = "information",
                   reportPrivateImportUsage = "information",
-                  reportOptionalOperand = "warning",
-                  reportOptionalSubscript = "warning",
-                  reportOptionalMemberAccess = "warning",
+                  reportOptionalOperand = "information",
+                  reportOptionalSubscript = "information",
+                  reportOptionalMemberAccess = "information",
                 },
               },
             },
@@ -25,9 +49,9 @@ return {
             settings = {
               args = {
                 "--extend-select",
-                "W,UP,B,A,T10,ICN,G,SIM,PD,PL,NPY",
+                "W,C90,UP,ASYNC,S,B,A,COM,C4,DTZ,T10,EXE,ISC,ICN,G,INP,PIE,PYI,PT,RET,SIM,TID,TCH,PL,TRY,PD,NPY,PERF",
                 "--ignore",
-                "E501,W291,PLR0913,W293",
+                "E402,E501,W291,PLR0913,W293,S101,RET504,C901,TRY003,F401",
               },
             },
           },

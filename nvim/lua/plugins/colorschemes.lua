@@ -1,7 +1,6 @@
 return {
   { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
   { "navarasu/onedark.nvim" },
-  { "cpea2506/one_monokai.nvim" },
   { "folke/tokyonight.nvim", opts = {
     transparent = vim.g.transparent_enabled,
     dim_inactive = true,
@@ -53,7 +52,6 @@ return {
         group = vim.api.nvim_create_augroup("Color", {}),
         callback = function()
           mod_hl({ bold = true, italic = true }, {
-            "@keyword.return",
             "@constant.builtin",
             "@function.builtin",
             "@type.builtin",
@@ -62,17 +60,11 @@ return {
           mod_hl({ bold = true }, {
             "@type",
             "@constructor",
-            "@operator",
-            "@keyword",
           })
           mod_hl({ italic = true }, {
-            "@include",
             "@variable.builtin",
-            "@conditional",
-            "@keyword.function",
             "@comment",
             "@parameter",
-            "@method.call",
           })
 
           vim.cmd([[

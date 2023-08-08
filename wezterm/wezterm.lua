@@ -9,8 +9,10 @@ end
 
 -- SmartSplit.nvim
 local function is_vim(pane)
-  local prog = pane:get_user_vars().WEZTERM_PROG
-  return pane:get_user_vars().IS_NVIM or prog:match("^vim") or prog:match("^nvim") or prog:match("^v ")
+  -- local prog = pane:get_user_vars().WEZTERM_PROG
+  -- return prog:match("^vim") or prog:match("^nvim") or prog:match("^v ")
+  -- this is set by the plugin, and unset on ExitPre in Neovim
+  return pane:get_user_vars().IS_NVIM == 'true'
 end
 
 local direction_keys = {
@@ -70,7 +72,7 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     window:set_config_overrides(overrides)
 end)
 
-config.window_background_opacity = 0.80
+config.window_background_opacity = 0.75
 config.macos_window_background_blur = 10
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
@@ -138,5 +140,13 @@ config.keys = {
 --   },
 -- },
 config.enable_kitty_graphics = true
+
+wezterm.on('update-status', function(window, pane)
+  local meta = pane:get_metadata() or {}
+  if meta.is_tardy then
+    local secs = meta.since_last_response_ms / 1000.0
+    window:set_right_status(string.format('tardy: %5.1fs⏳', secs))
+  end
+end)
 
 return config

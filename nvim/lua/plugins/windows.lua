@@ -19,7 +19,7 @@ return {
   { "kwkarlwang/bufresize.nvim", opts = {}, event = "WinEnter" }, -- on terminal resize
   {
     "mrjones2014/smart-splits.nvim",
-    event = "WinEnter",
+    lazy=false,
     keys = { -- Combine with nostalgic-term.nvim for terminal mapping
       { "<A-j>", "<CMD>SmartResizeDown<CR>" },
       { "<A-k>", "<CMD>SmartResizeUp<CR>" },

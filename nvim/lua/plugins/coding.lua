@@ -100,8 +100,7 @@ return {
       },
     },
   },
-  -- { "chaoren/vim-wordmotion", event = "VeryLazy" }, -- w handles Snake/camelCase, etc
-  { "ThePrimeagen/refactoring.nvim", config = true },
+  { "ThePrimeagen/refactoring.nvim", opts = {} },
   {
     "Wansmer/sibling-swap.nvim",
     opts = { use_default_keymaps = false },

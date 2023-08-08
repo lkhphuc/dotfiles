@@ -1,17 +1,5 @@
 local fg = require("lazyvim.util").fg
 
-local function get_venv(variable)
-  local venv = os.getenv(variable)
-  if venv ~= nil and string.find(venv, "/") then
-    local orig_venv = venv
-    for w in orig_venv:gmatch("([^/]+)") do
-      venv = w
-    end
-    venv = string.format("%s", venv)
-  end
-  return venv
-end
-
 local function is_wide_term(width)
   width = width or 150
   return vim.o.columns > width
@@ -111,24 +99,12 @@ return {
             end,
             color = fg("Constant"),
           },
-          { -- python env
-            function()
-              local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or "NO ENV"
-              return " " .. venv
-            end,
-            cond = function() return vim.bo.filetype == "python" end,
-            color = fg("Type"),
-          },
-          -- { --window
-          --   function() return " " .. vim.api.nvim_win_get_number(0) end,
-          --   cond = function() return true end,
-          -- },
+        },
+        lualine_z = {
           { --terminal
             function() return " " .. vim.o.channel end,
             cond = function() return vim.o.buftype == "terminal" end,
           },
-        },
-        lualine_z = {
           { "hostname", icon = "", separator = { right = "" }, padding = 1 },
         },
       },
@@ -155,10 +131,13 @@ return {
     event = "VeryLazy",
     config = function()
       require("tabby.tabline").use_preset("active_wins_at_tail", {
-        tab_name = {
-          name_fallback = function(tabid)
-            return " " .. vim.fn.fnamemodify(vim.fn.getcwd(-1, tabid), ":~")
-          end,
+        theme = {
+          fill = 'TabLineFill',
+          head = 'lualine_a_insert',
+          current_tab = 'lualine_b_insert',
+          tab = 'lualine_b_normal',
+          win = 'lualine_c_normal',
+          tail = 'lualine_b_insert',
         },
       })
     end,
