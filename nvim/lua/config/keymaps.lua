@@ -3,6 +3,17 @@
 -- Add any additional keymaps here
 local map = vim.keymap.set
 
+-- these keymaps will also accept a range,
+vim.keymap.set({'n', 't'}, '<A-h>', require('smart-splits').resize_left)
+vim.keymap.set({'n', 't'}, '<A-j>', require('smart-splits').resize_down)
+vim.keymap.set({'n', 't'}, '<A-k>', require('smart-splits').resize_up)
+vim.keymap.set({'n', 't'}, '<A-l>', require('smart-splits').resize_right)
+vim.keymap.set({'n', 't'}, '<C-h>', require('smart-splits').move_cursor_left)
+vim.keymap.set({'n', 't'}, '<C-j>', require('smart-splits').move_cursor_down)
+vim.keymap.set({'n', 't'}, '<C-k>', require('smart-splits').move_cursor_up)
+vim.keymap.set({'n', 't'}, '<C-l>', require('smart-splits').move_cursor_right)
+vim.keymap.set('n', '<leader>wr', require('smart-splits').start_resize_mode, {desc = "Resize mode"})
+
 -- Fold
 map("n", "z<space>", "za", { desc = "Toggle fold" })
 
@@ -57,7 +68,6 @@ end, { noremap = true, expr = true })
 map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
 map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true })
 
--- Add empty lines before and after cursor line
 map(
   "n",
   "gO",
@@ -67,7 +77,7 @@ map(
 map(
   "n",
   "go",
-  "<Cmd>call append(line('.'),     repeat([''], v:count1))<CR>",
+  "<Cmd>call append(line('.'), repeat([''], v:count1))<CR>",
   { desc = "Put empty line below" }
 )
 
