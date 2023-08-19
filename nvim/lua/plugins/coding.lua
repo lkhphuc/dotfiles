@@ -53,7 +53,6 @@ return {
   {
     "echasnovski/mini.align",
     opts = { mappings = { start = "", start_with_preview = "gA" } },
-    config = function(_, opts) require("mini.align").setup(opts) end,
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
@@ -100,33 +99,8 @@ return {
       },
     },
   },
-  { "ThePrimeagen/refactoring.nvim", opts = {} },
-  {
-    "Wansmer/sibling-swap.nvim",
-    opts = { use_default_keymaps = false },
-    keys = {
-      {
-        "gs[",
-        function() require("sibling-swap").swap_with_left() end,
-        desc = "Swap with previous sibling",
-      },
-      {
-        "gs]",
-        function() require("sibling-swap").swap_with_right() end,
-        desc = "Swap with next sibling",
-      },
-      {
-        "gS[",
-        function() require("sibling-swap").swap_with_left_with_opp() end,
-        desc = "Swap with previous sibling and operator",
-      },
-      {
-        "gS]",
-        function() require("sibling-swap").swap_with_right_with_opp() end,
-        desc = "Swap with next sibling and operator",
-      },
-    },
-  },
+  { "ThePrimeagen/refactoring.nvim", opts = {}, cmd = "Refactor" },
+  { 'echasnovski/mini.operators', opts = {}, keys = {"g=", "gx", "gm", "gr", "gs"} },
   {
     "echasnovski/mini.move",
     config = function(_, opts) require("mini.move").setup(opts) end,
