@@ -5,7 +5,6 @@
 local g, o, opt = vim.g, vim.o, vim.opt
 
 g.mapleader = " "
-g.maplocalleader = " "
 
 o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
 o.splitright = true
