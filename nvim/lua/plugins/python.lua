@@ -51,7 +51,7 @@ return {
                 "--extend-select",
                 "W,C90,UP,ASYNC,S,B,A,COM,C4,DTZ,T10,EXE,ISC,ICN,G,INP,PIE,PYI,PT,RET,SIM,TID,TCH,PL,TRY,PD,NPY,PERF",
                 "--ignore",
-                "E402,E501,W291,PLR0913,W293,S101,RET504,C901,TRY003,F401",
+                "E402,E501,W291,PLR0913,W293,S101,RET504,RET505,C901,TRY003,F401",
               },
             },
           },

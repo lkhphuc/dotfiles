@@ -30,7 +30,7 @@ return {
         json = { colorscheme = "kanagawa" },
         toml = { colorscheme = "kanagawa" },
         yaml = { colorscheme = "kanagawa" },
-        help = { colorscheme = "one_monokai" },
+        help = { colorscheme = "carbonfox" },
       },
     },
     init = function()

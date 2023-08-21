@@ -4,19 +4,17 @@
 local map = vim.keymap.set
 
 -- these keymaps will also accept a range,
-vim.keymap.set({'n', 't'}, '<A-h>', require('smart-splits').resize_left)
-vim.keymap.set({'n', 't'}, '<A-j>', require('smart-splits').resize_down)
-vim.keymap.set({'n', 't'}, '<A-k>', require('smart-splits').resize_up)
-vim.keymap.set({'n', 't'}, '<A-l>', require('smart-splits').resize_right)
-vim.keymap.set({'n', 't'}, '<C-h>', require('smart-splits').move_cursor_left)
-vim.keymap.set({'n', 't'}, '<C-j>', require('smart-splits').move_cursor_down)
-vim.keymap.set({'n', 't'}, '<C-k>', require('smart-splits').move_cursor_up)
-vim.keymap.set({'n', 't'}, '<C-l>', require('smart-splits').move_cursor_right)
-vim.keymap.set('n', '<leader>wr', require('smart-splits').start_resize_mode, {desc = "Resize mode"})
+map({ "n", "t" }, "<A-h>", require("smart-splits").resize_left)
+map({ "n", "t" }, "<A-j>", require("smart-splits").resize_down)
+map({ "n", "t" }, "<A-k>", require("smart-splits").resize_up)
+map({ "n", "t" }, "<A-l>", require("smart-splits").resize_right)
+map({ "n", "t" }, "<C-h>", require("smart-splits").move_cursor_left)
+map({ "n", "t" }, "<C-j>", require("smart-splits").move_cursor_down)
+map({ "n", "t" }, "<C-k>", require("smart-splits").move_cursor_up)
+map({ "n", "t" }, "<C-l>", require("smart-splits").move_cursor_right)
+map("n", "<leader>wr", require("smart-splits").start_resize_mode, { desc = "Resize mode" })
 
--- Fold
 map("n", "z<space>", "za", { desc = "Toggle fold" })
-
 
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
@@ -40,21 +38,19 @@ map("n", "J", function()
   vim.cmd("normal! `z")
 end, { desc = "Join line with smart whitespace removal" })
 
--- properly indent on empty line when "i"
 map("n", "i", function()
   if #vim.fn.getline(".") == 0 then
     return [["_cc]]
   else
     return "i"
   end
-end, { expr = true })
+end, { expr = true, desc = "properly indent on empty line when insert" })
 
 -- Tab pages
 -- there are also LazyVim's default keymap with leader
-map("n", "]<TAB>", ":tabnext<CR>", { silent = true })
-map("n", "[<TAB>", ":tabprev<CR>", { silent = true })
+map("n", "]<TAB>", ":tabnext<CR>", { silent = true, desc = "Next tab" })
+map("n", "[<TAB>", ":tabprev<CR>", { silent = true, desc = "Prev tab" })
 
--- Don't yank empty line to clipboard
 map("n", "dd", function()
   local is_empty_line = vim.api.nvim_get_current_line():match("^%s*$")
   if is_empty_line then
@@ -62,7 +58,7 @@ map("n", "dd", function()
   else
     return "dd"
   end
-end, { noremap = true, expr = true })
+end, { noremap = true, expr = true, desc = "Don't yank empty line to clipboard" })
 
 -- mini.bascis mappings
 map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
