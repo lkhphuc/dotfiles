@@ -84,21 +84,20 @@ config.font = wezterm.font_with_fallback({
   { family = "Rec Mono Duotone" },
   { family = "JetBrains Mono" },
 })
--- config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 config.font_size = 15
+config.underline_position = "-2pt"
 config.color_scheme = "Tokyo Night"
 
-config.window_decorations = "RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
 config.keys = {
   { key = "_", mods = "CMD", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
   { key = "|", mods = "CMD", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 
-  { key = 'X', mods = 'CMD', action = act.ActivateCopyMode },
-  { key = 'Z', mods = 'CMD', action = act.TogglePaneZoomState },
   { key = 'p', mods = 'CMD', action = act.ActivateCommandPalette },
-
+  { key = 'Z', mods = 'CMD', action = act.TogglePaneZoomState },
+  { key = 'V', mods = 'CMD', action = act.ActivateCopyMode },
   { key = 'phys:Space', mods = 'CMD|SHIFT', action = act.QuickSelect },
 
   { key = 'PageUp',   mods = '', action = act.ScrollByPage(-1) },
@@ -106,16 +105,16 @@ config.keys = {
 
   { key = '>', mods = 'CMD|SHIFT', action = act.MoveTabRelative(1) },
   { key = '<', mods = 'CMD|SHIFT', action = act.MoveTabRelative(-1) },
+  { key = "C", mods = "CMD", action = act.CloseCurrentPane({confirm=true}) },
+  { key = "e", mods = "CMD", action = act.SpawnTab("DefaultDomain")},
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
+  { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },
 
   { key = 'h', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Left' },
   { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
   { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
   { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
-
-  { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },
-  { key = 'Enter', mods = 'CMD|ALT', action = act.ToggleFullScreen, },
   split_nav('move', 'h'),
   split_nav('move', 'j'),
   split_nav('move', 'k'),
@@ -134,6 +133,37 @@ wezterm.on('update-status', function(window, pane)
     local secs = meta.since_last_response_ms / 1000.0
     window:set_right_status(string.format('tardy: %5.1fs⏳', secs))
   end
+end)
+
+local function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane in that tab
+  return tab_info.active_pane.title
+end
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local title = tab.tab_index + 1 .. ": " .. tab_title(tab)
+  local pane = tab.active_pane
+  if pane.domain_name and pane.domain_name ~= "local" then
+    title = title .. " - (" .. pane.domain_name .. ")"
+  end
+
+  local has_unseen_output = false
+  for _, pane in ipairs(tab.panes) do
+    if pane.has_unseen_output then
+      has_unseen_output = true
+      break
+    end
+  end
+  if has_unseen_output then
+    title = title .. " ●"
+  end
+
+  return title
 end)
 
 return config

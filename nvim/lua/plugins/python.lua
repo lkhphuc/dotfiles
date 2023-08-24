@@ -29,16 +29,18 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
+        ---@type lspconfig.options.pyright
         pyright = {
           settings = {
             python = {
               analysis = {
-                diagnosticSeverityOverrides = {
-                  reportGeneralTypeIssues = "information",
-                  reportPrivateImportUsage = "information",
-                  reportOptionalOperand = "information",
-                  reportOptionalSubscript = "information",
-                  reportOptionalMemberAccess = "information",
+                diagnosticmode = "openfilesonly",
+                diagnosticseverityoverrides = {
+                  reportgeneraltypeissues = "information",
+                  reportprivateimportusage = "information",
+                  reportoptionaloperand = "information",
+                  reportoptionalsubscript = "information",
+                  reportoptionalmemberaccess = "information",
                 },
               },
             },
@@ -51,13 +53,13 @@ return {
                 "--extend-select",
                 "W,C90,UP,ASYNC,S,B,A,COM,C4,DTZ,T10,EXE,ISC,ICN,G,INP,PIE,PYI,PT,RET,SIM,TID,TCH,PL,TRY,PD,NPY,PERF",
                 "--ignore",
-                "E402,E501,W291,PLR0913,W293,S101,RET504,RET505,C901,TRY003,F401",
+                "E402,E501,W291,PLR0913,W293,S101,RET504,RET505,C901,TRY003,F401,PLR0915",
               },
             },
           },
         },
       },
-    },
+    }
   },
   {
     "goerz/jupytext.vim",

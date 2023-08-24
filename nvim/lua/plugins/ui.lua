@@ -19,6 +19,14 @@ return {
           },
           view = "mini"
         },
+        {
+          filter = {
+            event = "notify",
+            any = {
+              { find = "No information available"}
+            }
+          }
+        }
       },
     },
   },
