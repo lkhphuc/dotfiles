@@ -34,13 +34,13 @@ return {
           settings = {
             python = {
               analysis = {
-                diagnosticmode = "openfilesonly",
-                diagnosticseverityoverrides = {
-                  reportgeneraltypeissues = "information",
-                  reportprivateimportusage = "information",
-                  reportoptionaloperand = "information",
-                  reportoptionalsubscript = "information",
-                  reportoptionalmemberaccess = "information",
+                diagnosticMode = "openFilesOnly",
+                diagnosticSeverityOverrides = {
+                  reportGeneralTypeIssues = "information",
+                  reportPrivateImportUsage = "information",
+                  reportOptionalOperand = "information",
+                  reportOptionalSubscript = "information",
+                  reportOptionalMemberAccess = "information",
                 },
               },
             },
