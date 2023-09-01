@@ -131,14 +131,7 @@ return {
     event = "VeryLazy",
     config = function()
       require("tabby.tabline").use_preset("active_wins_at_tail", {
-        theme = {
-          fill = 'TabLineFill',
-          head = 'lualine_a_insert',
-          current_tab = 'lualine_a_insert',
-          tab = 'lualine_b_normal',
-          win = 'lualine_c_normal',
-          tail = 'lualine_b_insert',
-        },
+        lualine_theme='auto',
       })
     end,
   },

@@ -25,7 +25,8 @@ return {
             any = {
               { find = "No information available"}
             }
-          }
+          },
+          view = "mini",
         }
       },
     },
