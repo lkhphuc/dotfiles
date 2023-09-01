@@ -6,6 +6,8 @@ local g, o, opt = vim.g, vim.o, vim.opt
 
 g.mapleader = " "
 
+o.title = true
+o.titlestring = "nvim - " ..vim.fn.fnamemodify(vim.loop.cwd(), ":t")
 o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
 o.splitright = true
 

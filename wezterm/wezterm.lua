@@ -79,7 +79,7 @@ config.macos_window_background_blur = 10
 config.unix_domains = { { name = "unix" } }
 
 config.font = wezterm.font_with_fallback({
-  -- { family="Cascadia Code", harfbuzz_features={"calt", "ss01", "ss02"}, },
+  { family="Cascadia Code", harfbuzz_features={"calt", "ss01", "ss02"}, },
   { family = "IBM Plex Mono" },
   { family = "Rec Mono Duotone" },
   { family = "JetBrains Mono" },
@@ -96,7 +96,7 @@ config.keys = {
   { key = "|", mods = "CMD", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 
   { key = 'p', mods = 'CMD', action = act.ActivateCommandPalette },
-  { key = 'Z', mods = 'CMD', action = act.TogglePaneZoomState },
+  { key = 'z', mods = 'CMD', action = act.TogglePaneZoomState },
   { key = 'V', mods = 'CMD', action = act.ActivateCopyMode },
   { key = 'phys:Space', mods = 'CMD|SHIFT', action = act.QuickSelect },
 
@@ -149,7 +149,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   local title = tab.tab_index + 1 .. ": " .. tab_title(tab)
   local pane = tab.active_pane
   if pane.domain_name and pane.domain_name ~= "local" then
-    title = title .. " - (" .. pane.domain_name .. ")"
+    title = title .. " (" .. pane.domain_name .. ") "
   end
 
   local has_unseen_output = false
