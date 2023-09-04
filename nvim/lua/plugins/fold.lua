@@ -48,6 +48,7 @@ return {
         bash = { "treesitter", "indent" },
         git = "",
         ["neo-tree"] = "",
+        Outline = "",
       }
       return ftMap[filetype]
     end,

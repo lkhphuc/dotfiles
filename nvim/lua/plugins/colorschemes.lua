@@ -15,6 +15,8 @@ return {
     },
   },
   { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'loctvl842/monokai-pro.nvim', opts = { day_night = { enable = true}}},
+  { 'ellisonleao/gruvbox.nvim', opts={}},
   { "xiyaowong/nvim-transparent",
     lazy = false,
     opts = {
