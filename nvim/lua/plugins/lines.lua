@@ -26,12 +26,12 @@ return {
             separator = { left = "", right = "" },
             padding = 0,
           },
-          { "branch", color = { gui = "italic" }, cond = is_wide_term },
         },
         lualine_b = {
+          { "branch", color = { gui = "bold" }, cond = is_wide_term },
           {
             function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-            color = { gui = "bold" },
+            color = { gui = "italic" },
           },
         },
         lualine_c = {
@@ -83,13 +83,14 @@ return {
             cond = require("lazy.status").has_updates,
             color = fg("Special"),
           },
-          { "progress", icon = "", separator = false },
-          { "location", padding = { left = 0, right = 1 } },
+          { "progress", separator = false, padding = 0, },
+          { "location", icon = "", padding = 0},
         },
         lualine_y = {
           {
             function() return " " .. vim.api.nvim_get_option_value("tabstop", { buf = 0 }) end,
             cond = is_wide_term,
+            padding = 0,
           },
           {
             function()
@@ -99,13 +100,13 @@ return {
             end,
             color = fg("Constant"),
           },
-        },
-        lualine_z = {
           { --terminal
             function() return " " .. vim.o.channel end,
             cond = function() return vim.o.buftype == "terminal" end,
           },
-          { "hostname", icon = "", separator = { right = "" }, padding = 1 },
+        },
+        lualine_z = {
+          { "hostname", icon = "", separator = { left = "", right = "" }, padding = 1 },
         },
       },
       extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" },
