@@ -97,7 +97,7 @@ setopt GLOB_STAR_SHORT
 setopt NUMERIC_GLOB_SORT
 
 precmd() {
-  echo -ne "\033]0;zsh - $(pwd | sed 's/.*\///')\007"
+  echo -ne "\033]0; $(pwd | sed 's/.*\///')\007"
 }
 
 # vim:ft=bash

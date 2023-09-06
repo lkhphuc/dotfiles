@@ -7,6 +7,9 @@ map i $(less -RX $f)
 map f $nvim $(fzf)
 
 set icons
+set sortby time
+set reverse
+set info size:time
 
 # interpreter for shell commands (needs to be POSIX compatible)
 # set shell zsh

@@ -106,7 +106,7 @@ return {
           },
         },
         lualine_z = {
-          { "hostname", icon = "", separator = { left = "", right = "" }, padding = 1 },
+          { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
         },
       },
       extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" },

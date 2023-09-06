@@ -355,3 +355,4 @@ Vagrantfile             
 
 # other formats
 *.pdf   
+*.log   
