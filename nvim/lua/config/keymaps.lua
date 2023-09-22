@@ -2,6 +2,9 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local map = vim.keymap.set
+local Util = require("lazyvim.util")
+
+map("n", "<leader>fl", function() Util.float_term({ "lf" } ) end, { desc = "LF file manager" })
 
 -- these keymaps will also accept a range,
 map({ "n", "t" }, "<A-h>", require("smart-splits").resize_left)

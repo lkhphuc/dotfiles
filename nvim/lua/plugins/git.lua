@@ -122,4 +122,27 @@ return {
       end,
     }
   },
+  {
+    'linrongbin16/gitlinker.nvim',
+    keys = { { "<leader>gl", desc = "Copy git link" }, { "<leader>gL", desc = "Open git link" } },
+    opts = {
+      custom_rules = function(remote_url)
+        local pattern_rules = {
+          {
+            ["^git@es.naverlabs%.([_%.%-%w]+):([%.%-%w]+)/([%.%-%w]+)%.git$"] = "https://es.naverlabs.%1/%2/%3/blob/",
+            ["^https://es.naverlabs%.([_%.%-%w]+)/([%.%-%w]+)/([%.%-%w]+)%.git$"] = "https://es.naverlabs.%1/%2/%3/blob/",
+          },
+        }
+        for _, group in ipairs(pattern_rules) do
+          for pattern, replace in pairs(group) do
+            if string.match(remote_url, pattern) then
+              local result = string.gsub(remote_url, pattern, replace)
+              return result
+            end
+          end
+        end
+        return nil
+      end,
+    }
+  },
 }

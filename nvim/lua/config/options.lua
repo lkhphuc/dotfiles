@@ -41,6 +41,8 @@ opt.fillchars = {
   eob = " ",
 }
 
+opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
+
 opt.path:append("**")
 opt.shortmess:append("s")
 

@@ -85,7 +85,7 @@ config.font = wezterm.font_with_fallback({
   { family = "JetBrains Mono" },
 })
 config.font_size = 15
-config.underline_position = "-2pt"
+config.underline_position = "-3pt"
 config.color_scheme = "Tokyo Night"
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
@@ -98,7 +98,7 @@ config.keys = {
   { key = 'p', mods = 'CMD', action = act.ActivateCommandPalette },
   { key = 'z', mods = 'CMD', action = act.TogglePaneZoomState },
   { key = 'V', mods = 'CMD', action = act.ActivateCopyMode },
-  { key = 'phys:Space', mods = 'CMD|SHIFT', action = act.QuickSelect },
+  { key = 'x', mods = 'CMD', action = act.QuickSelect },
 
   { key = 'PageUp',   mods = '', action = act.ScrollByPage(-1) },
   { key = 'PageDown', mods = '', action = act.ScrollByPage(1) },
@@ -107,6 +107,7 @@ config.keys = {
   { key = '<', mods = 'CMD|SHIFT', action = act.MoveTabRelative(-1) },
   { key = "C", mods = "CMD", action = act.CloseCurrentPane({confirm=true}) },
   { key = "e", mods = "CMD", action = act.SpawnTab("DefaultDomain")},
+  { key = "l", mods = "CMD", action = act.ActivateLastTab},
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
   { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },

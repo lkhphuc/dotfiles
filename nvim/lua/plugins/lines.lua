@@ -141,12 +141,6 @@ return {
     branch = "main",
     event = "BufReadPost",
     opts = {
-      highlight = {
-        groups = {
-          InclineNormal = "CursorLine",
-          InclineNormalNC = "CursorLine",
-        },
-      },
       window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
       hide = { cursorline = true },
       -- ignore = { buftypes = function(bufnr, buftype) return false end },
@@ -199,7 +193,7 @@ return {
           { get_git_diff() },
           { ft_icon .. " ", guifg = ft_color, guibg = "none" },
           { filename .. " ", gui = modified },
-          { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
+          -- { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
         }
         return buffer
       end,
