@@ -27,21 +27,10 @@ return {
       vim.api.nvim_create_user_command("SendToJupyter", send_to_jupyter, {})
     end,
     keys = {
-      { "<CR>",   "<Plug>Send",     desc = "Send", mode = { "n", "v" } },
-      { "<S-CR>", "vap<Plug>Send}", desc = "Send", mode = "n" },
+      { "<CR>",   "<Plug>Send",    desc = "Send", mode = "n" },
+      { "<CR>",   "<Plug>Send'>",  desc = "Send", mode = "v" },
+      { "<S-CR>", "vap<Plug>Send'>", desc = "Send", mode = "n" },
     },
-  },
-  {
-    "nikvdp/neomux",
-    event = "VeryLazy",
-    init = function()
-      vim.g.neomux_start_term_map = ""
-      vim.g.neomux_win_num_status = ""
-      vim.g.neomux_winswap_map_prefix = "<leader>ws"
-      vim.g.neomux_term_sizefix_map = "<leader>wf"
-      vim.g.neomux_dont_fix_term_ctrlw_map = 1
-      vim.g.neomux_no_term_autoinsert = 1
-    end,
   },
   {
     "voldikss/vim-floaterm",

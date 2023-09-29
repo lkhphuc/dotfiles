@@ -5,6 +5,9 @@ set cleaner ~/.config/lf/cleaner.sh
 map i $(less -RX $f)
 
 map f $nvim $(fzf)
+map T trash
+map D delete
+map S calcdirsize
 
 set icons
 set sortby time
@@ -128,3 +131,6 @@ cmd fzf_search ${{
 }}
 map gs :fzf_search
 
+cmd on-select &{{
+    lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
+}}

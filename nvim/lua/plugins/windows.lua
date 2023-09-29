@@ -14,7 +14,12 @@ return {
     "sindrets/winshift.nvim",
     cmd = "WinShift",
     opts = { highlight_moving_win = true },
-    keys = { "<leader>wS", "<CMD>WinShift<CR>", desc = "Win Shift/Swap" },
+    keys = { { "<leader>ws", "<CMD>WinShift<CR>", desc = "Win Shift/Swap" } },
   },
   { "mrjones2014/smart-splits.nvim", lazy=false, },
+  {
+    "nvim-zh/colorful-winsep.nvim",
+    opts = {},
+    event = { "WinNew" },
+  },
 }

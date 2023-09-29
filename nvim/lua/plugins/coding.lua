@@ -4,7 +4,7 @@ return {
     opts = {
       custom_textobjects = {
         u = require("mini.ai").gen_spec.function_call(), -- "usage" call of function or class
-        N = { "%f[%d]%d+" }, -- Numbers
+        n = { "%f[%d]%d+" }, -- Numbers
         e = { -- Word with camel case
           {
             "%u[%l%d]+%f[^%l%d]",

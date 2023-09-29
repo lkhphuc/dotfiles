@@ -9,10 +9,9 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "+",
-          node_incremental = "+",
-          node_decremental = "-",
-          scope_incremental = "_",
+          node_incremental = "v",
+          node_decremental = "<BS>",
+          scope_incremental = "<M-v>",
         },
       },
       matchup = { enable = true, include_match_words = true },

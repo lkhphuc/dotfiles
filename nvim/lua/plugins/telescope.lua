@@ -20,7 +20,7 @@ return {
       layout_strategies = "flex",
       layout_config = { prompt_position = "top" },
       sorting_strategy = "ascending",
-      path_display = { "smart", shorten = 10 },
+      path_display = { "truncate" },
     },
     pickers = {
       find_files = { theme = "dropdown" },

@@ -19,18 +19,12 @@ return {
     cmd = "MundoToggle",
     keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
+  { "RRethy/vim-illuminate", enabled = false },
   {
-    "simrat39/symbols-outline.nvim",
-    opts = {
-      keymaps = {
-        fold_all = "H",
-        unfold_all = "L",
-      },
-    },
-    cmd = "SymbolsOutline",
-    keys = {
-      { "<leader>co", "<Cmd>SymbolsOutline<Cr>", "Symbols Outline" },
-    },
+    "echasnovski/mini.cursorword",
+    -- config = function(_, opts) require("mini.cursorword").setup(opts) end,
+      opts = {},
+    event = "VeryLazy",
   },
   {
     "echasnovski/mini.map",

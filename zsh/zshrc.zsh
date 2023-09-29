@@ -38,8 +38,7 @@ znap install conda-incubator/conda-zsh-completion
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
-znap source zpm-zsh/colors
-znap source zpm-zsh/ls # Use exa for ls
+znap source zpm-zsh/ls # Use eza for ls
 znap source zpm-zsh/autoenv
 znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
@@ -49,7 +48,6 @@ znap source zsh-users/zsh-completions
 # znap eval direnv  "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
 znap fpath _fuck "$(thefuck --alias)"
-znap install ogham/exa
 znap source not-poma/lazyshell  # GPT
 source $HOME/.config/lf/utils.sh
 

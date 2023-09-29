@@ -1,5 +1,9 @@
 return {
-  { "rebelot/kanagawa.nvim", opts = { dimInactive = true } },
+  {
+    "rebelot/kanagawa.nvim",
+    opts = { dimInactive = true, colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
+    }
+  },
   { "navarasu/onedark.nvim" },
   { "folke/tokyonight.nvim", opts = {
     transparent = vim.g.transparent_enabled,
@@ -15,8 +19,9 @@ return {
     },
   },
   { 'rose-pine/neovim', name = 'rose-pine' },
-  { 'loctvl842/monokai-pro.nvim', opts = { day_night = { enable = true}}},
+  { 'loctvl842/monokai-pro.nvim', opts = {} },
   { 'ellisonleao/gruvbox.nvim', opts={}},
+  { 'ribru17/bamboo.nvim',opts = {}},
   { "xiyaowong/nvim-transparent",
     lazy = false,
     opts = {
@@ -71,6 +76,7 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
+            highlight! MiniCursorword guibg=#3b4261 gui=NONE cterm=NONE
             highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
           ]])
         end,
