@@ -1,5 +1,5 @@
 return {
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
   opts = {
     sources = {
       require("null-ls").builtins.formatting.yapf.with({
