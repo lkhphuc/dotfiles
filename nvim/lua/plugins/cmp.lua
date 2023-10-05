@@ -105,14 +105,14 @@ return {
     local cmp = require("cmp")
     cmp.setup(opts) -- insert mode completion
     cmp.setup.cmdline({ "/", "?" }, {
-      completion = { completeopt = "menu,menuone,noselect" },
+      completion = { completeopt = "menu,menuone,noselect,noinsert" },
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
         { name = "buffer" },
       },
     })
     cmp.setup.cmdline(":", {
-      completion = { completeopt = "menu,menuone,noselect" },
+      completion = { completeopt = "menu,menuone,noselect,noinsert" },
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = "cmdline" },

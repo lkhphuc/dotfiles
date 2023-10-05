@@ -104,19 +104,6 @@ map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual sele
 map("x", "*", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]])
 map("x", "#", [[y?\V<C-R>=escape(@", '?\')<CR><CR>]])
 
-local enabled = false
-local function toggle_diagnostics_virtualtext()
-  enabled = not enabled
-  if enabled then
-    vim.diagnostic.config({ virtual_text = true })
-    vim.notify("Enabled diagnostics virtualtext", 5, { title = "Diagnostics" })
-  else
-    vim.diagnostic.config({ virtual_text = false })
-    vim.notify("Disabled diagnostics virtualtext", 5, { title = "Diagnostics" })
-  end
-end
-map("n", "<leader>uv", toggle_diagnostics_virtualtext, { desc = "Toggle diagnostic virtual text" })
-
 -- NOTE: Adding `redraw` helps with `cmdheight=0` if buffer is not modified
 map(
   { "n", "i", "x" },
@@ -133,7 +120,7 @@ map_toggle(
   '<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>',
   "Toggle 'background'"
 )
-map_toggle("c", function() require("reticle").toggle_cursorline() end, "Toggle 'cursorline'")
+map_toggle("c", "<Cmd>setlocal cursorline! cursorline?<CR>", "Toggle 'cursorline'")
 map_toggle("C", "<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>", "Toggle 'cursorcolumn'")
 map_toggle("d", function()
   if vim.o.diff then

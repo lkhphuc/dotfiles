@@ -1,21 +1,22 @@
+local function toggle_diag_virtext()
+  local virtual_text = {  -- Default virtual_text opts from Lazy.Nvim
+    spacing = 4,
+    source = "if_many",
+    prefix = "●",
+  }
+  local config = vim.diagnostic.config()
+  if type(config.virtual_text) == "table" then
+    config.virtual_text = false
+    vim.diagnostic.config(config)
+    vim.notify("Enabled diagnostics virtualtext", 5, { title = "Diagnostics" })
+  else
+    config.virtual_text = virtual_text
+    vim.diagnostic.config(config)
+    vim.notify("Disabled diagnostics virtualtext", 5, { title = "Diagnostics" })
+  end
+end
+
 return {
-  { "smjonas/inc-rename.nvim", opts = {} },
-  {
-    "weilbith/nvim-code-action-menu",
-    cmd = "CodeActionMenu",
-    init = function()
-      require("lazyvim.util").on_attach(
-        function(client, buffer)
-          vim.keymap.set(
-            { "n", "v" },
-            "<leader>ca",
-            "<Cmd>CodeActionMenu<CR>",
-            { buffer = buffer, desc = "Code Action" }
-          )
-        end
-      )
-    end,
-  },
   {
     "neovim/nvim-lspconfig",
     init = function()
@@ -29,18 +30,11 @@ return {
       -- disable keymaps
       keys[#keys + 1] = { "gy", false } -- For gy, gp to system clipboard
       keys[#keys + 1] = { "gt", "<CMD>Telescope lsp_type_definitions<CR>" }
+      keys[#keys + 1] = { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext"}
     end,
     ---@class PluginLspOpts
     opts = {
       autoformat = false,
-      capabilities = {
-        textDocument = {
-          foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-          },
-        },
-      },
       ---@type lspconfig.options
       servers = {},
       -- return true if you don't want this server to be setup with lspconfig
@@ -50,27 +44,16 @@ return {
         -- ["*"] = function(server, opts) end,
       },
     },
-    dependencies = {
-      {
-        "jubnzv/virtual-types.nvim",
-        init = function()
-          require("lazyvim.util").on_attach(function(client, buffer)
-            if client.server_capabilities.codeLensProvider ~= nil then
-              require("virtualtypes").on_attach(client, buffer)
-            end
-          end)
-        end,
-      },
-      {
-        "kosayoda/nvim-lightbulb",
-        opts = {
-          autocmd = { enabled = true },
-          sign = { enabled = true, text = "" },
-          action_kinds = { "quickfix", "refactor" },
-          ignore = {
-            actions_without_kind = true,
-          },
-        },
+  },
+  {
+    "kosayoda/nvim-lightbulb",
+    event = "LspAttach",
+    opts = {
+      autocmd = { enabled = true },
+      sign = { enabled = true, text = "" },
+      action_kinds = { "quickfix", "refactor" },
+      ignore = {
+        actions_without_kind = true,
       },
     },
   },

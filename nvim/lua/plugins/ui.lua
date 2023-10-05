@@ -1,5 +1,5 @@
 return {
-  { "nvim-notify", opts = {background_colour = "#1a1b26"}},
+  { "nvim-notify", opts = { background_colour = "NormalFloat" } },
   { "folke/noice.nvim",
     opts = {
       presets = {
@@ -45,21 +45,5 @@ return {
     event = "LspAttach",
     opts = { lsp = { auto_attach = true }, },
     keys = { {"<leader>cn", "<Cmd>Navbuddy<CR>", desc = "Code breadcrumbs Navigation"}, },
-  },
-  {
-    "luukvbaal/statuscol.nvim",
-    config = function()
-      vim.o.foldcolumn = "1"
-      local builtin = require("statuscol.builtin")
-      require("statuscol").setup({
-        setopt = true,
-        segments = {
-          { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
-          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-          { text = { "%s" }, click = "v:lua.ScSa" },
-        },
-      })
-    end,
-    event = "VeryLazy",
   },
 }
