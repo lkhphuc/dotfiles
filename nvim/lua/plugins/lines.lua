@@ -10,7 +10,7 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
-        component_separators = "┊", --        
+        component_separators = '', -- ┊ |        
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
           winbar = { "dashboard", "NeoTree", "Outline", "TelescopePrompt", "Mundo", "MundoDiff" },
@@ -28,10 +28,10 @@ return {
           },
         },
         lualine_b = {
-          { "branch", color = { gui = "bold" }, cond = is_wide_term },
+          { "branch", color = fg("Special"), cond = is_wide_term },
           {
             function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-            color = { gui = "italic" },
+            color = { gui = "italic", fg=fg("Constant").fg},
           },
         },
         lualine_c = {
@@ -83,18 +83,17 @@ return {
             cond = require("lazy.status").has_updates,
             color = fg("Special"),
           },
-          { "progress", separator = false, padding = 0, },
-          { "location", icon = "", padding = 0},
+          { "location", separator = false},
+          { "progress", icon = "", },
         },
         lualine_y = {
           {
             function() return " " .. vim.api.nvim_get_option_value("tabstop", { buf = 0 }) end,
             cond = is_wide_term,
-            padding = 0,
           },
           {
             function()
-              local num_clients = #vim.lsp.get_active_clients({ bufnr = 0 })
+              local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
               if num_clients > 0 then return " " .. num_clients end
               return ""
             end,
@@ -114,7 +113,6 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
-    enabled = false,
     -- dependencies = { "tiagovla/scope.nvim", opts = {} },
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
@@ -126,15 +124,6 @@ return {
         -- separator_style = "slope",
       },
     },
-  },
-  {
-    "nanozuki/tabby.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("tabby.tabline").use_preset("active_wins_at_tail", {
-        lualine_theme='auto',
-      })
-    end,
   },
   {
     "b0o/incline.nvim",
@@ -199,10 +188,4 @@ return {
       end,
     },
   },
-  -- {'vimpostor/vim-tpipeline', -- tmux + nvim global statusline
-  --   init = function()
-  --     vim.g.tpipeline_usepane = 1
-  --     vim.g.tpipeline_clearstl = 1
-  --   end
-  -- },
 }

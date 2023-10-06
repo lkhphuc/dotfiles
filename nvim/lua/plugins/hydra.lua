@@ -3,161 +3,73 @@ return {
   event = "VeryLazy",
   init = function()
     require("hydra")({
-      name = "Side scroll",
+      name = "Folding screen",
       mode = "n",
-      body = "z",
-      hint = "Side scroll",
+      color = "pink",
+      body = "<leader>z",
+      hint = [[
+  _M_: 󰡍    _m_:     _k_:     _[_: 󰜝    _i_: 󰌁
+  _H_:     _h_:     _z_: 󰘢    _l_:     _L_:   
+  _R_: 󰡏    _r_:     _j_:     _]_: 󰜙    _a_:     _<Esc>_: Quit
+  ]],
+      config = {
+        hint = { border = "rounded" },
+        invoke_on_body = true,
+        on_enter = function()
+          vim.opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
+          vim.b.minianimate_disable = true
+        end,
+        on_exit = function()
+          vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util.ui'.statuscolumn()]]
+          vim.b.minianimate_disable = false
+        end,
+      },
       heads = {
-        { "h", "5zh" },
-        { "l", "5zl", { desc = "←/→" } },
-        { "H", "zH" },
-        { "L", "zL", { desc = "half screen ←/→" } },
+        { "h", "5zh", { nowait = true } },
+        { "l", "5zl", { nowait = true } },
+        { "H", "zH" , { nowait = true }},
+        { "L", "zL" , { nowait = true }},
+        { "[", "[z" , { nowait = true }},
+        { "]", "]z" , { nowait = true }},
+        { "j", "zj" , { nowait = true }},
+        { "k", "zk" , { nowait = true }},
+        { "i", "zi" , { nowait = true }},
+        { "a", "za" , { nowait = true }},
+        { "m", "zm" , { nowait = true }},
+        { "M", "zM" , { nowait = true }},
+        { "r", "zr" , { nowait = true }},
+        { "R", "zR" , { nowait = true }},
+        { "z", "zz" , { nowait = true }},
       },
     })
 
     require("hydra")({
       name = "Buffers",
       body = "<leader>b",
-      -- hint = [[
-      --        ^<-^  ^-> ^
-      -- Cycle  ^_h_^ ^_l_^
-      -- Move   ^_H_^ ^_L_^
-      -- ]],
-      config = {
-        hint = { type = "window", border = "single" },
-        invoke_on_body = true,
-        on_key = function()
-          -- Preserve animation
-          vim.wait(200, function() vim.cmd("redraw") end, 30, false)
-        end,
-      },
-      heads = {
-        {
-          "h",
-          "<cmd>BufferLineCyclePrev<Cr>",
-          { desc = "choose left", on_key = false },
-        },
-        {
-          "l",
-          "<cmd>BufferLineCycleNext<Cr>",
-          { desc = "choose right", on_key = false },
-        },
-        {
-          "H",
-          "<cmd>BufferLineMovePrev<Cr>",
-          { desc = "move left" },
-        },
-        {
-          "L",
-          "<cmd>BufferLineMoveNext<Cr>",
-          { desc = "move right" },
-        },
-        { "p", "<cmd>BufferLinePick<Cr>", { desc = "Pick" } },
-        { "P", "<Cmd>BufferLineTogglePin<Cr>", { desc = "pin" } },
-        {
-          "b",
-          "<Cmd>Telescope buffers<CR>",
-          { desc = "fuzzy pick " },
-        },
-        { "d", function() require("mini.bufremove").delete(0, false) end, { desc = "close" } },
-        { "q", function() require("mini.bufremove").unshow(0) end, { desc = "unshow" } },
-        {
-          "c",
-          "<Cmd>BufferLinePickClose<CR>",
-          { desc = "Pick close" },
-        },
-        {
-          "sd",
-          "<Cmd>BufferLineSortByDirectory<CR>",
-          { desc = "by directory" },
-        },
-        {
-          "se",
-          "<Cmd>BufferLineSortByExtension<CR>",
-          { desc = "by extension" },
-        },
-        { "st", "<Cmd>BufferLineSortByTabs<CR>", { desc = "by tab" } },
-        { "<Esc>", nil, { exit = true } },
-      },
-    })
-
-    require("hydra")({
-      name = "Windows",
       hint = [[
-  ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
-  ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
-  ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally
-  _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
-  ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
-  focus^^^^^^  window^^^^^^  ^_=_: equalize^   _z_: maximize
-  ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^   _o_: remain only
-  _<Space>_: pick buffer
-           ]],
+      _h_:     _l_:     _p_:     _s_:     _d_: 󰆴   _D_: 󰒺   _<Tab>_:  
+      _H_: 󰁍    _L_: 󰁔    _P_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _<Esc>_: Quit 
+      ]],
       config = {
-        on_key = function() vim.wait(1) end,
+        color = "pink",
+        hint = { position = "top", offset = 1,  border = "rounded" },
         invoke_on_body = true,
-        hint = {
-          border = "rounded",
-          offset = -1,
-        },
       },
-      mode = "n",
-      body = "<leader>w",
       heads = {
-        { "h", "<CMD>SmartCursorMoveLeft<CR>" },
-        { "j", "<CMD>SmartCursorMoveDown<CR>" },
-        { "k", "<CMD>SmartCursorMoveUp<CR>" },
-        { "l", "<CMD>SmartCursorMoveRight<CR>" },
-
-        { "H", "<Cmd>WinShift left<CR>" },
-        { "J", "<Cmd>WinShift down<CR>" },
-        { "K", "<Cmd>WinShift up<CR>" },
-        { "L", "<Cmd>WinShift right<CR>" },
-
-        { "<C-h>", "<CMD>SmartResizeLeft<CR>" },
-        { "<C-j>", "<CMD>SmartResizeDown<CR>" },
-        { "<C-k>", "<CMD>SmartResizeUp<CR>" },
-        { "<C-l>", "<CMD>SmartResizeRight<CR>" },
-        { "=", "<C-w>=", { desc = "equalize" } },
-        { "s", "<C-w>s" },
-        { "<C-s>", "<C-w><C-s>", { desc = false } },
-        { "v", "<C-w>v" },
-        { "<C-v>", "<C-w><C-v>", { desc = false } },
-        { "w", "<C-w>w", { exit = true, desc = false } },
-        { "<C-w>", "<C-w>w", { exit = true, desc = false } },
-        { "z", "<Cmd>ZenMode<CR>", { exit = true, desc = "Zen mode" } },
-        { "o", "<C-w>o", { exit = true, desc = "remain only" } },
-        { "<C-o>", "<C-w>o", { exit = true, desc = false } },
-        {
-          "<Space>",
-          "<CMD>BufferLinePick<CR>",
-          {
-            exit = true,
-            desc = "choose buffer",
-          },
-        },
-
-        { "c", vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]) },
-        {
-          "q",
-          vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
-          { desc = "close window" },
-        },
-        {
-          "<C-q>",
-          vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
-          { desc = false },
-        },
-        {
-          "<C-c>",
-          vim.cmd([[try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry]]),
-          { desc = false },
-        },
-        {
-          "<Esc>",
-          nil,
-          { exit = true, desc = false },
-        },
+        { "h", "<cmd>BufferLineCyclePrev<Cr>" },
+        { "l", "<cmd>BufferLineCycleNext<Cr>" },
+        { "H", "<cmd>BufferLineMovePrev<Cr>" },
+        { "L", "<cmd>BufferLineMoveNext<Cr>" },
+        { "p", "<cmd>BufferLinePick<Cr>" },
+        { "P", "<Cmd>BufferLineTogglePin<Cr>", { nowait = true } },
+        { "s", "<Cmd>Telescope buffers<CR>", { nowait = true }},
+        { "d", function() require("mini.bufremove").delete(0, false) end },
+        { "q", function() require("mini.bufremove").unshow(0) end },
+        { "c", "<Cmd>BufferLinePickClose<CR>" },
+        { "D", "<Cmd>BufferLineSortByDirectory<CR>" },
+        { "E", "<Cmd>BufferLineSortByExtension<CR>" },
+        { "<Tab>", "<Cmd>BufferLineSortByTabs<CR>" },
+        { "<Esc>", nil, { exit = true } },
       },
     })
 

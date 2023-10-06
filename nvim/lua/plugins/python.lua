@@ -71,7 +71,7 @@ return {
     opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
-    keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel" } },
+    keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel", ft='python' } },
   },
   {
     "dccsillag/magma-nvim",

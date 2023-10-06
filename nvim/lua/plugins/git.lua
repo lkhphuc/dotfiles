@@ -65,14 +65,12 @@ return {
    _/_: base file    _u_: undo stage    _p_: preview hunk  _d_: show deleted
    _h_: file history _H_: files history
    ^
-   ^ ^ _D_: Diff View         _<Enter>_: LazyGit         _<Esc>_: exit
+   ^ ^ _v_: Diff View         _g_: LazyGit         _<Esc>_: exit
             ]],
           config = {
             color = "pink",
             invoke_on_body = true,
-            hint = {
-              border = "rounded",
-            },
+            hint = { border = "rounded" },
             on_enter = function()
               vim.cmd("silent! %foldopen!")
               vim.bo.modifiable = false
@@ -90,40 +88,32 @@ return {
             end,
           },
           mode = { "n", "x" },
-          body = "<leader>G",
+          body = "<leader>g",
           heads = {
-            { "J", next_hunk,                        { expr = true, desc = "next hunk" } },
-            { "K", prev_hunk,                        { expr = true, desc = "prev hunk" } },
-            { "s", gs.stage_hunk,                    { desc = "stage hunk" } },
-            { "u", gs.undo_stage_hunk,               { desc = "undo last stage" } },
-            { "r", gs.reset_hunk,                    { desc = "reset hunk" } },
-            { "S", gs.stage_buffer,                  { desc = "stage buffer" } },
-            { "R", gs.reset_buffer,                  { desc = "reset buffer" } },
-            { "p", gs.preview_hunk,                  { desc = "preview hunk" } },
-            { "d", gs.toggle_deleted,                { nowait = true, desc = "toggle deleted" } },
-            { "h", "<CMD>DiffviewFileHistory %<CR>", { exit = true, desc = "File history" } },
-            { "H", "<CMD>DiffviewFileHistory <CR>",  { exit = true, desc = "Files history" } },
-            { "b", gs.blame_line,                    { desc = "blame" } },
-            {
-              "B",
-              function() gs.blame_line({ full = true }) end,
-              { desc = "blame show full" },
-            },
-            { "/",     gs.show,                 { exit = true, desc = "show base file" } }, -- show the base of the file
-            {
-              "<Enter>",
-              function() require("lazyvim.util").float_term("lazygit") end,
-              { exit = true, desc = "LazyGit" },
-            },
-            { "D",     "<Cmd>DiffviewOpen<CR>", { exit = true, desc = "Open Diffview" } },
-            { "<Esc>", nil,                     { exit = true, nowait = true, desc = "exit" } },
+            { "J", next_hunk, { expr = true, desc = "next hunk" } },
+            { "K", prev_hunk, { expr = true, desc = "prev hunk" } },
+            { "s", gs.stage_hunk, { desc = "stage hunk" } },
+            { "u", gs.undo_stage_hunk, { desc = "undo last stage" } },
+            { "r", gs.reset_hunk, { desc = "reset hunk" } },
+            { "S", gs.stage_buffer, { desc = "stage buffer" } },
+            { "R", gs.reset_buffer, { desc = "reset buffer" } },
+            { "p", gs.preview_hunk, { desc = "preview hunk" } },
+            { "d", gs.toggle_deleted, { nowait = true } },
+            { "h", "<CMD>DiffviewFileHistory %<CR>", { exit = true } },
+            { "H", "<CMD>DiffviewFileHistory <CR>", { exit = true } },
+            { "b", gs.blame_line, { desc = "blame" } },
+            { "B", function() gs.blame_line({ full = true }) end, },
+            { "/", gs.show, { exit = true } }, -- show the base of the file
+            { "g", function() require("lazyvim.util").float_term("lazygit") end, { exit = true }, },
+            { "v", "<Cmd>DiffviewOpen<CR>", { exit = true } },
+            { "<Esc>", nil, { exit = true, nowait = true } },
           },
         })
       end,
-    }
+    },
   },
   {
-    'linrongbin16/gitlinker.nvim',
+    "linrongbin16/gitlinker.nvim",
     keys = { { "<leader>gl", desc = "Copy git link" }, { "<leader>gL", desc = "Open git link" } },
     opts = {
       custom_rules = function(remote_url)
@@ -143,6 +133,6 @@ return {
         end
         return nil
       end,
-    }
+    },
   },
 }

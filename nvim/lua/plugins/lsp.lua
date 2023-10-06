@@ -8,11 +8,11 @@ local function toggle_diag_virtext()
   if type(config.virtual_text) == "table" then
     config.virtual_text = false
     vim.diagnostic.config(config)
-    vim.notify("Enabled diagnostics virtualtext", 5, { title = "Diagnostics" })
+    vim.notify("Disable diagnostics virtualtext", 5, { title = "Diagnostics" })
   else
     config.virtual_text = virtual_text
     vim.diagnostic.config(config)
-    vim.notify("Disabled diagnostics virtualtext", 5, { title = "Diagnostics" })
+    vim.notify("Enabled diagnostics virtualtext", 5, { title = "Diagnostics" })
   end
 end
 
