@@ -41,7 +41,7 @@ opt.fillchars = {
   eob = " ",
 }
 
-opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
+opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 
 opt.path:append("**")
 opt.shortmess:append("s")

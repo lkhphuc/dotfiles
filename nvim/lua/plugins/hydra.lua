@@ -16,11 +16,11 @@ return {
         hint = { border = "rounded" },
         invoke_on_body = true,
         on_enter = function()
-          vim.opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
+          -- vim.opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
           vim.b.minianimate_disable = true
         end,
         on_exit = function()
-          vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util.ui'.statuscolumn()]]
+          -- vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util.ui'.statuscolumn()]]
           vim.b.minianimate_disable = false
         end,
       },
@@ -47,8 +47,8 @@ return {
       name = "Buffers",
       body = "<leader>b",
       hint = [[
-      _h_:     _l_:     _p_:     _s_:     _d_: 󰆴   _D_: 󰒺   _<Tab>_:  
-      _H_: 󰁍    _L_: 󰁔    _P_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _<Esc>_: Quit 
+      _h_:     _l_:     _j_:     _s_:     _d_: 󰆴   _D_: 󰒺   _<Tab>_:  
+      _H_: 󰁍    _L_: 󰁔    _p_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _<Esc>_: Quit 
       ]],
       config = {
         color = "pink",
@@ -60,8 +60,8 @@ return {
         { "l", "<cmd>BufferLineCycleNext<Cr>" },
         { "H", "<cmd>BufferLineMovePrev<Cr>" },
         { "L", "<cmd>BufferLineMoveNext<Cr>" },
-        { "p", "<cmd>BufferLinePick<Cr>" },
-        { "P", "<Cmd>BufferLineTogglePin<Cr>", { nowait = true } },
+        { "j", "<cmd>BufferLinePick<Cr>" },
+        { "p", "<Cmd>BufferLineTogglePin<Cr>", { nowait = true } },
         { "s", "<Cmd>Telescope buffers<CR>", { nowait = true }},
         { "d", function() require("mini.bufremove").delete(0, false) end },
         { "q", function() require("mini.bufremove").unshow(0) end },

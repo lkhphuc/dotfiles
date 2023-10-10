@@ -63,6 +63,16 @@ map("n", "dd", function()
   end
 end, { noremap = true, expr = true, desc = "Don't yank empty line to clipboard" })
 
+map("n", "dm", function()
+  local cur_line = vim.fn.line(".")
+  local marks = vim.fn.getmarklist("%")
+  for _, mark in ipairs(marks) do
+    if mark.pos[2] == cur_line and mark.mark ~= "'^" and mark.mark ~= "'." then
+      vim.api.nvim_buf_del_mark(0, string.sub(mark.mark, 2, #mark.mark))
+    end
+  end
+end, { noremap = true, desc = "Delete mark on the current line" })
+
 -- mini.bascis mappings
 map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
 map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true })
@@ -144,6 +154,7 @@ map_toggle("w", "<Cmd>setlocal wrap! wrap?<CR>", "Toggle 'wrap'")
 vim.api.nvim_create_user_command("DiffOrig", function()
   -- Get start buffer
   local start = vim.api.nvim_get_current_buf()
+  local ft = vim.api.nvim_get_option_value("filetype", { buf = start })
 
   -- `vnew` - Create empty vertical split window
   -- `set buftype=nofile` - Buffer is not related to a file, will not be written
@@ -153,8 +164,7 @@ vim.api.nvim_create_user_command("DiffOrig", function()
 
   -- Get scratch buffer
   local scratch = vim.api.nvim_get_current_buf()
-  vim.api.nvim_buf_set_option(scratch, "filetype", vim.api.nvim_buf_get_option(start, "filetype"))
-
+  vim.api.nvim_set_option_value("filetype", ft, { buf=scratch })
   -- `wincmd p` - Go to the start window
   -- `diffthis` - Set diff mode to a start window
   vim.cmd("wincmd p | diffthis")

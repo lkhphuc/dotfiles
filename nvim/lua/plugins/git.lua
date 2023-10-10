@@ -20,6 +20,8 @@ return {
         changedelete = { text = "🮇" },
         untracked = { text = "┆" },
       },
+      signcolumn = true,
+      numhl = true,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
         local function map(mode, l, r, desc)
@@ -75,13 +77,13 @@ return {
               vim.cmd("silent! %foldopen!")
               vim.bo.modifiable = false
               gs.toggle_linehl(true)
-              gs.toggle_numhl(true)
+              -- gs.toggle_numhl(true)
               gs.toggle_word_diff(true)
               gs.toggle_current_line_blame(true)
             end,
             on_exit = function()
               gs.toggle_linehl(false)
-              gs.toggle_numhl(false)
+              -- gs.toggle_numhl(false)
               gs.toggle_word_diff(false)
               gs.toggle_current_line_blame(false)
               gs.toggle_deleted(false)
