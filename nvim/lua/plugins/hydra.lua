@@ -8,9 +8,9 @@ return {
       color = "pink",
       body = "<leader>z",
       hint = [[
-  _M_: 󰡍    _m_:     _k_:     _[_: 󰜝    _i_: 󰌁
+  _M_: 󰡍    _m_:     _k_:     _[_: 󰜝    _i_: 󰌁   _<Esc>_: Quit
   _H_:     _h_:     _z_: 󰘢    _l_:     _L_:   
-  _R_: 󰡏    _r_:     _j_:     _]_: 󰜙    _a_:     _<Esc>_: Quit
+  _R_: 󰡏    _r_:     _j_:     _]_: 󰜙    _a_/_<Space>_:  
   ]],
       config = {
         hint = { border = "rounded" },
@@ -35,6 +35,7 @@ return {
         { "k", "zk" , { nowait = true }},
         { "i", "zi" , { nowait = true }},
         { "a", "za" , { nowait = true }},
+        { "<Space>", "za" , { nowait = true }},
         { "m", "zm" , { nowait = true }},
         { "M", "zM" , { nowait = true }},
         { "r", "zr" , { nowait = true }},
@@ -48,7 +49,7 @@ return {
       body = "<leader>b",
       hint = [[
       _h_:     _l_:     _j_:     _s_:     _d_: 󰆴   _D_: 󰒺   _<Tab>_:  
-      _H_: 󰁍    _L_: 󰁔    _p_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _<Esc>_: Quit 
+      _H_: 󰁍    _L_: 󰁔    _p_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _m_: Move _<Esc>_: Quit 
       ]],
       config = {
         color = "pink",
@@ -60,9 +61,10 @@ return {
         { "l", "<cmd>BufferLineCycleNext<Cr>" },
         { "H", "<cmd>BufferLineMovePrev<Cr>" },
         { "L", "<cmd>BufferLineMoveNext<Cr>" },
-        { "j", "<cmd>BufferLinePick<Cr>" },
+        { "j", "<cmd>BufferLinePick<Cr>", {exit = true} },
         { "p", "<Cmd>BufferLineTogglePin<Cr>", { nowait = true } },
-        { "s", "<Cmd>Telescope buffers<CR>", { nowait = true }},
+        { "s", "<Cmd>Telescope buffers<CR>", { nowait = true, exit=true }},
+        { "m", "<Cmd>ScopeMoveBuf<CR>", { nowait = true, exit=true }},
         { "d", function() require("mini.bufremove").delete(0, false) end },
         { "q", function() require("mini.bufremove").unshow(0) end },
         { "c", "<Cmd>BufferLinePickClose<CR>" },

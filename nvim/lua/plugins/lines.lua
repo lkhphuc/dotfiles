@@ -113,13 +113,28 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
-    -- dependencies = { "tiagovla/scope.nvim", opts = {} },
+    dependencies = {
+      {
+        "tiagovla/scope.nvim",
+        opts = {},
+        init = function()
+          require("lazyvim.util").on_load(
+            "telescope",
+            function() require("telescope").load_extension("scope") end
+          )
+        end,
+        keys = {
+          { "<leader>.",  "<Cmd>Telescope scope buffers<CR>", desc = "Search buffers from all tabs" },
+          { "<leader>bm",  "<Cmd>ScopeMoveBuf<CR>", desc = "Move buffer to another tab" },
+        }
+      },
+    },
     keys = {
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Pin buffer" },
       { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
     },
     opts = {
       options = {
+        always_show_bufferline = true,
         diagnostics = false,
         -- separator_style = "slope",
       },

@@ -29,7 +29,7 @@ return {
 
       -- disable keymaps
       keys[#keys + 1] = { "gy", false } -- For gy, gp to system clipboard
-      keys[#keys + 1] = { "gt", "<CMD>Telescope lsp_type_definitions<CR>" }
+      keys[#keys + 1] = { "gT", "<CMD>Telescope lsp_type_definitions<CR>" }
       keys[#keys + 1] = { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext"}
     end,
     ---@class PluginLspOpts
