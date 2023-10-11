@@ -65,10 +65,19 @@ end, { noremap = true, expr = true, desc = "Don't yank empty line to clipboard" 
 
 map("n", "dm", function()
   local cur_line = vim.fn.line(".")
-  local marks = vim.fn.getmarklist("%")
-  for _, mark in ipairs(marks) do
-    if mark.pos[2] == cur_line and mark.mark ~= "'^" and mark.mark ~= "'." then
+  -- Delete buffer local mark
+  for _, mark in ipairs(vim.fn.getmarklist("%")) do
+    if mark.pos[2] == cur_line and mark.mark:match("[a-zA-Z]") then
       vim.api.nvim_buf_del_mark(0, string.sub(mark.mark, 2, #mark.mark))
+      return
+    end
+  end
+  -- Delete global marks
+  local cur_buf = vim.api.nvim_win_get_buf(vim.api.nvim_get_current_win())
+  for _, mark in ipairs(vim.fn.getmarklist()) do
+    if mark.pos[1] == cur_buf and mark.pos[2] == cur_line and mark.mark:match("[a-zA-Z]") then
+      vim.api.nvim_buf_del_mark(0, string.sub(mark.mark, 2, #mark.mark))
+      return
     end
   end
 end, { noremap = true, desc = "Delete mark on the current line" })
