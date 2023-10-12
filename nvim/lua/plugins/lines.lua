@@ -1,4 +1,4 @@
-local fg = require("lazyvim.util").fg
+local fg = require("lazyvim.util").ui.fg
 
 local function is_wide_term(width)
   width = width or 150
@@ -124,7 +124,7 @@ return {
           )
         end,
         keys = {
-          { "<leader>.",  "<Cmd>Telescope scope buffers<CR>", desc = "Search buffers from all tabs" },
+          { "<leader>.",  "<Cmd>Telescope scope buffers theme=dropdown<CR>", desc = "Search buffers from all tabs" },
           { "<leader>bm",  "<Cmd>ScopeMoveBuf<CR>", desc = "Move buffer to another tab" },
         }
       },

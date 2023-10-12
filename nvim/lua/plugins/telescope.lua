@@ -3,7 +3,6 @@ return {
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     { "nvim-telescope/telescope-file-browser.nvim" },
-    { "LukasPietzschmann/telescope-tabs", config = true },
     { "danielfalk/smart-open.nvim", dependencies = { "kkharji/sqlite.lua" } },
     { "tsakirist/telescope-lazy.nvim" },
   },
@@ -55,15 +54,23 @@ return {
   },
   keys = {
     { "<leader>/", "<Cmd>Telescope grep_string search= theme=ivy<CR>", desc = "Fuzzy workspace" },
+    {
+      "<leader>#",
+      function()
+        require("telescope.builtin").grep_string({
+          theme = "cursor",
+          layout_config = { height = 0.5, width = 0.9 },
+        })
+      end,
+      desc = "Search word under cursor",
+    },
+    { "<leader>'", "<Cmd>Telescope registers<CR>", desc = "Registers" },
+    { "<leader><CR>", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
     { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
-    { "<leader>s'", "<Cmd>Telescope registers<CR>", desc = "Registers" },
     { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
     { "<leader>sp", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
-    { "<leader><CR>", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
-
     { "<leader>F", "<Cmd>Telescope file_browser<CR>", desc = "Browse files" },
-    { "<leader><space>", "<Cmd>Telescope smart_open<CR>", desc = "Open ..." },
-    { "<leader>s<Tab>", "<Cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Tabs" },
+    { "<leader><space>", "<Cmd>Telescope smart_open theme=dropdown<CR>", desc = "Open ..." },
     { "<leader>sP", "<Cmd>Telescope lazy<CR>", desc = "Plugins" },
   },
   config = function(_, opts)

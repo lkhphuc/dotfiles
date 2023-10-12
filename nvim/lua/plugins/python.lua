@@ -1,4 +1,3 @@
----@diagnostic disable: missing-fields
 local function get_venv(variable)
   local venv = os.getenv(variable)
   if venv ~= nil and string.find(venv, "/") then
@@ -59,6 +58,14 @@ return {
           },
         },
       },
+    }
+  },
+  {
+    "conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        python = { "yapf"  },
+      }
     }
   },
   {

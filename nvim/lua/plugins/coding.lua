@@ -1,5 +1,13 @@
 return {
   {
+    "nvim-lint",
+    opts = {
+      linters_by_ft = {
+        sh = { "shellcheck" },
+      },
+    },
+  },
+  {
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {
@@ -14,7 +22,7 @@ return {
           },
           "^().*()$",
         },
-        E = { '()()%f[%w]%w+()[ \t]*()' }, -- Imitate word ignoring digits and punctuation
+        E = { "()()%f[%w]%w+()[ \t]*()" }, -- Imitate word ignoring digits and punctuation
         x = function(ai_mode, _, _) -- Code Cell objects
           local buf_nlines = vim.api.nvim_buf_line_count(0)
           local begin_cell = 1 -- First cell from first line to first cell delimeter
@@ -100,15 +108,5 @@ return {
     },
   },
   { "ThePrimeagen/refactoring.nvim", opts = {}, cmd = "Refactor" },
-  { 'echasnovski/mini.operators', opts = {}, keys = {"g=", "gx", "gm", "gr", "gs"} },
-  {
-    "echasnovski/mini.move",
-    config = function(_, opts) require("mini.move").setup(opts) end,
-    keys = {
-      { "<M-j>", mode = "x" },
-      { "<M-k>", mode = "x" },
-      { "<M-h>", mode = "x" },
-      { "<M-l>", mode = "x" },
-    },
-  },
+  { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
 }

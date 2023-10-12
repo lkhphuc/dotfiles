@@ -41,7 +41,9 @@ opt.fillchars = {
   eob = " ",
 }
 
+opt.foldlevel = 2
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
+g.autoformat = false
 
 opt.path:append("**")
 opt.shortmess:append("s")

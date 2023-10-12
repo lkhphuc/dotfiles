@@ -34,7 +34,6 @@ return {
     end,
     ---@class PluginLspOpts
     opts = {
-      autoformat = false,
       ---@type lspconfig.options
       servers = {},
       -- return true if you don't want this server to be setup with lspconfig
