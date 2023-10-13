@@ -22,9 +22,8 @@ return {
   { "RRethy/vim-illuminate", enabled = false },
   {
     "echasnovski/mini.cursorword",
-    -- config = function(_, opts) require("mini.cursorword").setup(opts) end,
-      opts = {},
-    event = "VeryLazy",
+    opts = {},
+    event = "BufEnter",
   },
   {
     "echasnovski/mini.map",

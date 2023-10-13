@@ -41,9 +41,16 @@ return {
     },
   },
   {
-    "SmiteshP/nvim-navbuddy",
-    event = "LspAttach",
-    opts = { lsp = { auto_attach = true }, },
-    keys = { {"<leader>cn", "<Cmd>Navbuddy<CR>", desc = "Code breadcrumbs Navigation"}, },
+    "aerial.nvim",
+    init = function ()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "aerial*",
+        callback = function () vim.b.minicursorword_disable = true end
+      })
+    end,
+    opts = {
+      nav = { preview = true, keymaps = { q = "actions.close", } },
+    },
+    keys = { { "<leader>cn", "<Cmd>AerialNavToggle<CR>", desc = "Code navigation" }, }
   },
 }
