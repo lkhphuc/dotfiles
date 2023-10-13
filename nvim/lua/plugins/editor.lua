@@ -59,7 +59,6 @@ return {
     event = "VeryLazy",
     opts = {
       comment = { suffix = "gc" }, -- ]c is for git/diff change
-      indent = { options = { change_type = "diff" } },
       treesitter = { suffix = "n" },
     },
     config = function(_, opts) require("mini.bracketed").setup(opts) end,

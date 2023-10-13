@@ -15,7 +15,7 @@ o.breakindent = true -- Indent wrapped lines to match line start
 o.showbreak = "↳" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
-o.wrap = true
+o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
 
 o.number = true
 o.relativenumber = true

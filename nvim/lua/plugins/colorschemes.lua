@@ -19,14 +19,13 @@ return {
     },
   },
   { 'rose-pine/neovim', name = 'rose-pine' },
-  { 'loctvl842/monokai-pro.nvim', opts = {} },
-  { 'ellisonleao/gruvbox.nvim', opts={}},
+  { 'loctvl842/monokai-pro.nvim' },
+  { 'ellisonleao/gruvbox.nvim'},
   {
     'ribru17/bamboo.nvim',
     opts = {
       highlights = {
         ["@comment"] = { fg = '$grey' },
-        ["@lsp.type.selfKeyword"] = { link = '@variable.static' }
       }
 
     }
