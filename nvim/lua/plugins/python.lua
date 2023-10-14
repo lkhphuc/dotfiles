@@ -14,20 +14,22 @@ return {
   {
     "lualine.nvim",
     opts = function(_, opts)
-      table.insert(opts.sections.lualine_y, {
+      table.insert(opts.sections.lualine_x, {
         function()
           local venv = get_venv("CONDA_DEFAULT_ENV") or get_venv("VIRTUAL_ENV") or "NO ENV"
           return " " .. venv
         end,
         cond = function() return vim.bo.filetype == "python" end,
+        color = require("lazyvim.util.ui").fg("Operator")
       })
-    end
+    end,
   },
-  { "venv-selector.nvim", enabled = false},
+  { "venv-selector.nvim", enabled = false },
   {
     "nvim-lspconfig",
     opts = {
       ---@type lspconfig.options
+      ---@diagnostic disable-next-line: missing-fields
       servers = {
         ---@type lspconfig.options.pyright
         pyright = {
@@ -58,15 +60,15 @@ return {
           },
         },
       },
-    }
+    },
   },
   {
     "conform.nvim",
     opts = {
       formatters_by_ft = {
-        python = { "yapf"  },
-      }
-    }
+        python = { "yapf" },
+      },
+    },
   },
   {
     "goerz/jupytext.vim",
@@ -78,19 +80,31 @@ return {
     opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
-    keys = { { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel", ft='python' } },
+    keys = {
+      { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel", ft = "python" },
+    },
   },
   {
-    "dccsillag/magma-nvim",
+    "nvim-cmp",
+    opts = function(_, opts)
+      table.insert(opts.sources, 1, {
+        name = "jupyter",
+        group_index = 1,
+        priority = 100,
+      })
+    end,
+  },
+  {
+    "benlubas/molten-nvim",
     build = ":UpdateRemotePlugins",
-    cmd = "MagmaInit",
+    cmd = "MoltenInit",
     keys = {
-      { "<leader>r",  "<cmd>MagmaEvaluateOperator<CR>", expr = true },
-      { "<leader>rr", "<cmd>MagmaEvaluateLine<CR>" },
-      { "<leader>rc", "<cmd>MagmaReevaluateCell<CR>" },
-      { "<leader>rd", "<cmd>MagmaDelete<CR>" },
-      { "<leader>ro", "<cmd>MagmaShowOutput<CR>" },
-      { "<leader>r",  ":<C-u>MagmaEvaluateVisual<CR>",  mode = "v" },
+      { "<leader>r", "<cmd>MoltenEvaluateOperator<CR>", expr = true },
+      { "<leader>rr", "<cmd>MoltenEvaluateLine<CR>" },
+      { "<leader>rc", "<cmd>MoltenReevaluateCell<CR>" },
+      { "<leader>rd", "<cmd>MoltenDelete<CR>" },
+      { "<leader>ro", "<cmd>MoltenShowOutput<CR>" },
+      { "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>", mode = "v" },
     },
   },
 }

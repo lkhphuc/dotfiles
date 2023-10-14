@@ -21,6 +21,7 @@ o.number = true
 o.relativenumber = true
 o.numberwidth = 3
 o.cursorline = true
+o.showtabline = 0 -- never
 
 o.ignorecase = true -- Ignore case when searching (use `\C` to force not doing that)
 o.incsearch = true -- Show search results while typing

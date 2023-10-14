@@ -37,6 +37,12 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
   end,
 })
 
+-- auto wrap on text-based file
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {"text", "tex", "markdown", "rst"},
+  callback = function() vim.wo.wrap = true end,
+})
+
 ----------------- python -----------------
 -- From nvim-puppetteer
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {

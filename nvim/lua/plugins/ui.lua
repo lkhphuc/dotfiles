@@ -2,7 +2,8 @@ local fg = require("lazyvim.util").ui.fg
 
 return {
   { "nvim-notify", opts = { background_colour = "NormalFloat" } },
-  { "folke/noice.nvim",
+  {
+    "folke/noice.nvim",
     opts = {
       presets = {
         bottom_search = false, -- a classic bottom cmdline for search
@@ -16,20 +17,20 @@ return {
             event = "msg_show",
             any = {
               { find = "E486" },
-              { find = "osc52" }
-            }
+              { find = "osc52" },
+            },
           },
-          view = "mini"
+          view = "mini",
         },
         {
           filter = {
             event = "notify",
             any = {
-              { find = "No information available"}
-            }
+              { find = "No information available" },
+            },
           },
           view = "mini",
-        }
+        },
       },
     },
   },
@@ -44,111 +45,91 @@ return {
   },
   {
     "aerial.nvim",
-    init = function ()
+    init = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "aerial*",
-        callback = function () vim.b.minicursorword_disable = true end
+        callback = function() vim.b.minicursorword_disable = true end,
       })
     end,
     opts = {
-      nav = { preview = true, keymaps = { q = "actions.close", } },
+      nav = { preview = true, keymaps = { q = "actions.close" } },
     },
-    keys = { { "<leader>cn", "<Cmd>AerialNavToggle<CR>", desc = "Code navigation" }, }
+    keys = { { "<leader>cn", "<Cmd>AerialNavToggle<CR>", desc = "Code navigation" } },
   },
   {
     "nvim-lualine/lualine.nvim",
-    opts = {
-      options = {
+    opts = function(_, opts)
+      opts.options = {
         component_separators = "", -- ┊ |        
         section_separators = { left = "", right = "" },
-      },
-      sections = {
-        lualine_a = {
-          {
-            "mode",
-            icon = "",
-            fmt = function(str) return str:sub(1, 1) end,
-            separator = { left = "", right = "" },
-            padding = 0,
-          },
+      }
+      opts.sections.lualine_a = {
+        {
+          "mode",
+          icon = "",
+          fmt = function(str) return str:sub(1, 1) end,
+          separator = { left = "", right = "" },
+          padding = 0,
         },
-        lualine_b = {
-          { "branch", color = fg("Special") },
-          {
-            function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-            color = { gui = "italic", fg = fg("Constant").fg },
-            padding = 0,
-          },
+      }
+      -- Remove some LazyVim's default by name
+      opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
+      opts.sections.lualine_c[4] = { -- default pretty path truncate unnecassary
+        "filename",
+        path = 1,
+        symbols = { modified = "●", readonly = "", unnamed = "" },
+        separator = false,
+      }
+      -- opts.sections.lualine_c[1] = util.lualine.root_dir({cwd = true})
+      table.insert(opts.sections.lualine_c, 1, {
+        function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+        color = { gui = "italic", fg = fg("Constant").fg },
+      })
+
+      -- Remove some LazyVim's default
+      for _, component in ipairs(opts.sections.lualine_x) do
+        if component[1] == "diff" then component[1] = "" end
+      end
+      table.insert(opts.sections.lualine_x, 1, {
+        function() return require("noice").api.status.search.get() end,
+        cond = function()
+          return package.loaded["noice"] and require("noice").api.status.search.has()
+        end,
+        color = fg("DiagnosticInfo"),
+      })
+
+      opts.sections.lualine_y = {
+        { "location", padding = false },
+        { "progress", icon = "" },
+        { -- lsp
+          function()
+            local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
+            if num_clients > 0 then return " " .. num_clients end
+            return ""
+          end,
+          color = fg("Constant"),
         },
-        lualine_c = {
-          { "filetype", icon_only = true, separator = "" },
-          {
-            "filename",
-            path = 1,
-            symbols = { modified = "●", readonly = "", unnamed = "" },
-            separator = false,
-            padding = 0,
-          },
-          { "aerial", sep = " ", sep_icon = "", }
+        { --terminal
+          function() return " " .. vim.o.channel end,
+          cond = function() return vim.o.buftype == "terminal" end,
+          color = fg("Constant")
         },
-        lualine_x = {
-          {
-            function() return "  " .. require("dap").status() end,
-            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = fg("Debug"),
-          },
-          {
-            function() return require("noice").api.status.search.get() end,
-            cond = function()
-              return package.loaded["noice"] and require("noice").api.status.search.has()
-            end,
-            color = fg("DiagnosticInfo"),
-          },
-          {
-            function() return require("noice").api.status.command.get() end,
-            cond = function()
-              return package.loaded["noice"] and require("noice").api.status.command.has()
-            end,
-            color = fg("Statement"),
-          },
-          {
-            function() return require("noice").api.status.mode.get() end,
-            cond = function()
-              return package.loaded["noice"] and require("noice").api.status.mode.has()
-            end,
-            color = fg("Constant"),
-          },
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = fg("Special"),
-          },
-          { "location", separator = false },
-          { "progress", icon = "" },
+        { -- tabs
+          function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
+          cond = function() return vim.fn.tabpagenr("$") > 1 end,
+          color = { fg = fg("Special").fg, gui = "bold" },
         },
-        lualine_y = {
-          { -- lsp
-            function()
-              local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
-              if num_clients > 0 then return " " .. num_clients end
-              return ""
-            end,
-            color = fg("Constant"),
-          },
-          { --terminal
-            function() return " " .. vim.o.channel end,
-            cond = function() return vim.o.buftype == "terminal" end,
-          },
-        },
-        lualine_z = {
-          { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
-        },
-      },
-      extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" },
-    },
+      }
+      opts.sections.lualine_z = {
+        { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
+      }
+
+      opts.extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" }
+    end,
   },
   {
     "akinsho/bufferline.nvim",
+    enabled = false,
     event = "BufEnter",
     dependencies = {
       {
@@ -162,7 +143,7 @@ return {
         end,
         keys = {
           {
-            "<leader>.",
+            "<leader>ba",
             "<Cmd>Telescope scope buffers theme=dropdown<CR>",
             desc = "Search buffers from all tabs",
           },
