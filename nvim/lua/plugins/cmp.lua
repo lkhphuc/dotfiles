@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   "hrsh7th/nvim-cmp",
   event = { "InsertEnter", "CmdlineEnter" },
@@ -30,7 +31,7 @@ return {
       if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
       return col ~= 0
-          and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+        and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
     end
     opts.mapping = vim.tbl_extend("force", opts.mapping, {
       ["<Tab>"] = cmp.mapping(function(fallback)
@@ -87,22 +88,28 @@ return {
         return item
       end,
     }
-    opts.sources = cmp.config.sources(
-      {
-        { name = "jupyter", priority = 750 },
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-      }, {
-      {
-        name = "buffer",
-        option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
-      },
-      { name = "path" },
-    })
   end,
 
   config = function(_, opts)
     local cmp = require("cmp")
+    for _, source in ipairs(opts.sources) do
+      if source.name == "copilot" then
+        source.group_index = 2 -- disable copilot on default
+      else
+        source.group_index = source.group_index or 1
+      end
+    end
+    local second_sources = vim.tbl_filter(
+      function(source) return source.group_index == 2 end,
+      opts.sources
+    )
+    opts.mapping = vim.tbl_extend("force", opts.mapping, {
+      ["<C-l>"] = cmp.mapping.complete({
+        config = {
+          sources = second_sources,
+        },
+      }),
+    })
     cmp.setup(opts) -- insert mode completion
     cmp.setup.cmdline({ "/", "?" }, {
       completion = { completeopt = "menu,menuone,noselect,noinsert" },
@@ -115,7 +122,7 @@ return {
       completion = { completeopt = "menu,menuone,noselect,noinsert" },
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = "cmdline" },
+        { name = "cmdline", priority = 100 },
         { name = "cmdline_history" },
       }),
     })
