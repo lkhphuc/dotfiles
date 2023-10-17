@@ -23,7 +23,7 @@ return {
   {
     "echasnovski/mini.cursorword",
     opts = {},
-    event = "BufEnter",
+    event = "BufReadPost",
   },
   {
     "echasnovski/mini.map",

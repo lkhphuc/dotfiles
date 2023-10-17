@@ -33,19 +33,6 @@ return {
     },
   },
   {
-    "voldikss/vim-floaterm",
-    keys = "<C-;>",
-    init = function()
-      vim.g.floaterm_keymap_next = "<Home>"
-      vim.g.floaterm_keymap_prev = "<End>"
-      vim.g.floaterm_keymap_new = "<M-;>"
-      vim.g.floaterm_keymap_toggle = "<C-;>"
-      vim.g.floaterm_position = "center"
-      vim.g.floaterm_width = 0.9
-      vim.g.floaterm_height = 0.9
-    end,
-  },
-  {
     "chomosuke/term-edit.nvim",
     event = "TermOpen",
   },

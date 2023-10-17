@@ -4,6 +4,13 @@
 local map = vim.keymap.set
 local Util = require("lazyvim.util")
 
+map(
+  "n",
+  "<C-.>",
+  function() Util.terminal.open(nil, { ft = "", border = "double", style = "minimal" }) end,
+  { desc = "Toggle float terminal" }
+)
+map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })
 map("n", "<leader>fl", function() Util.terminal.open("lf") end, { desc = "LF file manager" })
 
 -- these keymaps will also accept a range,
@@ -173,7 +180,7 @@ vim.api.nvim_create_user_command("DiffOrig", function()
 
   -- Get scratch buffer
   local scratch = vim.api.nvim_get_current_buf()
-  vim.api.nvim_set_option_value("filetype", ft, { buf=scratch })
+  vim.api.nvim_set_option_value("filetype", ft, { buf = scratch })
   -- `wincmd p` - Go to the start window
   -- `diffthis` - Set diff mode to a start window
   vim.cmd("wincmd p | diffthis")
