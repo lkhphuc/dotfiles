@@ -32,7 +32,15 @@ o.smartindent = true -- Make indenting smart
 o.virtualedit = "block,onemore" -- Allow going past the end of line in visual block mode
 
 o.list = false
-o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
+-- Define which helper symbols to show
+opt.listchars = {
+  leadmultispace = "▏ ",
+  tab = "▏ ",
+  extends = "…",
+  precedes = "…",
+  nbsp = "␣",
+  eol = "↲",
+}
 opt.fillchars = {
   foldopen = "",
   foldclose = "",
@@ -43,6 +51,7 @@ opt.fillchars = {
 }
 
 opt.foldlevel = 2
+opt.sessionoptions:append("folds")
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false
 

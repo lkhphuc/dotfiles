@@ -8,14 +8,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
   command = [[setlocal listchars= nonumber norelativenumber | startinsert]],
 })
 
--- vim.api.nvim_create_autocmd("TermClose", {
---   callback = function()
---     if vim.v.event.status == 0 then
---       if vim.bo.filetype ~= "floaterm" then vim.api.nvim_buf_delete(0, {}) end
---       -- vim.cmd("ToggleTerm")
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd("TermClose", {
+  callback = function()
+    if vim.v.event.status == 0 then
+      vim.api.nvim_buf_delete(0, {})
+    end
+  end,
+})
 
 -- show cursor line only in active window, i.e reticle.nvim
 vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
