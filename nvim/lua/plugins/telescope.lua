@@ -12,8 +12,7 @@ return {
       selection_caret = " ",
       mappings = {
         i = {
-          ["<C-g>"] = require("telescope.actions").to_fuzzy_refine,
-          ["<C-d>"] = require("telescope.actions").delete_buffer,
+          ["<C-Space>"] = require("telescope.actions").to_fuzzy_refine,
         },
       },
       layout_strategies = "flex",
@@ -24,8 +23,16 @@ return {
     pickers = {
       find_files = { theme = "dropdown" },
       git_files = { theme = "dropdown" },
-      buffers = { theme = "dropdown" },
+      buffers = {
+        theme = "dropdown",
+        mappings = {
+          i = {
+            ["<C-d>"] = require("telescope.actions").delete_buffer,
+          },
+        },
+      },
       -- current_buffer_fuzzy_find = { layout = "vertical" },
+      grep_string = { theme = "cursor", layout_config = { height = 0.7, width = 0.9 } },
       lsp_references = {
         theme = "cursor",
         show_line = false,
@@ -53,17 +60,8 @@ return {
     },
   },
   keys = {
-    { "<leader>/", "<Cmd>Telescope grep_string search= theme=ivy<CR>", desc = "Fuzzy workspace" },
-    {
-      "<leader>#",
-      function()
-        require("telescope.builtin").grep_string({
-          theme = "cursor",
-          layout_config = { height = 0.5, width = 0.9 },
-        })
-      end,
-      desc = "Search word under cursor",
-    },
+    { "<leader>/", "<Cmd>Telescope current_buffer_fuzzy_find<CR>", desc = "Fuzzy workspace" },
+    { "<leader>#", "<Cmd>Telescope grep_string<Cr>", desc = "Search word under cursor" },
     { "<leader>'", "<Cmd>Telescope registers<CR>", desc = "Registers" },
     { "<leader><CR>", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
     { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
