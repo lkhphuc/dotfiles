@@ -64,20 +64,6 @@ return {
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
-    "echasnovski/mini.surround",
-    opts = {
-      mappings = { -- Emulate Tpope's original mapping
-        add = "ys",
-        delete = "ds",
-        find = "]s",
-        find_left = "[s",
-        highlight = "vs",
-        replace = "cs",
-        update_n_lines = "",
-      },
-    },
-  },
-  {
     "echasnovski/mini.trailspace",
     keys = {
       {
