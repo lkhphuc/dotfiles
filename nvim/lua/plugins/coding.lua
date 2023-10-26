@@ -94,5 +94,19 @@ return {
     },
   },
   { "ThePrimeagen/refactoring.nvim", opts = {}, cmd = "Refactor" },
+  {
+    "echasnovski/mini.surround",
+    opts = {
+      mappings = { -- Emulate Tpope's original mapping
+        add = "ys",
+        delete = "ds",
+        find = "]s",
+        find_left = "[s",
+        highlight = "vs",
+        replace = "cs",
+        update_n_lines = "",
+      },
+    },
+  },
   { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
 }
