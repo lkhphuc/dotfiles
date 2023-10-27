@@ -84,7 +84,6 @@ return {
 
           vim.cmd([[
             highlight! Folded guibg=NONE
-            highlight! MiniCursorword guibg=#3b4261 gui=NONE cterm=NONE
             highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
           ]])
         end,
