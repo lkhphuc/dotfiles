@@ -166,9 +166,6 @@ return {
         },
       },
     },
-    keys = {
-      { "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick buffer" },
-    },
     opts = {
       options = {
         always_show_bufferline = true,

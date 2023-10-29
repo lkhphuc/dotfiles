@@ -62,12 +62,10 @@ return {
         require("hydra")({
           name = "Git",
           hint = [[
-   _J_: next hunk    _s_: stage hunk    _S_: stage buffer  _b_: blame line
-   _K_: prev hunk    _r_: reset hunk    _R_: reset buffer  _B_: blame show full
-   _/_: base file    _u_: undo stage    _p_: preview hunk  _d_: show deleted
-   _h_: file history _H_: files history
-   ^
-   ^ ^ _v_: Diff View         _g_: LazyGit         _<Esc>_: exit
+    _J_: next hunk       _s_: stage hunk      _b_: blame line         _d_: Diff this    _h_: file history  
+    _K_: prev hunk       _S_: stage buffer    _B_: blame show full    _D_: Diff orig    _H_: files history
+    _l_: deleted lines   _u_: undo stage      _p_: preview hunk       _/_: base file    _v_: Diff View
+    ^ ^ _g_: LazyGit        _<Esc>_: exit    
             ]],
           config = {
             color = "pink",
@@ -96,16 +94,16 @@ return {
             { "K", prev_hunk, { expr = true, desc = "prev hunk" } },
             { "s", gs.stage_hunk, { desc = "stage hunk" } },
             { "u", gs.undo_stage_hunk, { desc = "undo last stage" } },
-            { "r", gs.reset_hunk, { desc = "reset hunk" } },
             { "S", gs.stage_buffer, { desc = "stage buffer" } },
-            { "R", gs.reset_buffer, { desc = "reset buffer" } },
             { "p", gs.preview_hunk, { desc = "preview hunk" } },
-            { "d", gs.toggle_deleted, { nowait = true } },
+            { "l", gs.toggle_deleted, { nowait = true } },
+            { "d", gs.diffthis, { desc = "Diff This", exit = true } },
+            { "D", function() gs.diffthis("~") end, { desc = "Diff with ~", exit = true } },
             { "h", "<CMD>DiffviewFileHistory %<CR>", { exit = true } },
             { "H", "<CMD>DiffviewFileHistory <CR>", { exit = true } },
             { "b", gs.blame_line, { desc = "blame" } },
             { "B", function() gs.blame_line({ full = true }) end, },
-            { "/", gs.show, { exit = true } }, -- show the base of the file
+            { "/", gs.show, }, -- show the base of the file
             { "g", function() require("lazyvim.util").terminal.open("lazygit") end, { exit = true }, },
             { "v", "<Cmd>DiffviewOpen<CR>", { exit = true } },
             { "<Esc>", nil, { exit = true, nowait = true } },
@@ -117,24 +115,6 @@ return {
   {
     "linrongbin16/gitlinker.nvim",
     keys = { { "<leader>gl", desc = "Copy git link" }, { "<leader>gL", desc = "Open git link" } },
-    opts = {
-      custom_rules = function(remote_url)
-        local pattern_rules = {
-          {
-            ["^git@es.naverlabs%.([_%.%-%w]+):([%.%-%w]+)/([%.%-%w]+)%.git$"] = "https://es.naverlabs.%1/%2/%3/blob/",
-            ["^https://es.naverlabs%.([_%.%-%w]+)/([%.%-%w]+)/([%.%-%w]+)%.git$"] = "https://es.naverlabs.%1/%2/%3/blob/",
-          },
-        }
-        for _, group in ipairs(pattern_rules) do
-          for pattern, replace in pairs(group) do
-            if string.match(remote_url, pattern) then
-              local result = string.gsub(remote_url, pattern, replace)
-              return result
-            end
-          end
-        end
-        return nil
-      end,
-    },
+    opts = {},
   },
 }

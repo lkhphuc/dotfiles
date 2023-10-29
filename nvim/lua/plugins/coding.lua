@@ -64,16 +64,6 @@ return {
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
-    "echasnovski/mini.trailspace",
-    keys = {
-      {
-        "<leader>mt",
-        function() require("mini.trailspace").trim() end,
-        desc = "Trim white space",
-      },
-    },
-  },
-  {
     "mini.indentscope",
     opts = {
       mappings = { goto_top = "[ai", goto_bottom = "]ai" },

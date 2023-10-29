@@ -61,7 +61,6 @@ return {
       comment = { suffix = "gc" }, -- ]c is for git/diff change
       treesitter = { suffix = "n" },
     },
-    config = function(_, opts) require("mini.bracketed").setup(opts) end,
   },
   {
     "HiPhish/rainbow-delimiters.nvim",

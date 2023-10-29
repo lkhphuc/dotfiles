@@ -13,17 +13,6 @@ map(
 map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })
 map("n", "<leader>fl", function() Util.terminal.open("lf") end, { desc = "LF file manager" })
 
--- these keymaps will also accept a range,
-map({ "n", "t" }, "<A-h>", require("smart-splits").resize_left)
-map({ "n", "t" }, "<A-j>", require("smart-splits").resize_down)
-map({ "n", "t" }, "<A-k>", require("smart-splits").resize_up)
-map({ "n", "t" }, "<A-l>", require("smart-splits").resize_right)
-map({ "n", "t" }, "<C-h>", require("smart-splits").move_cursor_left)
-map({ "n", "t" }, "<C-j>", require("smart-splits").move_cursor_down)
-map({ "n", "t" }, "<C-k>", require("smart-splits").move_cursor_up)
-map({ "n", "t" }, "<C-l>", require("smart-splits").move_cursor_right)
-map("n", "<leader>wr", require("smart-splits").start_resize_mode, { desc = "Resize mode" })
-
 map("n", "z<space>", "za", { desc = "Toggle fold" })
 
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
@@ -56,8 +45,7 @@ map("n", "i", function()
   end
 end, { expr = true, desc = "properly indent on empty line when insert" })
 
--- Tab pages
--- there are also LazyVim's default keymap with leader
+map("n", "gb", "<C-^>", { silent = true, desc = "Alternate file" })
 map("n", "]<TAB>", ":tabnext<CR>", { silent = true, desc = "Next tab" })
 map("n", "[<TAB>", ":tabprev<CR>", { silent = true, desc = "Prev tab" })
 
@@ -109,9 +97,9 @@ map(
 -- Copy/paste with system clipboard
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
 map("n", "gY", '"+y$', { desc = "Copy to system clipboard" })
-map("n", "gp", '"+p', { desc = "Paste from system clipboard" })
+map({"n", "x"}, "gp", '"+p', { desc = "Paste from system clipboard" })
 -- Paste in Visual with `P` to not copy selected text (`:h v_P`)
-map("x", "gp", '"+P', { desc = "Paste from system clipboard" })
+map({"n", "x"}, "gP", '"+P', { desc = "Paste from system clipboard (without yanking replaced text)" })
 
 -- gv: Reselect visual selection by default
 -- Reselect latest changed, put, or yanked text
