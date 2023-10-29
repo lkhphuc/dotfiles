@@ -14,19 +14,16 @@ return {
       routes = {
         {
           filter = {
-            event = "msg_show",
-            any = {
-              { find = "E486" },
-              { find = "osc52" },
-            },
-          },
-          view = "mini",
-        },
-        {
-          filter = {
-            event = "notify",
             any = {
               { find = "No information available" },
+              { find = "E486" },
+              { find = "osc52" },
+              { find = "more line" },
+              { find = "line less" },
+              { find = "fewer line" },
+              { find = " yanked" },
+              { find = " change;" },
+              { find = "Already at newest change" },
             },
           },
           view = "mini",
