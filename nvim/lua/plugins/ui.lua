@@ -189,8 +189,7 @@ return {
 
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "bold,italic"
-          or "bold"
+        local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "italic" or ""
 
         local function get_git_diff()
           local icons = require("lazyvim.config").icons.git

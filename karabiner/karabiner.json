@@ -4855,12 +4855,11 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + r = Wezterm (remote)",
+                                "description": "t = Neovide",
                                 "from": {
-                                    "key_code": "r",
+                                    "key_code": "t",
                                     "modifiers": {
                                         "mandatory": [
-                                            "left_command",
                                             "right_command",
                                             "right_control",
                                             "right_shift",
@@ -4870,7 +4869,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a WezTerm1 --args --config 'default_gui_startup_args={\"connect\", \"gpu\"}' --config 'font=require(\"wezterm\").font(\"Iosevka Term\")'"
+                                        "shell_command": "open -a neovide"
                                     }
                                 ],
                                 "type": "basic"

@@ -60,3 +60,13 @@ opt.shortmess:append("s")
 
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
   .. "/envs/neovim/bin/python"
+
+if vim.g.neovide then
+  vim.g.minianimate_disable = true
+  vim.keymap.set("v", "<D-c>", '"+y') -- Copy
+  vim.keymap.set({"n", "v"}, "<D-v>", '"+P') -- Paste
+  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
+  vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+  vim.g.neovide_padding_top = 25
+  vim.opt.guifont = {'Iosevka_Term', 'Symbols_Nerd_Font:h15'}
+end
