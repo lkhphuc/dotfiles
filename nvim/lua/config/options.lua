@@ -21,7 +21,8 @@ o.number = true
 o.relativenumber = true
 o.numberwidth = 3
 o.cursorline = true
-o.showtabline = 0 -- never
+o.showtabline = 0 --never
+o.winblend = 10
 
 o.ignorecase = true -- Ignore case when searching (use `\C` to force not doing that)
 o.incsearch = true -- Show search results while typing
@@ -68,5 +69,5 @@ if vim.g.neovide then
   vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
   vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
   vim.g.neovide_padding_top = 25
-  vim.opt.guifont = {'Iosevka_Term', 'Symbols_Nerd_Font:h15'}
+  vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
 end

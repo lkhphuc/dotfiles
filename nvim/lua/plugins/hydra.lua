@@ -8,9 +8,9 @@ return {
       color = "pink",
       body = "<leader>z",
       hint = [[
-  _M_: 󰡍    _m_:     _k_:     _[_: 󰜝    _i_: 󰌁   _<Esc>_: Quit
-  _H_:     _h_:     _z_: 󰘢    _l_:     _L_:   
-  _R_: 󰡏    _r_:     _j_:     _]_: 󰜙    _a_/_<Space>_:  
+  _m_:     _M_: 󰡍    _[_: 󰜝    _k_:     _i_: 󰌁       _<Esc>_: Quit
+  _r_:     _R_: 󰡏    _]_: 󰜙    _j_:     _a_/_<Space>_:       Fold
+  _H_:     _h_:     _l_:     _L_:     _z_: 󰘢             Screen
   ]],
       config = {
         hint = { border = "rounded" },

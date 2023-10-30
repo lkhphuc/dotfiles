@@ -21,8 +21,8 @@ return {
               { find = "more line" },
               { find = "line less" },
               { find = "fewer line" },
-              { find = " yanked" },
-              { find = " change;" },
+              { find = "lines? yanked" },
+              { find = " change[;s]" },
               { find = "Already at newest change" },
             },
           },
@@ -77,11 +77,7 @@ return {
         symbols = { modified = "●", readonly = "", unnamed = "" },
         separator = false,
       }
-      -- opts.sections.lualine_c[1] = util.lualine.root_dir({cwd = true})
-      table.insert(opts.sections.lualine_c, 1, {
-        function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-        color = { gui = "italic", fg = fg("Constant").fg },
-      })
+      opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({cwd = true})
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do

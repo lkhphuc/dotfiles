@@ -22,6 +22,7 @@ map("n", "L", "$", { desc = "Last character of line" })
 map("n", "J", function()
   vim.cmd("normal! mzJ")
   local col = vim.fn.col(".")
+---@diagnostic disable-next-line: param-type-mismatch
   local context = string.sub(vim.fn.getline("."), col - 1, col + 1)
   if
     context == ") ."
