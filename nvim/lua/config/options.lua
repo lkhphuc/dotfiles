@@ -50,7 +50,7 @@ opt.fillchars = {
   eob = " ",
 }
 
-opt.foldlevel = 2
+opt.foldlevel = 3
 opt.sessionoptions:append("folds")
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false
