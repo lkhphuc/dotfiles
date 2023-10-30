@@ -64,10 +64,10 @@ g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
 
 if vim.g.neovide then
   vim.g.minianimate_disable = true
+  vim.g.neovide_input_macos_alt_is_meta = true
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
-  vim.keymap.set({"n", "v"}, "<D-v>", '"+P') -- Paste
-  vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
-  vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+  vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
+  vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
   vim.g.neovide_padding_top = 25
   vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
 end

@@ -17,6 +17,7 @@ return {
             any = {
               { find = "No information available" },
               { find = "E486" },
+              { find = "E490" },
               { find = "osc52" },
               { find = "more line" },
               { find = "line less" },
