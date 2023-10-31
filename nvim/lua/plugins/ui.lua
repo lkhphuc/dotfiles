@@ -23,7 +23,7 @@ return {
               { find = "line less" },
               { find = "fewer line" },
               { find = "lines? yanked" },
-              { find = " change[;s]" },
+              { find = " changes?;" },
               { find = "Already at newest change" },
             },
           },

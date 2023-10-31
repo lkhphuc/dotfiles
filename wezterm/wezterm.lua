@@ -79,7 +79,7 @@ config.macos_window_background_blur = 10
 config.unix_domains = { { name = "unix" } }
 
 config.font = wezterm.font_with_fallback({
-  { family="Cascadia Code", harfbuzz_features={"calt", "ss01", "ss02"}, },
+  { family = "Cascadia Code", harfbuzz_features = { "calt", "ss01", "ss02" } },
   { family = "IBM Plex Mono" },
   { family = "Rec Mono Duotone" },
   { family = "JetBrains Mono" },
@@ -99,6 +99,7 @@ config.keys = {
   { key = 'z', mods = 'CMD', action = act.TogglePaneZoomState },
   { key = 'V', mods = 'CMD', action = act.ActivateCopyMode },
   { key = 'x', mods = 'CMD', action = act.QuickSelect },
+  { key = '+', mods = 'CMD', action = act.IncreaseFontSize },
 
   { key = 'PageUp',   mods = '', action = act.ScrollByPage(-1) },
   { key = 'PageDown', mods = '', action = act.ScrollByPage(1) },
@@ -112,6 +113,8 @@ config.keys = {
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
   { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },
 
+  { key = ']', mods = "CMD", action = act.RotatePanes 'Clockwise'},
+  { key = '[', mods = "CMD", action = act.RotatePanes 'CounterClockwise'},
   { key = 'h', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Left' },
   { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
   { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },

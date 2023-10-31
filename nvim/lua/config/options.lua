@@ -69,5 +69,14 @@ if vim.g.neovide then
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
   vim.g.neovide_padding_top = 25
+  vim.g.neovide_cursor_trail_size = 0.2
   vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
+  vim.g.neovide_scale_factor = 1.0
+  vim.keymap.set("n", "<D-=>", function()
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1
+  end
+  )
+  vim.keymap.set("n", "<D-->", function()
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1
+  end)
 end
