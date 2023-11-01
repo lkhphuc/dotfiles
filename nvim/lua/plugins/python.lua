@@ -1,10 +1,9 @@
+---@diagnostic disable: missing-fields
 return {
-  { "venv-selector.nvim", enabled = false },
   {
     "nvim-lspconfig",
     opts = {
       ---@type lspconfig.options
-      ---@diagnostic disable-next-line: missing-fields
       servers = {
         ---@type lspconfig.options.pyright
         pyright = {

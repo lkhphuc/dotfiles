@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
     })
 
     vim.cmd([[
-      highlight! SemshiImported gui=bold
+      highlight! semshiImported gui=bold
       highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
       ]])
   end,
