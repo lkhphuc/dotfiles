@@ -21,7 +21,7 @@ return {
     event = "VeryLazy",
     opts = {
       themes = {
-        markdown = { colorscheme = "catppuccin" },
+        -- markdown = { colorscheme = "catppuccin" },
         json = { colorscheme = "nordfox" },
         toml = { colorscheme = "terafox" },
         yaml = { colorscheme = "carbonfox" },

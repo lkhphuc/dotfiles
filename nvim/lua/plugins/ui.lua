@@ -32,6 +32,7 @@ return {
       },
     },
   },
+  { "edgy.nvim", opts = { animate = { enabled = not vim.g.neovide } } },
   {
     "folke/which-key.nvim",
     opts = {
@@ -78,7 +79,7 @@ return {
         symbols = { modified = "●", readonly = "", unnamed = "" },
         separator = false,
       }
-      opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({cwd = true})
+      opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
@@ -96,20 +97,13 @@ return {
         { "location", padding = false },
         { "progress", icon = "" },
         { -- python env
-        function()
-          local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No env"
-          if venv ~= nil and string.find(venv, "/") then
-            local orig_venv = venv
-            for w in orig_venv:gmatch("([^/]+)") do
-              venv = w
-            end
-            venv = string.format("%s", venv)
-          end
-          return " " .. venv
-        end,
-        cond = function() return vim.bo.filetype == "python" end,
-        color = require("lazyvim.util.ui").fg("Operator")
-      },
+          function()
+            local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No env"
+            return " " .. venv
+          end,
+          cond = function() return vim.bo.filetype == "python" end,
+          color = require("lazyvim.util.ui").fg("Operator"),
+        },
         { -- lsp
           function()
             local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
@@ -121,7 +115,7 @@ return {
         { --terminal
           function() return " " .. vim.o.channel end,
           cond = function() return vim.o.buftype == "terminal" end,
-          color = fg("Constant")
+          color = fg("Constant"),
         },
         { -- tabs
           function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
