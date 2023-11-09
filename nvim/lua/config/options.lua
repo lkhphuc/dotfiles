@@ -77,6 +77,5 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1
   end)
   vim.g.neovide_scale_factor = 1.0
-  vim.g.neovide_padding_top = 25
   vim.opt.guifont = { "Rec Mono Duotone", "Symbols_Nerd_Font:h11" }
 end

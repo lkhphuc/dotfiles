@@ -7,7 +7,7 @@ local Util = require("lazyvim.util")
 map(
   "n",
   "<C-.>",
-  function() Util.terminal.open(nil, { ft = "", border = "double", style = "minimal" }) end,
+  function() Util.terminal.open(nil, { ft = "", border = "rounded", style = "minimal" }) end,
   { desc = "Toggle float terminal" }
 )
 map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })

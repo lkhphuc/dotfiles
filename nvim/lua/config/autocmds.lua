@@ -102,7 +102,7 @@ local function mod_hl(opts, hl_names)
   end
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
+vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme", "SessionLoadPost" }, {
   group = vim.api.nvim_create_augroup("Color", {}),
   callback = function()
     mod_hl({ bold = true, italic = true }, {
