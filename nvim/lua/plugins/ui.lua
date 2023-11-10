@@ -7,9 +7,11 @@ return {
     opts = {
       presets = {
         bottom_search = false, -- a classic bottom cmdline for search
-        lsp_doc_border = { -- add a border to hover docs and signature help
-          views = { hover = { border = { style = "shadow" }, position = { row = 1, col = 0 } } },
-        },
+      },
+      views = {
+        hover = {
+          win_options = { winblend = 20 },
+        }
       },
       routes = {
         {
@@ -44,12 +46,6 @@ return {
   },
   {
     "aerial.nvim",
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "aerial*",
-        callback = function() vim.b.minicursorword_disable = true end,
-      })
-    end,
     opts = {
       nav = { preview = true, keymaps = { q = "actions.close" } },
     },

@@ -44,15 +44,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 ----------------- python -----------------
 -- From nvim-puppetteer
+local function replaceNodeText(node, text)
+  local start_row, start_col, end_row, end_col = node:range()
+  local lines = vim.split(text, "\n")
+  vim.cmd.undojoin() -- make undos ignore the next change, see issue #8
+  vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, lines)
+end
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
   pattern = { "*.py" },
   callback = function()  -- Auto f-string on typing {
-    local function replaceNodeText(node, text)
-      local start_row, start_col, end_row, end_col = node:range()
-      local lines = vim.split(text, "\n")
-      vim.cmd.undojoin() -- make undos ignore the next change, see issue #8
-      vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, lines)
-    end
 
     local node = vim.treesitter.get_node()
     if not node then return end
