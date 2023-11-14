@@ -36,6 +36,7 @@ map("n", "J", function()
     vim.cmd("undojoin | normal! hx")
   end
   vim.cmd("normal! `z")
+  vim.cmd("delmarks z")
 end, { desc = "Join line with smart whitespace removal" })
 
 map("n", "i", function()

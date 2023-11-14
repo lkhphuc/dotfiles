@@ -62,6 +62,18 @@ opt.shortmess:append("s")
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
   .. "/envs/neovim/bin/python"
 
+g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.clipboard.osc52').copy,
+    ['*'] = require('vim.clipboard.osc52').copy,
+  },
+  paste = {
+    ['+'] = require('vim.clipboard.osc52').paste,
+    ['*'] = require('vim.clipboard.osc52').paste,
+  },
+}
+
 if vim.g.neovide then
   vim.g.minianimate_disable = true
   vim.g.neovide_input_macos_alt_is_meta = true

@@ -19,6 +19,7 @@ return {
     local luasnip = require("luasnip")
     local cmp = require("cmp")
 
+    opts.completion.keyword_length = 2
     opts.window = {
       completion = {
         col_offset = -2, -- to align text when 2 icons are prepended

@@ -99,4 +99,5 @@ return {
     },
   },
   { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
+  { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
 }
