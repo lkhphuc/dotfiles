@@ -116,7 +116,7 @@ return {
         { -- tabs
           function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
           cond = function() return vim.fn.tabpagenr("$") > 1 end,
-          color = { fg = fg("Special").fg, gui = "bold" },
+          color = { fg = fg("Tag").fg, gui = "bold" },
         },
       }
       opts.sections.lualine_z = {

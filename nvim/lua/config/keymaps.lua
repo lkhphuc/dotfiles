@@ -22,7 +22,7 @@ map("n", "L", "$", { desc = "Last character of line" })
 map("n", "J", function()
   vim.cmd("normal! mzJ")
   local col = vim.fn.col(".")
----@diagnostic disable-next-line: param-type-mismatch
+  ---@diagnostic disable-next-line: param-type-mismatch
   local context = string.sub(vim.fn.getline("."), col - 1, col + 1)
   if
     context == ") ."
@@ -98,10 +98,10 @@ map(
 
 -- Copy/paste with system clipboard
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
-map("n", "gY", '"+y$', { desc = "Copy to system clipboard" })
-map({"n", "x"}, "gp", '"+p', { desc = "Paste from system clipboard" })
+map({ "n" }, "gY", '"+y$', { desc = "Copy to system clipboard" })
+map({ "n", "x" }, "gp", '"+p', { desc = "Paste from system clipboard" })
 -- Paste in Visual with `P` to not copy selected text (`:h v_P`)
-map({"n", "x"}, "gP", '"+P', { desc = "Paste from system clipboard (without yanking replaced text)" })
+map({ "n", "x" }, "gP", '"+P', { desc = "Paste from system (without yanking text)" })
 
 -- gv: Reselect visual selection by default
 -- Reselect latest changed, put, or yanked text
@@ -109,7 +109,7 @@ map(
   "n",
   "gV",
   '"`[" . strpart(getregtype(), 0, 1) . "`]"',
-  { expr = true, desc = "Visually select changed text" }
+  { expr = true, desc = "Select changed" }
 )
 
 -- Search inside visually highlighted text. Use `silent = false` for it to
@@ -185,3 +185,29 @@ vim.api.nvim_create_user_command("DiffOrig", function()
 end, { desc = "Diff with last saved." })
 
 vim.keymap.set({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })
+
+vim.keymap.set("n", "<leader><TAB>n", "<Cmd>tabnew<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader><TAB><TAB>", function()
+  vim.ui.select(vim.api.nvim_list_tabpages(), {
+    prompt = "Select tab:",
+    format_item = function(tabid)
+      local wins = vim.api.nvim_tabpage_list_wins(tabid)
+      local not_floating_win = function(winid)
+        return vim.api.nvim_win_get_config(winid).relative == ""
+      end
+      wins = vim.tbl_filter(not_floating_win, wins)
+      local bufs = {}
+      for _, win in ipairs(wins) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+        if buftype ~= "nofile" then
+          local fname = vim.api.nvim_buf_get_name(buf)
+          table.insert(bufs, vim.fn.fnamemodify(fname, ":t"))
+        end
+      end
+      return "Tab " .. vim.api.nvim_tabpage_get_number(tabid) .. ": " .. table.concat(bufs, ",")
+    end,
+  }, function(tabid)
+    if tabid ~= nil then vim.cmd(tabid .. "tabnext") end
+  end)
+end, { desc = "Select tab" })

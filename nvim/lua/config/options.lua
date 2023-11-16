@@ -62,18 +62,6 @@ opt.shortmess:append("s")
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
   .. "/envs/neovim/bin/python"
 
-g.clipboard = {
-  name = 'OSC 52',
-  copy = {
-    ['+'] = require('vim.clipboard.osc52').copy,
-    ['*'] = require('vim.clipboard.osc52').copy,
-  },
-  paste = {
-    ['+'] = require('vim.clipboard.osc52').paste,
-    ['*'] = require('vim.clipboard.osc52').paste,
-  },
-}
-
 if vim.g.neovide then
   vim.g.minianimate_disable = true
   vim.g.neovide_input_macos_alt_is_meta = true
@@ -89,5 +77,20 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1
   end)
   vim.g.neovide_scale_factor = 1.0
-  vim.opt.guifont = { "Rec Mono Duotone", "Symbols_Nerd_Font:h11" }
+  vim.keymap.set({"n", "v", "t", "i"}, "<D-]>", [[<C-\><C-N><Cmd>tabnext<CR>]])
+  vim.keymap.set({"n", "v", "t", "i"}, "<D-[>", [[<C-\><C-N><Cmd>tabprev<CR>]])
+  vim.keymap.set({"n", "v", "t", "i"}, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
+  vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
+else
+  g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.clipboard.osc52').copy,
+      ['*'] = require('vim.clipboard.osc52').copy,
+    },
+    paste = {
+      ['+'] = require('vim.clipboard.osc52').paste,
+      ['*'] = require('vim.clipboard.osc52').paste,
+    },
+  }
 end
