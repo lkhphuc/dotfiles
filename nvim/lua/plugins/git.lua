@@ -114,7 +114,6 @@ return {
   },
   {
     "linrongbin16/gitlinker.nvim",
-    keys = { { "<leader>gl", desc = "Copy git link" }, { "<leader>gL", desc = "Open git link" } },
-    opts = {},
+    cmd = "GitLink",
   },
 }

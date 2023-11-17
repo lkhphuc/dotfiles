@@ -81,16 +81,4 @@ if vim.g.neovide then
   vim.keymap.set({"n", "v", "t", "i"}, "<D-[>", [[<C-\><C-N><Cmd>tabprev<CR>]])
   vim.keymap.set({"n", "v", "t", "i"}, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
-else
-  g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.clipboard.osc52').copy,
-      ['*'] = require('vim.clipboard.osc52').copy,
-    },
-    paste = {
-      ['+'] = require('vim.clipboard.osc52').paste,
-      ['*'] = require('vim.clipboard.osc52').paste,
-    },
-  }
 end
