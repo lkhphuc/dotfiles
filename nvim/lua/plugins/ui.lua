@@ -27,9 +27,19 @@ return {
               { find = "lines? yanked" },
               { find = " changes?;" },
               { find = "Already at newest change" },
+              { event = "msg_show", find = "No more valid diagnostics to move to" },
+              { event = "msg_show", find = "^E486: Pattern not found" },
             },
           },
           view = "mini",
+        },
+        {
+          filter = {
+            any = {
+              { event = "msg_show", find = "^[/?]." },
+            },
+          },
+          skip = true
         },
       },
     },

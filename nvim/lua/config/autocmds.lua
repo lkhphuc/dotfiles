@@ -10,9 +10,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 vim.api.nvim_create_autocmd("TermClose", {
   callback = function()
-    if vim.v.event.status == 0 then
-      vim.api.nvim_buf_delete(0, {})
-    end
+    if vim.v.event.status == 0 then vim.api.nvim_buf_delete(0, {}) end
   end,
 })
 
@@ -38,9 +36,23 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
 
 -- auto wrap on text-based file
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = {"text", "tex", "markdown", "rst"},
+  pattern = { "text", "tex", "markdown", "rst" },
   callback = function() vim.wo.wrap = true end,
 })
+
+-- indent line (non-blankline only)
+local function update_lead()
+  local lead = "│"
+  for i = 1, vim.bo.tabstop - 1 do
+    lead = lead .. " "
+  end
+  vim.opt.listchars:append({ leadmultispace = lead })
+end
+vim.api.nvim_create_autocmd(
+  "OptionSet",
+  { pattern = { "listchars", "tabstop", "filetype" }, callback = update_lead }
+)
+vim.api.nvim_create_autocmd("VimEnter", { callback = update_lead, once = true })
 
 ----------------- python -----------------
 -- From nvim-puppetteer
@@ -52,8 +64,7 @@ local function replaceNodeText(node, text)
 end
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
   pattern = { "*.py" },
-  callback = function()  -- Auto f-string on typing {
-
+  callback = function() -- Auto f-string on typing {
     local node = vim.treesitter.get_node()
     if not node then return end
 

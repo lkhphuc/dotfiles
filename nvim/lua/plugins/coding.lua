@@ -70,6 +70,7 @@ return {
       draw = { priority = 12 },
     },
   },
+  { "indent-blankline.nvim", enabled = false },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
   {
     "CKolkey/ts-node-action",

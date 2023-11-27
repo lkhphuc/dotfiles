@@ -15,7 +15,6 @@ o.breakindent = true -- Indent wrapped lines to match line start
 o.showbreak = "↳" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
-o.listchars = "tab:->,extends:…,precedes:…,nbsp:␣,eol:↲" -- Define which helper symbols to show
 
 o.number = true
 o.relativenumber = true
@@ -35,12 +34,12 @@ o.virtualedit = "block,onemore" -- Allow going past the end of line in visual bl
 o.list = false
 -- Define which helper symbols to show
 opt.listchars = {
-  leadmultispace = "▏ ",
-  tab = "▏ ",
+  leadmultispace = "│",
+  tab = "│ ",
   extends = "…",
   precedes = "…",
   nbsp = "␣",
-  eol = "↲",
+  -- eol = "↲",
 }
 opt.fillchars = {
   foldopen = "",
@@ -69,16 +68,19 @@ if vim.g.neovide then
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
   vim.keymap.set("t", "<D-v>", [[<C-\><C-N>"+P]]) -- Paste
-  vim.keymap.set("n", "<D-=>", function()
-    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1
-  end
+  vim.keymap.set(
+    "n",
+    "<D-=>",
+    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1 end
   )
-  vim.keymap.set("n", "<D-->", function()
-    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1
-  end)
+  vim.keymap.set(
+    "n",
+    "<D-->",
+    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
+  )
   vim.g.neovide_scale_factor = 1.0
-  vim.keymap.set({"n", "v", "t", "i"}, "<D-]>", [[<C-\><C-N><Cmd>tabnext<CR>]])
-  vim.keymap.set({"n", "v", "t", "i"}, "<D-[>", [[<C-\><C-N><Cmd>tabprev<CR>]])
-  vim.keymap.set({"n", "v", "t", "i"}, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
+  vim.keymap.set({ "n", "v", "t", "i" }, "<D-]>", [[<C-\><C-N><Cmd>tabnext<CR>]])
+  vim.keymap.set({ "n", "v", "t", "i" }, "<D-[>", [[<C-\><C-N><Cmd>tabprev<CR>]])
+  vim.keymap.set({ "n", "v", "t", "i" }, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
 end

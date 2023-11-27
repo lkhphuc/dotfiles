@@ -32,9 +32,4 @@ return {
       { "<leader>wr", "<Cmd>SmartResizeMode<CR>", mode = "n", desc = "Resize mode" },
     },
   },
-  {
-    "nvim-zh/colorful-winsep.nvim",
-    opts = {},
-    event = { "WinNew" },
-  },
 }
