@@ -34,7 +34,7 @@ o.virtualedit = "block,onemore" -- Allow going past the end of line in visual bl
 o.list = false
 -- Define which helper symbols to show
 opt.listchars = {
-  leadmultispace = "│",
+  leadmultispace = "│ ",
   tab = "│ ",
   extends = "…",
   precedes = "…",
@@ -51,7 +51,6 @@ opt.fillchars = {
 }
 
 opt.foldlevel = 3
-opt.sessionoptions:append("folds")
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false
 

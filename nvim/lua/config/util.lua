@@ -22,7 +22,7 @@ M.statuscolumn = function()
 
     vim.api.nvim_win_call(win, function()
       if vim.fn.foldclosed(vim.v.lnum) >= 0 then
-        fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "Folded" }
+        fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "FoldColumn" }
       elseif vim.fn.foldlevel(vim.v.lnum) > vim.fn.foldlevel(vim.v.lnum - 1) then
         fold = { text = vim.opt.fillchars:get().foldopen or "" }
       end

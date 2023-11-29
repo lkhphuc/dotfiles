@@ -52,7 +52,7 @@ vim.api.nvim_create_autocmd(
   "OptionSet",
   { pattern = { "listchars", "tabstop", "filetype" }, callback = update_lead }
 )
-vim.api.nvim_create_autocmd("VimEnter", { callback = update_lead, once = true })
+vim.api.nvim_create_autocmd("BufReadPost", { callback = update_lead, once = true })
 
 ----------------- python -----------------
 -- From nvim-puppetteer
@@ -113,28 +113,34 @@ local function mod_hl(opts, hl_names)
   end
 end
 
-vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme", "SessionLoadPost" }, {
-  group = vim.api.nvim_create_augroup("Color", {}),
-  callback = function()
-    mod_hl({ bold = true, italic = true }, {
-      "@constant.builtin",
-      "@function.builtin",
-      "@type.builtin",
-      "@boolean",
-    })
-    mod_hl({ bold = true }, {
-      "@type",
-      "@constructor",
-    })
-    mod_hl({ italic = true }, {
-      "@variable.builtin",
-      "@comment",
-      "@parameter",
-    })
+local update_highlight = function()
+  mod_hl({ bold = true, italic = true }, {
+    "@constant.builtin",
+    "@function.builtin",
+    "@type.builtin",
+    "@boolean",
+  })
+  mod_hl({ bold = true }, {
+    "@type",
+    "@constructor",
+  })
+  mod_hl({ italic = true }, {
+    "@variable.builtin",
+    "@comment",
+    "@parameter",
+  })
 
-    vim.cmd([[
-      highlight! semshiImported gui=bold
+  vim.cmd([[
+      highlight! Folded guibg=NONE
       highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
       ]])
-  end,
+end
+vim.api.nvim_create_autocmd(
+  { "ColorScheme", "SessionLoadPost" },
+  { group = vim.api.nvim_create_augroup("Color", {}), callback = update_highlight }
+)
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+  group = vim.api.nvim_create_augroup("Color", { clear = false }),
+  callback = update_highlight,
+  once = true,
 })

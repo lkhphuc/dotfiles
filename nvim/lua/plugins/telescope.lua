@@ -12,7 +12,7 @@ return {
       selection_caret = " ",
       mappings = {
         i = {
-          ["<C-Space>"] = require("telescope.actions").to_fuzzy_refine,
+          ["<C-Space>"] = function () require("telescope.actions").to_fuzzy_refine() end,
         },
       },
       layout_strategies = "flex",
@@ -27,7 +27,7 @@ return {
         theme = "dropdown",
         mappings = {
           i = {
-            ["<C-d>"] = require("telescope.actions").delete_buffer,
+            ["<C-d>"] = function() require("telescope.actions").delete_buffer() end,
           },
         },
       },
