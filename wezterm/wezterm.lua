@@ -98,7 +98,7 @@ config.keys = {
   { key = 'p', mods = 'CMD', action = act.ActivateCommandPalette },
   { key = 'z', mods = 'CMD', action = act.TogglePaneZoomState },
   { key = 'V', mods = 'CMD', action = act.ActivateCopyMode },
-  { key = 'x', mods = 'CMD', action = act.QuickSelect },
+  { key = ' ', mods = 'CMD|SHIFT', action = act.QuickSelect },
   { key = '+', mods = 'CMD', action = act.IncreaseFontSize },
 
   { key = 'PageUp',   mods = '', action = act.ScrollByPage(-1) },

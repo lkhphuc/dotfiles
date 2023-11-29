@@ -41,18 +41,16 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- indent line (non-blankline only)
-local function update_lead()
-  local lead = "│"
-  for i = 1, vim.bo.tabstop - 1 do
-    lead = lead .. " "
-  end
-  vim.opt.listchars:append({ leadmultispace = lead })
-end
-vim.api.nvim_create_autocmd(
-  "OptionSet",
-  { pattern = { "listchars", "tabstop", "filetype" }, callback = update_lead }
-)
-vim.api.nvim_create_autocmd("BufReadPost", { callback = update_lead, once = true })
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = { "list", "listchars", "tabstop", "filetype" },
+  callback = function()
+    local lead = "│"
+    for i = 1, vim.bo.tabstop - 1 do
+      lead = lead .. " "
+    end
+    vim.opt.listchars:append({ leadmultispace = lead })
+  end,
+})
 
 ----------------- python -----------------
 -- From nvim-puppetteer
