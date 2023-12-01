@@ -95,8 +95,8 @@ return {
             { "h", "<CMD>DiffviewFileHistory %<CR>", { exit = true } },
             { "H", "<CMD>DiffviewFileHistory <CR>", { exit = true } },
             { "b", gs.blame_line, { desc = "blame" } },
-            { "B", function() gs.blame_line({ full = true }) end, },
-            { "/", gs.show, }, -- show the base of the file
+            { "B", function() gs.blame_line({ full = true }) end },
+            { "/", gs.show }, -- show the base of the file
             { "g", function() require("lazyvim.util").terminal.open("lazygit") end, { exit = true }, },
             { "v", "<Cmd>DiffviewOpen<CR>", { exit = true } },
             { "<Esc>", nil, { exit = true, nowait = true } },

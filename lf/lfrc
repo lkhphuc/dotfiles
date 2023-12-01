@@ -1,4 +1,4 @@
-# vim:ft=config
+# vim:ft=bash
 
 set previewer ~/.config/lf/previewer.sh
 set cleaner ~/.config/lf/cleaner.sh
@@ -134,3 +134,10 @@ map gs :fzf_search
 cmd on-select &{{
     lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
 }}
+
+cmd yank-dirname $dirname -- "$f" | head -n-1 | pbcopy
+cmd yank-path $printf '%s' "$fx" | pbcopy
+cmd yank-basename $basename -a -- $fx | head -n-1 | pbcopy
+map yd :yank-dirname
+map yp :yank-path
+map yy :yank-basename
