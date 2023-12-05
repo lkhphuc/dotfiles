@@ -3,14 +3,9 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     keys = {
       {
-        "<leader>ge",
-        function() require("neo-tree.command").execute({ source = "git_status", toggle = true }) end,
-        desc = "Git status explorer",
-      },
-      {
-        "<leader>be",
-        function() require("neo-tree.command").execute({ source = "buffers", toggle = true }) end,
-        desc = "Buffer explorer",
+        "<leader>ce",
+        "<Cmd>Neotree document_symbols toggle=true<CR>",
+        desc = "Code symbol Explorer",
       },
     },
   },
@@ -51,8 +46,8 @@ return {
   },
   {
     "mattboehm/vim-unstack",
-    cmd = { "UnstackFromSelection", "UnstackFromClipboard", "Unstack" },
-    keys = { { "<leader>uS", "<Cmd>Unstack<CR>", desc = "Un-stack trace" } },
+    cmd = { "UnstackFromSelection", "UnstackFromClipboard", "UnstackFromText" },
+    keys = { { "<leader>uS", "<Cmd>UnstackFromClipboard<CR>", desc = "Un-stack trace" } },
   },
   {
     "echasnovski/mini.bracketed",
@@ -66,4 +61,5 @@ return {
     "HiPhish/rainbow-delimiters.nvim",
     event = "BufEnter",
   },
+  {"tiagovla/scope.nvim", opts = {}, event="VeryLazy"},
 }

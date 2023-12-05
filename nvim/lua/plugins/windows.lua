@@ -8,7 +8,6 @@ return {
     },
     cmd = "ZenMode",
     keys = { { "<leader>uz", "<Cmd>ZenMode<CR>", desc = "Zen Mode" } },
-    dependencies = { "folke/twilight.nvim", opts = {} },
   },
   {
     "sindrets/winshift.nvim",

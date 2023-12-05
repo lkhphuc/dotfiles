@@ -98,10 +98,10 @@ return {
         end,
         color = fg("DiagnosticInfo"),
       })
+      table.insert(opts.sections.lualine_x, { "location", padding = 0, })
+      table.insert(opts.sections.lualine_x, { "progress", icon = ""})
 
       opts.sections.lualine_y = {
-        { "location", padding = false },
-        { "progress", icon = "" },
         { -- python env
           function()
             local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No env"
@@ -126,7 +126,7 @@ return {
         { -- tabs
           function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
           cond = function() return vim.fn.tabpagenr("$") > 1 end,
-          color = { fg = fg("Tag").fg, gui = "bold" },
+          color = { fg = fg("Macro").fg, gui = "bold" },
         },
       }
       opts.sections.lualine_z = {

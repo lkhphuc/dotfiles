@@ -12,7 +12,13 @@ return {
   { "rose-pine/neovim", name = "rose-pine" },
   { "loctvl842/monokai-pro.nvim" },
   { "sainnhe/gruvbox-material" },
-  { "ribru17/bamboo.nvim", opts = { highlights = { ["@comment"] = { fg = "$grey" }}}},
+  {
+    "ribru17/bamboo.nvim",
+    opts = {
+      highlights = { ["@comment"] = { fg = "$grey" }},
+      dim_inactive = true,
+    }
+  },
   { "xiyaowong/nvim-transparent",
     opts = { extra_groups = { "NormalFloat" } },
     keys = { { "\\t", "<Cmd>TransparentToggle<CR>", desc = "Toggle Transparent" } },
