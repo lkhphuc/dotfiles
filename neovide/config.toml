@@ -1,1 +1,13 @@
 frame = "transparent"
+
+[font]
+normal = [{ family = "Iosevka Term"}, "Symbols Nerd Font Mono"]
+italic = [{ family = "Monaspace Radon" }, "Symbols Nerd Font Mono"]
+bold = [{ family = "Monaspace Krypton" }, "Symbols Nerd Font Mono"]
+size = 13
+
+[font.features]
+"Monaspace Argon" = ["+calt", "+liga", "+dlig", "+ss01", "+ss02", "+ss03", "+ss04", "+ss05", "+ss06", "+ss07", "+ss08" ]
+"Monaspace Radon" = ["+calt", "+liga", "+dlig", "+ss01", "+ss02", "+ss03", "+ss04", "+ss05", "+ss06", "+ss07", "+ss08" ]
+"Monaspace Krypton" = ["+calt", "+liga", "+dlig", "+ss01", "+ss02", "+ss03", "+ss04", "+ss05", "+ss06", "+ss07", "+ss08" ]
+"Cascadia Code" = [ "+calt", "+ss01", "+ss02" ]

@@ -97,7 +97,11 @@ return {
             { "b", gs.blame_line, { desc = "blame" } },
             { "B", function() gs.blame_line({ full = true }) end },
             { "/", gs.show }, -- show the base of the file
-            { "g", function() require("lazyvim.util").terminal.open("lazygit") end, { exit = true }, },
+            {
+              "g",
+              function() require("lazyvim.util").terminal.open("lazygit") end,
+              { exit = true },
+            },
             { "v", "<Cmd>DiffviewOpen<CR>", { exit = true } },
             { "<Esc>", nil, { exit = true, nowait = true } },
           },
@@ -105,8 +109,5 @@ return {
       end,
     },
   },
-  {
-    "linrongbin16/gitlinker.nvim",
-    cmd = "GitLink",
-  },
+  { "linrongbin16/gitlinker.nvim", cmd = "GitLink", opts = {} },
 }

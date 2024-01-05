@@ -79,6 +79,9 @@ config.macos_window_background_blur = 10
 config.unix_domains = { { name = "unix" } }
 
 config.font = wezterm.font_with_fallback({
+  { family = "Monaspace Argon",
+    harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08" }
+  },
   { family = "Cascadia Code", harfbuzz_features = { "calt", "ss01", "ss02" } },
   { family = "IBM Plex Mono" },
   { family = "Rec Mono Duotone" },

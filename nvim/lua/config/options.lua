@@ -83,5 +83,4 @@ if vim.g.neovide then
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-t>", [[<C-\><C-N><Cmd>tabnew<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-w>", [[<C-\><C-N><Cmd>tabclose<CR>]])
-  vim.opt.guifont = { "Iosevka_Term", "Symbols_Nerd_Font:h15" }
 end

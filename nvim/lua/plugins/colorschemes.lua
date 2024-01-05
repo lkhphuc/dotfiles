@@ -5,7 +5,7 @@ return {
       colors = { theme = { all = { ui = { bg_gutter = "none" }}}}
     }
   },
-  { "navarasu/onedark.nvim" },
+  { "navarasu/onedark.nvim", opts = {style= 'warmer'} },
   { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
   { "EdenEast/nightfox.nvim" }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { "catppuccin/nvim", name = "catppuccin", opts = { dim_inactive = { enabled = true } } },
