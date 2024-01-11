@@ -4,14 +4,12 @@
 local map = vim.keymap.set
 local Util = require("lazyvim.util")
 
-map(
-  "n",
-  "<C-.>",
-  function() Util.terminal.open(nil, { ft = "", border = "rounded", style = "minimal" }) end,
-  { desc = "Toggle float terminal" }
-)
+map("n", "<C-.>", function() Util.terminal.open(nil, { ft = "", border = "rounded" }) end, {})
 map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })
 map("n", "<leader>fl", function() Util.terminal.open("lf") end, { desc = "LF file manager" })
+
+map("t", "<C-p>", "<Up>")
+map("t", "<C-n>", "<Down>")
 
 map("n", "z<space>", "za", { desc = "Toggle fold" })
 

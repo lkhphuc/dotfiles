@@ -76,7 +76,13 @@ config.window_background_opacity = 0.75
 config.macos_window_background_blur = 10
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }
-config.unix_domains = { { name = "unix" } }
+config.unix_domains = {
+  {
+    name = "gpu",
+    proxy_command = { "ssh", "-T", "gpu", "wezterm", "cli", "proxy" }
+  }
+}
+-- config.ssh_domains = wezterm.default_ssh_domains()
 
 config.font = wezterm.font_with_fallback({
   { family = "Monaspace Argon",

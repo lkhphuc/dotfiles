@@ -76,7 +76,7 @@ return {
           path = "",
           fuzzy_path = "󰉓",
           omni = "",
-          copilot = "",
+          copilot = "",
           cmp_tabnine = "󰌒",
           rg = "",
           cmdline = "",
