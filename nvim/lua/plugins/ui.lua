@@ -224,7 +224,7 @@ return {
           { get_git_diff() },
           { ft_icon .. " ", guifg = ft_color, guibg = "none" },
           { filename .. " ", gui = modified },
-          -- { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
+          {"┊ "}, { " " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
         }
         return buffer
       end,

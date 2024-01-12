@@ -1,52 +1,7 @@
----@diagnostic disable: undefined-field
 local wezterm = require("wezterm")
 local act = wezterm.action
 
-local config = {}
-if wezterm.config_builder then
-  config = wezterm.config_builder()
-end
-
--- SmartSplit.nvim
-local function is_vim(pane)
-  -- local prog = pane:get_user_vars().WEZTERM_PROG
-  -- return prog:match("^vim") or prog:match("^nvim") or prog:match("^v ")
-  -- this is set by the plugin, and unset on ExitPre in Neovim
-  return pane:get_user_vars().IS_NVIM == 'true'
-end
-
-local direction_keys = {
-  Left = "h",
-  Down = "j",
-  Up = "k",
-  Right = "l", -- reverse lookup
-  h = "Left",
-  j = "Down",
-  k = "Up",
-  l = "Right",
-}
-
-local function split_nav(resize_or_move, key)
-  return {
-    key = key,
-    mods = resize_or_move == "resize" and "META" or "CTRL",
-    action = wezterm.action_callback(function(win, pane)
-      if is_vim(pane) then
-        -- pass the keys through to vim/nvim
-        win:perform_action({
-          SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },
-        }, pane)
-      else
-        if resize_or_move == "resize" then
-          win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
-        else
-          win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-        end
-      end
-    end),
-  }
-end
-
+local config = wezterm.config_builder()
 
 -- ZenMode.nvim
 wezterm.on('user-var-changed', function(window, pane, name, value)
@@ -79,10 +34,10 @@ config.macos_window_background_blur = 10
 config.unix_domains = {
   {
     name = "gpu",
-    proxy_command = { "ssh", "-T", "gpu", "wezterm", "cli", "proxy" }
+    proxy_command = { "ssh", "-L", "/tmp/nvim-socket:/tmp/nvim-socket", "-T", "gpu", "wezterm", "cli", "proxy" }
   }
 }
--- config.ssh_domains = wezterm.default_ssh_domains()
+config.ssh_domains = wezterm.default_ssh_domains()
 
 config.font = wezterm.font_with_fallback({
   { family = "Monaspace Argon",
@@ -115,8 +70,8 @@ config.keys = {
 
   { key = '>', mods = 'CMD|SHIFT', action = act.MoveTabRelative(1) },
   { key = '<', mods = 'CMD|SHIFT', action = act.MoveTabRelative(-1) },
-  { key = "C", mods = "CMD", action = act.CloseCurrentPane({confirm=true}) },
-  { key = "e", mods = "CMD", action = act.SpawnTab("DefaultDomain")},
+  { key = "d", mods = "CMD", action = act.CloseCurrentPane({confirm=true}) },
+  { key = "g", mods = "CMD", action = act.SpawnTab("DefaultDomain")},
   { key = "l", mods = "CMD", action = act.ActivateLastTab},
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
@@ -128,15 +83,6 @@ config.keys = {
   { key = 'l', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Right' },
   { key = 'k', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Up' },
   { key = 'j', mods = 'CTRL|CMD', action = act.ActivatePaneDirection 'Down' },
-  split_nav('move', 'h'),
-  split_nav('move', 'j'),
-  split_nav('move', 'k'),
-  split_nav('move', 'l'),
-  -- resize panes
-  split_nav('resize', 'h'),
-  split_nav('resize', 'j'),
-  split_nav('resize', 'k'),
-  split_nav('resize', 'l'),
 }
 config.enable_kitty_graphics = true
 
@@ -178,5 +124,14 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
   return title
 end)
+
+local smart_splits = wezterm.plugin.require('https://github.com/mrjones2014/smart-splits.nvim')
+smart_splits.apply_to_config(config, {
+  direction_keys = { 'h', 'j', 'k', 'l' },
+  modifiers = {
+    move = 'CTRL', -- modifier to use for pane movement, e.g. CTRL+h to move left
+    resize = 'META', -- modifier to use for pane resize, e.g. META+h to resize to the left
+  }
+})
 
 return config
