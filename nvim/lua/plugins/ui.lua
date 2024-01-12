@@ -108,7 +108,7 @@ return {
             return " " .. venv
           end,
           cond = function() return vim.bo.filetype == "python" end,
-          color = require("lazyvim.util.ui").fg("Operator"),
+          color = fg("Operator"),
         },
         { -- lsp
           function()
@@ -126,7 +126,7 @@ return {
         { -- tabs
           function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
           cond = function() return vim.fn.tabpagenr("$") > 1 end,
-          color = { fg = fg("Macro").fg, gui = "bold" },
+          color = { fg = fg("Type").fg, gui = "bold" },
         },
       }
       opts.sections.lualine_z = {
@@ -140,26 +140,6 @@ return {
     "akinsho/bufferline.nvim",
     enabled = false,
     event = "BufEnter",
-    dependencies = {
-      {
-        "tiagovla/scope.nvim",
-        opts = {},
-        init = function()
-          require("lazyvim.util").on_load(
-            "telescope",
-            function() require("telescope").load_extension("scope") end
-          )
-        end,
-        keys = {
-          {
-            "<leader>ba",
-            "<Cmd>Telescope scope buffers theme=dropdown<CR>",
-            desc = "Search buffers from all tabs",
-          },
-          { "<leader>bm", "<Cmd>ScopeMoveBuf<CR>", desc = "Move buffer to another tab" },
-        },
-      },
-    },
     opts = {
       options = {
         always_show_bufferline = true,

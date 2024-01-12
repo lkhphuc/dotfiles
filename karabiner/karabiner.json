@@ -4855,26 +4855,6 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "t = Neovide",
-                                "from": {
-                                    "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a neovide"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
                                 "description": "option + r = terminal",
                                 "from": {
                                     "key_code": "r",
@@ -4916,7 +4896,48 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + t = typora",
+                                "description": "command + r = vscode",
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_option",
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a code"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "t = Neovide",
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a neovide"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "command + t = Neovide (ssh)",
                                 "from": {
                                     "key_code": "t",
                                     "modifiers": {
@@ -4931,48 +4952,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a Typora"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "option + t = notes",
-                                "from": {
-                                    "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a notes"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "t = vscode",
-                                "from": {
-                                    "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Visual Studio Code'"
+                                        "shell_command": "open -a neovide --args '--server=localhost:6666'"
                                     }
                                 ],
                                 "type": "basic"
@@ -7001,6 +6981,34 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 615,
+                        "vendor_id": 76
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": false,
+                        "is_pointing_device": true,
+                        "product_id": 617,
+                        "vendor_id": 76
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": false,
                     "simple_modifications": [],
                     "treat_as_built_in_keyboard": false
                 }
