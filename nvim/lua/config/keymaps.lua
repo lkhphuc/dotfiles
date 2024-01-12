@@ -10,6 +10,7 @@ map("n", "<leader>fl", function() Util.terminal.open("lf") end, { desc = "LF fil
 
 map("t", "<C-p>", "<Up>")
 map("t", "<C-n>", "<Down>")
+map("t", "<C-e>", "<Right>")
 
 map("n", "z<space>", "za", { desc = "Toggle fold" })
 

@@ -91,10 +91,6 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
     end
   end,
 })
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = { "*.ipynb" },
-  command = "set commentstring=# %s",
-})
 
 ------------ COLOR ------------
 -- NOTE: Due to the way different colorschemes configure different highlights group,

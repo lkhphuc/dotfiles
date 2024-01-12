@@ -34,7 +34,7 @@ config.macos_window_background_blur = 10
 config.unix_domains = {
   {
     name = "gpu",
-    proxy_command = { "ssh", "-L", "/tmp/nvim-socket:/tmp/nvim-socket", "-T", "gpu", "wezterm", "cli", "proxy", },
+    proxy_command = { "ssh", "-T", "gpu", "wezterm", "cli", "proxy", },
   },
 }
 config.ssh_domains = wezterm.default_ssh_domains()
@@ -80,10 +80,6 @@ config.keys = {
 
   { key = "]", mods = "CMD", action = act.RotatePanes("Clockwise") },
   { key = "[", mods = "CMD", action = act.RotatePanes("CounterClockwise") },
-  -- { key = "h", mods = "CTRL|CMD", action = act.ActivatePaneDirection("Left") },
-  -- { key = "l", mods = "CTRL|CMD", action = act.ActivatePaneDirection("Right") },
-  -- { key = "k", mods = "CTRL|CMD", action = act.ActivatePaneDirection("Up") },
-  -- { key = "j", mods = "CTRL|CMD", action = act.ActivatePaneDirection("Down") },
 }
 config.enable_kitty_graphics = true
 

@@ -32,8 +32,4 @@ return {
       { "<S-CR>", "vap<Plug>Send'>", desc = "Send", mode = "n" },
     },
   },
-  {
-    "chomosuke/term-edit.nvim",
-    event = "TermOpen",
-  },
 }
