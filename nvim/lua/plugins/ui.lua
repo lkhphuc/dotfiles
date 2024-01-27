@@ -155,18 +155,10 @@ return {
     opts = {
       window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
       hide = { cursorline = true },
-      -- ignore = { buftypes = function(bufnr, buftype) return false end },
       render = function(props)
-        if vim.bo[props.buf].buftype == "terminal" then
-          return {
-            { " " .. vim.bo[props.buf].channel .. " ", group = "DevIconTerminal" },
-            { " " .. vim.api.nvim_win_get_number(props.win), group = "Special" },
-          }
-        end
-
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.api.nvim_get_option_value("modified", { buf = 0 }) and "italic" or ""
+        local modified = vim.bo[props.buf].modified and 'bold,italic' or 'bold'
 
         local function get_git_diff()
           local icons = require("lazyvim.config").icons.git
@@ -202,9 +194,9 @@ return {
         local buffer = {
           { get_diagnostic_label() },
           { get_git_diff() },
-          { ft_icon .. " ", guifg = ft_color, guibg = "none" },
+          { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
           { filename .. " ", gui = modified },
-          {"┊ "}, { " " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
+          { "┊  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
         }
         return buffer
       end,
