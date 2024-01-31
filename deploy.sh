@@ -42,7 +42,7 @@ fi
 
 brew install starship
 brew install bat
-brew install exa
+brew install eza
 brew install git-delta
 brew tap tgotwig/linux-dust & brew install dust
 brew install duf
