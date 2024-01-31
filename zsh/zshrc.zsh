@@ -3,9 +3,9 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 source $HOME/.zsh/zsh-snap/znap.zsh
 
-znap eval starship "starship init zsh --print-full-init"
-znap prompt
-# znap source romkatv/powerlevel10k
+# znap eval starship "starship init zsh --print-full-init"
+# znap prompt
+znap source romkatv/powerlevel10k
 # znap source jeffreytse/zsh-vi-mode
 # function zvm_after_init() {
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
@@ -17,6 +17,10 @@ znap source Freed-Wu/fzf-tab-source
   zstyle ':completion:*:git-checkout:*' sort false
   # set list-colors to enable filename colorizing
   zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
+  # preview directory's content with eza when completing cd
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+  # switch group using `,` and `.`
+  zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # }
 
@@ -60,7 +64,9 @@ alias g="git" lg="lazygit"
 export BAT_THEME=OneHalfDark
 export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"
 
+export PATH=$HOME/.local/bin:$PATH
 export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000

@@ -15,6 +15,6 @@ end_start=$(($num_lines - 1))
 
 case "${file}" in
   # *) echo $h ;;
-  *.log) tr '\r' '\n' < ${file} | bat -f -n -l log --terminal-width "${w}" --wrap=never -r :$h -r $end_start:;;
+  *.log) tr '\r' '\n' < "${file}" | bat -f -n -l log --terminal-width "${w}" --wrap=never -r :$h -r $end_start:;;
   *) bat -f -n --terminal-width "${w}" "${file}";;
 esac

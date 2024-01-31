@@ -109,9 +109,12 @@ end
 
 local update_highlight = function()
   mod_hl({ bold = true, italic = true }, {
+    "@type.builtin",
+    "@module.builtin",
     "@constant.builtin",
     "@function.builtin",
-    "@type.builtin",
+    "@variable.builtin",
+    "@variable.parameter.builtin",
     "@boolean",
   })
   mod_hl({ bold = true }, {
@@ -119,13 +122,12 @@ local update_highlight = function()
     "@constructor",
   })
   mod_hl({ italic = true }, {
-    "@variable.builtin",
     "@comment",
-    "@parameter",
+    "@variable.parameter",
   })
 
   vim.cmd([[
-      highlight! Folded guibg=NONE
+      " highlight! Folded guibg=NONE
       highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE
       ]])
 end

@@ -1,11 +1,13 @@
 return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     {
       "tsakirist/telescope-lazy.nvim",
       config = function()
-        require("lazyvim.util").on_load("telescope.nvim", function() require("telescope").load_extension("lazy") end)
+        require("lazyvim.util").on_load(
+          "telescope.nvim",
+          function() require("telescope").load_extension("lazy") end
+        )
       end,
     },
   },
@@ -57,7 +59,8 @@ return {
   keys = {
     { "<leader>/", "<Cmd>Telescope current_buffer_fuzzy_find<CR>", desc = "Fuzzy workspace" },
     { "<leader>#", "<Cmd>Telescope grep_string<Cr>", desc = "Search word under cursor" },
-    { "<leader>'", "<Cmd>Telescope registers<CR>", desc = "Registers" },
+    { '<leader>"', "<Cmd>Telescope registers<CR>", desc = "Registers" },
+    { "<leader>'", "<Cmd>Telescope marks<CR>", desc = "Marks" },
     { "<leader><CR>", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
     { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
     { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },

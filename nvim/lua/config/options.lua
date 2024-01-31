@@ -50,6 +50,7 @@ opt.fillchars = {
   eob = " ",
 }
 
+opt.foldtext = ""
 opt.foldlevel = 3
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false
@@ -63,6 +64,9 @@ g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
 if vim.g.neovide then
   vim.g.minianimate_disable = true
   vim.g.neovide_input_macos_alt_is_meta = true
+  vim.g.neovide_window_blurred = true
+  vim.g.neovide_transparency = 0.8
+  vim.g.neovide_hide_mouse_when_typing = true
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste

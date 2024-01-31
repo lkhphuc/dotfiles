@@ -29,6 +29,7 @@ return {
               { find = "Already at newest change" },
               { event = "msg_show", find = "No more valid diagnostics to move to" },
               { event = "msg_show", find = "^E486: Pattern not found" },
+              { event = "msg_show", find = "^Hunk " },
             },
           },
           view = "mini",
@@ -66,15 +67,14 @@ return {
     opts = function(_, opts)
       opts.options = {
         component_separators = "", -- ┊ |        
-        section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
       }
       opts.sections.lualine_a = {
         {
           "mode",
-          icon = "",
-          fmt = function(str) return str:sub(1, 1) end,
-          separator = { left = "", right = "" },
-          padding = 0,
+          icon = "", --   
+          fmt = function(str) return str:sub(1, 3) end,
+          color = {gui = "bold"},
         },
       }
       -- Remove some LazyVim's default by name
@@ -86,6 +86,10 @@ return {
         separator = false,
       }
       opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
+      -- opts.sections.lualine_c[1] = {
+      --   function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+      --   color = { gui = "italic", fg = fg("Constant").fg },
+      -- }
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
@@ -130,7 +134,7 @@ return {
         },
       }
       opts.sections.lualine_z = {
-        { "hostname", icon = "", separator = { left = "", right = "" }, padding = 0 },
+        { "hostname", icon = "", },
       }
 
       opts.extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" }

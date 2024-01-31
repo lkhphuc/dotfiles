@@ -101,13 +101,13 @@ return {
           vim.cmd([[
             highlight! semshiGlobal gui=italic
             highlight! semshiImported gui=bold
-            highlight! link semshiParameter @lsp.type.parameter
+            highlight! semshiBuiltin gui=bold,italic
+            highlight! link semshiParameter @lsp.variable.parameter
             highlight! link semshiParameterUnused DiagnosticUnnecessary
-            highlight! link semshiBuiltin @function.builtin
-            highlight! link semshiAttribute @field
+            highlight! link semshiAttribute @variable.member
             highlight! link semshiSelf @lsp.type.selfKeyword
             highlight! link semshiUnresolved @lsp.type.unresolvedReference
-            highlight! link semshiFree @variable.global
+            highlight! link semshiFree @keyword.import
             ]])
         end,
       })
