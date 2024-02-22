@@ -13,7 +13,7 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = {
       signcolumn = true,
-      _signs_staged_enable = true,
+      _signs_staged_enable = false,
       numhl = true,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -38,6 +38,7 @@ return {
         map({ "n", "v" }, "<leader>gr", "<Cmd>Gitsigns reset_hunk<CR>", "Reset Hunk")
         map("n", "<leader>gS", gs.stage_buffer, "Stage Buffer")
         map("n", "<leader>gu", gs.undo_stage_hunk, "Undo Stage Hunk")
+        map("n", "<leader>gU", gs.reset_buffer_index, "Undo all Stages")
         map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
         map("n", "<leader>gp", gs.preview_hunk_inline, "Preview Hunk")
         map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame Line")

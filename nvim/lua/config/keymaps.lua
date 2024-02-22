@@ -46,8 +46,8 @@ map("n", "i", function()
   end
 end, { expr = true, desc = "properly indent on empty line when insert" })
 
-map("n", "<Tab>", "<C-^>", { silent = true, desc = "Alternate file" })
-map("n", "gb", "<C-^>", { silent = true, desc = "Alternate file" })
+-- Don't remap <TAB> as that is the same as <C-i}
+-- map("n", "gb", "<C-^>", { silent = true, desc = "Alternate file" })
 map("n", "<S-Tab>", "g<Tab>", { silent = true, desc = "Alternate tab" })
 map("n", "]<TAB>", ":tabnext<CR>", { silent = true, desc = "Next tab" })
 map("n", "[<TAB>", ":tabprev<CR>", { silent = true, desc = "Prev tab" })

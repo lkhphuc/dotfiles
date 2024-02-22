@@ -17,7 +17,7 @@ htop/htoprc
 
 nvim/site/
 
-zsh/zshrc.zwc
+**.zwc
 mozilla/vpn.moz
 tmux/plugins
 btop

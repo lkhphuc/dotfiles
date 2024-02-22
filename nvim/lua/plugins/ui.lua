@@ -11,7 +11,7 @@ return {
       views = {
         hover = {
           win_options = { winblend = 20 },
-        }
+        },
       },
       routes = {
         {
@@ -40,7 +40,7 @@ return {
               { event = "msg_show", find = "^[/?]." },
             },
           },
-          skip = true
+          skip = true,
         },
       },
     },
@@ -74,7 +74,7 @@ return {
           "mode",
           icon = "", --   
           fmt = function(str) return str:sub(1, 3) end,
-          color = {gui = "bold"},
+          color = { gui = "bold" },
         },
       }
       -- Remove some LazyVim's default by name
@@ -90,6 +90,7 @@ return {
       --   function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
       --   color = { gui = "italic", fg = fg("Constant").fg },
       -- }
+      -- opts.sections.lualine_c[3] = '%{%v:lua.dropbar.get_dropbar_str()%}'
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
@@ -102,8 +103,8 @@ return {
         end,
         color = fg("DiagnosticInfo"),
       })
-      table.insert(opts.sections.lualine_x, { "location", padding = 0, })
-      table.insert(opts.sections.lualine_x, { "progress", icon = ""})
+      table.insert(opts.sections.lualine_x, { "location", padding = 0 })
+      table.insert(opts.sections.lualine_x, { "progress", icon = "" })
 
       opts.sections.lualine_y = {
         { -- python env
@@ -134,7 +135,7 @@ return {
         },
       }
       opts.sections.lualine_z = {
-        { "hostname", icon = "", },
+        { "hostname", icon = "" },
       }
 
       opts.extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" }
@@ -160,9 +161,10 @@ return {
       window = { zindex = 40, margin = { horizontal = 0, vertical = 0 } },
       hide = { cursorline = true },
       render = function(props)
+        local helpers = require("incline.helpers")
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-        local modified = vim.bo[props.buf].modified and 'bold,italic' or 'bold'
+        local modified = vim.bo[props.buf].modified and "bold,italic" or "bold"
 
         local function get_git_diff()
           local icons = require("lazyvim.config").icons.git
@@ -198,9 +200,9 @@ return {
         local buffer = {
           { get_diagnostic_label() },
           { get_git_diff() },
-          { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
-          { filename .. " ", gui = modified },
-          { "┊  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
+          ft_icon and {  " " .. ft_icon .. " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',
+          { " " .. filename, gui = modified },
+          { "  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
         }
         return buffer
       end,
