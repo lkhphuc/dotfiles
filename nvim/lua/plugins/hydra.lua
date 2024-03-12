@@ -1,5 +1,5 @@
 return {
-  "anuvyklack/hydra.nvim",
+  "nvimtools/hydra.nvim",
   event = "VeryLazy",
   init = function()
     require("hydra")({
@@ -13,7 +13,6 @@ return {
   _H_:     _h_:     _l_:     _L_:     _z_: 󰘢             Screen
   ]],
       config = {
-        hint = { border = "rounded" },
         invoke_on_body = true,
         on_enter = function()
           -- vim.opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
@@ -53,7 +52,7 @@ return {
       ]],
       config = {
         color = "pink",
-        hint = { position = "top", offset = 1,  border = "rounded" },
+        -- hint = { position = "top", offset = 1 },
         invoke_on_body = true,
       },
       heads = {
@@ -94,7 +93,6 @@ return {
         color = "amaranth",
         invoke_on_body = true,
         hint = {
-          border = "rounded",
           position = "middle",
         },
       },
@@ -126,6 +124,7 @@ return {
           function() vim.o.cursorline = not vim.o.cursorline end,
           { desc = "cursor line" },
         },
+        { "q", nil, { exit = true } },
         { "<Esc>", nil, { exit = true } },
       },
     })

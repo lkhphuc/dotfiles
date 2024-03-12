@@ -64,7 +64,6 @@ return {
           config = {
             color = "pink",
             invoke_on_body = true,
-            hint = { border = "rounded" },
             on_enter = function()
               vim.cmd("silent! %foldopen!")
               vim.bo.modifiable = false
