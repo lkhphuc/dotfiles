@@ -8,6 +8,30 @@ return {
     },
   },
   {
+    "folke/flash.nvim",
+    keys = {
+      {
+        "<leader>*",
+        function() require("flash").jump({ pattern = vim.fn.expand("<cword>") }) end,
+        desc = "Jump with current word.",
+      },
+      {
+        "<leader>k",
+        function()
+          require("flash").jump({
+            action = function(match, state)
+              vim.api.nvim_win_call(match.win, function()
+                vim.api.nvim_win_set_cursor(match.win, match.pos)
+                vim.lsp.buf.hover()
+              end)
+              state:restore()
+            end,
+          })
+        end,
+      },
+    },
+  },
+  {
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {
