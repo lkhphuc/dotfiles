@@ -27,7 +27,7 @@ return {
       vim.api.nvim_create_user_command("SendToJupyter", send_to_jupyter, {})
     end,
     keys = {
-      { "<CR>",   "<Plug>Send",    desc = "Send", mode = "n" },
+      { "<C-CR>",   "<Plug>Send",    desc = "Send", mode = "n" },
       { "<CR>",   "<Plug>Send'>",  desc = "Send", mode = "v" },
       { "<S-CR>", "vap<Plug>Send'>", desc = "Send", mode = "n" },
     },

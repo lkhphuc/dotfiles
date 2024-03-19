@@ -3,7 +3,7 @@ local fg = require("lazyvim.util").ui.fg
 return {
   { "nvim-notify", opts = { background_colour = "NormalFloat" } },
   {
-    "folke/noice.nvim",
+    "noice.nvim",
     opts = {
       presets = {
         bottom_search = false, -- a classic bottom cmdline for search
@@ -47,12 +47,10 @@ return {
   },
   { "edgy.nvim", opts = { animate = { enabled = not vim.g.neovide } } },
   {
-    "folke/which-key.nvim",
+    "which-key.nvim",
     opts = {
       window = { winblend = 10 },
-      layout = {
-        align = "center", -- align columns left, center or right
-      },
+      layout = { align = "center", },
     },
   },
   {
@@ -77,20 +75,12 @@ return {
           color = { gui = "bold" },
         },
       }
-      -- Remove some LazyVim's default by name
+      table.insert(opts.sections.lualine_b, {
+        function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+        color = { gui = "italic", fg = fg("Operator").fg },
+      })
+      -- opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
       opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
-      opts.sections.lualine_c[4] = { -- default pretty path truncate unnecassary
-        "filename",
-        path = 1,
-        symbols = { modified = "●", readonly = "", unnamed = "" },
-        separator = false,
-      }
-      opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
-      -- opts.sections.lualine_c[1] = {
-      --   function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-      --   color = { gui = "italic", fg = fg("Constant").fg },
-      -- }
-      -- opts.sections.lualine_c[3] = '%{%v:lua.dropbar.get_dropbar_str()%}'
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
