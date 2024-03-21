@@ -1,3 +1,4 @@
+vim.g.lazyvim_python_lsp = "basedpyright"
 ---@diagnostic disable: missing-fields
 return {
   {
@@ -5,6 +6,26 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
+        ---@type lspconfig.options.basedpyright
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                diagnosticSeverityOverrides = {
+                  reportUnusedCallResult = "information",
+                  reportUnusedExpression = "information",
+                  reportUnknownMemberType = "none",
+                  reportUnknownLambdaType = "none",
+                  reportUnknownParameterType = "none",
+                  reportMissingParameterType = "none",
+                  reportUnknownVariableType = "none",
+                  reportUnknownArgumentType = "none",
+                  reportAny = "none",
+                },
+              },
+            },
+          }
+        },
         ---@type lspconfig.options.pyright
         pyright = {
           settings = {
@@ -37,6 +58,13 @@ return {
     },
   },
   {
+    "venv-selector.nvim",
+    opts = {
+      anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h"),
+      anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h") .. "/envs",
+    }
+  },
+  {
     "conform.nvim",
     opts = {
       formatters_by_ft = {
@@ -45,45 +73,9 @@ return {
     },
   },
   {
-    "goerz/jupytext.vim",
-    event = "BufAdd *.ipynb",
-    config = function() vim.g.jupytext_fmt = "py" end,
-  },
-  {
-    "lkhphuc/jupyter-kernel.nvim",
-    opts = { timeout = 0.5 },
-    build = ":UpdateRemotePlugins",
-    cmd = "JupyterAttach",
-    keys = {
-      { "<leader>k", "<Cmd>JupyterInspect<CR>", desc = "Inspect object in kernel", ft = "python" },
-    },
-  },
-  {
-    "nvim-cmp",
-    opts = function(_, opts)
-      table.insert(opts.sources, 1, {
-        name = "jupyter",
-        group_index = 1,
-        priority = 100,
-      })
-    end,
-  },
-  {
-    "benlubas/molten-nvim",
-    build = ":UpdateRemotePlugins",
-    cmd = "MoltenInit",
-    keys = {
-      { "<leader>r", "<cmd>MoltenEvaluateOperator<CR>", expr = true },
-      { "<leader>rr", "<cmd>MoltenEvaluateLine<CR>" },
-      { "<leader>rc", "<cmd>MoltenReevaluateCell<CR>" },
-      { "<leader>rd", "<cmd>MoltenDelete<CR>" },
-      { "<leader>ro", "<cmd>MoltenShowOutput<CR>" },
-      { "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>", mode = "v" },
-    },
-  },
-  {
     -- "numiras/semshi",
     "wookayin/semshi", -- use a maintained fork
+    enabled = false,
     ft = "python",
     build = ":UpdateRemotePlugins",
     init = function()
@@ -112,5 +104,5 @@ return {
         end,
       })
     end,
-  }
+  },
 }
