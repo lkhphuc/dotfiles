@@ -66,5 +66,10 @@ return {
     { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
     { "<leader>sp", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
     { "<leader>sP", "<Cmd>Telescope lazy<CR>", desc = "Plugins" },
+    -- git
+    { "<leader>gfc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+    { "<leader>gfs", "<cmd>Telescope git_status<CR>", desc = "status" },
+    { "<leader>gfb", "<cmd>Telescope git_branches<CR>", desc = "branch" },
+    { "<leader>gfh", "<cmd>Telescope git_stash<CR>", desc = "stashs" },
   },
 }

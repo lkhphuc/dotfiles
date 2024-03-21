@@ -6,7 +6,7 @@ return {
       name = "Folding screen",
       mode = "n",
       color = "pink",
-      body = "za",
+      body = "z<space>",
       hint = [[
   _m_:     _M_: 󰡍    _[_: 󰜝    _k_:     _i_: 󰌁       _<Esc>_: Quit
   _r_:     _R_: 󰡏    _]_: 󰜙    _j_:     _a_/_<Space>_:       Fold
