@@ -2,13 +2,8 @@ return {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     {
-      "tsakirist/telescope-lazy.nvim",
-      config = function()
-        require("lazyvim.util").on_load(
-          "telescope.nvim",
-          function() require("telescope").load_extension("lazy") end
-        )
-      end,
+      "polirritmico/telescope-lazy-plugins.nvim",
+      keys = { { "<leader>sP", "<Cmd>Telescope lazy_plugins<CR>", desc = "Plugins" } },
     },
   },
   opts = {
@@ -65,7 +60,6 @@ return {
     { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
     { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
     { "<leader>sp", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
-    { "<leader>sP", "<Cmd>Telescope lazy<CR>", desc = "Plugins" },
     -- git
     { "<leader>gfc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
     { "<leader>gfs", "<cmd>Telescope git_status<CR>", desc = "status" },

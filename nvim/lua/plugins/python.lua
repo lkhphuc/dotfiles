@@ -1,4 +1,3 @@
-vim.g.lazyvim_python_lsp = "basedpyright"
 ---@diagnostic disable: missing-fields
 return {
   {
