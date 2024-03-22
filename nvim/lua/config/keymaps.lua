@@ -2,11 +2,10 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local map = vim.keymap.set
-local Util = require("lazyvim.util")
 
-map("n", "<C-.>", function() Util.terminal.open(nil, { ft = "", border = "rounded" }) end, {})
+map("n", "<C-.>", function() LazyVim.terminal.open(nil, { ft = "", border = "rounded" }) end, {})
 map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })
-map("n", "<leader>fl", function() Util.terminal.open("lf") end, { desc = "LF file manager" })
+map("n", "<leader>fl", function() LazyVim.terminal.open("lf") end, { desc = "LF file manager" })
 
 map("t", "<C-p>", "<Up>")
 map("t", "<C-n>", "<Down>")

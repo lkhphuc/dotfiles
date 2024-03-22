@@ -1,4 +1,4 @@
-local fg = require("lazyvim.util").ui.fg
+local fg = LazyVim.ui.fg
 
 return {
   { "nvim-notify", opts = { background_colour = "NormalFloat" } },
@@ -167,7 +167,7 @@ return {
               table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
             end
           end
-          if #labels > 0 then table.insert(labels, { "┊ " }) end
+          -- if #labels > 0 then table.insert(labels, { "┊ " }) end
           return labels
         end
         local function get_diagnostic_label()

@@ -1,5 +1,3 @@
-local M_lz = require("lazyvim.util.ui")
-
 M = {}
 M.statuscolumn = function()
   local win = vim.g.statusline_winid
@@ -12,7 +10,7 @@ M.statuscolumn = function()
   if show_signs then
   ---@type Sign?,Sign?,Sign?
     local sign, gitsign, fold
-    for _, s in ipairs(M_lz.get_signs(buf, vim.v.lnum)) do
+    for _, s in ipairs(LazyVim.ui.get_signs(buf, vim.v.lnum)) do
       if s.name and s.name:find("GitSign") then
         gitsign = s
       else
@@ -28,7 +26,7 @@ M.statuscolumn = function()
       end
     end)
 
-    local mark = M_lz.get_mark(buf, vim.v.lnum)
+    local mark = LazyVim.ui.get_mark(buf, vim.v.lnum)
     if vim.v.virtnum ~= 0 then
       -- Don't duplicate sign on virtual line
       sign = nil
@@ -36,7 +34,7 @@ M.statuscolumn = function()
       sign = sign or mark or fold
     end
     -- except for gitsign's indicator line
-    components[2] = M_lz.icon(sign or gitsign)
+    components[2] = LazyVim.ui.icon(sign or gitsign)
   end
 
   -- Numbers in Neovim are weird

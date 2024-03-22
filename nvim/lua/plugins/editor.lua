@@ -21,10 +21,8 @@ return {
     event = "BufReadPost",
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = {"aerial-*",},
-        callback = function()
-          vim.b.minicursorword_disable = true
-        end,
+        pattern = { "aerial-*" },
+        callback = function() vim.b.minicursorword_disable = true end,
       })
     end,
   },
