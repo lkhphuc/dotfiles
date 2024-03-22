@@ -60,7 +60,7 @@ return {
         { "l", "<cmd>BufferLineCycleNext<Cr>" },
         { "H", "<cmd>BufferLineMovePrev<Cr>" },
         { "L", "<cmd>BufferLineMoveNext<Cr>" },
-        { "j", "<cmd>BufferLinePick<Cr>", {exit = true} },
+        { "j", "<cmd>BufferLinePick<Cr>", { exit = true } },
         { "p", "<Cmd>BufferLineTogglePin<Cr>", { nowait = true } },
         { "s", "<Cmd>Telescope buffers<CR>", { nowait = true, exit=true }},
         { "m", "<Cmd>ScopeMoveBuf<CR>", { nowait = true, exit=true }},

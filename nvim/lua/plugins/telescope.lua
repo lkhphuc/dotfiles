@@ -3,7 +3,7 @@ return {
   dependencies = {
     {
       "polirritmico/telescope-lazy-plugins.nvim",
-      keys = { { "<leader>sP", "<Cmd>Telescope lazy_plugins<CR>", desc = "Plugins" } },
+      keys = { { "<leader>sp", "<Cmd>Telescope lazy_plugins<CR>", desc = "Plugins" } },
     },
   },
   opts = {
@@ -59,7 +59,7 @@ return {
     { "<leader><CR>", "<Cmd>Telescope resume<CR>", desc = "Resume last search" },
     { "<leader>s/", "<Cmd>Telescope search_history<CR>", desc = "Search history" },
     { "<leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
-    { "<leader>sp", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
+    { "<leader>sP", "<Cmd>Telescope builtin<CR>", desc = "Pickers" },
     -- git
     { "<leader>gfc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
     { "<leader>gfs", "<cmd>Telescope git_status<CR>", desc = "status" },

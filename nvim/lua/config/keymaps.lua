@@ -12,7 +12,7 @@ map("t", "<C-p>", "<Up>")
 map("t", "<C-n>", "<Down>")
 map("t", "<C-e>", "<Right>")
 
-map("n", "z<space>", "za", { desc = "Toggle fold" })
+-- map("n", "z<space>", "za", { desc = "Toggle fold" })
 
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
@@ -80,7 +80,7 @@ map("n", "dm", function()
   end
 end, { noremap = true, desc = "Delete mark on the current line" })
 
--- mini.bascis mappings
+-- mini.basic mappings
 map({ "n", "x" }, "j", [[v:count == 0 ? 'gj' : 'j']], { expr = true })
 map({ "n", "x" }, "k", [[v:count == 0 ? 'gk' : 'k']], { expr = true })
 

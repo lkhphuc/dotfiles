@@ -19,6 +19,14 @@ return {
     "echasnovski/mini.cursorword",
     opts = {},
     event = "BufReadPost",
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {"aerial-*",},
+        callback = function()
+          vim.b.minicursorword_disable = true
+        end,
+      })
+    end,
   },
   {
     "echasnovski/mini.map",
@@ -49,17 +57,6 @@ return {
     cmd = { "UnstackFromSelection", "UnstackFromClipboard", "UnstackFromText" },
     keys = { { "<leader>uS", "<Cmd>UnstackFromClipboard<CR>", desc = "Un-stack trace" } },
   },
-  {
-    "echasnovski/mini.bracketed",
-    event = "VeryLazy",
-    opts = {
-      comment = { suffix = "gc" }, -- ]c is for git/diff change
-      treesitter = { suffix = "n" },
-    },
-  },
-  {
-    "HiPhish/rainbow-delimiters.nvim",
-    event = "BufEnter",
-  },
-  {"tiagovla/scope.nvim", opts = {}, event="VeryLazy"},
+  { "HiPhish/rainbow-delimiters.nvim", event = "BufEnter" },
+  { "tiagovla/scope.nvim", opts = {}, event = "VeryLazy" },
 }

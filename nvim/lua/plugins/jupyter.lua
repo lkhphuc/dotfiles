@@ -30,7 +30,7 @@ return {
   {
     "GCBallesteros/jupytext.nvim",
     ft = { "json", "ipynb" },
-    opts = { },
+    opts = {},
   },
   -- Overlay cell marker & metadata so it's less distracting
   {
@@ -120,25 +120,54 @@ return {
   {
     "benlubas/molten-nvim",
     build = ":UpdateRemotePlugins",
-    cmd = "MoltenInit",
     keys = {
-      { "<leader>r", "<cmd>MoltenEvaluateOperator<CR>", expr = true },
-      { "<leader>rr", "<cmd>MoltenEvaluateLine<CR>" },
-      { "<leader>rc", "<cmd>MoltenReevaluateCell<CR>" },
-      { "<leader>rd", "<cmd>MoltenDelete<CR>" },
-      { "<leader>ro", "<cmd>MoltenShowOutput<CR>" },
-      { "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>", mode = "v" },
-      {
-        "<leader>re",
-        ":noautocmd MoltenEnterOutput<CR>",
-        desc = "open output window",
-        silent = true,
-      },
+      { "<leader>rm", "<cmd>MoltenInit python<CR>", desc = "MoltenInit python" },
     },
     init = function()
       vim.g.molten_auto_open_output = false
       vim.g.molten_virt_text_output = true
       vim.g.molten_virt_lines_off_by_1 = true
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MoltenInitPost",
+        callback = function()
+          vim.keymap.set(
+            "n",
+            "<CR>",
+            "<cmd>MoltenEvaluateOperator<CR>",
+            { buffer = true, silent = true, desc = "Run" }
+          )
+          vim.keymap.set(
+            "v",
+            "<CR>",
+            ":<C-u>MoltenEvaluateVisual<CR>'>",
+            { buffer = true, silent = true, desc = "Run selection" }
+          )
+          vim.keymap.set(
+            "n",
+            "<S-CR>",
+            "<cmd>MoltenReevaluateCell<CR>]xj",
+            { remap = true, buffer = true, silent = true, desc = "Run cell and move" }
+          )
+          vim.keymap.set(
+            "n",
+            "<leader>rh",
+            "<cmd>MoltenHideOutput<CR>",
+            { buffer = true, silent = true, desc = "Hide Output" }
+          )
+          vim.keymap.set(
+            "n",
+            "<leader>ro",
+            "<cmd>noautocmd MoltenEnterOutput<CR>",
+            { buffer = true, silent = true, desc = "Show/Enter Output" }
+          )
+          vim.keymap.set(
+            "n",
+            "<leader>ri",
+            "<cmd>MoltenImportOutput<CR>",
+            { buffer = true, silent = true, desc = "Import Notebook Output" }
+          )
+        end,
+      })
     end,
   },
 }
