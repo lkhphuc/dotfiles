@@ -26,10 +26,9 @@
 -- )
 
 return {
-  -- Automatically convert ipynb to py script with cell markers
-  {
+  { -- Automatically convert ipynb to py script with cell markers
     "GCBallesteros/jupytext.nvim",
-    ft = { "json", "ipynb" },
+    lazy = false,
     opts = {},
   },
   -- Overlay cell marker & metadata so it's less distracting
@@ -130,22 +129,40 @@ return {
       vim.api.nvim_create_autocmd("User", {
         pattern = "MoltenInitPost",
         callback = function()
-          vim.keymap.set("n", "<CR>", "<cmd>MoltenEvaluateOperator<CR>",
+          vim.keymap.set(
+            "n",
+            "<CR>",
+            "<cmd>MoltenEvaluateOperator<CR>",
             { buffer = true, silent = true, desc = "Run" }
           )
-          vim.keymap.set("v", "<CR>", ":<C-u>MoltenEvaluateVisual<CR>'>",
+          vim.keymap.set(
+            "v",
+            "<CR>",
+            ":<C-u>MoltenEvaluateVisual<CR>'>",
             { buffer = true, silent = true, desc = "Run selection" }
           )
-          vim.keymap.set("n", "<S-CR>", "vax<CR>]xj",
+          vim.keymap.set(
+            "n",
+            "<S-CR>",
+            "vax<CR>]xj",
             { remap = true, buffer = true, silent = true, desc = "Run cell and move" }
           )
-          vim.keymap.set("n", "<leader>rh", "<cmd>MoltenHideOutput<CR>",
+          vim.keymap.set(
+            "n",
+            "<leader>rh",
+            "<cmd>MoltenHideOutput<CR>",
             { buffer = true, silent = true, desc = "Hide Output" }
           )
-          vim.keymap.set("n", "<leader>ro", "<cmd>noautocmd MoltenEnterOutput<CR>",
+          vim.keymap.set(
+            "n",
+            "<leader>ro",
+            "<cmd>noautocmd MoltenEnterOutput<CR>",
             { buffer = true, silent = true, desc = "Show/Enter Output" }
           )
-          vim.keymap.set("n", "<leader>ri", "<cmd>MoltenImportOutput<CR>",
+          vim.keymap.set(
+            "n",
+            "<leader>ri",
+            "<cmd>MoltenImportOutput<CR>",
             { buffer = true, silent = true, desc = "Import Notebook Output" }
           )
         end,
