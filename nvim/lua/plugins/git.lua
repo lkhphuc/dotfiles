@@ -14,7 +14,6 @@ return {
     opts = {
       signcolumn = true,
       _signs_staged_enable = false,
-      numhl = true,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
 

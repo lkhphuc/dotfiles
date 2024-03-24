@@ -120,7 +120,7 @@ return {
     "benlubas/molten-nvim",
     build = ":UpdateRemotePlugins",
     keys = {
-      { "<leader>rm", "<cmd>MoltenInit python<CR>", desc = "MoltenInit python" },
+      { "<leader>rm", "<cmd>MoltenInit<CR>", desc = "MoltenInit" },
     },
     init = function()
       vim.g.molten_auto_open_output = false
