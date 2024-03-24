@@ -2,14 +2,15 @@
 -- It's commonly defined in many editors and program to use
 -- a space and two percent (%) sign after the comment symbol
 -- For python, that would be a line starting with `# %%`
+local cell_marker = [[# %%]]
 
 -- Define code cell marker treesitter object
 -- Open a python file and run `:TSEditQueryUserAfter textobjects`
 -- Add the following query to the opened file:
 --
 -- ; extends
--- ((comment) @code_cell.marker
--- (#lua-match? @code_cell.marker "^# %%%%"))
+-- ((comment) @cell_marker
+--   (#lua-match? @cell_marker "^# %%%%"))
 --
 --
 -- Injecting markdown highlight to all standalone multiline string
@@ -26,6 +27,31 @@
 -- )
 
 return {
+  { -- General vim repl code send
+    "jpalardy/vim-slime",
+    init = function()
+      vim.g.slime_no_mappings = 1
+      vim.g.slime_cell_delimiter = cell_marker
+      vim.g.slime_bracketed_paste = 1
+      vim.g.slime_target = "wezterm"
+      vim.g.slime_default_config = { pane_direction = "right" }
+      vim.g.slime_menu_config = true
+      vim.api.nvim_create_user_command("SlimeTarget", function(opts)
+        if opts.args ~= nil then
+          vim.b.slime_config = nil
+          vim.b.slime_target = opts.args
+        else
+          vim.print(vim.b.slime_target .. vim.b.slime_config)
+        end
+      end, { desc = "Change Slime target", nargs = "*" })
+    end,
+    cmd = "SlimeConfig",
+    keys = {
+      { "<CR>", "<Plug>SlimeRegionSend", mode = "x" },
+      { "<CR>", "<Plug>SlimeMotionSend", mode = "n" },
+      { "<S-CR>", "<Plug>SlimeSendCell", mode = "n" },
+    },
+  },
   { -- Automatically convert ipynb to py script with cell markers
     "GCBallesteros/jupytext.nvim",
     lazy = false,
@@ -44,18 +70,17 @@ return {
           right_gravity = false,
         }
       end
-      opts.highlighters["cell"] = {
+      opts.highlighters["cell_marker"] = {
         pattern = function(bufid)
           local cms = vim.api.nvim_get_option_value("commentstring", { buf = bufid })
-          return "^" .. string.gsub(cms, "%%s", "") .. "%%%%.*"
+          return "^" .. string.gsub(cms, [[%s]], "") .. [[%%.*]]
         end,
         group = "",
         extmark_opts = censor_extmark_opts,
       }
     end,
   },
-  -- Define code cell object `ix`, `ax`
-  {
+  { -- Define code cell object `ix`, `ax`
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {
@@ -65,7 +90,7 @@ return {
           local res = {}
           for i = 1, buf_nlines do
             local cur_line = vim.fn.getline(i)
-            if cur_line:sub(1, 4) == "# %%" then -- NOTE: Cell delimeter
+            if cur_line:sub(1, 4) == cell_marker then -- NOTE: Cell delimeter
               local end_cell = i - 1
               local region = {
                 from = { line = begin_cell, col = 1 },
@@ -85,20 +110,18 @@ return {
       },
     },
   },
-  -- Mapping for moving between cell `]x`, `[x`
-  {
+  { -- Mapping for moving between cell `]x`, `[x`
     "nvim-treesitter",
     opts = {
       textobjects = {
         move = {
-          goto_next_start = { ["]x"] = "@code_cell.marker" },
-          goto_previous_start = { ["[x"] = "@code_cell.marker" },
+          goto_next_start = { ["]x"] = "@cell_marker" },
+          goto_previous_start = { ["[x"] = "@cell_marker" },
         },
       },
     },
   },
-  -- Inspect and completion in neovim from running kernel
-  {
+  { -- Inspect and completion in neovim from running kernel
     "lkhphuc/jupyter-kernel.nvim",
     opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
@@ -115,8 +138,7 @@ return {
       },
     },
   },
-  -- Notebook-style run and display results
-  {
+  { -- Notebook-style run and display results
     "benlubas/molten-nvim",
     build = ":UpdateRemotePlugins",
     keys = {
@@ -130,40 +152,28 @@ return {
         pattern = "MoltenInitPost",
         callback = function()
           vim.keymap.set(
-            "n",
-            "<CR>",
-            "<cmd>MoltenEvaluateOperator<CR>",
+            "n", "<CR>", "<cmd>MoltenEvaluateOperator<CR>",
             { buffer = true, silent = true, desc = "Run" }
           )
           vim.keymap.set(
-            "v",
-            "<CR>",
-            ":<C-u>MoltenEvaluateVisual<CR>'>",
+            "x", "<CR>", ":<C-u>MoltenEvaluateVisual<CR>'>",
             { buffer = true, silent = true, desc = "Run selection" }
           )
           vim.keymap.set(
-            "n",
-            "<S-CR>",
-            "vax<CR>]xj",
-            { remap = true, buffer = true, silent = true, desc = "Run cell and move" }
+            "n", "<S-CR>", "vax<CR>]xj",
+            { remap = true, buffer = true, desc = "Run cell and move" }
           )
           vim.keymap.set(
-            "n",
-            "<leader>rh",
-            "<cmd>MoltenHideOutput<CR>",
+            "n", "<leader>rh", "<cmd>MoltenHideOutput<CR>",
             { buffer = true, silent = true, desc = "Hide Output" }
           )
           vim.keymap.set(
-            "n",
-            "<leader>ro",
-            "<cmd>noautocmd MoltenEnterOutput<CR>",
+            "n", "<leader>ro", "<cmd>noautocmd MoltenEnterOutput<CR>",
             { buffer = true, silent = true, desc = "Show/Enter Output" }
           )
           vim.keymap.set(
-            "n",
-            "<leader>ri",
-            "<cmd>MoltenImportOutput<CR>",
-            { buffer = true, silent = true, desc = "Import Notebook Output" }
+            "n", "<leader>ri", "<cmd>MoltenImportOutput<CR>",
+            { buffer = true, desc = "Import Notebook Output" }
           )
         end,
       })
