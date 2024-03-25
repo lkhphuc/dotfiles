@@ -63,17 +63,21 @@ g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
 
 if vim.g.neovide then
   vim.g.minianimate_disable = true
-  vim.g.neovide_input_macos_alt_is_meta = true
   vim.g.neovide_window_blurred = true
   vim.g.neovide_transparency = 0.8
+  -- vim.g.neovide_show_border = true
   vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_input_macos_alt_is_meta = true
+  vim.g.neovide_cursor_animate_command_line = false  -- noice incompat
+  vim.g.neovide_cursor_smooth_blink = true
+  vim.g.neovide_cursor_vfx_mode = "ripple"
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
   vim.keymap.set("t", "<D-v>", [[<C-\><C-N>"+P]]) -- Paste
   vim.keymap.set(
     "n",
-    "<D-=>",
+    "<D-+>",
     function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1 end
   )
   vim.keymap.set(

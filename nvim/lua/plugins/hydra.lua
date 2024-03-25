@@ -1,8 +1,8 @@
 return {
   "nvimtools/hydra.nvim",
   event = "VeryLazy",
-  config = function()
-    require("hydra")({
+  opts = {
+    z_keys = {
       name = "Folding screen",
       mode = "n",
       color = "pink",
@@ -41,10 +41,10 @@ return {
         { "R", "zR", { nowait = true } },
         { "z", "zz", { nowait = true } },
       },
-    })
+    },
 
     -- TODO: mini.visit
-    require("hydra")({
+    buffers = {
       name = "Buffers",
       body = "<leader>b",
       hint = [[
@@ -73,9 +73,9 @@ return {
         { "<Tab>", "<Cmd>BufferLineSortByTabs<CR>" },
         { "<Esc>", nil, { exit = true } },
       },
-    })
+    },
 
-    require("hydra")({
+    options = {
       name = "UI Options",
       hint = [[
   ^ ^        UI Options
@@ -128,15 +128,15 @@ return {
         { "q", nil, { exit = true } },
         { "<Esc>", nil, { exit = true } },
       },
-    })
+    },
 
-    require("hydra")({
+    git = {
       name = "Git",
       hint = [[
     _J_: next hunk       _s_: stage hunk      _b_: blame line         _d_: Diff this    _h_: file history  
     _K_: prev hunk       _S_: stage buffer    _B_: blame show full    _D_: Diff orig    _H_: files history
     _l_: deleted lines   _u_: undo stage      _p_: preview hunk       _/_: base file    _v_: Diff View
-    ^ ^ _g_: LazyGit        _<Esc>_: exit    
+    ^ ^ _g_: LazyGit                          _q_: quit            _<Esc>_: exit    
             ]],
       config = {
         color = "pink",
@@ -178,8 +178,15 @@ return {
         { "/", "<CMD>Gitsigns show<CR>" }, -- show the base of the file
         { "g", function() LazyVim.terminal.open("lazygit") end, { exit = true } },
         { "v", "<CMD>DiffviewOpen<CR>", { exit = true } },
+        { "q", nil, { exit = true, nowait = true } },
         { "<Esc>", nil, { exit = true, nowait = true } },
       },
-    })
+    },
+  },
+
+  config = function(_, opts)
+    for name, mode in pairs(opts) do
+      require("hydra")(mode)
+    end
   end,
 }

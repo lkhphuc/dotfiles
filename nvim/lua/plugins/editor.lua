@@ -33,6 +33,7 @@ return {
       })
     end,
   },
+  { "rainbowhxch/beacon.nvim", opts = {}, event = "BufEnter", enabled = not vim.g.neovide },
   {
     "echasnovski/mini.map",
     opts = function()

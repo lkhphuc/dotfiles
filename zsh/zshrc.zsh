@@ -66,7 +66,7 @@ export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.local/share/nvim/mason/bin:$PATH
 export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000
