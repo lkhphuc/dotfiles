@@ -68,7 +68,7 @@ if vim.g.neovide then
   -- vim.g.neovide_show_border = true
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_input_macos_alt_is_meta = true
-  vim.g.neovide_cursor_animate_command_line = false  -- noice incompat
+  vim.g.neovide_cursor_animate_command_line = false -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
   vim.g.neovide_cursor_vfx_mode = "ripple"
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy

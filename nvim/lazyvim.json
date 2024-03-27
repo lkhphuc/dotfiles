@@ -3,12 +3,14 @@
     "lazyvim.plugins.extras.coding.copilot",
     "lazyvim.plugins.extras.dap.core",
     "lazyvim.plugins.extras.editor.aerial",
+    "lazyvim.plugins.extras.editor.dial",
     "lazyvim.plugins.extras.editor.mini-files",
     "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.python-semshi",
     "lazyvim.plugins.extras.lang.tex",
     "lazyvim.plugins.extras.lang.yaml",
+    "lazyvim.plugins.extras.lazyrc",
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.ui.edgy",
     "lazyvim.plugins.extras.ui.mini-animate",
@@ -17,7 +19,7 @@
     "lazyvim.plugins.extras.vscode"
   ],
   "news": {
-    "NEWS.md": "2123"
+    "NEWS.md": "2850"
   },
   "version": 3
 }

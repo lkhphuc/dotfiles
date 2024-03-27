@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 local map = vim.keymap.set
 
-map("n", "<C-,>", "<C-^>", {desc = "Alternate buffer"})
+map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map("n", "<C-.>", function() LazyVim.terminal.open(nil, { ft = "", border = "rounded" }) end, {})
 map("t", "<C-.>", "<Cmd>close<cr>", { desc = "Toggle float terminal" })
 map("n", "<leader>fl", function() LazyVim.terminal.open("lf") end, { desc = "LF file manager" })

@@ -1,30 +1,8 @@
 -- In a native script, we mimick a notebook cell by defining a marker
 -- It's commonly defined in many editors and program to use
 -- a space and two percent (%) sign after the comment symbol
--- For python, that would be a line starting with `# %%`
+-- For python, julia etc that would be a line starting with `# %%`
 local cell_marker = [[# %%]]
-
--- Define code cell marker treesitter object
--- Open a python file and run `:TSEditQueryUserAfter textobjects`
--- Add the following query to the opened file:
---
--- ; extends
--- ((comment) @cell_marker
---   (#lua-match? @cell_marker "^# %%%%"))
---
---
--- Injecting markdown highlight to all standalone multiline string
--- Open a python file and run `:TSEditQueryUserAfter injections`
--- Add the following query to the opened file:
---
--- ;extends
--- (module
---   (expression_statement
---     (string
---       (string_content) @injection.content)
---     )
---   (#set! injection.language "markdown")
--- )
 
 return {
   { -- General vim repl code send
@@ -34,38 +12,40 @@ return {
       vim.g.slime_cell_delimiter = cell_marker
       vim.g.slime_bracketed_paste = 1
       vim.g.slime_target = "wezterm"
-      vim.g.slime_default_config = { pane_direction = "right" }
+      vim.g.slime_default_config = { pane_direction = "next" }
       vim.g.slime_menu_config = true
       vim.api.nvim_create_user_command("SlimeTarget", function(opts)
         if opts.args ~= nil then
-          vim.b.slime_config = nil
           vim.b.slime_target = opts.args
+          vim.b.slime_config = nil
         else
-          vim.print(vim.b.slime_target .. vim.b.slime_config)
+          vim.b.slime_config = vim.g.slime_config
+          vim.b.slime_target = vim.g.slime_target
         end
-      end, { desc = "Change Slime target", nargs = "*" })
+        vim.notify("Slime send target is: " .. vim.b.slime_target)
+      end, { desc = "Change Slime target", nargs = 1 })
     end,
-    cmd = "SlimeConfig",
+    cmd = { "SlimeConfig", "SlimeTarget" },
     keys = {
-      { "<CR>", "<Plug>SlimeRegionSend", mode = "x" },
-      { "<CR>", "<Plug>SlimeMotionSend", mode = "n" },
-      { "<S-CR>", "<Plug>SlimeSendCell", mode = "n" },
+      { "<S-CR>", "<Plug>SlimeRegionSend", mode = "x", desc = "Send Selection" },
+      { "<S-CR>", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion / Text Object" },
+      { "<S-CR><S-CR>", "<C-CR>ix]rj", mode = "n", remap = true, desc = "Send Cell and Jump Next" },
+      { "<leader>rr", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion (Aslo <C-CR>)" },
+      { "<leader>rC", "<Cmd>SlimeConfig<CR>", desc = "Slime Run Config" },
+      { "<leader>rT", "<Cmd>SlimeTarget<CR>", desc = "Slime Run Target" },
     },
   },
-  { -- Automatically convert ipynb to py script with cell markers
-    "GCBallesteros/jupytext.nvim",
-    lazy = false,
-    opts = {},
-  },
-  -- Overlay cell marker & metadata so it's less distracting
-  {
+  
+  { -- Overlay cell marker & metadata so it's less distracting
     "echasnovski/mini.hipatterns",
     opts = function(_, opts)
-      local censor_extmark_opts = function(_, match, _)
-        local mask = string.rep("=", vim.api.nvim_win_get_width(0))
+      local censor_extmark_opts = function(buf_id, match, data)
+        local mask = string.rep("⎯", vim.api.nvim_win_get_width(0))
         return {
           virt_text = { { mask, "SignColumn" } },
           virt_text_pos = "overlay",
+          virt_text_hide = true,
+          -- virt_text_win_col = 5,
           priority = 200,
           right_gravity = false,
         }
@@ -80,46 +60,71 @@ return {
       }
     end,
   },
-  { -- Define code cell object `ix`, `ax`
+  { -- Define code cell object `ir`, `ar`
     "echasnovski/mini.ai",
     opts = {
       custom_textobjects = {
-        x = function(ai_mode, _, _) -- Code Cell objects
+        r = function(ai_mode, _, _) -- Repl Code Cell object
           local buf_nlines = vim.api.nvim_buf_line_count(0)
-          local begin_cell = 1 -- First cell from first line to first cell delimeter
-          local res = {}
-          for i = 1, buf_nlines do
-            local cur_line = vim.fn.getline(i)
-            if cur_line:sub(1, 4) == cell_marker then -- NOTE: Cell delimeter
-              local end_cell = i - 1
-              local region = {
-                from = { line = begin_cell, col = 1 },
-                to = { line = end_cell, col = vim.fn.getline(end_cell):len() },
-              }
-              table.insert(res, region)
-              begin_cell = i
-              if ai_mode == "i" then begin_cell = begin_cell + 1 end
+          local cell_markers = {}
+          for line_no = 1, buf_nlines do
+            if vim.fn.getline(line_no):sub(1, 4) == cell_marker then
+              table.insert(cell_markers, line_no)
             end
           end
-          table.insert(res, { -- Last cell from last delimeter to end of file
-            from = { line = begin_cell, col = 1 },
-            to = { line = buf_nlines, col = vim.fn.getline(buf_nlines):len() },
-          })
-          return res
+          table.insert(cell_markers, 1, 0) -- Beginning
+          table.insert(cell_markers, #cell_markers + 1, buf_nlines + 1)
+
+          local regions = {}
+          for i = 1, #cell_markers - 1 do
+            local from_line, to_line
+            if ai_mode == "i" then
+              from_line = cell_markers[i] + 1
+              to_line = cell_markers[i + 1] - 1
+            else
+              from_line = math.max(cell_markers[i], 1)
+              to_line = cell_markers[i + 1] - 1
+            end
+            -- for `around cell` on empty line select previous cell
+            local to_line_len = vim.fn.getline(to_line):len() + 1
+            table.insert(regions, {
+              from = { line = from_line, col = 1 },
+              to = { line = to_line, col = to_line_len },
+            })
+          end
+          return regions
         end,
       },
     },
   },
-  { -- Mapping for moving between cell `]x`, `[x`
+  { -- Mapping for moving between cell `]r`, `[r`
     "nvim-treesitter",
     opts = {
       textobjects = {
+        select = {
+          enable = true,
+          keymaps = {
+            ["ix"] = "@cell.inner",
+            ["ax"] = "@cell.outer",
+          },
+        },
         move = {
-          goto_next_start = { ["]x"] = "@cell_marker" },
-          goto_previous_start = { ["[x"] = "@cell_marker" },
+          goto_next_start = { ["]r"] = "@cell_marker" },
+          goto_previous_start = { ["[r"] = "@cell_marker" },
         },
       },
     },
+  },
+  { -- Automatically convert ipynb to py script with cell markers
+    "GCBallesteros/jupytext.nvim",
+    dependencies = {
+      {
+        "mason.nvim",
+        opts = function(_, opts) vim.list_extend(opts.ensure_installed, { "jupytext" }) end,
+      },
+    },
+    lazy = false, -- for auto convert ipynb on open, minimal startup time
+    opts = {},
   },
   { -- Inspect and completion in neovim from running kernel
     "lkhphuc/jupyter-kernel.nvim",
@@ -152,31 +157,70 @@ return {
         pattern = "MoltenInitPost",
         callback = function()
           vim.keymap.set(
-            "n", "<CR>", "<cmd>MoltenEvaluateOperator<CR>",
+            "n",
+            "<C-CR>",
+            "<cmd>MoltenEvaluateOperator<CR>",
             { buffer = true, silent = true, desc = "Run" }
           )
           vim.keymap.set(
-            "x", "<CR>", ":<C-u>MoltenEvaluateVisual<CR>'>",
+            "x",
+            "<C-CR>",
+            ":<C-u>MoltenEvaluateVisual<CR>'>",
             { buffer = true, silent = true, desc = "Run selection" }
           )
           vim.keymap.set(
-            "n", "<S-CR>", "vax<CR>]xj",
+            "n",
+            "<S-CR>",
+            "vax<CR>]xj",
             { remap = true, buffer = true, desc = "Run cell and move" }
           )
           vim.keymap.set(
-            "n", "<leader>rh", "<cmd>MoltenHideOutput<CR>",
+            "n",
+            "<leader>rh",
+            "<cmd>MoltenHideOutput<CR>",
             { buffer = true, silent = true, desc = "Hide Output" }
           )
           vim.keymap.set(
-            "n", "<leader>ro", "<cmd>noautocmd MoltenEnterOutput<CR>",
+            "n",
+            "<leader>ro",
+            "<cmd>noautocmd MoltenEnterOutput<CR>",
             { buffer = true, silent = true, desc = "Show/Enter Output" }
           )
           vim.keymap.set(
-            "n", "<leader>ri", "<cmd>MoltenImportOutput<CR>",
+            "n",
+            "<leader>ri",
+            "<cmd>MoltenImportOutput<CR>",
             { buffer = true, desc = "Import Notebook Output" }
           )
+          vim.cmd([[JupyterAttach]])
         end,
       })
     end,
   },
+  {
+    "hydra.nvim",
+    optional = true,
+    opts = {
+      code_cells = {
+        name = "Code cells",
+        mode = "n",
+        color = "pink",
+        body = "<leader>r",
+        hint = [[_j_/_k_: move down/up  _r_: run cell_l_: run line  _R_: run above^^     _<esc>_/_q_: exit]],
+        config = { invoke_on_body = true,  },
+        heads = {
+          { "J", "]r", remap = true },
+          { "K", "[r", remap = true },
+          { "<S-CR>", "<C-CR>ir]r", remap = true },
+          { "<CR>", "V<C-CR>", remap = true },
+          { "m", "<Cmd>MoltenInit<CR>" },
+          { "R", ":QuartoSendAbove<CR>" },
+          { "C", "<Cmd>SlimeConfig<CR>" },
+          { "T", "<Cmd>SlimeTarget<CR>" },
+          { "<esc>", nil, { exit = true } },
+          { "q", nil, { exit = true } },
+        }
+      }
+    }
+  }
 }
