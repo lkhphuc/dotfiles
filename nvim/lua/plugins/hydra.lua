@@ -8,9 +8,9 @@ return {
       color = "pink",
       body = "z<space>",
       hint = [[
-  _m_:     _M_: 󰡍    _[_: 󰜝    _k_:     _i_: 󰌁       _<Esc>_: Quit
-  _r_:     _R_: 󰡏    _]_: 󰜙    _j_:     _a_/_<Space>_:       Fold
-  _H_:     _h_:     _l_:     _L_:     _z_: 󰘢             Screen
+  _M_: 󰡍     _m_:       _k_:      _[_: 󰜝    _i_: 󰌁             _<Esc>_: Quit
+  _H_:      _h_:       _z_: 󰘢     _l_:     _L_:                     Screen
+  _R_: 󰡏     _r_:       _j_:      _]_: 󰜙    _a_/_<Space>_:             Fold
   ]],
       config = {
         invoke_on_body = true,
@@ -143,6 +143,7 @@ return {
         invoke_on_body = true,
         on_enter = function()
           local gs = package.loaded.gitsigns
+          if not gs then return end
           vim.cmd("silent! %foldopen!")
           vim.bo.modifiable = false
           gs.toggle_linehl(true)
@@ -152,6 +153,7 @@ return {
         end,
         on_exit = function()
           local gs = package.loaded.gitsigns
+          if not gs then return end
           gs.toggle_linehl(false)
           gs.toggle_numhl(false)
           gs.toggle_word_diff(false)
@@ -159,8 +161,8 @@ return {
           gs.toggle_deleted(false)
         end,
       },
-      mode = { "n", "x" },
-      body = "<leader>g",
+      mode = "n",
+      body = "<leader>G",
       heads = {
         { "J", "<CMD>Gitsigns next_hunk<CR>", { desc = "next hunk" } },
         { "K", "<CMD>Gitsigns prev_hunk<CR>", { desc = "prev hunk" } },

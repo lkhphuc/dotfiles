@@ -50,22 +50,15 @@ return {
     "which-key.nvim",
     opts = {
       window = { winblend = 10 },
-      layout = { align = "center", },
+      layout = { align = "center" },
     },
-  },
-  {
-    "aerial.nvim",
-    opts = {
-      nav = { preview = true, keymaps = { q = "actions.close" } },
-    },
-    keys = { { "<leader>cn", "<Cmd>AerialNavToggle<CR>", desc = "Code navigation" } },
   },
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
       opts.options = {
         component_separators = "", -- ┊ |        
-        section_separators = { left = "", right = "" },
+        section_separators = "", -- { left = "", right = "" },
       }
       opts.sections.lualine_a = {
         {
@@ -86,25 +79,25 @@ return {
       for _, component in ipairs(opts.sections.lualine_x) do
         if component[1] == "diff" then component[1] = "" end
       end
-      table.insert(opts.sections.lualine_x, 1, {
-        function() return require("noice").api.status.search.get() end,
-        cond = function()
-          return package.loaded["noice"] and require("noice").api.status.search.has()
-        end,
-        color = fg("DiagnosticInfo"),
-      })
-      table.insert(opts.sections.lualine_x, { "location", padding = 0 })
-      table.insert(opts.sections.lualine_x, { "progress", icon = "" })
-
-      opts.sections.lualine_y = {
-        { -- python env
+      vim.list_extend(opts.sections.lualine_x, {
+        {
+          function() return require("noice").api.status.search.get() end,
+          cond = function()
+            return package.loaded["noice"] and require("noice").api.status.search.has()
+          end,
+          color = fg("DiagnosticInfo"),
+        },
+        {
           function()
-            local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No env"
+            local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"
             return " " .. venv
           end,
           cond = function() return vim.bo.filetype == "python" end,
-          color = fg("Operator"),
+          color = { fg = fg("Operator").fg, gui = "italic" },
         },
+      })
+
+      vim.list_extend(opts.sections.lualine_y, {
         { -- lsp
           function()
             local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
@@ -113,18 +106,14 @@ return {
           end,
           color = fg("Constant"),
         },
-        { --terminal
-          function() return " " .. vim.o.channel end,
-          cond = function() return vim.o.buftype == "terminal" end,
-          color = fg("Constant"),
-        },
-        { -- tabs
-          function() return "  " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
-          cond = function() return vim.fn.tabpagenr("$") > 1 end,
-          color = { fg = fg("Type").fg, gui = "bold" },
-        },
-      }
+      })
       opts.sections.lualine_z = {
+        { -- tabs
+          function() return " " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
+          cond = function() return vim.fn.tabpagenr("$") > 1 end,
+          color = { gui = "bold" },
+          separator = "|",
+        },
         { "hostname", icon = "" },
       }
 
@@ -159,12 +148,19 @@ return {
         local function get_git_diff()
           local icons = require("lazyvim.config").icons.git
           icons["changed"] = icons.modified
-          local signs = vim.b[props.buf].gitsigns_status_dict
+          local summary = vim.b.minidiff_summary
+          summary = summary
+              and {
+                added = summary.add,
+                modified = summary.change,
+                removed = summary.delete,
+              }
+            or vim.b[props.buf].gitsigns_status_dict
           local labels = {}
-          if signs == nil then return labels end
+          if summary == nil then return labels end
           for name, icon in pairs(icons) do
-            if tonumber(signs[name]) and signs[name] > 0 then
-              table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
+            if tonumber(summary[name]) and summary[name] > 0 then
+              table.insert(labels, { icon .. summary[name] .. " ", group = "Diff" .. name })
             end
           end
           -- if #labels > 0 then table.insert(labels, { "┊ " }) end
@@ -190,7 +186,11 @@ return {
         local buffer = {
           { get_diagnostic_label() },
           { get_git_diff() },
-          ft_icon and {  " " .. ft_icon .. " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or '',
+          ft_icon and {
+            " " .. ft_icon .. " ",
+            guibg = ft_color,
+            guifg = helpers.contrast_color(ft_color),
+          } or "",
           { " " .. filename, gui = modified },
           { "  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
         }
@@ -198,4 +198,5 @@ return {
       end,
     },
   },
+  { "mini.animate", opts = { open = { enable = false,  }, }, },
 }

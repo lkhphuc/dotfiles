@@ -8,7 +8,7 @@ ignore = [
   "D10",  # Undocumented public
   "E402", # module-import-not-at-top-of-file
   "E501", # Line too long
-  # "E999",  # Syntax error, let other take cares
+  "E999",  # Syntax error, let other take cares
   "ERA",     # Eradicate
   "F401",    # Unused import
   "I",       # Import sort
