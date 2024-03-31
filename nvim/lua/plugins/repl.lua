@@ -29,13 +29,13 @@ return {
     keys = {
       { "<S-CR>", "<Plug>SlimeRegionSend", mode = "x", desc = "Send Selection" },
       { "<S-CR>", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion / Text Object" },
-      { "<S-CR><S-CR>", "<C-CR>ix]rj", mode = "n", remap = true, desc = "Send Cell and Jump Next" },
+      { "<S-CR><S-CR>", "vir<S-CR>]rj", mode = "n", remap = true, desc = "Send Cell and Jump Next" },
       { "<leader>rr", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion (Aslo <C-CR>)" },
       { "<leader>rC", "<Cmd>SlimeConfig<CR>", desc = "Slime Run Config" },
       { "<leader>rT", "<Cmd>SlimeTarget<CR>", desc = "Slime Run Target" },
     },
   },
-  
+
   { -- Overlay cell marker & metadata so it's less distracting
     "echasnovski/mini.hipatterns",
     opts = function(_, opts)
@@ -117,12 +117,6 @@ return {
   },
   { -- Automatically convert ipynb to py script with cell markers
     "GCBallesteros/jupytext.nvim",
-    dependencies = {
-      {
-        "mason.nvim",
-        opts = function(_, opts) vim.list_extend(opts.ensure_installed, { "jupytext" }) end,
-      },
-    },
     lazy = false, -- for auto convert ipynb on open, minimal startup time
     opts = {},
   },
@@ -152,26 +146,34 @@ return {
     init = function()
       vim.g.molten_auto_open_output = false
       vim.g.molten_virt_text_output = true
-      vim.g.molten_virt_lines_off_by_1 = true
+      vim.g.molten_virt_lines_off_by_1 = false
+      vim.g.molten_virt_text_max_lines = 30
+      vim.g.molten_wrap_output = true
       vim.api.nvim_create_autocmd("User", {
         pattern = "MoltenInitPost",
         callback = function()
           vim.keymap.set(
             "n",
-            "<C-CR>",
+            "<leader>rM",
+            "<cmd>MoltenDeinit<CR>",
+            { buffer = true, desc = "Molten Stop" }
+          )
+          vim.keymap.set(
+            "n",
+            "<S-CR>",
             "<cmd>MoltenEvaluateOperator<CR>",
             { buffer = true, silent = true, desc = "Run" }
           )
           vim.keymap.set(
             "x",
-            "<C-CR>",
+            "<S-CR>",
             ":<C-u>MoltenEvaluateVisual<CR>'>",
             { buffer = true, silent = true, desc = "Run selection" }
           )
           vim.keymap.set(
             "n",
-            "<S-CR>",
-            "vax<CR>]xj",
+            "<S-CR><S-CR>",
+            "vir<S-CR>]rj",
             { remap = true, buffer = true, desc = "Run cell and move" }
           )
           vim.keymap.set(
@@ -192,7 +194,16 @@ return {
             "<cmd>MoltenImportOutput<CR>",
             { buffer = true, desc = "Import Notebook Output" }
           )
+          if vim.fn.bufname():match("ipynb") then vim.cmd("MoltenImportOutput") end
           vim.cmd([[JupyterAttach]])
+        end,
+      })
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = { "*.ipynb" },
+        callback = function()
+          if require("molten.status").initialized() == "Molten" then
+            vim.cmd("MoltenExportOutput!")
+          end
         end,
       })
     end,

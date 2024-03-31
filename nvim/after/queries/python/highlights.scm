@@ -5,6 +5,6 @@
 ((
   (comment) @_mdcomment
   . (expression_statement
-      (string (string_content) @text)))
+      (string (string_content) @variable)))
   (#lua-match? @_mdcomment "^# %%%% %[markdown%]"))
 

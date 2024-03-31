@@ -7,11 +7,10 @@ return {
   },
   { "navarasu/onedark.nvim", opts = {style= 'warmer'} },
   { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
-  { "EdenEast/nightfox.nvim" }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
+  { "EdenEast/nightfox.nvim", opts = {options = {dim_inactive = true}} }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { "catppuccin/nvim", name = "catppuccin", opts = { dim_inactive = { enabled = true } } },
-  { "rose-pine/neovim", name = "rose-pine" },
   { "loctvl842/monokai-pro.nvim" },
-  { "sainnhe/gruvbox-material" },
+  { "marko-cerovac/material.nvim" },
   {
     "ribru17/bamboo.nvim",
     opts = {
@@ -25,6 +24,7 @@ return {
   },
   { "folke/styler.nvim",
     event = "VeryLazy",
+    enabled = false,
     opts = {
       themes = {
         -- markdown = { colorscheme = "catppuccin" },

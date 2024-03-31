@@ -106,6 +106,11 @@ return {
           end,
           color = fg("Constant"),
         },
+        { --terminal
+          function() return " " .. vim.o.channel end,
+          cond = function() return vim.o.buftype == "terminal" end,
+          color = fg("Constant"),
+        },
       })
       opts.sections.lualine_z = {
         { -- tabs
