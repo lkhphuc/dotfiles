@@ -46,7 +46,7 @@ return {
     -- TODO: mini.visit
     buffers = {
       name = "Buffers",
-      body = "<leader>b",
+      body = "<leader>B",
       hint = [[
       _h_:     _l_:     _j_:     _s_:     _d_: 󰆴   _D_: 󰒺   _<Tab>_:  
       _H_: 󰁍    _L_: 󰁔    _p_: 󰐃    _c_: 󰦀    _q_:    _E_: 󰒻   _m_: Move _<Esc>_: Quit 

@@ -21,19 +21,6 @@ return {
       { "[V", function() require("mini.visits").iterate_paths("first") end, desc = "First visited path", },
     },
   },
-  { "RRethy/vim-illuminate", enabled = false },
-  {
-    "echasnovski/mini.cursorword",
-    opts = {},
-    event = "BufReadPost",
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "aerial-*" },
-        callback = function() vim.b.minicursorword_disable = true end,
-      })
-    end,
-  },
-  { "rainbowhxch/beacon.nvim", opts = {}, event = "BufEnter", enabled = not vim.g.neovide },
   {
     "echasnovski/mini.map",
     opts = function()

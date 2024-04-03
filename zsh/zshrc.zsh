@@ -43,13 +43,13 @@ znap install conda-incubator/conda-zsh-completion
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
 znap source zpm-zsh/ls # Use eza for ls
-znap source zpm-zsh/autoenv
+# znap source zpm-zsh/autoenv
 znap source hlissner/zsh-autopair
 znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 
-# znap eval direnv  "direnv hook zsh"
+znap eval direnv "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
 znap fpath _fuck "$(thefuck --alias)"
 znap source not-poma/lazyshell  # GPT
@@ -66,7 +66,7 @@ export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"
 
-export PATH=$HOME/.local/bin:$HOME/.local/share/nvim/mason/bin:$PATH
+export PATH="$HOME/.local/bin:$HOME/.pixi/bin/:$HOME/.local/share/nvim/mason/bin:$PATH"
 export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000

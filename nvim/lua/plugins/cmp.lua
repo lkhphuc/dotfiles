@@ -3,63 +3,17 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     { "abecodes/tabout.nvim", opts = {} },
-    {
-      "L3MON4D3/LuaSnip",
-      keys = function() return {} end, -- override LazyVim to configure suptertab
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-        require("luasnip.loaders.from_snipmate").lazy_load()
-      end,
-    },
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
   },
   opts = function(_, opts)
-    local luasnip = require("luasnip")
-    local cmp = require("cmp")
-
     opts.completion.keyword_length = 2
     opts.window = {
       completion = {
         col_offset = -2, -- to align text when 2 icons are prepended
       },
     }
-    opts.view = { entries = { name = "custom", selection_order = "near_cursor" } }
 
-    -- Super tab completion
-    local has_words_before = function()
-      if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
-      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0
-        and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-    end
-    opts.mapping = vim.tbl_extend("force", opts.mapping, {
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() and has_words_before() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<C-Space>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.close()
-        else
-          cmp.complete()
-        end
-      end),
-    })
 
     opts.formatting = {
       fields = { "kind", "abbr", "menu" },
@@ -99,14 +53,13 @@ return {
         source.group_index = source.group_index or 1
       end
     end
-    local second_sources = vim.tbl_filter(
-      function(source) return source.group_index == 2 end,
-      opts.sources
-    )
     opts.mapping = vim.tbl_extend("force", opts.mapping, {
       ["<C-l>"] = cmp.mapping.complete({
         config = {
-          sources = second_sources,
+          sources = vim.tbl_filter(
+            function(source) return source.group_index == 2 end,
+            opts.sources
+          ),
         },
       }),
     })

@@ -2,7 +2,6 @@ return {
   -- { "tpope/vim-fugitive", cmd = "G" }, -- Git commands in nvim
   {
     "sindrets/diffview.nvim",
-    event = "BufEnter",
     keys = {
       { "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", desc = "file history" },
       { "<leader>gH", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
@@ -13,7 +12,8 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = {
       signcolumn = true,
-      _signs_staged_enable = false,
+      numhl = true,
+      _signs_staged_enable = true,
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
 

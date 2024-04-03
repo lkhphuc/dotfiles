@@ -57,6 +57,7 @@ g.autoformat = false
 
 opt.path:append("**")
 opt.shortmess:append("s")
+o.mousemoveevent = true
 
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
   .. "/envs/neovim/bin/python"
@@ -66,7 +67,6 @@ if vim.g.neovide then
   vim.g.neovide_window_blurred = true
   vim.g.neovide_transparency = 0.8
   -- vim.g.neovide_show_border = true
-  vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_input_macos_alt_is_meta = true
   vim.g.neovide_cursor_animate_command_line = false -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
@@ -86,8 +86,8 @@ if vim.g.neovide then
     function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
   )
   vim.g.neovide_scale_factor = 1.0
-  vim.keymap.set({ "n", "v", "t", "i" }, "<D-]>", [[<C-\><C-N><Cmd>tabnext<CR>]])
-  vim.keymap.set({ "n", "v", "t", "i" }, "<D-[>", [[<C-\><C-N><Cmd>tabprev<CR>]])
+  vim.keymap.set({ "n", "v", "t", "i" }, "<D-}>", [[<C-\><C-N><Cmd>tabnext<CR>]])
+  vim.keymap.set({ "n", "v", "t", "i" }, "<D-{>", [[<C-\><C-N><Cmd>tabprev<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-t>", [[<C-\><C-N><Cmd>tabnew<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-w>", [[<C-\><C-N><Cmd>tabclose<CR>]])
