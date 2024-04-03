@@ -29,7 +29,13 @@ return {
     keys = {
       { "<S-CR>", "<Plug>SlimeRegionSend", mode = "x", desc = "Send Selection" },
       { "<S-CR>", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion / Text Object" },
-      { "<S-CR><S-CR>", "vir<S-CR>]rj", mode = "n", remap = true, desc = "Send Cell and Jump Next" },
+      {
+        "<S-CR><S-CR>",
+        "vir<S-CR>]rj",
+        mode = "n",
+        remap = true,
+        desc = "Send Cell and Jump Next",
+      },
       { "<leader>rr", "<Plug>SlimeMotionSend", mode = "n", desc = "Send Motion (Aslo <C-CR>)" },
       { "<leader>rC", "<Cmd>SlimeConfig<CR>", desc = "Slime Run Config" },
       { "<leader>rT", "<Cmd>SlimeTarget<CR>", desc = "Slime Run Target" },
@@ -38,6 +44,7 @@ return {
 
   { -- Overlay cell marker & metadata so it's less distracting
     "echasnovski/mini.hipatterns",
+    ft = { "python" },
     opts = function(_, opts)
       local censor_extmark_opts = function(buf_id, match, data)
         local mask = string.rep("⎯", vim.api.nvim_win_get_width(0))
@@ -52,8 +59,9 @@ return {
       end
       opts.highlighters["cell_marker"] = {
         pattern = function(bufid)
-          local cms = vim.api.nvim_get_option_value("commentstring", { buf = bufid })
-          return "^" .. string.gsub(cms, [[%s]], "") .. [[%%.*]]
+          -- local cms = vim.api.nvim_get_option_value("commentstring", { buf = bufid })
+          -- return "^" .. string.gsub(cms, [[%s]], "") .. [[%%.*]]
+          return "^# *%%"
         end,
         group = "",
         extmark_opts = censor_extmark_opts,
@@ -62,40 +70,32 @@ return {
   },
   { -- Define code cell object `ir`, `ar`
     "echasnovski/mini.ai",
-    opts = {
-      custom_textobjects = {
-        r = function(ai_mode, _, _) -- Repl Code Cell object
-          local buf_nlines = vim.api.nvim_buf_line_count(0)
-          local cell_markers = {}
-          for line_no = 1, buf_nlines do
-            if vim.fn.getline(line_no):sub(1, 4) == cell_marker then
-              table.insert(cell_markers, line_no)
-            end
+    opts = function(_, opts)
+      opts.custom_textobjects["r"] = function(ai_mode, _, _) -- Repl Code Cell object
+        local buf_nlines = vim.api.nvim_buf_line_count(0)
+        local cell_markers = {}
+        for line_no = 1, buf_nlines do
+          if vim.fn.getline(line_no):sub(1, 4) == cell_marker then
+            table.insert(cell_markers, line_no)
           end
-          table.insert(cell_markers, 1, 0) -- Beginning
-          table.insert(cell_markers, #cell_markers + 1, buf_nlines + 1)
+        end
+        table.insert(cell_markers, 1, 0) -- Beginning
+        table.insert(cell_markers, #cell_markers + 1, buf_nlines + 1)
 
-          local regions = {}
-          for i = 1, #cell_markers - 1 do
-            local from_line, to_line
-            if ai_mode == "i" then
-              from_line = cell_markers[i] + 1
-              to_line = cell_markers[i + 1] - 1
-            else
-              from_line = math.max(cell_markers[i], 1)
-              to_line = cell_markers[i + 1] - 1
-            end
-            -- for `around cell` on empty line select previous cell
-            local to_line_len = vim.fn.getline(to_line):len() + 1
-            table.insert(regions, {
-              from = { line = from_line, col = 1 },
-              to = { line = to_line, col = to_line_len },
-            })
-          end
-          return regions
-        end,
-      },
-    },
+        local regions = {}
+        for i = 1, #cell_markers - 1 do
+          local from_line = ai_mode == "i" and cell_markers[i] + 1 or math.max(cell_markers[i], 1)
+          -- for `around cell` on empty line select previous cell
+          local to_line = cell_markers[i + 1] - 1
+          local to_line_len = vim.fn.getline(to_line):len() + 1
+          table.insert(regions, {
+            from = { line = from_line, col = 1 },
+            to = { line = to_line, col = to_line_len },
+          })
+        end
+        return regions
+      end
+    end,
   },
   { -- Mapping for moving between cell `]r`, `[r`
     "nvim-treesitter",
@@ -147,7 +147,6 @@ return {
       vim.g.molten_auto_open_output = false
       vim.g.molten_virt_text_output = true
       vim.g.molten_virt_lines_off_by_1 = false
-      vim.g.molten_virt_text_max_lines = 30
       vim.g.molten_wrap_output = true
       vim.api.nvim_create_autocmd("User", {
         pattern = "MoltenInitPost",
@@ -207,6 +206,19 @@ return {
         end,
       })
     end,
+    dependencies = {
+      { "lualine.nvim",
+        opts = function(_, opts)
+          table.insert(opts.sections.lualine_x, {
+            function()
+              local kernels = require('molten.status').kernels()
+              return kernels == "" and "" or " " .. kernels
+            end,
+            color = "PreProc",
+          })
+        end,
+      },
+    },
   },
   {
     "hydra.nvim",

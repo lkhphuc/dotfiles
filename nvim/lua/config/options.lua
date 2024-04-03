@@ -59,8 +59,8 @@ opt.path:append("**")
 opt.shortmess:append("s")
 o.mousemoveevent = true
 
-g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h")
-  .. "/envs/neovim/bin/python"
+g.lazyvim_python_lsp = "basedpyright"
+g.python3_host_prog = vim.fn.stdpath("data") .. "/python/.pixi/envs/default/bin/python"
 
 if vim.g.neovide then
   vim.g.minianimate_disable = true

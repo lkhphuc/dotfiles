@@ -11,8 +11,9 @@ return {
             basedpyright = {
               analysis = {
                 diagnosticSeverityOverrides = {
-                  reportUnusedCallResult = "information",
-                  reportUnusedExpression = "information",
+                  reportUnusedVariable = "none",
+                  reportUnusedCallResult = "none",
+                  reportUnusedExpression = "none",
                   reportUnknownMemberType = "none",
                   reportUnknownLambdaType = "none",
                   reportUnknownParameterType = "none",
@@ -47,23 +48,16 @@ return {
   },
   {
     "venv-selector.nvim",
+    enabled = false,
     opts = {
       anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h"),
       anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h") .. "/envs",
     }
   },
   {
-    "conform.nvim",
-    opts = {
-      formatters_by_ft = {
-        python = { "yapf" },
-      },
-    },
-  },
-  {
     -- "numiras/semshi",
     "wookayin/semshi", -- use a maintained fork
-    enabled = false,
+    -- enabled = false,
     ft = "python",
     build = ":UpdateRemotePlugins",
     init = function()
@@ -79,15 +73,15 @@ return {
         callback = function()
           -- Only add style, inherit or link to the LSP's colors
           vim.cmd([[
-            highlight! semshiGlobal gui=italic
-            highlight! semshiImported gui=bold
+            highlight! semshiGlobal gui=bold
+            highlight! semshiImported gui=italic
             highlight! semshiBuiltin gui=bold,italic
-            highlight! link semshiParameter @lsp.variable.parameter
+            highlight! link semshiParameter @lsp.type.parameter
             highlight! link semshiParameterUnused DiagnosticUnnecessary
             highlight! link semshiAttribute @variable.member
-            highlight! link semshiSelf @lsp.type.selfKeyword
+            highlight! link semshiSelf @lsp.type.selfParameter
             highlight! link semshiUnresolved @lsp.type.unresolvedReference
-            highlight! link semshiFree @keyword.import
+            highlight! link semshiFree @lsp.typemod.variable.static
             ]])
         end,
       })

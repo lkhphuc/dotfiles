@@ -1,15 +1,20 @@
 # For MacOS, symlink `ln -s ~/.config/ruff ~/Library/Application\ Support/ruff`
+[tool.ruff]
+extend-include = ["*.ipynb"]
+
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-  "ANN",  # missing-type
+  "ANN", # missing-type
   # "B007",  # unused-loop-control-variable
   # "C901",  # complex-structure
   # "COM812",  # missing-trailing-comma
-  "D10",  # Undocumented public
-  "E402", # module-import-not-at-top-of-file
-  "E501", # Line too long
-  "E999",  # Syntax error, let other take cares
+  "D10",     # Undocumented public
+  "D20",     # Undocumented public
+  "D40",
+  "E402",    # module-import-not-at-top-of-file
+  "E501",    # Line too long
+  "E999",    # Syntax error, let other take cares
   "ERA",     # Eradicate
   "F401",    # Unused import
   "I",       # Import sort
@@ -18,16 +23,16 @@ ignore = [
   "PLR0915", # too-many-statements 
   "PLR2004", # magic-value-comparison
   "PLR5501", # collapsible-else-if
-  "RET504", # unnecessary-assign
+  "RET504",  # unnecessary-assign
   # "RET505", # superfluous-else-return
   "S101", # assert
   "S301", # suspicious-pickle-usage
-  "S311",    # suspicious-non-cryptographic-random-usage
+  "S311", # suspicious-non-cryptographic-random-usage
   # "SIM300",  # yoda-conditions
-  "TRY003",  # raise-vanilla-args
+  "TRY003", # raise-vanilla-args
   "UP039",  # unnecessary-class-parentheses
-  "Q000",  # single quote
-  "Q001",  # single quote
-  "Q002",  # single quote
-  "W29",  # trailing-whitespace, missing blankline
+  "Q000",   # single quote
+  "Q001",   # single quote
+  "Q002",   # single quote
+  "W29",    # trailing-whitespace, missing blankline
 ]
