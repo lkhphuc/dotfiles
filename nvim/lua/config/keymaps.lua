@@ -206,7 +206,9 @@ vim.keymap.set("n", "<leader><TAB><TAB>", function()
           table.insert(bufs, vim.fn.fnamemodify(fname, ":t"))
         end
       end
-      return "Tab " .. vim.api.nvim_tabpage_get_number(tabid) .. ": " .. table.concat(bufs, ",")
+      local tabnr = vim.api.nvim_tabpage_get_number(tabid)
+      local cwd = vim.fn.fnamemodify(vim.fn.getcwd(-1, tabnr), ":t")
+      return "Tab " .. tabnr  .. " (" .. cwd ..  "): " .. table.concat(bufs, ",")
     end,
   }, function(tabid)
     if tabid ~= nil then vim.cmd(tabid .. "tabnext") end
