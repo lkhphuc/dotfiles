@@ -126,6 +126,11 @@ local update_highlight = function()
     "@variable.parameter",
   })
 
+  if not LazyVim.ui.color("IlluminatedWordText", true) and LazyVim.ui.color("LSPReferenceText", true) then
+    vim.api.nvim_set_hl(0, "IlluminatedWordText", {link = "LSPReferenceText"})
+    vim.api.nvim_set_hl(0, "IlluminatedWordRead", {link = "LSPReferenceText"})
+    vim.api.nvim_set_hl(0, "IlluminatedWordWrite", {link = "LSPReferenceText"})
+  end
   vim.cmd([[
       " highlight! Folded guibg=NONE
       highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE

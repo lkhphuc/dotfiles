@@ -8,7 +8,7 @@ M.statuscolumn = function()
   local components = { "", "", "" } -- left, middle, right
 
   if show_signs then
-  ---@type Sign?,Sign?,Sign?
+    ---@type Sign?,Sign?,Sign?
     local sign, gitsign, fold
     for _, s in ipairs(LazyVim.ui.get_signs(buf, vim.v.lnum)) do
       if s.name and s.name:find("GitSign") then
@@ -21,7 +21,9 @@ M.statuscolumn = function()
     vim.api.nvim_win_call(win, function()
       if vim.fn.foldclosed(vim.v.lnum) >= 0 then
         fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "FoldColumn" }
-      elseif vim.fn.foldlevel(vim.v.lnum) > vim.fn.foldlevel(vim.v.lnum - 1) then
+      elseif  -- fold start
+        not LazyVim.ui.skip_foldexpr[buf] and vim.treesitter.foldexpr(vim.v.lnum):sub(1, 1) == ">"
+      then
         fold = { text = vim.opt.fillchars:get().foldopen or "" }
       end
     end)
