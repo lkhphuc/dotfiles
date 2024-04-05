@@ -7,7 +7,7 @@ local g, o, opt = vim.g, vim.o, vim.opt
 g.mapleader = " "
 
 o.title = true
-o.titlestring = " " .. vim.fn.fnamemodify(vim.loop.cwd(), ":t")
+o.titlestring = " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
 o.splitright = true
 
@@ -39,7 +39,7 @@ opt.listchars = {
   extends = "…",
   precedes = "…",
   nbsp = "␣",
-  -- eol = "↲",
+  eol = "↲",
 }
 opt.fillchars = {
   foldopen = "",
@@ -50,7 +50,6 @@ opt.fillchars = {
   eob = " ",
 }
 
-opt.foldtext = ""
 opt.foldlevel = 3
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false

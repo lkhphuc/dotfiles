@@ -9,10 +9,11 @@ M.statuscolumn = function()
 
   if show_signs then
     ---@type Sign?,Sign?,Sign?
-    local sign, gitsign, fold
+    local sign, gitsign, fold, githl
     for _, s in ipairs(LazyVim.ui.get_signs(buf, vim.v.lnum)) do
-      if s.name and s.name:find("GitSign") then
+      if s.name and (s.name:find("GitSign") or s.name:find("MiniDiffSign")) then
         gitsign = s
+        githl = s["texthl"]
       else
         sign = s
       end
@@ -20,11 +21,11 @@ M.statuscolumn = function()
 
     vim.api.nvim_win_call(win, function()
       if vim.fn.foldclosed(vim.v.lnum) >= 0 then
-        fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "FoldColumn" }
-      elseif  -- fold start
+        fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = githl or "Folded" }
+      elseif -- fold start
         not LazyVim.ui.skip_foldexpr[buf] and vim.treesitter.foldexpr(vim.v.lnum):sub(1, 1) == ">"
       then
-        fold = { text = vim.opt.fillchars:get().foldopen or "" }
+        fold = { text = vim.opt.fillchars:get().foldopen or "", texthl = githl }
       end
     end)
 
@@ -51,6 +52,7 @@ M.statuscolumn = function()
     end
   end
   components[1] = "%=" .. components[1] .. " " -- right align
+  -- if vim.v.virtnum ~= 0 then components[1] = "%= " end
 
   return table.concat(components, "")
 end
