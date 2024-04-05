@@ -45,7 +45,28 @@ return {
       },
     },
   },
-  { "edgy.nvim", opts = { animate = { enabled = not vim.g.neovide } } },
+  {
+    "edgy.nvim",
+    opts = {
+      animate = { enabled = not vim.g.neovide },
+      keys = {
+        ["<A-l>"] = function(win) win:resize("width", 2) end,
+        ["<A-h>"] = function(win) win:resize("width", -2) end,
+        ["<A-k>"] = function(win) win:resize("height", 2) end,
+        ["<A-j>"] = function(win) win:resize("height", -2) end,
+      },
+    },
+    keys = {
+      {
+        "<localleader>e",
+        function()
+          vim.b.edgy_disable = not vim.b.edgy_disable
+          LazyVim.notify((vim.b.edgy_disable and "Disable" or "Enable") .. " Edgy for buffer")
+        end,
+        desc = "Edgy (un)attach",
+      },
+    },
+  },
   {
     "which-key.nvim",
     opts = {
@@ -203,5 +224,5 @@ return {
       end,
     },
   },
-  { "mini.animate", opts = { open = { enable = false,  }, }, },
+  { "mini.animate", opts = { open = { enable = false } } }, -- flicker with noice mini view
 }

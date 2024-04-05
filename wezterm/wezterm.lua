@@ -51,7 +51,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = 15
 config.underline_position = "-3pt"
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "kanagawabones"
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }

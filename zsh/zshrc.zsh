@@ -56,8 +56,7 @@ znap source not-poma/lazyshell  # GPT
 source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"
-[[ -v NVIM ]] && EDITOR="nvr -l"
-[ -x "$(command -v floaterm)" ] && EDITOR="floaterm"
+[[ -v NVIM ]] && export EDITOR="nvr -l" && export VISUAL="nvr -l"
 alias v="$EDITOR" vimdiff="$EDITOR -d"
 alias g="git" lg="lazygit"
 
