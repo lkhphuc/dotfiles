@@ -73,5 +73,6 @@ return {
     },
   },
   { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
+  { "mini.comment", enabled = not vim.fn.has("nvim-0.10") },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
 }

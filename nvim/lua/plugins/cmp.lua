@@ -2,9 +2,10 @@ return {
   "hrsh7th/nvim-cmp",
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
-    { "abecodes/tabout.nvim", opts = {} },
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
+    "rafamadriz/friendly-snippets",
+    { "garymjr/nvim-snippets", opts = { friendly_snippets = true}},
   },
   opts = function(_, opts)
     opts.completion.keyword_length = 2
@@ -14,14 +15,16 @@ return {
       },
     }
 
+    table.insert(opts.sources, { name = "snippets" })
 
     opts.formatting = {
       fields = { "kind", "abbr", "menu" },
       format = function(entry, item)
         local kind_icons = require("lazyvim.config").icons.kinds
         local source_icons = {
-          nvim_lsp = "",
+          nvim_lsp = "",
           luasnip = "",
+          snippets = "",
           treesitter = "",
           tags = "",
           buffer = "",
@@ -32,8 +35,8 @@ return {
           copilot = "",
           cmp_tabnine = "󰌒",
           rg = "",
-          cmdline = "",
-          cmdline_history = "",
+          cmdline = "",
+          cmdline_history = "",
           jupyter = "",
         }
         item.menu = source_icons[entry.source.name] or entry.source.name
@@ -75,7 +78,7 @@ return {
       completion = { completeopt = "menu,menuone,noselect,noinsert" },
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = "cmdline", priority = 100 },
+        { name = "cmdline" },
         { name = "cmdline_history" },
       }),
     })
