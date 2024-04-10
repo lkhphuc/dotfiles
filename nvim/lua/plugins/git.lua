@@ -8,21 +8,24 @@ return {
       { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
     },
   },
-  {
+ {
     "lewis6991/gitsigns.nvim",
     opts = {
       signcolumn = true,
-      numhl = true,
+      numhl = false,
+      current_line_blame_opts = { virt_text_pos = 'right_align'},
       _signs_staged_enable = true,
       on_attach = function(buffer)
-        local gs = package.loaded.gitsigns
+        local gs = require("gitsigns")
 
         local function map(mode, l, r, desc)
           vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
         end
 
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
+        map("n", "]h", function() gs.nav_hunk("next") end, "Next Hunk")
+        map("n", "[h", function() gs.nav_hunk("prev") end, "Prev Hunk")
+        map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
+        map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
         map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
         map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
         map("n", "<leader>gS", gs.stage_buffer, "Stage Buffer")

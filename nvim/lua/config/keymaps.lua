@@ -187,10 +187,11 @@ end, { desc = "Diff with last saved." })
 
 vim.keymap.set({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })
 
+---------- TAB
 vim.keymap.set("n", "<leader><TAB>n", "<Cmd>tabnew<CR>", { desc = "New tab" })
 vim.keymap.set("n", "<leader><TAB><TAB>", function()
   vim.ui.select(vim.api.nvim_list_tabpages(), {
-    prompt = "Select tab:",
+    prompt = "Select Tab:",
     format_item = function(tabid)
       local wins = vim.api.nvim_tabpage_list_wins(tabid)
       local not_floating_win = function(winid)
@@ -207,8 +208,9 @@ vim.keymap.set("n", "<leader><TAB><TAB>", function()
         end
       end
       local tabnr = vim.api.nvim_tabpage_get_number(tabid)
-      local cwd = vim.fn.fnamemodify(vim.fn.getcwd(-1, tabnr), ":t")
-      return "Tab " .. tabnr  .. " (" .. cwd ..  "): " .. table.concat(bufs, ",")
+      local cwd = string.format(" %8s: ", vim.fn.fnamemodify(vim.fn.getcwd(-1, tabnr), ":t"))
+      local is_current = vim.api.nvim_tabpage_get_number(0) == tabnr and "✸" or " "
+      return tabnr .. is_current .. cwd .. table.concat(bufs, ", ")
     end,
   }, function(tabid)
     if tabid ~= nil then vim.cmd(tabid .. "tabnext") end

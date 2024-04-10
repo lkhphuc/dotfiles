@@ -26,11 +26,10 @@ return {
     opts = function()
       local map = require("mini.map")
       return {
-        symbols = {
-          encode = require("mini.map").gen_encode_symbols.dot("4x2"),
-        },
+        symbols = { encode = require("mini.map").gen_encode_symbols.dot("3x2"), },
         integrations = {
           map.gen_integration.builtin_search(),
+          map.gen_integration.diff(),
           map.gen_integration.gitsigns(),
           map.gen_integration.diagnostic(),
         },
@@ -48,7 +47,7 @@ return {
   {
     "mattboehm/vim-unstack",
     cmd = { "UnstackFromSelection", "UnstackFromClipboard", "UnstackFromText" },
-    keys = { { "<leader>uS", "<Cmd>UnstackFromClipboard<CR>", desc = "Un-stack trace" } },
+    keys = { { "<leader>dS", "<Cmd>UnstackFromClipboard<CR>", desc = "Un-stack trace" } },
   },
   { "HiPhish/rainbow-delimiters.nvim", event = "BufEnter" },
   { "tiagovla/scope.nvim", opts = {}, event = "VeryLazy" },

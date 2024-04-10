@@ -16,8 +16,8 @@ o.showbreak = "↳" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
-o.number = true
-o.relativenumber = true
+o.number = false
+o.relativenumber = false
 o.numberwidth = 3
 o.cursorline = true
 o.showtabline = 0 --never
@@ -50,13 +50,14 @@ opt.fillchars = {
   eob = " ",
 }
 
+opt.diffopt:append({ "indent-heuristic", "algorithm:patience" })
 opt.foldlevel = 3
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 g.autoformat = false
 
 opt.path:append("**")
 opt.shortmess:append("s")
-o.mousemoveevent = true
+opt.mousemoveevent = true
 
 g.lazyvim_python_lsp = "basedpyright"
 g.python3_host_prog = vim.fn.stdpath("data") .. "/python/.pixi/envs/default/bin/python"

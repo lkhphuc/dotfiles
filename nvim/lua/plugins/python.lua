@@ -80,7 +80,7 @@ return {
             highlight! link semshiParameterUnused DiagnosticUnnecessary
             highlight! link semshiAttribute @variable.member
             highlight! link semshiSelf @lsp.type.selfParameter
-            highlight! link semshiUnresolved @lsp.type.unresolvedReference
+            highlight! semshiUnresolved gui=undercurl
             highlight! link semshiFree @lsp.typemod.variable.static
             ]])
         end,

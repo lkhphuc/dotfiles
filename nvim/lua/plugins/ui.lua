@@ -89,11 +89,11 @@ return {
           color = { gui = "bold" },
         },
       }
-      table.insert(opts.sections.lualine_b, {
-        function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-        color = { gui = "italic", fg = fg("Operator").fg },
-      })
-      -- opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
+      -- table.insert(opts.sections.lualine_b, {
+      --   function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+      --   color = { gui = "italic", fg = fg("Operator").fg },
+      -- })
+      opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
       opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
 
       -- Remove some LazyVim's default
@@ -106,9 +106,9 @@ return {
           cond = function()
             return package.loaded["noice"] and require("noice").api.status.search.has()
           end,
-          color = fg("DiagnosticInfo"),
+          color = fg("DiagnosticOk"),
         },
-        {
+        { --python venv
           function()
             local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"
             return " " .. venv
@@ -118,29 +118,29 @@ return {
         },
       })
 
-      vim.list_extend(opts.sections.lualine_y, {
-        { -- lsp
-          function()
-            local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
-            if num_clients > 0 then return " " .. num_clients end
-            return ""
-          end,
-          color = fg("Constant"),
-        },
-        { --terminal
-          function() return " " .. vim.o.channel end,
-          cond = function() return vim.o.buftype == "terminal" end,
-          color = fg("Constant"),
-        },
+      opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = ""}
+      table.insert(opts.sections.lualine_y, 1, {
+        function() -- lsp
+          local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
+          if num_clients > 0 then return " " .. num_clients end
+          return ""
+        end,
+        color = fg("Type"),
       })
+      table.insert(opts.sections.lualine_y, 1, { --terminal
+        function() return " " .. vim.o.channel end,
+        cond = function() return vim.o.buftype == "terminal" end,
+        color = fg("Type"),
+      })
+
       opts.sections.lualine_z = {
         { -- tabs
           function() return " " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
           cond = function() return vim.fn.tabpagenr("$") > 1 end,
           color = { gui = "bold" },
-          separator = "|",
+          separator = "⏐",
         },
-        { "hostname", icon = "" },
+        { "hostname", icon = "󰢹" },
       }
 
       opts.extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" }
@@ -218,7 +218,7 @@ return {
             guifg = helpers.contrast_color(ft_color),
           } or "",
           { " " .. filename, gui = modified },
-          { "  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },
+          { " 󰕮 " .. vim.api.nvim_win_get_number(props.win), group = "lualine_b_visual" },
         }
         return buffer
       end,
