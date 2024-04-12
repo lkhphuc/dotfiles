@@ -34,18 +34,17 @@ o.virtualedit = "block,onemore" -- Allow going past the end of line in visual bl
 o.list = false
 -- Define which helper symbols to show
 opt.listchars = {
-  leadmultispace = "│ ",
+  leadmultispace = "│   ",
   tab = "│ ",
   extends = "…",
   precedes = "…",
-  nbsp = "␣",
-  eol = "↲",
+  trail = "␣",
+  -- eol = "↲",
 }
 opt.fillchars = {
   foldopen = "",
   foldclose = "",
   fold = " ",
-  foldsep = " ",
   diff = "╱",
   eob = " ",
 }

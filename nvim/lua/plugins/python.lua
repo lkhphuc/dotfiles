@@ -20,6 +20,7 @@ return {
                   reportMissingParameterType = "none",
                   reportUnknownVariableType = "none",
                   reportUnknownArgumentType = "none",
+                  reportImplicitOverride = "none",
                   reportAny = "none",
                 },
               },

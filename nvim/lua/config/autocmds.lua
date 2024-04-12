@@ -42,13 +42,14 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- indent line (non-blankline only)
 vim.api.nvim_create_autocmd("OptionSet", {
-  pattern = { "list", "listchars", "tabstop", "filetype" },
+  pattern = { "list" },
   callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
     local lead = "│"
-    for i = 1, vim.bo.tabstop - 1 do
+    for i = 1, vim.bo[bufnr].tabstop - 1 do
       lead = lead .. " "
     end
-    vim.opt.listchars:append({ leadmultispace = lead })
+    vim.opt_local.listchars:append({ leadmultispace = lead })
   end,
 })
 
@@ -126,10 +127,12 @@ local update_highlight = function()
     "@variable.parameter",
   })
 
-  if not LazyVim.ui.color("IlluminatedWordText", true) and LazyVim.ui.color("LSPReferenceText", true) then
-    vim.api.nvim_set_hl(0, "IlluminatedWordText", {link = "LSPReferenceText"})
-    vim.api.nvim_set_hl(0, "IlluminatedWordRead", {link = "LSPReferenceText"})
-    vim.api.nvim_set_hl(0, "IlluminatedWordWrite", {link = "LSPReferenceText"})
+  if
+    not LazyVim.ui.color("IlluminatedWordText", true) and LazyVim.ui.color("LSPReferenceText", true)
+  then
+    vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "LSPReferenceText" })
+    vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "LSPReferenceText" })
+    vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "LSPReferenceText" })
   end
   vim.cmd([[
       " highlight! Folded guibg=NONE

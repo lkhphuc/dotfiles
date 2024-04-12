@@ -40,17 +40,18 @@ config.unix_domains = {
 config.ssh_domains = wezterm.default_ssh_domains()
 
 config.font = wezterm.font_with_fallback({
-  {
-    family = "Monaspace Argon",
-    harfbuzz_features = { "calt", "liga", "dlig", "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08", },
-  },
-  { family = "Cascadia Code", harfbuzz_features = { "calt", "ss01", "ss02" } },
-  { family = "IBM Plex Mono" },
+  -- { family = "0xProto Nerd Font" },
+  { family = "Cascadia Code" },
   { family = "Rec Mono Duotone" },
+  { family = "Victor Mono", weight = "Medium" },
   { family = "JetBrains Mono" },
 })
+config.harfbuzz_features = {
+  "calt", "clig", "dlig", "liga", "ss01", "ss02",
+  "ss03", "ss04", "ss05", "ss06", "ss07", "ss08",
+}
 config.font_size = 15
-config.underline_position = "-3pt"
+config.underline_position = "-2pt"
 config.color_scheme = "kanagawabones"
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
@@ -77,6 +78,7 @@ config.keys = {
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
   { key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
+  { key = "Tab", mods = "CTRL", action = act.DisableDefaultAssignment },
 
   { key = "]", mods = "CMD", action = act.RotatePanes("Clockwise") },
   { key = "[", mods = "CMD", action = act.RotatePanes("CounterClockwise") },
