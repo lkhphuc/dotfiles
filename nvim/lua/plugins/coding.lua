@@ -57,7 +57,31 @@ return {
       },
     },
   },
-  { "ThePrimeagen/refactoring.nvim", opts = {}, cmd = "Refactor" },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    opts = {},
+    cmd = "Refactor",
+    keys = {
+      {
+        "<leader>dv",
+        function() require("refactoring").debug.print_var() end,
+        mode = { "x", "n" },
+        desc = "Print variable",
+      },
+      {
+        "<leader>dd",
+        function() require("refactoring").debug.printf() end,
+        mode = "n",
+        desc = "Print function call",
+      },
+      {
+        "<leader>dD",
+        function() require("refactoring").debug.cleanup() end,
+        mode = "n",
+        desc = "Print cleanup",
+      },
+    },
+  },
   {
     "echasnovski/mini.surround",
     opts = {

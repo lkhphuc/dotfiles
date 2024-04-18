@@ -47,7 +47,7 @@ return {
       show_prompt = false,
       hint = "floating-big-letter",
       filter_rules = {
-        bo = { filetype = { "incline" } },
+        bo = { filetype = { "incline", "noice" } },
       },
     },
   },

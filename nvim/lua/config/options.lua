@@ -30,6 +30,7 @@ o.smartcase = true -- Don't ignore case when searching if pattern has upper case
 o.smartindent = true -- Make indenting smart
 
 o.virtualedit = "block,onemore" -- Allow going past the end of line in visual block mode
+o.scrolloff = 10 -- context lines
 
 o.list = false
 -- Define which helper symbols to show
@@ -69,7 +70,7 @@ if vim.g.neovide then
   vim.g.neovide_input_macos_alt_is_meta = true
   vim.g.neovide_cursor_animate_command_line = false -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
-  vim.g.neovide_cursor_vfx_mode = "ripple"
+  -- vim.g.neovide_cursor_vfx_mode = "ripple"
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
