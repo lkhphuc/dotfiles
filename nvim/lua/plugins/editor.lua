@@ -54,6 +54,7 @@ return {
   { "soulis-1256/eagle.nvim", lazy = false },
   {
     "3rd/image.nvim",
+    enabled = not vim.g.neovide,
     ft = { "markdown", "vimwiki", "quarto", "python" },
     opts = {
       integrations = {

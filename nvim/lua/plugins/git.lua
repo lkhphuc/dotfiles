@@ -11,10 +11,10 @@ return {
  {
     "lewis6991/gitsigns.nvim",
     opts = {
-      signcolumn = true,
-      numhl = false,
+      signs = { untracked = { text = "┊"}},
       current_line_blame_opts = { virt_text_pos = 'right_align'},
       _signs_staged_enable = true,
+      attach_to_untracked = true,
       on_attach = function(buffer)
         local gs = require("gitsigns")
 
@@ -36,7 +36,7 @@ return {
         map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame Line")
         map("n", "<leader>gd", gs.diffthis, "Diff This")
         map("n", "<leader>gD", function() gs.diffthis("~") end, "Diff This ~")
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 
         map("n", "<leader>gtb", gs.toggle_current_line_blame, "blame virtual text")
         map("n", "<leader>gtd", gs.toggle_deleted, "deleted virtual text")

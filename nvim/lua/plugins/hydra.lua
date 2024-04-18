@@ -133,8 +133,8 @@ return {
     git = {
       name = "Git",
       hint = [[
-    _J_: next hunk       _s_: stage hunk      _b_: blame line         _d_: Diff this    _h_: file history  
-    _K_: prev hunk       _S_: stage buffer    _B_: blame show full    _D_: Diff orig    _H_: files history
+    _K_: prev hunk ↑     _s_: stage hunk      _b_: blame line         _d_: Diff this    _h_: file history  
+    _J_: next hunk ↓     _S_: stage buffer    _B_: blame show full    _D_: Diff orig    _H_: files history
     _l_: deleted lines   _u_: undo stage      _p_: preview hunk       _/_: base file    _v_: Diff View
     ^ ^ _g_: LazyGit                          _q_: quit            _<Esc>_: exit    
             ]],
