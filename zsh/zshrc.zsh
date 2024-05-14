@@ -51,8 +51,8 @@ znap source zsh-users/zsh-completions
 
 znap eval direnv "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
-znap fpath _fuck "$(thefuck --alias)"
-znap source not-poma/lazyshell  # GPT
+# znap fpath _fuck "$(thefuck --alias)"
+# znap source not-poma/lazyshell  # GPT
 source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"

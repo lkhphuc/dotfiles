@@ -27,7 +27,9 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
   window:set_config_overrides(overrides)
 end)
 
-config.window_background_opacity = 0.75
+config.warn_about_missing_glyphs = false
+config.enable_wayland = false
+config.window_background_opacity = 0.80
 config.macos_window_background_blur = 10
 -- config.debug_key_events = true,
 -- config.default_gui_startup_args = { "connect", "unix" }

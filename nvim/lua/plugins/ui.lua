@@ -138,7 +138,7 @@ return {
           function() return " " .. vim.fn.tabpagenr() .. "/" .. vim.fn.tabpagenr("$") end,
           cond = function() return vim.fn.tabpagenr("$") > 1 end,
           color = { gui = "bold" },
-          separator = "⏐",
+          separator = "|",
         },
         { "hostname", icon = "󰢹" },
       }
