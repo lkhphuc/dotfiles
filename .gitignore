@@ -25,3 +25,4 @@ github-copilot
 nvim/.neoconf.json
 pudb/internal-cmdline-history.txt
 .luarc.json
+nvim/lazyvim.json

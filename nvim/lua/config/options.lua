@@ -60,6 +60,7 @@ opt.shortmess:append("s")
 opt.mousemoveevent = true
 
 g.lazyvim_python_lsp = "basedpyright"
+g.lazyvim_python_ruff = "ruff"
 g.python3_host_prog = vim.fn.stdpath("data") .. "/python/.pixi/envs/default/bin/python"
 
 if vim.g.neovide then
