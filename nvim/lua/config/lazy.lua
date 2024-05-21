@@ -15,6 +15,7 @@ require("lazy").setup({
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
+      opts = { colorscheme = "kanagawa" },
     },
     { import = "plugins" },
   },
@@ -22,7 +23,7 @@ require("lazy").setup({
     lazy = true, -- every plugin is lazy-loaded by default
     version = false, -- always use the latest git commit
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
     rtp = {
       disabled_plugins = {

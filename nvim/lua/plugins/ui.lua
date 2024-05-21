@@ -95,6 +95,7 @@ return {
       -- })
       opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
       opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
+      opts.sections.lualine_c[4] = LazyVim.lualine.pretty_path({length = 7})
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
