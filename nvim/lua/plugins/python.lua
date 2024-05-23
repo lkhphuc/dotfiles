@@ -11,6 +11,7 @@ return {
             basedpyright = {
               analysis = {
                 diagnosticSeverityOverrides = {
+                  reportOptionalMemberAccess = "none",
                   reportUnusedVariable = "none",
                   reportUnusedCallResult = "none",
                   reportUnusedExpression = "none",
@@ -29,6 +30,7 @@ return {
         },
         ---@type lspconfig.options.pyright
         pyright = {
+          enabled = false,
           settings = {
             python = {
               analysis = {

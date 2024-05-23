@@ -12,12 +12,15 @@ ignore = [
   "C408",  # rewrite litteral dict
   "D10",     # Undocumented public
   "D20",     # Undocumented public
+  "D21",     # Undocumented public
   "D40",
+  "D41",
   "E402",    # module-import-not-at-top-of-file
   "E501",    # Line too long
   "E731",    # assign lambda
   "E999",    # Syntax error, let other take cares
   "ERA",     # Eradicate
+  "FIX",
   "F401",    # Unused import
   "I",       # Import sort
   "PIE808",  # unnecessary-range-start
@@ -31,6 +34,7 @@ ignore = [
   "S301", # suspicious-pickle-usage
   "S311", # suspicious-non-cryptographic-random-usage
   # "SIM300",  # yoda-conditions
+  "TD00",  # todo
   "TRY003", # raise-vanilla-args
   "UP039",  # unnecessary-class-parentheses
   "Q000",   # single quote
