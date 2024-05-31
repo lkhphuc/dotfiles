@@ -2,7 +2,8 @@
 
 set previewer ~/.config/lf/previewer.sh
 set cleaner ~/.config/lf/cleaner.sh
-map i $(less -RX $f)
+map i $(bat --paging=always $f)
+map I $(nvim -u NONE $f)
 
 map f $nvim $(fzf)
 map T trash

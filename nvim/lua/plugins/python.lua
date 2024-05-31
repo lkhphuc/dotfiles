@@ -19,6 +19,7 @@ return {
                   reportUnknownLambdaType = "none",
                   reportUnknownParameterType = "none",
                   reportMissingParameterType = "none",
+                  reportMissingTypeStub = "information",
                   reportUnknownVariableType = "none",
                   reportUnknownArgumentType = "none",
                   reportImplicitOverride = "none",
