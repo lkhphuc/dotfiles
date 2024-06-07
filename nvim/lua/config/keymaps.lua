@@ -186,6 +186,7 @@ vim.api.nvim_create_user_command("DiffOrig", function()
 end, { desc = "Diff with last saved." })
 
 vim.keymap.set({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })
+vim.keymap.set({ "c", "i", "t" }, "<M-S-BS>", "<C-w>", { desc = "Alt-S-BS delete word in insert mode" })
 
 ---------- TAB
 vim.keymap.set("n", "<leader><TAB>n", "<Cmd>tabnew<CR>", { desc = "New tab" })

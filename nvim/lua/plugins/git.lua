@@ -48,5 +48,4 @@ return {
     },
   },
   { "linrongbin16/gitlinker.nvim", cmd = "GitLink", opts = {} },
-  { "pwntester/octo.nvim", opts = {}, cmd = "Octo"}
 }

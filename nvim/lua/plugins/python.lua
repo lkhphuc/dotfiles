@@ -18,6 +18,7 @@ return {
                   reportUnknownMemberType = "none",
                   reportUnknownLambdaType = "none",
                   reportUnknownParameterType = "none",
+                  reportUnknownVariableTypeType = "none",
                   reportMissingParameterType = "none",
                   reportMissingTypeStub = "information",
                   reportUnknownVariableType = "none",
@@ -31,7 +32,6 @@ return {
         },
         ---@type lspconfig.options.pyright
         pyright = {
-          enabled = false,
           settings = {
             python = {
               analysis = {

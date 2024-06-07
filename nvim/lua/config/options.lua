@@ -16,8 +16,8 @@ o.showbreak = "↳" -- character show in front of wrapped lines
 -- o.breakindentopt = "shift:-2" -- dedent showbreak
 o.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 
-o.number = false
-o.relativenumber = false
+o.number = true
+o.relativenumber = true
 o.numberwidth = 3
 o.cursorline = true
 o.showtabline = 0 --never
@@ -59,7 +59,7 @@ opt.path:append("**")
 opt.shortmess:append("s")
 opt.mousemoveevent = true
 
-g.lazyvim_python_lsp = "basedpyright"
+g.lazyvim_python_lsp = "pyright"
 g.lazyvim_python_ruff = "ruff"
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h").. "/envs/neovim/bin/python"
 
