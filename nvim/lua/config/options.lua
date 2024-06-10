@@ -53,6 +53,10 @@ opt.fillchars = {
 opt.diffopt:append({ "indent-heuristic", "algorithm:patience" })
 opt.foldlevel = 3
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
+vim.g.lazyvim_statuscolumn = {
+  folds_open = true,
+  tolds_githl = true,
+}
 g.autoformat = false
 
 opt.path:append("**")

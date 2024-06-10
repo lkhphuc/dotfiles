@@ -72,9 +72,9 @@ return {
     "MeanderingProgrammer/markdown.nvim",
     dependencies = { { "headlines.nvim", enabled = false } },
     name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
-    ft = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org" },
+    ft = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     opts = {
-      file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org" },
+      file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     },
   },
 }

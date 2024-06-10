@@ -1,5 +1,6 @@
 M = {}
-M.statuscolumn = function()
+
+function M.statuscolumn()
   local win = vim.g.statusline_winid
   local buf = vim.api.nvim_win_get_buf(win)
   local is_file = vim.bo[buf].buftype == ""
@@ -7,13 +8,20 @@ M.statuscolumn = function()
 
   local components = { "", "", "" } -- left, middle, right
 
+  local show_open_folds = vim.g.lazyvim_statuscolumn and vim.g.lazyvim_statuscolumn.folds_open
+  local use_githl = vim.g.lazyvim_statuscolumn and vim.g.lazyvim_statuscolumn.folds_githl
+
   if show_signs then
+    local signs = LazyVim.ui.get_signs(buf, vim.v.lnum)
+
     ---@type Sign?,Sign?,Sign?
     local sign, gitsign, fold, githl
-    for _, s in ipairs(LazyVim.ui.get_signs(buf, vim.v.lnum)) do
+    for _, s in ipairs(signs) do
       if s.name and (s.name:find("GitSign") or s.name:find("MiniDiffSign")) then
         gitsign = s
-        githl = s["texthl"]
+        if use_githl then
+          githl = s["texthl"]
+        end
       else
         sign = s
       end
@@ -22,9 +30,11 @@ M.statuscolumn = function()
     vim.api.nvim_win_call(win, function()
       if vim.fn.foldclosed(vim.v.lnum) >= 0 then
         fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = githl or "Folded" }
-      elseif -- fold start
-        not LazyVim.ui.skip_foldexpr[buf] and vim.treesitter.foldexpr(vim.v.lnum):sub(1, 1) == ">"
-      then
+      elseif
+        show_open_folds
+        and not LazyVim.ui.skip_foldexpr[buf]
+        and vim.treesitter.foldexpr(vim.v.lnum):sub(1, 1) == ">"
+      then -- fold start
         fold = { text = vim.opt.fillchars:get().foldopen or "", texthl = githl }
       end
     end)
@@ -51,8 +61,11 @@ M.statuscolumn = function()
       components[1] = is_relnum and "%r" or "%l" -- other lines
     end
   end
+
   components[1] = "%=" .. components[1] .. " " -- right align
-  -- if vim.v.virtnum ~= 0 then components[1] = "%= " end
+  -- if vim.v.virtnum ~= 0 then
+  --   components[1] = "%= "
+  -- end
 
   return table.concat(components, "")
 end
