@@ -77,4 +77,5 @@ return {
       file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     },
   },
+  { "stevearc/oil.nvim", opts ={}, keys = {{"-", "<CMD>Oil --float<CR>", desc = "Open parent directory"}}}
 }
