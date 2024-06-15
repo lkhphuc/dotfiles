@@ -13,7 +13,6 @@ return {
     opts = {
       signs = { untracked = { text = "┊"}},
       current_line_blame_opts = { virt_text_pos = 'right_align'},
-      _signs_staged_enable = true,
       attach_to_untracked = true,
       on_attach = function(buffer)
         local gs = require("gitsigns")

@@ -4855,48 +4855,7 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "option + r = terminal",
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a terminal"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "r = termnial",
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a wezterm"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "command + r = vscode",
+                                "description": "option + r = VSCode",
                                 "from": {
                                     "key_code": "r",
                                     "modifiers": {
@@ -4917,9 +4876,9 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "t = Neovide",
+                                "description": "r = Neovide",
                                 "from": {
-                                    "key_code": "t",
+                                    "key_code": "r",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
@@ -4937,7 +4896,48 @@
                                 "type": "basic"
                             },
                             {
-                                "description": "command + t = Neovide (ssh)",
+                                "description": "command + r = Neovide (ssh)",
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_option",
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a neovide --args '--server=localhost:6666 -c \"let g:neovide=1\" "
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "t = Terminal",
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a wezterm"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "command + t = Terminal (ssh)",
                                 "from": {
                                     "key_code": "t",
                                     "modifiers": {
@@ -4952,7 +4952,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a neovide --args '--server=localhost:6666'"
+                                        "shell_command": "open -a weztermSSH --args --config 'default_gui_startup_args={\"connect\", \"gpu\"}'"
                                     }
                                 ],
                                 "type": "basic"
