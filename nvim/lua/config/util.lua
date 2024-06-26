@@ -33,7 +33,7 @@ function M.statuscolumn()
       elseif
         show_open_folds
         and not LazyVim.ui.skip_foldexpr[buf]
-        and vim.treesitter.foldexpr(vim.v.lnum):sub(1, 1) == ">"
+        and tostring(vim.treesitter.foldexpr(vim.v.lnum)):sub(1, 1) == ">"
       then -- fold start
         fold = { text = vim.opt.fillchars:get().foldopen or "", texthl = githl }
       end
@@ -44,7 +44,7 @@ function M.statuscolumn()
       -- Don't duplicate sign on virtual line
       sign = nil
     else
-      sign = sign or mark or fold
+      sign = mark or fold or sign
     end
     -- except for gitsign's indicator line
     components[2] = LazyVim.ui.icon(sign or gitsign)
@@ -55,17 +55,11 @@ function M.statuscolumn()
   local is_num = vim.wo[win].number
   local is_relnum = vim.wo[win].relativenumber
   if (is_num or is_relnum) and vim.v.virtnum == 0 then
-    if vim.v.relnum == 0 then
-      components[1] = is_num and "%l" or "%r" -- the current line
-    else
-      components[1] = is_relnum and "%r" or "%l" -- other lines
-    end
+      components[1] = "%l" -- 0.11 handles both the current and other lines with %l
   end
 
   components[1] = "%=" .. components[1] .. " " -- right align
-  -- if vim.v.virtnum ~= 0 then
-  --   components[1] = "%= "
-  -- end
+  -- if vim.v.virtnum ~= 0 then components[1] = "%= " end
 
   return table.concat(components, "")
 end

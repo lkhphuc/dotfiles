@@ -492,6 +492,7 @@ keyboards_UserCustom_dct = {
     # Valid types to map device to: Apple, Windows, IBM, Chromebook (case sensitive)
     # Example:
     'Corne Keyboard': 'Apple',
+    'ZMK Project Corne Keyboard': 'Apple',
 }
 
 ###  SLICE_MARK_END: kbtype_override  ###  EDITS OUTSIDE THESE MARKS WILL BE LOST ON UPGRADE
@@ -3507,9 +3508,9 @@ keymap("Jetbrains", {
 
 keymap("Wordwise - not vscode", {
     # Wordwise remaining - for Everything but VS Code
-    C("Alt-Left"):              C("C-Left"),                    # Left of Word
+    # C("Alt-Left"):              C("C-Left"),                    # Left of Word
     C("Alt-Shift-Left"):        C("C-Shift-Left"),              # Select Left of Word
-    C("Alt-Right"):             C("C-Right"),                   # Right of Word
+    # C("Alt-Right"):             C("C-Right"),                   # Right of Word
     C("Alt-Shift-Right"):       C("C-Shift-Right"),             # Select Right of Word
     C("Alt-Shift-g"):           C("C-Shift-g"),                 # View source control
     # ** VS Code fix **
@@ -3895,8 +3896,8 @@ keymap("GenTerms overrides: Pop!_OS", {
 }, when = lambda ctx: matchProps(lst=terminals_lod)(ctx) and DISTRO_ID == 'pop')
 keymap("GenTerms overrides: Ubuntu/Fedora", {
     C("LC-RC-Q"):               C("Super-L"),                   # Lock screen (ubuntu/fedora)
-    C("LC-Right"):              [bind,C("Super-Page_Up")],      # SL - Change workspace (ubuntu/fedora)
-    C("LC-Left"):               [bind,C("Super-Page_Down")],    # SL - Change workspace (ubuntu/fedora)
+    # C("LC-Right"):              [bind,C("Super-Page_Up")],      # SL - Change workspace (ubuntu/fedora)
+    # C("LC-Left"):               [bind,C("Super-Page_Down")],    # SL - Change workspace (ubuntu/fedora)
 }, when = lambda ctx: matchProps(lst=terminals_lod)(ctx) and DISTRO_ID in ['ubuntu', 'fedora'] )
 
 

@@ -10,6 +10,7 @@ ignore = [
   # "C901",  # complex-structure
   # "COM812",  # missing-trailing-comma
   "C408",  # rewrite litteral dict
+  "COM812",  # missing-trailing-comma
   "D10",     # Undocumented public
   "D20",     # Undocumented public
   "D21",     # Undocumented public
@@ -19,9 +20,11 @@ ignore = [
   "E501",    # Line too long
   "E731",    # assign lambda
   "E999",    # Syntax error, let other take cares
+  "EM102",   # f-string in traceback
   "ERA",     # Eradicate
   "FIX",
   "F401",    # Unused import
+  "G004",    # Logging use f-string
   "I",       # Import sort
   "PIE808",  # unnecessary-range-start
   "PLR0913", #  too-many-arguments
@@ -34,7 +37,9 @@ ignore = [
   "S301", # suspicious-pickle-usage
   "S311", # suspicious-non-cryptographic-random-usage
   # "SIM300",  # yoda-conditions
+  "T201",  # print
   "TD00",  # todo
+  "TRY002", # write own exception
   "TRY003", # raise-vanilla-args
   "UP039",  # unnecessary-class-parentheses
   "Q000",   # single quote

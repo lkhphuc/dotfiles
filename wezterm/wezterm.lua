@@ -52,7 +52,7 @@ config.harfbuzz_features = {
   "calt", "clig", "dlig", "liga", "ss01", "ss02",
   "ss03", "ss04", "ss05", "ss06", "ss07", "ss08",
 }
-config.font_size = 15
+config.font_size = 13
 config.underline_position = "-2pt"
 config.color_scheme = "kanagawabones"
 
@@ -62,11 +62,13 @@ config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.keys = {
   { key = "_", mods = "CMD", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
   { key = "|", mods = "CMD", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+  { key = "_", mods = "CTRL|SHIFT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+  { key = "|", mods = "CTRL|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 
   { key = "p", mods = "CMD", action = act.ActivateCommandPalette },
-  { key = "z", mods = "CMD", action = act.TogglePaneZoomState },
+  { key = "Z", mods = "CMD", action = act.TogglePaneZoomState },
   { key = "V", mods = "CMD", action = act.ActivateCopyMode },
-  { key = " ", mods = "CMD|SHIFT", action = act.QuickSelect },
+  { key = "s", mods = "CTRL|SHIFT", action = act.QuickSelect },
   { key = "+", mods = "CMD", action = act.IncreaseFontSize },
 
   { key = "PageUp", mods = "", action = act.ScrollByPage(-1) },
@@ -74,12 +76,16 @@ config.keys = {
 
   { key = ">", mods = "CMD|SHIFT", action = act.MoveTabRelative(1) },
   { key = "<", mods = "CMD|SHIFT", action = act.MoveTabRelative(-1) },
-  { key = "d", mods = "CMD", action = act.CloseCurrentPane({ confirm = true }) },
+  -- { key = "d", mods = "CMD", action = act.CloseCurrentPane({ confirm = true }) },
+  { key = "d", mods = "CTRL|SHIFT", action = act.DisableDefaultAssignment },
+  { key = "d", mods = "CTRL", action = act.DisableDefaultAssignment },
   { key = "g", mods = "CMD", action = act.SpawnTab("DefaultDomain") },
+  { key = "g", mods = "CTRL|SHIFT", action = act.SpawnTab("DefaultDomain") },
   { key = "l", mods = "CMD", action = act.ActivateLastTab },
+  { key = "l", mods = "CTRL|SHIFT", action = act.ActivateLastTab },
 
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
-  { key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
+  -- { key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
   { key = "Tab", mods = "CTRL", action = act.DisableDefaultAssignment },
 
   { key = "]", mods = "CMD", action = act.RotatePanes("Clockwise") },
@@ -125,6 +131,13 @@ end)
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 smart_splits.apply_to_config(config, {
   direction_keys = { "h", "j", "k", "l" },
+  modifiers = {
+    move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
+    resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left
+  },
+})
+smart_splits.apply_to_config(config, {
+  direction_keys = { "LeftArrow", "DownArrow", "UpArrow", "RightArrow" },
   modifiers = {
     move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
     resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left

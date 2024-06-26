@@ -6,8 +6,9 @@ source $HOME/.zsh/zsh-snap/znap.zsh
 # znap eval starship "starship init zsh --print-full-init"
 # znap prompt
 znap source romkatv/powerlevel10k
-# znap source jeffreytse/zsh-vi-mode
-# function zvm_after_init() {
+znap source jeffreytse/zsh-vi-mode
+function zvm_after_init() {
+bindkey '^[^?' backward-kill-word
 znap source junegunn/fzf shell/{completion,key-bindings}.zsh
   export FZF_DEFAULT_OPTS="--layout=reverse"
   # export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
@@ -21,8 +22,7 @@ znap source Freed-Wu/fzf-tab-source
   zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
   # switch group using `,` and `.`
   zstyle ':fzf-tab:*' switch-group ',' '.'
-
-# }
+}
 
 # package managers
 [[ -x "$(command -v brew)" ]] &&  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -51,13 +51,13 @@ znap source zsh-users/zsh-completions
 
 znap eval direnv "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
-# znap fpath _fuck "$(thefuck --alias)"
+znap fpath _fuck "$(thefuck --alias)"
 # znap source not-poma/lazyshell  # GPT
 source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"
 [[ -v NVIM ]] && export EDITOR="nvr -l" && export VISUAL="nvr -l"
-alias v="$EDITOR" vimdiff="$EDITOR -d"
+alias v="$EDITOR" vimdiff="$EDITOR -d" n="nvim"
 alias g="git" lg="lazygit"
 
 export BAT_THEME=OneHalfDark
@@ -79,7 +79,8 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-
+autoload -U select-word-style
+select-word-style bash
 
 # Don't let > silently overwrite files. To overwrite, use >! instead.
 setopt NO_CLOBBER
