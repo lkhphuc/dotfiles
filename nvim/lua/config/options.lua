@@ -55,7 +55,7 @@ opt.foldlevel = 3
 opt.statuscolumn = [[%!v:lua.require'config.util'.statuscolumn()]]
 vim.g.lazyvim_statuscolumn = {
   folds_open = true,
-  tolds_githl = true,
+  folds_githl = true,
 }
 g.autoformat = false
 

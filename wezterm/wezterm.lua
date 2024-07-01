@@ -128,6 +128,24 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   return title
 end)
 
+wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+  local zoomed = ''
+  if tab.active_pane.is_zoomed then
+    zoomed = '[Z] '
+  end
+
+  local index = ''
+  if #tabs > 1 then
+    index = string.format('[%d/%d] ', tab.tab_index + 1, #tabs)
+  end
+  local host = ''
+  if pane.domain_name and pane.domain_name ~= "local" then
+    host = " (" .. pane.domain_name .. ") "
+  end
+
+  return zoomed .. index .. tab.active_pane.title .. host
+end)
+
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 smart_splits.apply_to_config(config, {
   direction_keys = { "h", "j", "k", "l" },
