@@ -63,7 +63,7 @@ opt.path:append("**")
 opt.shortmess:append("s")
 opt.mousemoveevent = true
 
-g.lazyvim_python_lsp = "pyright"
+g.lazyvim_python_lsp = "basedpyright"
 g.lazyvim_python_ruff = "ruff"
 g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h").. "/envs/neovim/bin/python"
 

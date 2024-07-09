@@ -10,6 +10,7 @@ return {
           settings = {
             basedpyright = {
               analysis = {
+                typeCheckingMode = "standard",
                 diagnosticSeverityOverrides = {
                   reportOptionalMemberAccess = "none",
                   reportUnusedVariable = "none",
@@ -53,8 +54,8 @@ return {
     "venv-selector.nvim",
     enabled = false,
     opts = {
-      anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h"),
-      anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE"), ":p:h:h") .. "/envs",
+      anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h"),
+      anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h") .. "/envs",
     }
   },
   {

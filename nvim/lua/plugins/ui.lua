@@ -149,7 +149,6 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
-    enabled = false,
     event = "BufEnter",
     opts = {
       options = {
