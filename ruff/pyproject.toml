@@ -22,6 +22,7 @@ ignore = [
   "E999",    # Syntax error, let other take cares
   "EM102",   # f-string in traceback
   "ERA",     # Eradicate
+  "FBT00",   # Boolean arguments
   "FIX",
   "F401",    # Unused import
   "G004",    # Logging use f-string

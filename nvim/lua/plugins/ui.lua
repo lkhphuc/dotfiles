@@ -69,10 +69,7 @@ return {
   },
   {
     "which-key.nvim",
-    opts = {
-      window = { winblend = 10 },
-      layout = { align = "center" },
-    },
+    opts = { preset = "helix"}
   },
   {
     "nvim-lualine/lualine.nvim",

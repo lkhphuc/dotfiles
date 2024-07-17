@@ -11,8 +11,10 @@ return {
       vim.g.slime_no_mappings = 1
       vim.g.slime_cell_delimiter = cell_marker
       vim.g.slime_bracketed_paste = 1
-      vim.g.slime_target = "wezterm"
-      vim.g.slime_default_config = { pane_direction = "next" }
+      vim.g.slime_python_ipython = 1
+      vim.g.slime_target = "neovim"
+      -- vim.g.slime_target = "wezterm"
+      -- vim.g.slime_default_config = { pane_direction = "next" }
       vim.g.slime_menu_config = true
       vim.api.nvim_create_user_command("SlimeTarget", function(opts)
         if opts.args ~= nil then
