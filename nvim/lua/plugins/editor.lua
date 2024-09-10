@@ -26,7 +26,7 @@ return {
     opts = function()
       local map = require("mini.map")
       return {
-        symbols = { encode = require("mini.map").gen_encode_symbols.dot("3x2"), },
+        symbols = { encode = require("mini.map").gen_encode_symbols.dot("3x2") },
         integrations = {
           map.gen_integration.builtin_search(),
           map.gen_integration.diff(),
@@ -77,5 +77,18 @@ return {
       file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     },
   },
-  { "stevearc/oil.nvim", opts ={}, keys = {{"-", "<CMD>Oil<CR>", desc = "Open parent directory"}}}
+  { "stevearc/oil.nvim", opts = {}, keys = { { "-", "<CMD>Oil<CR>", desc = "Open parent directory" } } },
+  { ---@type LazySpec
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>-", "<cmd>Yazi<cr>", desc = "Open yazi at the current file", },
+      { "<leader>_", "<cmd>Yazi cwd<cr>", desc = "Open the file manager in nvim's working directory", },
+      { "<leader>fy", "<cmd>Yazi toggle<cr>", desc = "Resume the last yazi session", },
+    },
+    opts = {
+      open_for_directories = false,
+      keymaps = { show_help = "<f1>", },
+    },
+  },
 }

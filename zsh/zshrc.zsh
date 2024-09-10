@@ -58,7 +58,7 @@ source $HOME/.config/lf/utils.sh
 export EDITOR="nvim"
 [[ -v NVIM ]] && export EDITOR="nvr -l" && export VISUAL="nvr -l"
 alias v="$EDITOR" vimdiff="$EDITOR -d" n="nvim"
-alias g="git" lg="lazygit"
+alias g="git" lg="lazygit" yz="yazi"
 
 export BAT_THEME=OneHalfDark
 export PAGER="bat"
