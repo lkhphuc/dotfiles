@@ -56,6 +56,8 @@ brew install lazygit
 brew install lf
 brew install btop
 brew install direnv
+brew install amethyst
+brew install stats
 
 check_default_shell
 

@@ -52,12 +52,21 @@ config.harfbuzz_features = {
   "calt", "clig", "dlig", "liga", "ss01", "ss02",
   "ss03", "ss04", "ss05", "ss06", "ss07", "ss08",
 }
-config.font_size = 13
+config.font_size = 15
 config.underline_position = "-2pt"
 config.color_scheme = "kanagawabones"
 
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+config.tab_max_width = 32
+config.window_frame = {
+  font_size = 14.0,
+}
+config.inactive_pane_hsb = {
+  saturation = 0.9,
+  brightness = 0.75,
+}
+
 
 config.keys = {
   { key = "_", mods = "CMD", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },

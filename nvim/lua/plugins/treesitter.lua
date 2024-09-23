@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       { "andymass/vim-matchup", branch = "master" },
-      { "nvim-treesitter-context", opts = { multiline_threshold = 2, }, },
+      { "nvim-treesitter/nvim-treesitter-context", opts = { multiline_threshold = 2, }, },
     },
     opts = {
       incremental_selection = {

@@ -32,6 +32,7 @@ znap source Freed-Wu/fzf-tab-source
 [[ "$TERM_PROGRAM" == "WezTerm" ]] && export TERM=wezterm
 znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
 znap fpath _wezterm "wezterm shell-completion --shell zsh"
+znap eval wezterm_info "curl -o ~/wezterm.terminfo https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo  && tic -x -o ~/.terminfo ~/wezterm.terminfo && rm ~/wezterm.terminfo"
 
 # python
 znap install conda-incubator/conda-zsh-completion

@@ -37,7 +37,7 @@ return {
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
-    "mini.indentscope",
+    "echasnovski/mini.indentscope",
     opts = {
       mappings = { goto_top = "[ai", goto_bottom = "]ai" },
       draw = { priority = 12 },

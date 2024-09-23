@@ -46,7 +46,8 @@ return {
     },
   },
   {
-    "edgy.nvim",
+    "folke/edgy.nvim",
+    enabled = true,
     opts = {
       animate = { enabled = not vim.g.neovide },
       keys = {
@@ -221,5 +222,5 @@ return {
       end,
     },
   },
-  { "mini.animate", opts = { open = { enable = false } } }, -- flicker with noice mini view
+  { "echasnovski/mini.animate", opts = { open = { enable = false } } }, -- flicker with noice mini view
 }
