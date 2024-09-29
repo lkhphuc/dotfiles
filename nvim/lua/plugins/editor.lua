@@ -11,14 +11,46 @@ return {
     keys = {
       { "<leader>va", function() require("mini.visits").add_label() end, desc = "Add label" },
       { "<leader>vr", function() require("mini.visits").remove_label() end, desc = "Remove label" },
-      { "<leader>vl", function() require("mini.visits").select_label("", nil) end, desc = "Select label (cwd)", },
-      { "<leader>vL", function() require("mini.visits").select_label("", "") end, desc = "Select label (all)", },
-      { "<leader>vv", function() require("mini.visits").select_path() end, desc = "Visited path (cwd)", },
-      { "<leader>vV", function() require("mini.visits").select_path("") end, desc = "Visited path (all)", },
-      { "]v", function() require("mini.visits").iterate_paths("forward") end, desc = "Next visited path", },
-      { "[v", function() require("mini.visits").iterate_paths("backward") end, desc = "Previous visited path", },
-      { "]V", function() require("mini.visits").iterate_paths("last") end, desc = "Last visited path", },
-      { "[V", function() require("mini.visits").iterate_paths("first") end, desc = "First visited path", },
+      {
+        "<leader>vl",
+        function() require("mini.visits").select_label("", nil) end,
+        desc = "Select label (cwd)",
+      },
+      {
+        "<leader>vL",
+        function() require("mini.visits").select_label("", "") end,
+        desc = "Select label (all)",
+      },
+      {
+        "<leader>vv",
+        function() require("mini.visits").select_path() end,
+        desc = "Visited path (cwd)",
+      },
+      {
+        "<leader>vV",
+        function() require("mini.visits").select_path("") end,
+        desc = "Visited path (all)",
+      },
+      {
+        "]v",
+        function() require("mini.visits").iterate_paths("forward") end,
+        desc = "Next visited path",
+      },
+      {
+        "[v",
+        function() require("mini.visits").iterate_paths("backward") end,
+        desc = "Previous visited path",
+      },
+      {
+        "]V",
+        function() require("mini.visits").iterate_paths("last") end,
+        desc = "Last visited path",
+      },
+      {
+        "[V",
+        function() require("mini.visits").iterate_paths("first") end,
+        desc = "First visited path",
+      },
     },
   },
   {
@@ -54,7 +86,7 @@ return {
   { "soulis-1256/eagle.nvim", lazy = false },
   {
     "3rd/image.nvim",
-    enabled = not vim.g.neovide,
+    enabled = false,
     ft = { "markdown", "vimwiki", "quarto", "python" },
     opts = {
       integrations = {

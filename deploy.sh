@@ -76,7 +76,7 @@ else
 	echo -e "\nNot backing up old dotfiles."
 fi
 
-ln -s ~/.config/ipython_config.py ~/.ipython/profile_default/ipython_config.py
+mkdir ~/.ipython/profile_default/ -p && ln -s ~/.config/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 printf "source '$HOME/.config/zsh/zshrc.zsh'" >> "$HOME"/.zshrc
 
 echo

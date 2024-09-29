@@ -3,9 +3,9 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 source $HOME/.zsh/zsh-snap/znap.zsh
 
-# znap eval starship "starship init zsh --print-full-init"
-# znap prompt
-znap source romkatv/powerlevel10k
+znap eval starship "starship init zsh --print-full-init"
+znap prompt
+# znap source romkatv/powerlevel10k
 znap source jeffreytse/zsh-vi-mode
 function zvm_after_init() {
 bindkey '^[^?' backward-kill-word

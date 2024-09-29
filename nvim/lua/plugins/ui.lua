@@ -51,10 +51,10 @@ return {
     opts = {
       animate = { enabled = not vim.g.neovide },
       keys = {
-        ["<A-l>"] = function(win) win:resize("width", 2) end,
-        ["<A-h>"] = function(win) win:resize("width", -2) end,
-        ["<A-k>"] = function(win) win:resize("height", 2) end,
-        ["<A-j>"] = function(win) win:resize("height", -2) end,
+        ["<M-Right>"] = function(win) win:resize("width", 2) end,
+        ["<M-Left>"] = function(win) win:resize("width", -2) end,
+        ["<M-Down>"] = function(win) win:resize("height", 2) end,
+        ["<M-Up>"] = function(win) win:resize("height", -2) end,
       },
     },
     keys = {

@@ -75,7 +75,7 @@ config.keys = {
   { key = "|", mods = "CTRL|SHIFT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 
   { key = "p", mods = "CMD", action = act.ActivateCommandPalette },
-  { key = "Z", mods = "CMD", action = act.TogglePaneZoomState },
+  { key = "z", mods = "CMD", action = act.TogglePaneZoomState },
   { key = "V", mods = "CMD", action = act.ActivateCopyMode },
   { key = "s", mods = "CTRL|SHIFT", action = act.QuickSelect },
   { key = "+", mods = "CMD", action = act.IncreaseFontSize },

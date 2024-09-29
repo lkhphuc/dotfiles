@@ -20,8 +20,9 @@ ignore = [
   "E501",    # Line too long
   "E731",    # assign lambda
   "E999",    # Syntax error, let other take cares
-  "EM102",   # f-string in traceback
+  "EM",      # formatting traceback
   "ERA",     # Eradicate
+  "FA102",   # Missing future import
   "FBT00",   # Boolean arguments
   "FIX",
   "F401",    # Unused import

@@ -35,12 +35,12 @@ return {
     keys = {
       { "<C-CR>",   "<Plug>Send",    desc = "Send", mode = "n" },
       { "<S-CR>",   "<Plug>Send'>",  desc = "Send", mode = "v" },
-      { "<S-CR>", "vap<Plug>Send'>", desc = "Send", mode = "n" },
+      { "<S-CR>", "vap<Plug>Send'>j", desc = "Send", mode = "n" },
     },
   },
   { -- General vim repl code send
     "jpalardy/vim-slime",
-    enable = false,
+    enabled = false,
     init = function()
       vim.g.slime_no_mappings = 1
       vim.g.slime_cell_delimiter = cell_marker
