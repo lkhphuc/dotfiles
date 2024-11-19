@@ -67,7 +67,7 @@ if vim.g.neovide then
   vim.g.neovide_window_blurred = true
   vim.g.neovide_transparency = 0.8
   -- vim.g.neovide_show_border = true
-  vim.g.neovide_input_macos_alt_is_meta = true
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
   vim.g.neovide_cursor_animate_command_line = false -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
   -- vim.g.neovide_cursor_vfx_mode = "ripple"

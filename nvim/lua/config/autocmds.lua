@@ -128,7 +128,7 @@ local update_highlight = function()
   })
 
   if
-    not LazyVim.ui.color("IlluminatedWordText", true) and LazyVim.ui.color("LSPReferenceText", true)
+    not LazyVim.ui.fg("IlluminatedWordText") and LazyVim.ui.fg("LSPReferenceText")
   then
     vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "LSPReferenceText" })
     vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "LSPReferenceText" })
