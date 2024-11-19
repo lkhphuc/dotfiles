@@ -70,7 +70,7 @@ return {
   },
   {
     "which-key.nvim",
-    opts = { preset = "helix"}
+    opts = { preset = "helix" },
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -93,7 +93,7 @@ return {
       -- })
       opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
       opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
-      opts.sections.lualine_c[4] = LazyVim.lualine.pretty_path({length = 7})
+      opts.sections.lualine_c[4] = LazyVim.lualine.pretty_path({ length = 7 })
 
       -- Remove some LazyVim's default
       for _, component in ipairs(opts.sections.lualine_x) do
@@ -117,7 +117,7 @@ return {
         },
       })
 
-      opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = ""}
+      opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = "" }
       table.insert(opts.sections.lualine_y, 1, {
         function() -- lsp
           local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
@@ -222,5 +222,23 @@ return {
       end,
     },
   },
-  { "echasnovski/mini.animate", opts = { open = { enable = false } } }, -- flicker with noice mini view
+  {
+    "echasnovski/mini.animate",
+    opts = {
+      open = { enable = false },
+      close = { enable = false },
+      resize = { enable = false },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      statuscolum = {
+        folds = {
+          open = true,
+          git_hl = true,
+        }
+      }
+    }
+  }
 }
