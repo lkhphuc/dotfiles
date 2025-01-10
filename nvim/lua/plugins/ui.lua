@@ -1,5 +1,3 @@
-local fg = LazyVim.ui.fg
-
 return {
   { "nvim-notify", opts = { background_colour = "NormalFloat" } },
   {
@@ -87,10 +85,10 @@ return {
           color = { gui = "bold" },
         },
       }
-      -- table.insert(opts.sections.lualine_b, {
-      --   function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
-      --   color = { gui = "italic", fg = fg("Operator").fg },
-      -- })
+      table.insert(opts.sections.lualine_b, {
+        function() return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end,
+        color = { gui = "italic", fg = require("snacks").util.color("Operator") },
+      })
       opts.sections.lualine_c[1] = require("lazyvim.util").lualine.root_dir({ cwd = true })
       opts.sections.lualine_c[2] = "" -- no diagnostic in statusline
       opts.sections.lualine_c[4] = LazyVim.lualine.pretty_path({ length = 7 })
@@ -105,7 +103,7 @@ return {
           cond = function()
             return package.loaded["noice"] and require("noice").api.status.search.has()
           end,
-          color = fg("DiagnosticOk"),
+          color = { fg = require("snacks").util.color("DiagnosticOk") },
         },
         { --python venv
           function()
@@ -113,23 +111,23 @@ return {
             return " " .. venv
           end,
           cond = function() return vim.bo.filetype == "python" end,
-          color = { fg = fg("Operator").fg, gui = "italic" },
+          color = { fg = require("snacks").util.color("Operator"), gui = "italic" },
         },
       })
 
-      opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = "" }
-      table.insert(opts.sections.lualine_y, 1, {
-        function() -- lsp
-          local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
-          if num_clients > 0 then return " " .. num_clients end
-          return ""
-        end,
-        color = fg("Type"),
-      })
+       opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = "" }
+       table.insert(opts.sections.lualine_y, 1, {
+         function() -- lsp
+           local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
+           if num_clients > 0 then return " " .. num_clients end
+           return ""
+         end,
+         color = { fg = require("snacks").util.color("Type") },
+       })
       table.insert(opts.sections.lualine_y, 1, { --terminal
         function() return " " .. vim.o.channel end,
         cond = function() return vim.o.buftype == "terminal" end,
-        color = fg("Type"),
+        color = {fg =  require("snacks").util.color("Type")},
       })
 
       opts.sections.lualine_z = {
@@ -142,7 +140,6 @@ return {
         { "hostname", icon = "󰢹" },
       }
 
-      opts.extensions = { "neo-tree", "lazy", "quickfix", "nvim-tree" }
     end,
   },
   {

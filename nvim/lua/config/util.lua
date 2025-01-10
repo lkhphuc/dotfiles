@@ -55,7 +55,15 @@ function M.statuscolumn()
   local is_num = vim.wo[win].number
   local is_relnum = vim.wo[win].relativenumber
   if (is_num or is_relnum) and vim.v.virtnum == 0 then
+    if vim.fn.has("nvim-0.11") == 1 then
       components[1] = "%l" -- 0.11 handles both the current and other lines with %l
+    else
+      if vim.v.relnum == 0 then
+        components[1] = "%l" -- the current line
+      else
+        components[1] = is_relnum and "%r" or "%l" -- other lines
+      end
+    end
   end
 
   components[1] = "%=" .. components[1] .. " " -- right align
