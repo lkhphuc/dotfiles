@@ -25,10 +25,7 @@ return {
         { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
       keys[#keys + 1] =
         { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
-      keys[#keys + 1] = { "<leader>cL", vim.lsp.codelens.run, desc = "CodeLens" }
 
-      keys[#keys + 1] = { "gy", false } -- For gy, gp to system clipboard
-      keys[#keys + 1] = { "gt", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto Type Definition" }
       keys[#keys + 1] = { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext"}
     end,
     ---@class PluginLspOpts

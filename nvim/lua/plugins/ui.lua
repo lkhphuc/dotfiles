@@ -221,6 +221,7 @@ return {
   },
   {
     "echasnovski/mini.animate",
+    vscode = false,
     opts = {
       open = { enable = false },
       close = { enable = false },

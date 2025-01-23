@@ -97,6 +97,24 @@ map(
 )
 
 -- Copy/paste with system clipboard
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg(""), "\n"),
+    vim.fn.getregtype(""),
+  }
+end
+
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste,
+  },
+}
 map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
 map({ "n" }, "gY", '"+y$', { desc = "Copy to system clipboard" })
 map({ "n", "x" }, "gp", '"+p', { desc = "Paste from system clipboard" })
