@@ -28,6 +28,8 @@ ignore = [
   "F401",    # Unused import
   "G004",    # Logging use f-string
   "I",       # Import sort
+  "N806",    # upper case import
+  "N812",
   "PIE808",  # unnecessary-range-start
   "PLR0913", #  too-many-arguments
   "PLR0915", # too-many-statements 

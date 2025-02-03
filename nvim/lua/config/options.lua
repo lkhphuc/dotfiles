@@ -9,6 +9,24 @@ g.mapleader = " "
 o.title = true
 o.titlestring = " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
 o.clipboard = "" -- use gy and gp to interact with osc52-system clipbard
+-- Copy/paste with system clipboard
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg(""), "\n"),
+    vim.fn.getregtype(""),
+  }
+end
+g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste,
+  },
+}
 o.splitright = true
 
 o.breakindent = true -- Indent wrapped lines to match line start
@@ -91,4 +109,18 @@ if vim.g.neovide then
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-t>", [[<C-\><C-N><Cmd>tabnew<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-w>", [[<C-\><C-N><Cmd>tabclose<CR>]])
+  -- https://github.com/neovide/neovide/issues/1771
+  -- Prevent scrolling animation when changing buffer
+  vim.api.nvim_create_autocmd("BufLeave", {
+    callback = function()
+      vim.g.neovide_scroll_animation_length = 0
+    end,
+  })
+  vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+      vim.fn.timer_start(70, function()
+        vim.g.neovide_scroll_animation_length = 0.3
+      end)
+    end,
+  })
 end
