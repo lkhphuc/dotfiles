@@ -1,15 +1,5 @@
 return {
   {
-    "folke/zen-mode.nvim",
-    opts = {
-      plugins = {
-        wezterm = { enabled = true, font = "+2" },
-      },
-    },
-    cmd = "ZenMode",
-    keys = { { "<leader>wz", "<Cmd>ZenMode<CR>", desc = "Zen Mode" } },
-  },
-  {
     "sindrets/winshift.nvim",
     opts = {},
     keys = { { "<leader>ws", "<CMD>WinShift<CR>", desc = "Win Shift/Swap" } },

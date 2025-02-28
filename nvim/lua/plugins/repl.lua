@@ -35,7 +35,7 @@ return {
     keys = {
       { "<C-CR>",   "<Plug>Send",    desc = "Send", mode = "n" },
       { "<S-CR>",   "<Plug>Send'>",  desc = "Send", mode = "v" },
-      { "<S-CR>", "vap<Plug>Send'>j", desc = "Send", mode = "n" },
+      { "<S-CR>", "vip<Plug>Send}j", desc = "Send", mode = "n" },
       { "<leader>ti", "<CMD>SendHere ipy<CR>", desc="Send to current ipython terminal.", mode="n"},
     },
   },

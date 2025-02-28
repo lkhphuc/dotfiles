@@ -1,6 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    enabled=false,
     opts = {
       defaults = {
         mappings = {
@@ -50,6 +51,7 @@ return {
   },
   {
     "polirritmico/telescope-lazy-plugins.nvim",
+    enabled = false,
     dependencies = {
       {
         "telescope.nvim",

@@ -12,6 +12,7 @@ return {
               analysis = {
                 typeCheckingMode = "standard",
                 diagnosticSeverityOverrides = {
+                  reportAttributeAccessIssue = "warning",
                   reportOptionalMemberAccess = "none",
                   reportUnusedVariable = "none",
                   reportUnusedCallResult = "none",
