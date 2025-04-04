@@ -68,6 +68,18 @@ config.inactive_pane_hsb = {
 }
 
 
+config.mouse_bindings = {
+  {
+    event = { Down = { streak = 2, button = 'Right' } },
+    action = wezterm.action.SelectTextAtMouseCursor 'Block',
+    mods = 'NONE',
+  },
+  {
+    event = { Down = { streak = 4, button = 'Left' } },
+    action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
+    mods = 'NONE',
+  },
+}
 config.keys = {
   { key = "_", mods = "CMD", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
   { key = "|", mods = "CMD", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
@@ -78,10 +90,13 @@ config.keys = {
   { key = "z", mods = "CMD", action = act.TogglePaneZoomState },
   { key = "V", mods = "CMD", action = act.ActivateCopyMode },
   { key = "s", mods = "CTRL|SHIFT", action = act.QuickSelect },
+  { key = "s", mods = "CMD", action = act.QuickSelect },
   { key = "+", mods = "CMD", action = act.IncreaseFontSize },
 
   { key = "PageUp", mods = "", action = act.ScrollByPage(-1) },
   { key = "PageDown", mods = "", action = act.ScrollByPage(1) },
+  { key = "PageUp", mods = "CMD", action = act.ScrollToPrompt(-1) },
+  { key = "PageDown", mods = "CMD", action = act.ScrollToPrompt(1) },
 
   { key = ">", mods = "CMD|SHIFT", action = act.MoveTabRelative(1) },
   { key = "<", mods = "CMD|SHIFT", action = act.MoveTabRelative(-1) },
@@ -96,6 +111,7 @@ config.keys = {
   { key = "Enter", mods = "SHIFT", action = act.DisableDefaultAssignment },
   -- { key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
   { key = "Tab", mods = "CTRL", action = act.DisableDefaultAssignment },
+  },
 
   { key = "]", mods = "CMD", action = act.RotatePanes("Clockwise") },
   { key = "[", mods = "CMD", action = act.RotatePanes("CounterClockwise") },
@@ -103,11 +119,17 @@ config.keys = {
 config.enable_kitty_graphics = true
 
 wezterm.on("update-status", function(window, pane)
+  local right_status = ""
+  local workspace = window.active_workspace()
+  if workspace ~= "default" then
+    right_status = right_status .. workspace
+  end
   local meta = pane:get_metadata() or {}
   if meta.is_tardy then
     local secs = meta.since_last_response_ms / 1000.0
-    window:set_right_status(string.format("tardy: %5.1fs⏳", secs))
+    right_status = string.format("tardy: %5.1fs⏳", secs) + right_status
   end
+  window:set_right_status(right_status)
 end)
 
 local function tab_title(tab_info)

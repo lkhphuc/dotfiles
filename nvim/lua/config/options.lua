@@ -83,8 +83,7 @@ g.python3_host_prog = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h")
 if vim.g.neovide then
   vim.g.minianimate_disable = true
   vim.g.neovide_window_blurred = true
-  vim.g.neovide_transparency = 0.8
-  -- vim.g.neovide_show_border = true
+  vim.g.neovide_opacity = 0.8
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
   vim.g.neovide_cursor_animate_command_line = false -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
@@ -101,6 +100,16 @@ if vim.g.neovide then
   vim.keymap.set(
     "n",
     "<D-->",
+    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
+  )
+  vim.keymap.set(
+    "n",
+    "<C-+>",
+    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1 end
+  )
+  vim.keymap.set(
+    "n",
+    "<C-->",
     function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
   )
   vim.g.neovide_scale_factor = 1.0
