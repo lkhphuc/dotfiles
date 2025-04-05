@@ -6,12 +6,13 @@ local map = vim.keymap.set
 -- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map({"n", "t"}, "<C-.>", function() Snacks.terminal.toggle(nil, { win = { position = "float", border = "rounded"} }) end, {})
 map("n", "<leader>fl", function() Snacks.terminal.open("lf") end, { desc = "LF file manager" })
+map("t", "<C-u>", [[<C-\><C-n>]], { desc = "Escape terminal by scrolling up" })
 
-map("t", "<C-p>", "<Up>")
-map("t", "<C-n>", "<Down>")
-map("t", "<C-e>", "<Right>")
+-- map("t", "<C-p>", "<Up>")
+-- map("t", "<C-n>", "<Down>")
+-- map("t", "<C-e>", "<Right>")
 
--- map("n", "z<space>", "za", { desc = "Toggle fold" })
+map("n", "z<space>", "za", { desc = "Toggle fold" })
 
 map({ "n", "v" }, "gf", "gF", { desc = "Go to file at line" })
 
@@ -214,5 +215,3 @@ vim.keymap.set("n", "<leader><TAB><TAB>", function()
     if tabid ~= nil then vim.cmd(tabid .. "tabnext") end
   end)
 end, { desc = "Select tab" })
-
-vim.keymap.set("n", "z<space>", "za", { desc = "Toggle Fold" })
