@@ -52,4 +52,9 @@ return {
       },
     },
   },
+  {
+    'felpafel/inlay-hint.nvim',
+    event = 'LspAttach',
+    opts = { },
+  }
 }

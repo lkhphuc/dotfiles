@@ -230,8 +230,9 @@ return {
   },
   {
     "folke/snacks.nvim",
+    ---@type snacks.Config
     opts = {
-      statuscolum = {
+      statuscolumn = {
         folds = {
           open = true,
           git_hl = true,

@@ -6,10 +6,12 @@ extend-include = ["*.ipynb"]
 select = ["ALL"]
 ignore = [
   "ANN", # missing-type
+  "ARGS001", 
   # "B007",  # unused-loop-control-variable
   # "C901",  # complex-structure
   # "COM812",  # missing-trailing-comma
   "C408",  # rewrite litteral dict
+  "C901",  # too complex
   "COM812",  # missing-trailing-comma
   "D10",     # Undocumented public
   "D20",     # Undocumented public
@@ -34,6 +36,7 @@ ignore = [
   # "N806",    # upper case import
   # "N812",
   "PIE808",  # unnecessary-range-start
+  "PLR09",   # too-many
   "PLR0913", #  too-many-arguments
   "PLR0915", # too-many-statements 
   "PLR2004", # magic-value-comparison
