@@ -6,7 +6,7 @@ local map = vim.keymap.set
 -- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map({"n", "t"}, "<C-.>", function() Snacks.terminal.toggle(nil, { win = { position = "float", border = "rounded"} }) end, {})
 map("n", "<leader>fl", function() Snacks.terminal.open("lf") end, { desc = "LF file manager" })
-map("t", "<C-u>", [[<C-\><C-n>]], { desc = "Escape terminal by scrolling up" })
+map("t", "<C-u><C-u>", [[<C-\><C-n>]], { desc = "Escape terminal by scrolling up" })
 
 -- map("t", "<C-p>", "<Up>")
 -- map("t", "<C-n>", "<Down>")

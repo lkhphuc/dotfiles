@@ -13,7 +13,7 @@ variable = 'WEZTERM_PANE'
 default = ""
 
 [gcloud]
-disabled = false
+disabled = true
 
 [os]
 disabled = false
@@ -23,6 +23,7 @@ disabled = false
 
 # nerd-font-symbols preset
 [aws]
+disabled = true
 symbol = "  "
 
 [buf]

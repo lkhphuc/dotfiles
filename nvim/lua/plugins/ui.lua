@@ -107,7 +107,7 @@ return {
         },
         { --python venv
           function()
-            local venv = os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"
+            local venv = os.getenv("VIRTUAL_ENV_PROMPT") or os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"
             return " " .. venv
           end,
           cond = function() return vim.bo.filetype == "python" end,
@@ -232,6 +232,10 @@ return {
     "folke/snacks.nvim",
     ---@type snacks.Config
     opts = {
+      picker = {
+        matcher = { frecency = true },
+        formatters = { file = { truncate = 120 }},
+      },
       statuscolumn = {
         folds = {
           open = true,
