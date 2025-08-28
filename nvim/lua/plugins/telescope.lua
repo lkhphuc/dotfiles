@@ -1,7 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    enabled=false,
+    optional = true,
     opts = {
       defaults = {
         mappings = {

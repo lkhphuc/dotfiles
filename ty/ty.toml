@@ -1,0 +1,3 @@
+[rules]
+missing-argument = "ignore"
+unknown-argument = "ignore"

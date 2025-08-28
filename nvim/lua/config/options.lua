@@ -69,7 +69,7 @@ opt.fillchars = {
 }
 
 opt.diffopt:append({ "indent-heuristic", "algorithm:patience" })
-opt.foldlevel = 1
+opt.foldlevel = 2
 g.autoformat = false
 
 opt.path:append("**")
