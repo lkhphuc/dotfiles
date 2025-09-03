@@ -5,7 +5,7 @@ local map = vim.keymap.set
 
 -- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map({"n", "t"}, "<C-.>", function() Snacks.terminal.toggle(nil, { win = { position = "float", border = "rounded"} }) end, {})
-map("n", "<leader>fl", function() Snacks.terminal.open("lf") end, { desc = "LF file manager" })
+map("n", "<leader>ft", function() Snacks.terminal.list() end, { desc = "List terminal" })
 map("t", "<C-u><C-u>", [[<C-\><C-n>]], { desc = "Escape terminal by scrolling up" })
 
 -- map("t", "<C-p>", "<Up>")
@@ -96,20 +96,16 @@ map(
 )
 
 
-map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
-map({ "n" }, "gY", '"+y$', { desc = "Copy to system clipboard" })
-map({ "n", "x" }, "gp", '"+p', { desc = "Paste from system clipboard" })
+map({ "n", "x" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+map({ "n" }, "<leader>Y", '"+y$', { desc = "Copy to EOL to system clipboard" })
+map({ "n" }, "yp", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy the current file path" })
+map({ "n", "x" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 -- Paste in Visual with `P` to not copy selected text (`:h v_P`)
-map({ "n", "x" }, "gP", '"+P', { desc = "Paste from system (without yanking text)" })
+map({ "n", "x" }, "<leader>P", '"+P', { desc = "Paste from system (without yanking text)" })
 
 -- gv: Reselect visual selection by default
--- Reselect latest changed, put, or yanked text
-map(
-  "n",
-  "gV",
-  '"`[" . strpart(getregtype(), 0, 1) . "`]"',
-  { expr = true, desc = "Select changed" }
-)
+-- gV: Reselect latest changed, put, or yanked text
+map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', { expr = true, desc = "Select changed" })
 
 -- Search inside visually highlighted text. Use `silent = false` for it to
 -- make effect immediately.
