@@ -98,13 +98,7 @@ return {
         if component[1] == "diff" then component[1] = "" end
       end
       vim.list_extend(opts.sections.lualine_x, {
-        {
-          function() return require("noice").api.status.search.get() end,
-          cond = function()
-            return package.loaded["noice"] and require("noice").api.status.search.has()
-          end,
-          color = { fg = require("snacks").util.color("DiagnosticOk") },
-        },
+        { "searchcount", maxcount = 99999, timeout = 500, color = { fg = require("snacks").util.color("DiagnosticOk") } },
         { --python venv
           function()
             local venv = os.getenv("VIRTUAL_ENV_PROMPT") or os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"
