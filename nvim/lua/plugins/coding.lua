@@ -87,31 +87,6 @@ return {
     },
   },
   {
-    "ThePrimeagen/refactoring.nvim",
-    opts = {},
-    cmd = "Refactor",
-    keys = {
-      {
-        "<leader>dv",
-        function() require("refactoring").debug.print_var() end,
-        mode = { "x", "n" },
-        desc = "Print variable",
-      },
-      {
-        "<leader>dd",
-        function() require("refactoring").debug.printf() end,
-        mode = "n",
-        desc = "Print function call",
-      },
-      {
-        "<leader>dD",
-        function() require("refactoring").debug.cleanup() end,
-        mode = "n",
-        desc = "Print cleanup",
-      },
-    },
-  },
-  {
     "echasnovski/mini.surround",
     opts = {
       mappings = { -- Emulate Tpope's original mapping
@@ -126,6 +101,5 @@ return {
     },
   },
   { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
-  { "mini.comment", enabled = not vim.fn.has("nvim-0.10") },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
 }

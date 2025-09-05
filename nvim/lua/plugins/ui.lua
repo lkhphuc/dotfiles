@@ -1,5 +1,4 @@
 return {
-  { "nvim-notify", opts = { background_colour = "NormalFloat" } },
   {
     "noice.nvim",
     opts = {
@@ -42,33 +41,6 @@ return {
         },
       },
     },
-  },
-  {
-    "folke/edgy.nvim",
-    enabled = true,
-    opts = {
-      animate = { enabled = not vim.g.neovide },
-      keys = {
-        ["<M-Right>"] = function(win) win:resize("width", 2) end,
-        ["<M-Left>"] = function(win) win:resize("width", -2) end,
-        ["<M-Down>"] = function(win) win:resize("height", 2) end,
-        ["<M-Up>"] = function(win) win:resize("height", -2) end,
-      },
-    },
-    keys = {
-      {
-        "<localleader>e",
-        function()
-          vim.b.edgy_disable = not vim.b.edgy_disable
-          LazyVim.notify((vim.b.edgy_disable and "Disable" or "Enable") .. " Edgy for buffer")
-        end,
-        desc = "Edgy (un)attach",
-      },
-    },
-  },
-  {
-    "which-key.nvim",
-    opts = { preset = "helix" },
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -211,15 +183,6 @@ return {
         }
         return buffer
       end,
-    },
-  },
-  {
-    "echasnovski/mini.animate",
-    vscode = false,
-    opts = {
-      open = { enable = false },
-      close = { enable = false },
-      resize = { enable = false },
     },
   },
   {

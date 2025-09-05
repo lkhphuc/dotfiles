@@ -1,15 +1,15 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    optional = true,
+    enabled = false,
     opts = {
       defaults = {
         mappings = {
           i = {
-            ["<C-Space>"] = require("telescope.actions").to_fuzzy_refine,
-            ["<C-Tab>"] = require("telescope.actions").select_tab_drop,
-            ["<M-h>"] = require("telescope.actions").results_scrolling_left,
-            ["<M-l>"] = require("telescope.actions").results_scrolling_right,
+            ["<C-Space>"] = function () require("telescope.actions").to_fuzzy_refine() end,
+            ["<C-Tab>"] = function () require("telescope.actions").select_tab_drop() end,
+            ["<M-h>"] = function () require("telescope.actions").results_scrolling_left() end,
+            ["<M-l>"] = function () require("telescope.actions").results_scrolling_right() end,
           },
         },
         layout_strategy = "flex",
@@ -26,7 +26,7 @@ return {
       pickers = {
         buffers = {
           theme = "dropdown",
-          mappings = { i = { ["<C-b>"] = require("telescope.actions").delete_buffer } },
+          mappings = { i = { ["<C-b>"] = function() require("telescope.actions").delete_buffer() end } },
         },
         current_buffer_fuzzy_find = { layout_strategy = "vertical" },
         grep_string = { layout_strategy = "vertical" },
