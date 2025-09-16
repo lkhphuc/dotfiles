@@ -4,7 +4,32 @@
 local map = vim.keymap.set
 
 -- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
-map({"n", "t"}, "<C-.>", function() Snacks.terminal.toggle(nil, { win = { position = "float", border = "rounded"} }) end, {})
+map(
+  { "n", "t" },
+  "<c-.>",
+  function()
+    Snacks.terminal.toggle(
+      nil,
+      {
+        cwd = LazyVim.root(),
+        env = { nvim_snack = "float" },
+        win = { position = "float", border = "rounded" },
+      }
+    )
+  end,
+  {}
+)
+map(
+  { "n", "t" },
+  "<c-/>",
+  function()
+    Snacks.terminal.toggle(
+      nil,
+      { cwd = LazyVim.root(), env = { nvim_snack = "right" }, win = { position = "right" } }
+    )
+  end,
+  {}
+)
 map("n", "<leader>ft", function() Snacks.terminal.list() end, { desc = "List terminal" })
 map("t", "<C-u><C-u>", [[<C-\><C-n>]], { desc = "Escape terminal by scrolling up" })
 
