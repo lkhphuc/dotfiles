@@ -33,12 +33,12 @@ return {
     },
   },
   {
-    "echasnovski/mini.align",
+    "nvim-mini/mini.align",
     opts = { mappings = { start = "", start_with_preview = "gA" } },
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
-    "echasnovski/mini.indentscope",
+    "nvim-mini/mini.indentscope",
     opts = {
       mappings = { goto_top = "[ai", goto_bottom = "]ai" },
       draw = { priority = 12 },
@@ -87,7 +87,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     opts = {
       mappings = { -- Emulate Tpope's original mapping
         add = "ys",
@@ -100,6 +100,6 @@ return {
       },
     },
   },
-  { "echasnovski/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
+  { "nvim-mini/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
 }

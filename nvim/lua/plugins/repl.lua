@@ -80,7 +80,7 @@ return {
   },
 
   { -- Overlay cell marker & metadata so it's less distracting
-    "echasnovski/mini.hipatterns",
+    "nvim-mini/mini.hipatterns",
     ft = { "python" },
     opts = function(_, opts)
       local censor_extmark_opts = function(buf_id, match, data)
@@ -106,7 +106,7 @@ return {
     end,
   },
   { -- Define code cell object `ir`, `ar`
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     opts = function(_, opts)
       opts.custom_textobjects["r"] = function(ai_mode, _, _) -- Repl Code Cell object
         local buf_nlines = vim.api.nvim_buf_line_count(0)

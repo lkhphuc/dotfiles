@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
 
 -- auto wrap on text-based file
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "text", "tex", "markdown", "rst" },
+  pattern = { "text", "tex", "markdown", "rst", "yaml", "toml", "json" },
   callback = function() vim.wo.wrap = true end,
 })
 

@@ -5,7 +5,7 @@ return {
     keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
   {
-    "echasnovski/mini.visits",
+    "nvim-mini/mini.visits",
     event = "BufEnter",
     opts = {},
     keys = {
@@ -54,7 +54,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.map",
+    "nvim-mini/mini.map",
     opts = function()
       local map = require("mini.map")
       return {
