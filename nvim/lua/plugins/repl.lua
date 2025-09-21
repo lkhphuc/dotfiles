@@ -81,6 +81,7 @@ return {
 
   { -- Overlay cell marker & metadata so it's less distracting
     "nvim-mini/mini.hipatterns",
+    optional = true,
     ft = { "python" },
     opts = function(_, opts)
       local censor_extmark_opts = function(buf_id, match, data)
@@ -159,6 +160,7 @@ return {
   },
   { -- Inspect and completion in neovim from running kernel
     "lkhphuc/jupyter-kernel.nvim",
+    enabled = false,
     opts = { timeout = 0.5 },
     build = ":UpdateRemotePlugins",
     cmd = "JupyterAttach",
@@ -176,6 +178,7 @@ return {
   },
   { -- Notebook-style run and display results
     "benlubas/molten-nvim",
+    enabled = false,
     build = ":UpdateRemotePlugins",
     keys = {
       { "<leader>rm", "<cmd>MoltenInit<CR>", desc = "MoltenInit" },
