@@ -3,18 +3,22 @@ return {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      -- "nvim-telescope/telescope.nvim", -- Optional
-      {
-        "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
-        opts = {},
-      },
     },
     opts = {
+      strategies = {
+        chat = {
+          adapter = "localhost",
+        },
+        inline = {
+          adapter = "localhost",
+        },
+      },
       adapters = {
-        openai = function()
-          return require("codecompanion.adapters").extend("openai", {
-            url = "localhost:8080/v1/chat/completions",
+        localhost = function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "http://localhost:1234",
+            },
           })
         end,
       },
@@ -22,9 +26,20 @@ return {
     cmd = { "CodeCompanion" },
     keys = {
       { "<leader>aa", "<CMD>CodeCompanionActions<CR>", mode = { "n", "v" }, desc = "AI Actions" },
-      { "<C-,>", "<CMD>CodeCompanionToggle<CR>", mode = { "n", "v" }, desc = "AI chat Toggle" },
-      { "<leader>ac", "<CMD>CodeCompanionAdd<CR>", mode = { "v" }, desc = "AI add to Chat" },
-      { "<leader>ap", "<CMD>'<,'>CodeCompanion<CR>", mode = { "n", "v" }, desc = "AI Prompt" },
+      { "<leader>at", "<CMD>CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "Toggle AI chat" },
+      { "<leader>ac", "<CMD>'<,'>CodeCompanion<CR>", mode = { "v" }, desc = "Add to AI chat" },
+    },
+  },
+  {
+    "HakonHarnes/img-clip.nvim",
+    opts = {
+      filetypes = {
+        codecompanion = {
+          prompt_for_file_name = false,
+          template = "[Image]($FILE_PATH)",
+          use_absolute_path = true,
+        },
+      },
     },
   },
 }
