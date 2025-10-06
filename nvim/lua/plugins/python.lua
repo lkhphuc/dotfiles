@@ -3,9 +3,7 @@ return {
   {
     "nvim-lspconfig",
     opts = {
-      ---@type lspconfig.options
       servers = {
-        ---@type lspconfig.options.basedpyright
         basedpyright = {
           settings = {
             basedpyright = {
@@ -32,7 +30,6 @@ return {
             },
           }
         },
-        ---@type lspconfig.options.pyright
         pyright = {
           settings = {
             python = {
@@ -53,7 +50,7 @@ return {
   },
   {
     "venv-selector.nvim",
-    enabled = false,
+    enabled = true,
     opts = {
       anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h"),
       anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h") .. "/envs",

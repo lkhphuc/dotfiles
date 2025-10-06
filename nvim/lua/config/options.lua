@@ -81,42 +81,33 @@ g.lazyvim_python_lsp = "basedpyright"
 if vim.g.neovide then
   vim.g.minianimate_disable = true
   vim.g.neovide_window_blurred = true
-  vim.g.neovide_opacity = 0.8
   vim.g.neovide_floating_corner_radius = 0.5
+  vim.g.neovide_opacity = 0.8
+  vim.g.experimental_layer_grouping = true
+  vim.g.neovide_cursor_hack = false
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
-  vim.g.neovide_cursor_animate_command_line = true -- noice incompat
   vim.g.neovide_cursor_smooth_blink = true
-  -- vim.g.neovide_cursor_vfx_mode = "ripple"
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
   vim.keymap.set("v", "<D-c>", '"+y') -- Copy
   vim.keymap.set({ "n", "v" }, "<D-v>", '"+P') -- Paste
   vim.keymap.set({ "i", "c" }, "<D-v>", "<C-R>+") -- Paste
   vim.keymap.set("t", "<D-v>", [[<C-\><C-N>"+P]]) -- Paste
-  vim.keymap.set(
-    "n",
-    "<D-+>",
-    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1 end
-  )
-  vim.keymap.set(
-    "n",
-    "<D-->",
-    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
-  )
-  vim.keymap.set(
-    "n",
-    "<C-+>",
-    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1 end
-  )
-  vim.keymap.set(
-    "n",
-    "<C-->",
-    function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1 end
-  )
+
   vim.g.neovide_scale_factor = 1.0
+  local change_scale_factor = function(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  vim.keymap.set("n", "<D-+>", function() change_scale_factor(1.1) end)
+  vim.keymap.set("n", "<D-->", function() change_scale_factor(1 / 1.1) end)
+  vim.keymap.set("n", "<C-+>", function() change_scale_factor(1.1) end)
+  vim.keymap.set("n", "<C-->", function() change_scale_factor(1 / 1.1) end)
+
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-}>", [[<C-\><C-N><Cmd>tabnext<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-{>", [[<C-\><C-N><Cmd>tabprev<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-l>", [[<C-\><C-N><Cmd>tabnext #<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-t>", [[<C-\><C-N><Cmd>tabnew<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-w>", [[<C-\><C-N><Cmd>tabclose<CR>]])
+
   -- https://github.com/neovide/neovide/issues/1771
   -- Prevent scrolling animation when changing buffer
   vim.api.nvim_create_autocmd("BufLeave", {
