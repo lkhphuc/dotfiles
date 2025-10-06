@@ -6,16 +6,13 @@ local map = vim.keymap.set
 -- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map(
   { "n", "t" },
-  "<c-.>",
+  "<c-,>",
   function()
-    Snacks.terminal.toggle(
-      nil,
-      {
-        cwd = LazyVim.root(),
-        env = { nvim_snack = "float" },
-        win = { position = "float", border = "rounded" },
-      }
-    )
+    Snacks.terminal.toggle(nil, {
+      cwd = LazyVim.root(),
+      env = { nvim_snack = "float" },
+      win = { position = "float", border = "rounded" },
+    })
   end,
   {}
 )
@@ -120,7 +117,6 @@ map(
   { desc = "Put empty line below" }
 )
 
-
 map({ "n", "x" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 map({ "n" }, "<leader>Y", '"+y$', { desc = "Copy to EOL to system clipboard" })
 map({ "n" }, "yp", '<cmd>let @+ = expand("%")<CR>', { desc = "Copy the current file path" })
@@ -130,7 +126,12 @@ map({ "n", "x" }, "<leader>P", '"+P', { desc = "Paste from system (without yanki
 
 -- gv: Reselect visual selection by default
 -- gV: Reselect latest changed, put, or yanked text
-map("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"', { expr = true, desc = "Select changed" })
+map(
+  "n",
+  "gV",
+  '"`[" . strpart(getregtype(), 0, 1) . "`]"',
+  { expr = true, desc = "Select changed" }
+)
 
 -- Search inside visually highlighted text. Use `silent = false` for it to
 -- make effect immediately.
@@ -205,7 +206,12 @@ vim.api.nvim_create_user_command("DiffOrig", function()
 end, { desc = "Diff with last saved." })
 
 vim.keymap.set({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Alt-BS delete word in insert mode" })
-vim.keymap.set({ "c", "i", "t" }, "<M-S-BS>", "<C-w>", { desc = "Alt-S-BS delete word in insert mode" })
+vim.keymap.set(
+  { "c", "i", "t" },
+  "<M-S-BS>",
+  "<C-w>",
+  { desc = "Alt-S-BS delete word in insert mode" }
+)
 
 ---------- TAB
 vim.keymap.set("n", "<leader><TAB>n", "<Cmd>tabnew<CR>", { desc = "New tab" })
