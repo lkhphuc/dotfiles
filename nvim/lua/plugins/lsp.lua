@@ -1,5 +1,5 @@
 local function toggle_diag_virtext()
-  local virtual_text = {  -- Default virtual_text opts from Lazy.Nvim
+  local virtual_text = { -- Default virtual_text opts from Lazy.Nvim
     spacing = 4,
     source = "if_many",
     prefix = "●",
@@ -22,20 +22,13 @@ return {
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] =
-        { "<leader>chi", "<CMD>Telescope lsp_incoming_calls<CR>", desc = "Hierarchy/Incoming" }
-      keys[#keys + 1] =
-        { "<leader>cho", "<CMD>Telescope lsp_outgoing_calls<CR>", desc = "Hierarchy/Outgoing" }
-
-      keys[#keys + 1] = { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext"}
+        { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext" }
     end,
-    ---@class PluginLspOpts
+    ---@type vim.diagnostic.Opts
     opts = {
-      ---@type lspconfig.options
       servers = {},
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
       setup = {
-        -- fallback for all
+        -- Specify * to use this function as a fallback for any server
         -- ["*"] = function(server, opts) end,
       },
     },
@@ -53,8 +46,8 @@ return {
     },
   },
   {
-    'felpafel/inlay-hint.nvim',
-    event = 'LspAttach',
-    opts = { },
-  }
+    "felpafel/inlay-hint.nvim",
+    event = "LspAttach",
+    opts = {},
+  },
 }

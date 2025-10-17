@@ -38,13 +38,6 @@ return {
     keys = { { "gA", desc = "Align with preview", mode = { "n", "x" } } },
   },
   {
-    "nvim-mini/mini.indentscope",
-    opts = {
-      mappings = { goto_top = "[ai", goto_bottom = "]ai" },
-      draw = { priority = 12 },
-    },
-  },
-  {
     "abecodes/tabout.nvim",
     config = function()
       require("tabout").setup({
@@ -72,7 +65,6 @@ return {
     event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
     priority = 1000,
   },
-  { "indent-blankline.nvim", enabled = false },
   { "tpope/vim-sleuth", event = "VeryLazy" }, --One plugin everything tab indent
   {
     "CKolkey/ts-node-action",

@@ -77,6 +77,7 @@ opt.shortmess:append("s")
 opt.mousemoveevent = true
 
 g.lazyvim_python_lsp = "basedpyright"
+g.sidekick_nes = false
 
 if vim.g.neovide then
   vim.g.minianimate_disable = true
