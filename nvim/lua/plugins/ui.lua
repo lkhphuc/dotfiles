@@ -71,6 +71,7 @@ return {
       end
       vim.list_extend(opts.sections.lualine_x, {
         { "searchcount", maxcount = 99999, timeout = 500, color = { fg = require("snacks").util.color("DiagnosticOk") } },
+        { require("minuet.lualine")},
         { --python venv
           function()
             local venv = os.getenv("VIRTUAL_ENV_PROMPT") or os.getenv("CONDA_DEFAULT_ENV") or os.getenv("VIRTUAL_ENV") or "No Env"

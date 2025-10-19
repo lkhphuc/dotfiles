@@ -5,6 +5,7 @@ return {
       colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
     },
   },
+  { "kepano/flexoki-nvim", name = "flexoki"},
   { "navarasu/onedark.nvim", opts = { style = "warmer" } },
   { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
   { "EdenEast/nightfox.nvim", opts = { options = { dim_inactive = true } } }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox

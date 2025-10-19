@@ -83,7 +83,7 @@ return {
   },
   { "HiPhish/rainbow-delimiters.nvim", event = "BufEnter" },
   { "tiagovla/scope.nvim", opts = {}, event = "VeryLazy" },
-  { "soulis-1256/eagle.nvim", lazy = false },
+  { "soulis-1256/eagle.nvim", opts = {show_headers=false}, event = "LspAttach" },
   {
     "3rd/image.nvim",
     enabled = false,
@@ -102,8 +102,6 @@ return {
   },
   {
     "MeanderingProgrammer/markdown.nvim",
-    dependencies = { { "headlines.nvim", enabled = false } },
-    name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
     ft = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     opts = {
       file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },

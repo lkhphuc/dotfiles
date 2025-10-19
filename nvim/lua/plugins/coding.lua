@@ -94,4 +94,29 @@ return {
   },
   { "nvim-mini/mini.operators", opts = {}, keys = { "g=", "gx", "gm", "gr", "gs" } },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
+  {
+    "saghen/blink.cmp",
+    dependencies = {"milanglacier/minuet-ai.nvim"},
+    opts = {
+    keymap = {
+        -- Manually invoke minuet completion.
+        ['<C-a>'] = require('minuet').make_blink_map(),
+    },
+        sources = {
+        providers = {
+          minuet = {
+            name = "minuet",
+            module = "minuet.blink",
+            async = true,
+            -- Should match minuet.config.request_timeout * 1000,
+            -- since minuet.config.request_timeout is in seconds
+            timeout_ms = 3000,
+            score_offset = 50, -- Gives minuet higher priority among suggestions
+          },
+        },
+      },
+      -- Recommended to avoid unnecessary request
+      completion = { trigger = { prefetch_on_insert = false } },
+    },
+  },
 }

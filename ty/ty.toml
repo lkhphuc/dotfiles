@@ -1,3 +1,7 @@
 [rules]
 missing-argument = "ignore"
 unknown-argument = "ignore"
+
+[experimental]
+rename = true
+autoImport = true

@@ -1,10 +1,9 @@
 return {
-  -- { "tpope/vim-fugitive", cmd = "G" }, -- Git commands in nvim
   {
     "sindrets/diffview.nvim",
     keys = {
-      { "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", desc = "File history" },
-      { "<leader>gH", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
+      { "<leader>gc", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current File history" },
+      { "<leader>gc", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
       { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
     },
   },
@@ -15,14 +14,27 @@ return {
       current_line_blame_opts = { virt_text_pos = 'right_align'},
       attach_to_untracked = true,
       on_attach = function(buffer)
-        local gs = require("gitsigns")
+        local gs = package.loaded.gitsigns
 
         local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
         end
 
-        map("n", "]h", function() gs.nav_hunk("next") end, "Next Hunk")
-        map("n", "[h", function() gs.nav_hunk("prev") end, "Prev Hunk")
+        -- stylua: ignore start
+        map("n", "]h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gs.nav_hunk("next")
+          end
+        end, "Next Hunk")
+        map("n", "[h", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gs.nav_hunk("prev")
+          end
+        end, "Prev Hunk")
         map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
         map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
         map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
@@ -32,9 +44,10 @@ return {
         map("n", "<leader>gU", gs.reset_buffer_index, "Undo all Stage Hunk")
         map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
         map("n", "<leader>gp", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>gd", gs.diffthis, "Diff This")
-        map("n", "<leader>gD", function() gs.diffthis("~") end, "Diff This ~")
+        map("n", "<leader>ge", function() gs.blame_line({ full = true }) end, "Blame Line")
+        map("n", "<leader>gE", function() gs.blame() end, "Blame Buffer")
+        map("n", "<leader>gi", gs.diffthis, "Diff This")
+        map("n", "<leader>g~", function() gs.diffthis("~") end, "Diff This ~")
         map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 
         map("n", "<leader>gtb", gs.toggle_current_line_blame, "blame virtual text")
@@ -43,8 +56,8 @@ return {
         map("n", "<leader>gtn", gs.toggle_numhl, "line number highlight")
         map("n", "<leader>gts", gs.toggle_signs, "signs column")
         map("n", "<leader>gtw", gs.toggle_word_diff, "word diff")
+        map("n", "<leader>go", function () gs.toggle_deleted() gs.toggle_word_diff() end, "Toggle diff mode")
       end,
     },
   },
-  { "linrongbin16/gitlinker.nvim", cmd = "GitLink", opts = {} },
 }
