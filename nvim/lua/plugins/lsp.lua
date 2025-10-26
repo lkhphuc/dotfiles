@@ -19,14 +19,15 @@ end
 return {
   {
     "neovim/nvim-lspconfig",
-    init = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] =
-        { "<leader>uv", toggle_diag_virtext, desc = "Toggle diagnostic virtualtext" }
-    end,
     ---@type vim.diagnostic.Opts
     opts = {
-      servers = {},
+      servers = {
+        ["*"] = {
+          keys = {
+            { "<leader>uv", toggle_diag_virtext, has="diagnostics", desc = "Toggle diagnostic virtualtext"}
+          }
+        }
+      },
       setup = {
         -- Specify * to use this function as a fallback for any server
         -- ["*"] = function(server, opts) end,

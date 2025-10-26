@@ -5,7 +5,17 @@ return {
       colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
     },
   },
-  { "kepano/flexoki-nvim", name = "flexoki"},
+  {
+    "webhooked/kanso.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      dimInactive = true,
+      foreground = {
+        dark = "saturated",
+      }
+    },
+  },
   { "navarasu/onedark.nvim", opts = { style = "warmer" } },
   { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
   { "EdenEast/nightfox.nvim", opts = { options = { dim_inactive = true } } }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox

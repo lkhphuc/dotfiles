@@ -83,7 +83,6 @@ return {
   },
   { "HiPhish/rainbow-delimiters.nvim", event = "BufEnter" },
   { "tiagovla/scope.nvim", opts = {}, event = "VeryLazy" },
-  { "soulis-1256/eagle.nvim", opts = {show_headers=false}, event = "LspAttach" },
   {
     "3rd/image.nvim",
     enabled = false,
