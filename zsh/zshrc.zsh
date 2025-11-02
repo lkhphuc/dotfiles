@@ -30,12 +30,12 @@ znap source Freed-Wu/fzf-tab-source
 # terminal's shell-integration
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 [[ "$TERM_PROGRAM" == "WezTerm" ]] && export TERM=wezterm
-znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
-znap fpath _wezterm "wezterm shell-completion --shell zsh"
-znap eval wezterm_info "curl -o ~/wezterm.terminfo https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo  && tic -x -o ~/.terminfo ~/wezterm.terminfo && rm ~/wezterm.terminfo"
+[[ -x "$(command -v wezterm)" ]] && znap eval wezterm 'curl -fsSL https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh'
+[[ -x "$(command -v wezterm)" ]] && znap fpath _wezterm "wezterm shell-completion --shell zsh"
+[[ -x "$(command -v wezterm)" ]] && znap eval wezterm_info "curl -o ~/wezterm.terminfo https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo  && tic -x -o ~/.terminfo ~/wezterm.terminfo && rm ~/wezterm.terminfo"
 
 # python
-znap install conda-incubator/conda-zsh-completion
+znap source conda-incubator/conda-zsh-completion
 [[ -x "$(command -v conda)" ]] && znap eval conda "conda shell.zsh hook"
 [[ -x "$(command -v pipx)" ]] && znap eval pipx "register-python-argcomplete pipx"
 [[ -x "$(command -v pip)" ]] && znap eval pip 'eval "$(pip completion --zsh)"'
@@ -102,7 +102,8 @@ setopt GLOB_STAR_SHORT
 setopt NUMERIC_GLOB_SORT
 
 precmd() {
-  echo -ne "\033]0; $(pwd | sed 's/.*\///')\007"
+  local title="${HOST}:$(basename "$PWD")"
+  echo -ne "\033]0;$title\007"
 }
 
 # vim:ft=bash

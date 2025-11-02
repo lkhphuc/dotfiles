@@ -22,7 +22,7 @@ map(
   function()
     Snacks.terminal.toggle(
       nil,
-      { cwd = LazyVim.root(), env = { nvim_snack = "right" }, win = { position = "right" } }
+      { cwd = LazyVim.root(), env = { nvim_snack = "right" }, win = { position = "right", width=100 } }
     )
   end,
   {}
