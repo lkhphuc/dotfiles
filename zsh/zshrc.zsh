@@ -40,6 +40,7 @@ znap source conda-incubator/conda-zsh-completion
 [[ -x "$(command -v pipx)" ]] && znap eval pipx "register-python-argcomplete pipx"
 [[ -x "$(command -v pip)" ]] && znap eval pip 'eval "$(pip completion --zsh)"'
 [[ -x "$(command -v poetry)" ]] && znap fpath _poetry 'poetry completions zsh'
+[[ -x "$(command -v uv)" ]] && znap eval uv "uv generate-shell-completion zsh"
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
@@ -52,9 +53,9 @@ znap source zsh-users/zsh-completions
 
 znap eval direnv "direnv hook zsh"
 znap eval zoxide "zoxide init zsh"
-znap fpath _fuck "$(thefuck --alias)"
+# znap fpath _fuck "$(thefuck --alias)"
 # znap source not-poma/lazyshell  # GPT
-source $HOME/.config/lf/utils.sh
+# source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"
 [[ -v NVIM ]] && export EDITOR="nvr -l" && export VISUAL="nvr -l"

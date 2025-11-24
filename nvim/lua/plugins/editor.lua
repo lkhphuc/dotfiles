@@ -106,8 +106,16 @@ return {
       file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     },
   },
+  {
+    '0xferrous/ansi.nvim',
+    ft = { "log", "ansi", "bigfile" },
+    opts = {
+        auto_enable = true,  -- Auto-enable for configured filetypes
+        filetypes = { 'log', 'ansi', 'bigfile' },  -- Filetypes to auto-enable
+    }
+  },
   { "stevearc/oil.nvim", opts = {}, keys = { { "-", "<CMD>Oil<CR>", desc = "Open parent directory" } } },
-  { ---@type LazySpec
+  {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     keys = {
