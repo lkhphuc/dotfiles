@@ -8,9 +8,6 @@ return {
     },
     opts = {
       ensure_installed = { "dap_repl", },
-      incremental_selection = {
-        keymaps = { node_incremental = "v", },
-      },
       matchup = { enable = true, include_match_words = true },
     },
   },

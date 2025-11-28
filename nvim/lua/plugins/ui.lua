@@ -1,5 +1,17 @@
 return {
   {
+    "rachartier/tiny-glimmer.nvim",
+    event = "VeryLazy",
+    lazy = false,  -- to catch other plugins' keybindings
+    opts = {
+      overwrite = {
+        search = { enabled = true},
+        undo = {enabled = true},
+        redo = {enabled = true},
+      }
+    }
+  },
+  {
     "noice.nvim",
     opts = {
       presets = {

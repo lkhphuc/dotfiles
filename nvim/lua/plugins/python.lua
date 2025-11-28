@@ -50,7 +50,6 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
-    enabled = true,
     opts = {
       anaconda_base_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h"),
       anaconda_envs_path = vim.fn.fnamemodify(os.getenv("CONDA_EXE") or "", ":p:h:h") .. "/envs",

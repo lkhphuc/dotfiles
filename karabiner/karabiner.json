@@ -1,5 +1,4 @@
 {
-    "global": { "show_in_menu_bar": false },
     "profiles": [
         {
             "complex_modifications": {
@@ -3554,41 +3553,9 @@
                     }
                 ]
             },
-            "devices": [
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": true,
-                        "product_id": 24926,
-                        "vendor_id": 7504
-                    },
-                    "ignore": false
-                }
-            ],
-            "fn_function_keys": [
-                {
-                    "from": { "key_code": "f3" },
-                    "to": [{ "key_code": "mission_control" }]
-                },
-                {
-                    "from": { "key_code": "f4" },
-                    "to": [{ "key_code": "launchpad" }]
-                },
-                {
-                    "from": { "key_code": "f5" },
-                    "to": [{ "key_code": "illumination_decrement" }]
-                },
-                {
-                    "from": { "key_code": "f6" },
-                    "to": [{ "key_code": "illumination_increment" }]
-                },
-                {
-                    "from": { "key_code": "f9" },
-                    "to": [{ "consumer_key_code": "fastforward" }]
-                }
-            ],
             "name": "Default profile",
-            "selected": true
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }
