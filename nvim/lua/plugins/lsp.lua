@@ -1,31 +1,31 @@
-local function toggle_diag_virtext()
-  local virtual_text = { -- Default virtual_text opts from Lazy.Nvim
-    spacing = 4,
-    source = "if_many",
-    prefix = "●",
-  }
-  local config = vim.diagnostic.config()
-  if type(config.virtual_text) == "table" then
-    config.virtual_text = false
-    vim.diagnostic.config(config)
-    vim.notify("Disable diagnostics virtualtext", 5, { title = "Diagnostics" })
-  else
-    config.virtual_text = virtual_text
-    vim.diagnostic.config(config)
-    vim.notify("Enabled diagnostics virtualtext", 5, { title = "Diagnostics" })
-  end
-end
-
 return {
+  {
+      "rachartier/tiny-inline-diagnostic.nvim",
+      event = "VeryLazy",
+      priority = 1000,
+      opts = {
+        preset = "simple",
+        hi = {
+          error = "DiagnosticVirtualTextError",
+          warn = "DiagnosticVirtualTextWarn",
+          info = "DiagnosticVirtualTextInfo",
+          hint = "DiagnosticVirtualTextHint",
+        },
+        options = {
+          show_source = { enabled = true, if_many = true, }
+      }
+    },
+  },
   {
     "neovim/nvim-lspconfig",
     ---@type vim.diagnostic.Opts
     opts = {
+      diagnostics = { virtual_text = false },
       servers = {
         ["*"] = {
-          keys = {
-            { "<leader>uv", toggle_diag_virtext, has="diagnostics", desc = "Toggle diagnostic virtualtext"}
-          }
+          -- keys = {
+          --   { "<leader>uv", toggle_diag_virtext, has="diagnostics", desc = "Toggle diagnostic virtualtext"}
+          -- }
         }
       },
       setup = {

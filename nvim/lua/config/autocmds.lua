@@ -14,6 +14,26 @@ vim.api.nvim_create_autocmd("TermOpen", {
 --   end,
 -- })
 
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("lazyvim_close_with_q", { clear = true }),
+  pattern = {
+    "dap-float",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.schedule(function()
+      vim.keymap.set("n", "q", function()
+        vim.cmd("close")
+        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+      end, {
+        buffer = event.buf,
+        silent = true,
+        desc = "Quit buffer",
+      })
+    end)
+  end,
+})
 -- show cursor line only in active window, i.e reticle.nvim
 vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
   callback = function()
@@ -127,13 +147,6 @@ local update_highlight = function()
     "@variable.parameter",
   })
 
-  if
-    not require("snacks").util.color("IlluminatedWordText") and require("snacks").util.color("LSPReferenceText")
-  then
-    vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "LSPReferenceText" })
-    vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "LSPReferenceText" })
-    vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "LSPReferenceText" })
-  end
   vim.cmd([[
       " highlight! Folded guibg=NONE
       highlight! MiniCursorwordCurrent guifg=NONE guibg=NONE gui=NONE cterm=NONE

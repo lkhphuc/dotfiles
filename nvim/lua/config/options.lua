@@ -27,6 +27,7 @@ vim.opt.listchars = {
   trail = "␣",
   eol = "↲",
 }
+vim.o.cursorline = true
 
 vim.opt.diffopt:append({ "indent-heuristic", "algorithm:patience" })
 vim.g.autoformat = false

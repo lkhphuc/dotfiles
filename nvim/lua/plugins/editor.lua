@@ -5,6 +5,16 @@ return {
     keys = { { "<leader>uu", "<cmd>MundoToggle<CR>", desc = "Undo" } },
   },
   {
+    "folke/which-key.nvim",
+    keys = {
+      {
+        "<leader>d<space>",
+        function() require("which-key").show({keys="<leader>d", loop=true}) end,
+        desc = "Hydra debug"
+      }
+    }
+  },
+  {
     "nvim-mini/mini.visits",
     event = "BufEnter",
     opts = {},
