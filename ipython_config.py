@@ -7,17 +7,17 @@ c = get_config()  #noqa
 #------------------------------------------------------------------------------
 ## A Mixin for applications that start InteractiveShell instances.
 #  
-#      Provides configurables for loading extensions and executing files
-#      as part of configuring a Shell environment.
+#  Provides configurables for loading extensions and executing files as part of
+#  configuring a Shell environment.
 #  
-#      The following methods should be called by the :meth:`initialize` method
-#      of the subclass:
+#  The following methods should be called by the :meth:`initialize` method of the
+#  subclass:
 #  
-#        - :meth:`init_path`
-#        - :meth:`init_shell` (to be implemented by the subclass)
-#        - :meth:`init_gui_pylab`
-#        - :meth:`init_extensions`
-#        - :meth:`init_code`
+#    - :meth:`init_path`
+#    - :meth:`init_shell` (to be implemented by the subclass)
+#    - :meth:`init_gui_pylab`
+#    - :meth:`init_extensions`
+#    - :meth:`init_code`
 
 ## Execute the given command string.
 #  Default: ''
@@ -30,15 +30,15 @@ c = get_config()  #noqa
 
 ## List of files to run at IPython startup.
 #  Default: []
-c.InteractiveShellApp.exec_files = ["./.ipython.py"]  # Execute a local py file on every interactive console
+# c.InteractiveShellApp.exec_files = []
 
 ## lines of code to run at IPython startup.
 #  Default: []
-c.InteractiveShellApp.exec_lines = ["%xmode Plain"]
+# c.InteractiveShellApp.exec_lines = []
 
 ## A list of dotted module names of IPython extensions to load.
 #  Default: []
-c.InteractiveShellApp.extensions = ['autoreload']
+# c.InteractiveShellApp.extensions = []
 
 ## Dotted module name(s) of one or more IPython extensions to load.
 #  
@@ -53,9 +53,9 @@ c.InteractiveShellApp.extensions = ['autoreload']
 # c.InteractiveShellApp.file_to_run = ''
 
 ## Enable GUI event loop integration with any of ('asyncio', 'glut', 'gtk',
-#  'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'qt6', 'tk',
-#  'wx', 'gtk2', 'qt4').
-#  Choices: any of ['asyncio', 'glut', 'gtk', 'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'qt6', 'tk', 'wx', 'gtk2', 'qt4'] (case-insensitive) or None
+#  'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt5', 'qt6', 'tk', 'wx',
+#  'gtk2', 'qt4').
+#  Choices: any of ['asyncio', 'glut', 'gtk', 'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt5', 'qt6', 'tk', 'wx', 'gtk2', 'qt4'] (case-insensitive) or None
 #  Default: None
 # c.InteractiveShellApp.gui = None
 
@@ -71,8 +71,9 @@ c.InteractiveShellApp.extensions = ['autoreload']
 # c.InteractiveShellApp.ignore_cwd = False
 
 ## Configure matplotlib for interactive use with
-#          the default matplotlib backend.
-#  Choices: any of ['auto', 'agg', 'gtk', 'gtk3', 'gtk4', 'inline', 'ipympl', 'nbagg', 'notebook', 'osx', 'pdf', 'ps', 'qt', 'qt4', 'qt5', 'qt6', 'svg', 'tk', 'webagg', 'widget', 'wx'] (case-insensitive) or None
+#          the default matplotlib backend. The exact options available
+#          depend on what Matplotlib provides at runtime.
+#  Choices: any of ['agg', 'auto', 'cairo', 'gtk3', 'gtk3agg', 'gtk3cairo', 'gtk4', 'gtk4agg', 'gtk4cairo', 'inline', 'macosx', 'nbagg', 'notebook', 'osx', 'pdf', 'pgf', 'ps', 'qt', 'qt5', 'qt5agg', 'qt5cairo', 'qt6', 'qtagg', 'qtcairo', 'svg', 'template', 'tk', 'tkagg', 'tkcairo', 'webagg', 'wx', 'wx', 'wxagg', 'wxcairo'] (case-insensitive) or None
 #  Default: None
 # c.InteractiveShellApp.matplotlib = None
 
@@ -82,7 +83,8 @@ c.InteractiveShellApp.extensions = ['autoreload']
 
 ## Pre-load matplotlib and numpy for interactive use,
 #          selecting a particular matplotlib backend and loop integration.
-#  Choices: any of ['auto', 'agg', 'gtk', 'gtk3', 'gtk4', 'inline', 'ipympl', 'nbagg', 'notebook', 'osx', 'pdf', 'ps', 'qt', 'qt4', 'qt5', 'qt6', 'svg', 'tk', 'webagg', 'widget', 'wx'] (case-insensitive) or None
+#          The exact options available depend on what Matplotlib provides at runtime.
+#  Choices: any of ['agg', 'auto', 'cairo', 'gtk3', 'gtk3agg', 'gtk3cairo', 'gtk4', 'gtk4agg', 'gtk4cairo', 'inline', 'macosx', 'nbagg', 'notebook', 'osx', 'pdf', 'pgf', 'ps', 'qt', 'qt5', 'qt5agg', 'qt5cairo', 'qt6', 'qtagg', 'qtcairo', 'svg', 'template', 'tk', 'tkagg', 'tkcairo', 'webagg', 'wx', 'wx', 'wxagg', 'wxcairo'] (case-insensitive) or None
 #  Default: None
 # c.InteractiveShellApp.pylab = None
 
@@ -144,21 +146,21 @@ c.InteractiveShellApp.extensions = ['autoreload']
 #  .. code-block:: python
 #  
 #     c.Application.logging_config = {
-#         'handlers': {
-#             'file': {
-#                 'class': 'logging.FileHandler',
-#                 'level': 'DEBUG',
-#                 'filename': '<path/to/file>',
+#         "handlers": {
+#             "file": {
+#                 "class": "logging.FileHandler",
+#                 "level": "DEBUG",
+#                 "filename": "<path/to/file>",
 #             }
 #         },
-#         'loggers': {
-#             '<application-name>': {
-#                 'level': 'DEBUG',
+#         "loggers": {
+#             "<application-name>": {
+#                 "level": "DEBUG",
 #                 # NOTE: if you don't list the default "console"
 #                 # handler here then it will be disabled
-#                 'handlers': ['console', 'file'],
+#                 "handlers": ["console", "file"],
 #             },
-#         }
+#         },
 #     }
 #  Default: {}
 # c.Application.logging_config = {}
@@ -246,6 +248,9 @@ c.InteractiveShellApp.extensions = ['autoreload']
 #  See also: BaseIPythonApplication.add_ipython_dir_to_sys_path
 # c.TerminalIPythonApp.add_ipython_dir_to_sys_path = False
 
+#  Default: True
+# c.TerminalIPythonApp.auto_create = True
+
 ## Execute the given command string.
 #  See also: InteractiveShellApp.code_to_run
 # c.TerminalIPythonApp.code_to_run = ''
@@ -293,8 +298,8 @@ c.InteractiveShellApp.extensions = ['autoreload']
 # c.TerminalIPythonApp.force_interact = False
 
 ## Enable GUI event loop integration with any of ('asyncio', 'glut', 'gtk',
-#  'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'qt6', 'tk',
-#  'wx', 'gtk2', 'qt4').
+#  'gtk2', 'gtk3', 'gtk4', 'osx', 'pyglet', 'qt', 'qt5', 'qt6', 'tk', 'wx',
+#  'gtk2', 'qt4').
 #  See also: InteractiveShellApp.gui
 # c.TerminalIPythonApp.gui = None
 
@@ -384,7 +389,7 @@ c.InteractiveShellApp.extensions = ['autoreload']
 #  nodes should be run interactively (displaying output from expressions).
 #  Choices: any of ['all', 'last', 'last_expr', 'none', 'last_expr_or_assign']
 #  Default: 'last_expr'
-c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
+# c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
@@ -414,8 +419,8 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 # c.InteractiveShell.automagic = True
 
 ## The part of the banner to be printed before the profile
-#  Default: "Python 3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.10.0 -- An enhanced Interactive Python. Type '?' for help.\n"
-# c.InteractiveShell.banner1 = "Python 3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.10.0 -- An enhanced Interactive Python. Type '?' for help.\n"
+#  Default: "Python 3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]\nType 'copyright', 'credits' or 'license' for more information\nIPython 9.7.0 -- An enhanced Interactive Python. Type '?' for help.\n"
+# c.InteractiveShell.banner1 = "Python 3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]\nType 'copyright', 'credits' or 'license' for more information\nIPython 9.7.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #  Default: ''
@@ -430,23 +435,12 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  Default: 1000
 # c.InteractiveShell.cache_size = 1000
 
-## Use colors for displaying information about objects. Because this information
-#  is passed through a pager (like 'less'), and some pagers get confused with
-#  color codes, this capability can be turned off.
-#  Default: True
-# c.InteractiveShell.color_info = True
-
-## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-#  Choices: any of ['Neutral', 'NoColor', 'LightBG', 'Linux'] (case-insensitive)
-#  Default: 'Neutral'
-# c.InteractiveShell.colors = 'Neutral'
+## Set the color scheme (nocolor, neutral, linux, lightbg).
+#  Default: 'neutral'
+c.InteractiveShell.colors = 'gruvbox-dark'
 
 #  Default: False
 # c.InteractiveShell.debug = False
-
-## Don't call post-execute functions that have failed in the past.
-#  Default: False
-# c.InteractiveShell.disable_failing_post_execute = False
 
 ## If True, anything that would be passed to the pager
 #          will be displayed as regular output instead.
@@ -456,6 +450,10 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 ## (Provisional API) enables html representation in mime bundles sent to pagers.
 #  Default: False
 # c.InteractiveShell.enable_html_pager = False
+
+## Set to show a tip when IPython starts.
+#  Default: True
+# c.InteractiveShell.enable_tip = True
 
 ## Total length of command history
 #  Default: 10000
@@ -530,7 +528,7 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 # c.InteractiveShell.wildcards_case_sensitive = True
 
 ## Switch modes for the IPython exception handlers.
-#  Choices: any of ['Context', 'Plain', 'Verbose', 'Minimal'] (case-insensitive)
+#  Choices: any of ['Context', 'Plain', 'Verbose', 'Minimal', 'Docs'] (case-insensitive)
 #  Default: 'Context'
 # c.InteractiveShell.xmode = 'Context'
 
@@ -579,7 +577,7 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 
 ## The part of the banner to be printed before the profile
 #  See also: InteractiveShell.banner1
-# c.TerminalInteractiveShell.banner1 = "Python 3.10.10 | packaged by conda-forge | (main, Mar 24 2023, 20:08:06) [GCC 11.3.0]\nType 'copyright', 'credits' or 'license' for more information\nIPython 8.10.0 -- An enhanced Interactive Python. Type '?' for help.\n"
+# c.TerminalInteractiveShell.banner1 = "Python 3.13.8 (main, Oct 10 2025, 12:48:21) [Clang 20.1.4 ]\nType 'copyright', 'credits' or 'license' for more information\nIPython 9.7.0 -- An enhanced Interactive Python. Type '?' for help.\n"
 
 ## The part of the banner to be printed after the profile
 #  See also: InteractiveShell.banner2
@@ -589,13 +587,9 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  See also: InteractiveShell.cache_size
 # c.TerminalInteractiveShell.cache_size = 1000
 
-## 
-#  See also: InteractiveShell.color_info
-# c.TerminalInteractiveShell.color_info = True
-
-## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
+## Set the color scheme (nocolor, neutral, linux, lightbg).
 #  See also: InteractiveShell.colors
-# c.TerminalInteractiveShell.colors = 'Neutral'
+c.TerminalInteractiveShell.colors = 'gruvbox-dark'
 
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
@@ -609,10 +603,6 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 ## File in which to store and read history
 #  Default: '~/.pdbhistory'
 # c.TerminalInteractiveShell.debugger_history_file = '~/.pdbhistory'
-
-## Don't call post-execute functions that have failed in the past.
-#  See also: InteractiveShell.disable_failing_post_execute
-# c.TerminalInteractiveShell.disable_failing_post_execute = False
 
 ## Options for displaying tab completions, 'column', 'multicolumn', and
 #  'readlinelike'. These options are for `prompt_toolkit`, see `prompt_toolkit`
@@ -645,6 +635,10 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  See also: InteractiveShell.enable_html_pager
 # c.TerminalInteractiveShell.enable_html_pager = False
 
+## 
+#  See also: InteractiveShell.enable_tip
+# c.TerminalInteractiveShell.enable_tip = True
+
 ## Enable vi (v) or Emacs (C-X C-E) shortcuts to open an external editor. This is
 #  in addition to the F2 binding, which is always enabled.
 #  Default: False
@@ -660,7 +654,9 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  Default: True
 # c.TerminalInteractiveShell.highlight_matching_brackets = True
 
-## The name or class of a Pygments style to use for syntax
+## Deprecated, and has not effect, use IPython themes
+#  
+#          The name or class of a Pygments style to use for syntax
 #          highlighting. To see available styles, run `pygmentize -L styles`.
 #  Default: traitlets.Undefined
 # c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
@@ -684,6 +680,36 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  See also: InteractiveShell.ipython_dir
 # c.TerminalInteractiveShell.ipython_dir = ''
 
+## Extra arguments to pass to `llm_provider_class` constructor.
+#  
+#  This is used to – for example – set the `model_id`
+#  Default: {}
+# c.TerminalInteractiveShell.llm_constructor_kwargs = {}
+
+## Fully Qualifed name of a function that takes an IPython history manager and
+#  return a prefix to pass the llm provider in addition to the current buffer
+#  text.
+#  
+#  You can use:
+#  
+#   - no_prefix
+#   - input_history
+#  
+#  As default value. `input_history` (default),  will use all the input history
+#  of current IPython session
+#  Default: 'input_history'
+# c.TerminalInteractiveShell.llm_prefix_from_history = 'input_history'
+
+## Provisional:
+#      This is a provisional API in IPython 8.32, before stabilisation
+#      in 9.0, it may change without warnings.
+#  
+#  class to use for the `NavigableAutoSuggestFromHistory` to request completions
+#  from a LLM, this should inherit from `jupyter_ai_magics:BaseProvider` and
+#  implement `stream_inline_completions`
+#  Default: None
+# c.TerminalInteractiveShell.llm_provider_class = None
+
 ## 
 #  See also: InteractiveShell.logappend
 # c.TerminalInteractiveShell.logappend = ''
@@ -703,6 +729,10 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 
 #  Default: {}
 # c.TerminalInteractiveShell.mime_renderers = {}
+
+## minimum characters for filling with ellipsis in file completions
+#  Default: 30
+# c.TerminalInteractiveShell.min_elide = 30
 
 ## Cursor shape changes depending on vi mode: beam in vi insert mode, block in
 #  nav mode, underscore in replace mode.
@@ -725,6 +755,17 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  Default: True
 # c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 
+## The format for line numbering, will be passed `line` (int, 1 based) the
+#  current line number and `rel_line` the relative line number. for example to
+#  display both you can use the following template string :
+#  c.TerminalInteractiveShell.prompt_line_number_format='{line:
+#  4d}/{rel_line:+03d} | ' This will display the current line number, with
+#  leading space and a width of at least 4 character, as well as the relative
+#  line number 0 padded and always with a + or - sign. Note that when using Emacs
+#  mode the prompt of the first line may not update.
+#  Default: ''
+# c.TerminalInteractiveShell.prompt_line_number_format = ''
+
 ## Class used to generate Prompt token for prompt_toolkit
 #  Default: 'IPython.terminal.prompts.Prompts'
 # c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
@@ -741,17 +782,110 @@ c.InteractiveShell.ast_node_interactivity = 'last_expr_or_assign'
 #  See also: InteractiveShell.separate_out2
 # c.TerminalInteractiveShell.separate_out2 = ''
 
+## Add, disable or modifying shortcuts.
+#  
+#  Each entry on the list should be a dictionary with ``command`` key identifying
+#  the target function executed by the shortcut and at least one of the
+#  following:
+#  
+#    - ``match_keys``: list of keys used to match an existing shortcut,
+#    - ``match_filter``: shortcut filter used to match an existing shortcut,
+#    - ``new_keys``: list of keys to set,
+#    - ``new_filter``: a new shortcut filter to set
+#  
+#  The filters have to be composed of pre-defined verbs and joined by one of the
+#  following conjunctions: ``&`` (and), ``|`` (or), ``~`` (not). The pre-defined
+#  verbs are:
+#  
+#    - ``always``
+#    - ``never``
+#    - ``has_line_below``
+#    - ``has_line_above``
+#    - ``is_cursor_at_the_end_of_line``
+#    - ``has_selection``
+#    - ``has_suggestion``
+#    - ``vi_mode``
+#    - ``vi_insert_mode``
+#    - ``emacs_insert_mode``
+#    - ``emacs_like_insert_mode``
+#    - ``has_completions``
+#    - ``insert_mode``
+#    - ``default_buffer_focused``
+#    - ``search_buffer_focused``
+#    - ``ebivim``
+#    - ``supports_suspend``
+#    - ``is_windows_os``
+#    - ``auto_match``
+#    - ``focused_insert``
+#    - ``not_inside_unclosed_string``
+#    - ``readline_like_completions``
+#    - ``preceded_by_paired_double_quotes``
+#    - ``preceded_by_paired_single_quotes``
+#    - ``preceded_by_raw_str_prefix``
+#    - ``preceded_by_two_double_quotes``
+#    - ``preceded_by_two_single_quotes``
+#    - ``followed_by_closing_paren_or_end``
+#    - ``preceded_by_opening_round_paren``
+#    - ``preceded_by_opening_bracket``
+#    - ``preceded_by_opening_brace``
+#    - ``preceded_by_double_quote``
+#    - ``preceded_by_single_quote``
+#    - ``followed_by_closing_round_paren``
+#    - ``followed_by_closing_bracket``
+#    - ``followed_by_closing_brace``
+#    - ``followed_by_double_quote``
+#    - ``followed_by_single_quote``
+#    - ``navigable_suggestions``
+#    - ``cursor_in_leading_ws``
+#    - ``pass_through``
+#  
+#  To disable a shortcut set ``new_keys`` to an empty list. To add a shortcut add
+#  key ``create`` with value ``True``.
+#  
+#  When modifying/disabling shortcuts, ``match_keys``/``match_filter`` can be
+#  omitted if the provided specification uniquely identifies a shortcut to be
+#  modified/disabled. When modifying a shortcut ``new_filter`` or ``new_keys``
+#  can be omitted which will result in reuse of the existing filter/keys.
+#  
+#  Only shortcuts defined in IPython (and not default prompt-toolkit shortcuts)
+#  can be modified or disabled. The full list of shortcuts, command identifiers
+#  and filters is available under :ref:`terminal-shortcuts-list`.
+#  
+#  Here is an example:
+#  
+#  .. code::
+#  
+#      c.TerminalInteractiveShell.shortcuts = [
+#         {
+#             "new_keys": ["c-q"],
+#             "command": "prompt_toolkit:named_commands.capitalize_word",
+#             "create": True,
+#         },
+#         {
+#             "new_keys": ["c-j"],
+#             "command": "prompt_toolkit:named_commands.beginning_of_line",
+#             "create": True,
+#         },
+#      ]
+#  Default: []
+# c.TerminalInteractiveShell.shortcuts = []
+
 ## Show rewritten input, e.g. for autocall.
 #  See also: InteractiveShell.show_rewritten_input
 # c.TerminalInteractiveShell.show_rewritten_input = True
 
 ## Use `raw_input` for the REPL, without completion and prompt colors.
 #  
-#              Useful when controlling IPython as a subprocess, and piping STDIN/OUT/ERR. Known usage are:
-#              IPython own testing machinery, and emacs inferior-shell integration through elpy.
+#              Useful when controlling IPython as a subprocess, and piping
+#              STDIN/OUT/ERR. Known usage are: IPython's own testing machinery,
+#              and emacs' inferior-python subprocess (assuming you have set
+#              `python-shell-interpreter` to "ipython") available through the
+#              built-in `M-x run-python` and third party packages such as elpy.
 #  
 #              This mode default to `True` if the `IPY_TEST_SIMPLE_PROMPT`
 #              environment variable is set, or the current terminal is not a tty.
+#              Thus the Default value reported in --help-all, or config will often
+#              be incorrectly reported.
 #  Default: False
 # c.TerminalInteractiveShell.simple_prompt = False
 
@@ -810,8 +944,8 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## Access the history database without adding to it.
 #  
-#      This is intended for use by standalone history tools. IPython shells use
-#      HistoryManager, below, which is a subclass of this.
+#  This is intended for use by standalone history tools. IPython shells use
+#  HistoryManager, below, which is a subclass of this.
 
 ## Options for configuring the SQLite connection
 #  
@@ -911,11 +1045,11 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## An object to manage the profile directory and its resources.
 #  
-#      The profile directory is used by all IPython applications, to manage
-#      configuration, logging and security.
+#  The profile directory is used by all IPython applications, to manage
+#  configuration, logging and security.
 #  
-#      This object knows how to find, create and manage these directories. This
-#      should be used by any code that wants to handle profiles.
+#  This object knows how to find, create and manage these directories. This
+#  should be used by any code that wants to handle profiles.
 
 ## Set the profile location directly. This overrides the logic used by the
 #          `profile` option.
@@ -927,26 +1061,25 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## A base formatter class that is configurable.
 #  
-#      This formatter should usually be used as the base class of all formatters.
-#      It is a traited :class:`Configurable` class and includes an extensible
-#      API for users to determine how their objects are formatted. The following
-#      logic is used to find a function to format an given object.
+#  This formatter should usually be used as the base class of all formatters. It
+#  is a traited :class:`Configurable` class and includes an extensible API for
+#  users to determine how their objects are formatted. The following logic is
+#  used to find a function to format an given object.
 #  
-#      1. The object is introspected to see if it has a method with the name
-#         :attr:`print_method`. If is does, that object is passed to that method
-#         for formatting.
-#      2. If no print method is found, three internal dictionaries are consulted
-#         to find print method: :attr:`singleton_printers`, :attr:`type_printers`
-#         and :attr:`deferred_printers`.
+#  1. The object is introspected to see if it has a method with the name
+#     :attr:`print_method`. If is does, that object is passed to that method
+#     for formatting.
+#  2. If no print method is found, three internal dictionaries are consulted
+#     to find print method: :attr:`singleton_printers`, :attr:`type_printers`
+#     and :attr:`deferred_printers`.
 #  
-#      Users should use these dictionaries to register functions that will be
-#      used to compute the format data for their objects (if those objects don't
-#      have the special print methods). The easiest way of using these
-#      dictionaries is through the :meth:`for_type` and :meth:`for_type_by_name`
-#      methods.
+#  Users should use these dictionaries to register functions that will be used to
+#  compute the format data for their objects (if those objects don't have the
+#  special print methods). The easiest way of using these dictionaries is through
+#  the :meth:`for_type` and :meth:`for_type_by_name` methods.
 #  
-#      If no function/callable is found to compute the format data, ``None`` is
-#      returned and this format type is not used.
+#  If no function/callable is found to compute the format data, ``None`` is
+#  returned and this format type is not used.
 
 #  Default: {}
 # c.BaseFormatter.deferred_printers = {}
@@ -965,25 +1098,25 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## The default pretty-printer.
 #  
-#      This uses :mod:`IPython.lib.pretty` to compute the format data of
-#      the object. If the object cannot be pretty printed, :func:`repr` is used.
-#      See the documentation of :mod:`IPython.lib.pretty` for details on
-#      how to write pretty printers.  Here is a simple example::
+#  This uses :mod:`IPython.lib.pretty` to compute the format data of the object.
+#  If the object cannot be pretty printed, :func:`repr` is used. See the
+#  documentation of :mod:`IPython.lib.pretty` for details on how to write pretty
+#  printers.  Here is a simple example::
 #  
-#          def dtype_pprinter(obj, p, cycle):
-#              if cycle:
-#                  return p.text('dtype(...)')
-#              if hasattr(obj, 'fields'):
-#                  if obj.fields is None:
-#                      p.text(repr(obj))
-#                  else:
-#                      p.begin_group(7, 'dtype([')
-#                      for i, field in enumerate(obj.descr):
-#                          if i > 0:
-#                              p.text(',')
-#                              p.breakable()
-#                          p.pretty(field)
-#                      p.end_group(7, '])')
+#      def dtype_pprinter(obj, p, cycle):
+#          if cycle:
+#              return p.text('dtype(...)')
+#          if hasattr(obj, 'fields'):
+#              if obj.fields is None:
+#                  p.text(repr(obj))
+#              else:
+#                  p.begin_group(7, 'dtype([')
+#                  for i, field in enumerate(obj.descr):
+#                      if i > 0:
+#                          p.text(',')
+#                          p.breakable()
+#                      p.pretty(field)
+#                  p.end_group(7, '])')
 
 #  See also: BaseFormatter.deferred_printers
 # c.PlainTextFormatter.deferred_printers = {}
@@ -1026,6 +1159,18 @@ c.TerminalInteractiveShell.true_color = True
 #  Default: False
 # c.Completer.auto_close_dict_keys = False
 
+## Provisional:
+#        This is a provisional API in IPython 9.3, it may change without warnings.
+#  
+#  A fully qualified path to an auto-import method for use by completer. The
+#  function should take a single string and return `ModuleType` and can raise
+#  `ImportError` exception if module is not found.
+#  
+#  The default auto-import implementation does not populate the user namespace
+#  with the imported module.
+#  Default: 'importlib.import_module'
+# c.Completer.auto_import_method = 'importlib.import_module'
+
 ## Enable unicode completions, e.g. \alpha<tab> . Includes completion of latex
 #  commands, unicode names, and expanding unicode characters back to latex
 #  commands.
@@ -1049,7 +1194,7 @@ c.TerminalInteractiveShell.true_color = True
 #  
 #          - ``forbidden``: no evaluation of code is permitted,
 #          - ``minimal``: evaluation of literals and access to built-in namespace;
-#            no item/attribute evaluationm no access to locals/globals,
+#            no item/attribute evaluation, no access to locals/globals,
 #            no evaluation of any operations or comparisons.
 #          - ``limited``: access to all namespaces, evaluation of hard-coded methods
 #            (for example: :any:`dict.keys`, :any:`object.__getattr__`,
@@ -1057,7 +1202,10 @@ c.TerminalInteractiveShell.true_color = True
 #            :any:`dict`, :any:`list`, :any:`tuple`, ``pandas.Series``),
 #          - ``unsafe``: evaluation of all methods and function calls but not of
 #            syntax with side-effects like `del x`,
-#          - ``dangerous``: completely arbitrary evaluation.
+#          - ``dangerous``: completely arbitrary evaluation; does not support auto-import.
+#  
+#          To override specific elements of the policy, you can use
+#  ``policy_overrides`` trait.
 #  Choices: any of ['forbidden', 'minimal', 'limited', 'unsafe', 'dangerous']
 #  Default: 'limited'
 # c.Completer.evaluation = 'limited'
@@ -1081,6 +1229,17 @@ c.TerminalInteractiveShell.true_color = True
 #  Default: 400
 # c.Completer.jedi_compute_type_timeout = 400
 
+## Overrides for policy evaluation.
+#  
+#          For example, to enable auto-import on completion specify:
+#  
+#          .. code-block::
+#  
+#              ipython --Completer.policy_overrides='{"allow_auto_import": True}'
+#  --Completer.use_jedi=False
+#  Default: {}
+# c.Completer.policy_overrides = {}
+
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
 #  installed.
 #  Default: True
@@ -1094,6 +1253,10 @@ c.TerminalInteractiveShell.true_color = True
 ## 
 #  See also: Completer.auto_close_dict_keys
 # c.IPCompleter.auto_close_dict_keys = False
+
+## Provisional:
+#  See also: Completer.auto_import_method
+# c.IPCompleter.auto_import_method = 'importlib.import_module'
 
 ## Enable unicode completions, e.g. \alpha<tab> . Includes completion of latex
 #  commands, unicode names, and expanding unicode characters back to latex
@@ -1161,6 +1324,10 @@ c.TerminalInteractiveShell.true_color = True
 #  Default: 2
 # c.IPCompleter.omit__names = 2
 
+## Overrides for policy evaluation.
+#  See also: Completer.policy_overrides
+# c.IPCompleter.policy_overrides = {}
+
 ## If True, emit profiling data for completion subsystem using cProfile.
 #  Default: False
 # c.IPCompleter.profile_completions = False
@@ -1201,9 +1368,9 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## Magics for talking to scripts
 #  
-#      This defines a base `%%script` cell magic for running a cell
-#      with a program in a subprocess, and registers a few top-level
-#      magics that call %%script with common interpreters.
+#  This defines a base `%%script` cell magic for running a cell with a program in
+#  a subprocess, and registers a few top-level magics that call %%script with
+#  common interpreters.
 
 ## Extra script cell magics to define
 #  
@@ -1235,7 +1402,7 @@ c.TerminalInteractiveShell.true_color = True
 #------------------------------------------------------------------------------
 ## Lightweight persistence for python variables.
 #  
-#      Provides the %store magic.
+#  Provides the %store magic.
 
 ## If True, any %store-d variables will be automatically restored
 #          when IPython starts.

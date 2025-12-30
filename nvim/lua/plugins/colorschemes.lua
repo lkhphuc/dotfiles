@@ -5,17 +5,18 @@ return {
       colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
       overrides = function(colors)
         local theme = colors.theme
-        local makeDiagnosticColor = function(color)
+        local saturate_blend = function(color, saturate, blend)
           local c = require("kanagawa.lib.color")
-          return { fg = c(color):saturate(-0.2):to_hex(), bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
+          return { fg = c(color):saturate(saturate):to_hex(), bg = c(color):blend(theme.ui.bg, blend):to_hex() }
         end
 
         return {
-          DiagnosticVirtualTextHint  = makeDiagnosticColor(theme.diag.hint),
-          DiagnosticVirtualTextInfo  = makeDiagnosticColor(theme.diag.info),
-          DiagnosticVirtualTextWarn  = makeDiagnosticColor(theme.diag.warning),
-          DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
-          LspInlayHint = makeDiagnosticColor(theme.ui.nontext),
+          DiagnosticVirtualTextHint  = saturate_blend(theme.diag.hint, -0.2, 0.95),
+          DiagnosticVirtualTextInfo  = saturate_blend(theme.diag.info, -0.2, 0.95),
+          DiagnosticVirtualTextWarn  = saturate_blend(theme.diag.warning, -0.2, 0.95),
+          DiagnosticVirtualTextError = saturate_blend(theme.diag.error, -0.3, 0.90),
+          LspInlayHint = saturate_blend(theme.ui.nontext, 0.0, 0.95),
+          NvimDapVirtualText = saturate_blend(theme.syn.comment, 0.0, 0.95)
         }
       end
     },
@@ -26,16 +27,18 @@ return {
       dimInactive = true,
       foreground = {
         dark = "saturated",
+        light = "saturated",
       },
       overrides = function(colors)
         local theme = colors.theme
-        local blendBG = function(color)
-          local c = require("kanso.lib.color")
-          return { fg = c(color):to_hex(), bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
+        local saturate_blend = function(color, saturate, blend)
+          local c = require("kanagawa.lib.color")
+          return { fg = c(color):saturate(saturate):to_hex(), bg = c(color):blend(theme.ui.bg, blend):to_hex() }
         end
 
         return {
-          LspInlayHint = blendBG(theme.ui.nontext),
+          LspInlayHint = saturate_blend(theme.ui.nontext, 0.0, 0.95),
+          NvimDapVirtualText = saturate_blend(theme.syn.comment, 0.0, 0.95)
         }
       end
     },

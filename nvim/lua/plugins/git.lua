@@ -1,13 +1,22 @@
 return {
+  -- {
+  --   "sindrets/diffview.nvim",
+  --   keys = {
+  --     { "<leader>gc", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current File history" },
+  --     { "<leader>gc", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
+  --     { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
+  --   },
+  -- },
   {
-    "sindrets/diffview.nvim",
+    "esmuellert/vscode-diff.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    cmd = "CodeDiff",
     keys = {
-      { "<leader>gc", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current File history" },
-      { "<leader>gc", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
-      { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
+      { "<leader>gv", "<Cmd>CodeDiff<CR>", desc = "Git code Diff View" },
     },
+    branch = "next",
   },
- {
+  {
     "lewis6991/gitsigns.nvim",
     opts = {
       signs = { untracked = { text = "┊"}},
