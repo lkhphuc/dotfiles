@@ -94,15 +94,15 @@ return {
         },
       })
 
-       opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = "" }
-       table.insert(opts.sections.lualine_y, 1, {
-         function() -- lsp
-           local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
-           if num_clients > 0 then return " " .. num_clients end
-           return ""
-         end,
-         color = { fg = require("snacks").util.color("Type") },
-       })
+      opts.sections.lualine_y[2] = { "location", padding = { left = 0, right = 1 }, icon = "" }
+      table.insert(opts.sections.lualine_y, 1, {
+        function() -- lsp
+          local num_clients = #vim.lsp.get_clients({ bufnr = 0 })
+          if num_clients > 0 then return " " .. num_clients end
+          return ""
+        end,
+        color = { fg = require("snacks").util.color("Type") },
+      })
       table.insert(opts.sections.lualine_y, 1, { --terminal
         function() return " " .. vim.o.channel end,
         cond = function() return vim.o.buftype == "terminal" end,

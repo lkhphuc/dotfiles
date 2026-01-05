@@ -2,6 +2,8 @@
 
 c = get_config()  #noqa
 
+from IPython.core import ultratb;
+ultratb.VerboseTB.tb_highlight = 'bg:ansired'
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 #------------------------------------------------------------------------------
@@ -437,7 +439,7 @@ c = get_config()  #noqa
 
 ## Set the color scheme (nocolor, neutral, linux, lightbg).
 #  Default: 'neutral'
-c.InteractiveShell.colors = 'gruvbox-dark'
+# c.InteractiveShell.colors = 'gruvbox-dark'
 
 #  Default: False
 # c.InteractiveShell.debug = False
@@ -589,7 +591,7 @@ c.InteractiveShell.colors = 'gruvbox-dark'
 
 ## Set the color scheme (nocolor, neutral, linux, lightbg).
 #  See also: InteractiveShell.colors
-c.TerminalInteractiveShell.colors = 'gruvbox-dark'
+# c.TerminalInteractiveShell.colors = 'gruvbox-dark'
 
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a

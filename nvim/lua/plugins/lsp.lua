@@ -1,18 +1,18 @@
 return {
   {
-      "rachartier/tiny-inline-diagnostic.nvim",
-      event = "VeryLazy",
-      priority = 1000,
-      opts = {
-        preset = "simple",
-        hi = {
-          error = "DiagnosticVirtualTextError",
-          warn = "DiagnosticVirtualTextWarn",
-          info = "DiagnosticVirtualTextInfo",
-          hint = "DiagnosticVirtualTextHint",
-        },
-        options = {
-          show_source = { enabled = true, if_many = true, }
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    opts = {
+      preset = "simple",
+      hi = {
+        error = "DiagnosticVirtualTextError",
+        warn = "DiagnosticVirtualTextWarn",
+        info = "DiagnosticVirtualTextInfo",
+        hint = "DiagnosticVirtualTextHint",
+      },
+      options = {
+        show_source = { enabled = true, if_many = true, },
       }
     },
   },
@@ -46,9 +46,29 @@ return {
       },
     },
   },
+  { "saghen/blink.cmp",
+    opts = {
+      sources = {
+        providers = { lsp = { async = true } },
+      },
+    },
+  },
   {
     "felpafel/inlay-hint.nvim",
     event = "LspAttach",
     opts = {},
+  },
+  { "rcarriga/nvim-dap-ui", enabled = false },
+  {
+    "MironPascalCaseFan/debugmaster.nvim",
+    dependencies = { "mfussenegger/nvim-dap", },
+    keys = {
+      {"<leader>dd", function() require("debugmaster").mode.toggle() end, mode={"n", "v"}, nowait=true,}
+    },
+    config = function()
+      local dm = require("debugmaster")
+      dm.keys.get("U").key = "F"
+      dm.keys.get("u").key = "U"
+    end,
   },
 }
