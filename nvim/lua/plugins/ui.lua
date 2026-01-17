@@ -128,8 +128,11 @@ return {
       options = {
         always_show_bufferline = true,
         diagnostics = false,
-        -- separator_style = "slope",
+        separator_style = "slope",
       },
+    },
+    keys = {
+      {"gb", "<Cmd>BufferLinePick<CR>", desc="BufferLine pick"},
     },
   },
   {
@@ -211,7 +214,8 @@ return {
           open = true,
           git_hl = true,
         }
-      }
+      },
+      indent = {chunk = { enabled = true }},
     }
   }
 }

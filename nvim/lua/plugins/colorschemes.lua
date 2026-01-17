@@ -43,7 +43,6 @@ return {
       end
     },
   },
-  { "navarasu/onedark.nvim", opts = { style = "warmer" } },
   { "folke/tokyonight.nvim", opts = { dim_inactive = true } },
   { "EdenEast/nightfox.nvim", opts = { options = { dim_inactive = true } } }, -- dayfox, dawnfox, duskfox, nordfox, terafox, carbonfox
   { 'AlexvZyl/nordic.nvim'},

@@ -88,4 +88,5 @@ return {
       })
     end,
   },
+  {'sychen52/gF-python-traceback', ft="python"},
 }

@@ -20,12 +20,10 @@ vim.o.infercase = true -- Infer letter cases for a richer built-in keyword compl
 vim.o.list = false
 -- Define which helper symbols to show
 vim.opt.listchars = {
-  leadmultispace = "│   ",
-  tab = "│ ",
   extends = "…",
   precedes = "…",
   trail = "␣",
-  eol = "↲",
+  -- eol = "↲",
 }
 vim.o.cursorline = true
 
@@ -41,6 +39,7 @@ vim.g.sidekick_nes = false
 
 if vim.g.neovide then
   vim.g.minianimate_disable = true
+  vim.g.snack_animate = false
   vim.g.neovide_window_blurred = true
   vim.g.neovide_floating_corner_radius = 0.5
   vim.g.neovide_opacity = 0.90
@@ -56,12 +55,12 @@ if vim.g.neovide then
 
   vim.g.neovide_scale_factor = 1.0
   local change_scale_factor = function(delta)
-    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + delta
   end
-  vim.keymap.set("n", "<D-+>", function() change_scale_factor(1.1) end)
-  vim.keymap.set("n", "<D-->", function() change_scale_factor(1 / 1.1) end)
-  vim.keymap.set("n", "<C-+>", function() change_scale_factor(1.1) end)
-  vim.keymap.set("n", "<C-->", function() change_scale_factor(1 / 1.1) end)
+  vim.keymap.set("n", "<D-+>", function() change_scale_factor(0.1) end)
+  vim.keymap.set("n", "<D-->", function() change_scale_factor(-0.1) end)
+  vim.keymap.set("n", "<C-+>", function() change_scale_factor(0.1) end)
+  vim.keymap.set("n", "<C-->", function() change_scale_factor(-0.1) end)
 
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-}>", [[<C-\><C-N><Cmd>tabnext<CR>]])
   vim.keymap.set({ "n", "v", "t", "i" }, "<D-{>", [[<C-\><C-N><Cmd>tabprev<CR>]])
