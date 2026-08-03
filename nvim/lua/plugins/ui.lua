@@ -215,7 +215,7 @@ return {
           git_hl = true,
         }
       },
-      indent = {chunk = { enabled = true }},
+      -- indent = {chunk = { enabled = true }},
     }
   }
 }

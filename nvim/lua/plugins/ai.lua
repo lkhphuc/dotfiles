@@ -1,7 +1,15 @@
 return {
   {
     "folke/sidekick.nvim",
-    opts = { nes = { enabled = false } },
+    opts = {
+      nes = { enabled = false },
+      cli = {
+        mux = { enabled = true },
+        tools = {
+          kimi = { cmd = { "kimi" } }
+        }
+      }
+    },
     keys = {
       {
         "<leader>ac",
