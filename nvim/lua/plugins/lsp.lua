@@ -71,4 +71,20 @@ return {
       dm.keys.get("u").key = "U"
     end,
   },
+  { "theHamsta/nvim-dap-virtual-text", 
+    opts = {
+      display_callback = function(variable, buf, stackframe, node, options)
+        -- by default, strip out new line characters
+        if options.virt_text_pos == 'inline' then
+          if #variable.value > 100 then
+            return ' = ' .. variable.value:gsub("%s+", " "):sub(1, 100) .. '...'
+          else
+            return ' = ' .. variable.value:gsub("%s+", " ")
+          end
+        else
+          return variable.name .. ' = ' .. variable.value:gsub("%s+", " ")
+        end
+      end,
+    }
+  },
 }
