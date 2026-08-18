@@ -1,5 +1,6 @@
 return {
   "nvimtools/hydra.nvim",
+  enabled=false,
   event = "VeryLazy",
   opts = {
     z_keys = {

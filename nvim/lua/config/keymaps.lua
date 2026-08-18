@@ -3,14 +3,12 @@
 -- Add any additional keymaps here
 local map = vim.keymap.set
 
--- map("n", "<C-,>", "<C-^>", { desc = "Alternate buffer" })
 map(
   { "n", "t" },
   "<c-,>",
   function()
     Snacks.terminal.toggle(nil, {
-      cwd = LazyVim.root(),
-      env = { nvim_snack = "float" },
+      env = { nvim_snack = "float", tab_id =vim.api.nvim_get_current_tabpage() },
       win = { position = "float", border = "rounded" },
     })
   end,

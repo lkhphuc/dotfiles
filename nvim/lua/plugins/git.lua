@@ -1,6 +1,7 @@
 return {
   {
-    "sindrets/diffview.nvim",
+    "dlyongemallo/diffview.nvim",
+    dependencies = { { "rickhowe/diffchar.vim"}, },
     keys = {
       { "<leader>gC", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current File history" },
       { "<leader>gc", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },

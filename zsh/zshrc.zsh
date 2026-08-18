@@ -3,9 +3,10 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 source $HOME/.zsh/zsh-snap/znap.zsh
 
-znap eval starship "starship init zsh --print-full-init"
+[[ -x "$(command -v starship)" ]] && znap eval starship "starship init zsh --print-full-init"
 znap prompt
 # znap source romkatv/powerlevel10k
+
 znap source jeffreytse/zsh-vi-mode
 function zvm_after_init() {
 bindkey '^[^?' backward-kill-word
@@ -38,9 +39,9 @@ znap source Freed-Wu/fzf-tab-source
 znap source conda-incubator/conda-zsh-completion
 [[ -x "$(command -v conda)" ]] && znap eval conda "conda shell.zsh hook"
 [[ -x "$(command -v pipx)" ]] && znap eval pipx "register-python-argcomplete pipx"
-[[ -x "$(command -v pip)" ]] && znap eval pip 'eval "$(pip completion --zsh)"'
-[[ -x "$(command -v poetry)" ]] && znap fpath _poetry 'poetry completions zsh'
-[[ -x "$(command -v uv)" ]] && znap eval uv "uv generate-shell-completion zsh"
+[[ -x "$(command -v pip)" ]] && znap eval pip 'pip completion --zsh'
+[[ -x "$(command -v uv)" ]] && znap eval uv 'uv generate-shell-completion zsh'
+[[ -x "$(command -v uvx)" ]] && znap eval uvx 'uvx --generate-shell-completion zsh'
 
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 znap source zsh-users/zsh-autosuggestions  # On same line
@@ -51,10 +52,18 @@ znap source MichaelAquilina/zsh-you-should-use
 znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-completions
 
-znap eval direnv "direnv hook zsh"
-znap eval zoxide "zoxide init zsh"
-# znap fpath _fuck "$(thefuck --alias)"
-# znap source not-poma/lazyshell  # GPT
+[[ -x "$(command -v direnv)" ]] && znap eval direnv "direnv hook zsh"
+# direnv runs .envrc in bash and leaks LINENO into zsh exports (read-only in zsh)
+if (( $+functions[_direnv_hook] )); then
+  _direnv_hook() {
+    trap -- '' SIGINT
+    eval "$(direnv export zsh 2>/dev/null | sed 's/export LINENO=[^;]*;//')"
+    trap - SIGINT
+  }
+fi
+[[ -x "$(command -v zoxide)" ]] && znap eval zoxide "zoxide init zsh"
+[[ -x "$(command -v thefuck)" ]] && znap fpath _fuck "$(thefuck --alias)"
+[[ -x "$(command -v zellij)" ]] && znap eval zellij 'zellij setup --generate-completion zsh | grep -Fv '\''_zellij "$@"'\''; print; print "compdef _zellij zellij"'
 # source $HOME/.config/lf/utils.sh
 
 export EDITOR="nvim"
@@ -67,7 +76,6 @@ export PAGER="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export LESSOPEN="|$HOMEBREW_PREFIX/bin/lesspipe.sh %s"
 
-export PATH="$HOME/.local/bin:$HOME/.pixi/bin/:$HOME/.local/share/nvim/mason/bin:$PATH"
 export SAVEHIST=2000
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=2000
