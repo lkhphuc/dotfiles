@@ -1,4 +1,23 @@
 return {
+  {
+    "TheNoeTrevino/haunt.nvim",
+    opts = {},
+    keys = {
+      {"<leader>ha", function () require("haunt.api").annotate() end, desc = "Annotate"},
+      {"<leader>ht", function () require("haunt.api").toggle_annotation() end, desc = "Toggle annotation"},
+      {"<leader>hT", function () require("haunt.api").toggle_all_lines() end, desc = "Toggle all annotations"},
+      {"<leader>hd", function () require("haunt.api").delete() end, desc = "Delete bookmark"},
+      {"<leader>hC", function () require("haunt.api").clear_all() end, desc = "Delete all bookmark"},
+      {"<leader>hp", function () require("haunt.api").prev() end, desc = "Previous bookmark"},
+      {"<leader>hn", function () require("haunt.api").next() end, desc = "Next bookmark"},
+      {"<leader>hl", function () require("haunt.picker").show() end, desc = "Show picker"},
+      {"<leader>hq", function () require("haunt.api").to_quickfix({current_buffer=true}) end, desc = "Send Hauntings to QF Lix (buffer)"},
+      {"<leader>hQ", function () require("haunt.api").to_quickfix() end, desc = "Send Hauntings to QF Lix (all)"},
+      {"<leader>hy", function () require("haunt.api").yank_location({current_buffer=true}) end, desc = "Send Hauntings to clipboard (buffer)"},
+      {"<leader>hY", function () require("haunt.api").yank_location() end, desc = "Send Hauntings to clipboard (all)"},
+    }
+
+  },
   { -- Undo tree
     "simnalamburt/vim-mundo",
     cmd = "MundoToggle",
@@ -111,6 +130,7 @@ return {
   },
   {
     "MeanderingProgrammer/markdown.nvim",
+    enabled = false,
     ft = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },
     opts = {
       file_types = { "markdown", "python", "quarto", "rmd", "vimwiki", "norg", "org", "octo" },

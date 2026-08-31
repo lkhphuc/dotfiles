@@ -128,7 +128,7 @@ return {
       options = {
         always_show_bufferline = true,
         diagnostics = false,
-        separator_style = "slope",
+        -- separator_style = "slope",
       },
     },
     keys = {

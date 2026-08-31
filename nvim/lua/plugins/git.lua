@@ -1,11 +1,11 @@
 return {
   {
-    "dlyongemallo/diffview.nvim",
+    "dlyongemallo/diffview-plus.nvim",
     dependencies = { { "rickhowe/diffchar.vim"}, },
     keys = {
       { "<leader>gC", "<Cmd>DiffviewFileHistory %<CR>", desc = "Current File history" },
       { "<leader>gc", "<Cmd>DiffviewFileHistory <CR>", desc = "Commit history" },
-      { "<leader>gV", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
+      { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Diff View" },
     },
   },
   {
@@ -14,7 +14,7 @@ return {
     opts = { explorer = { view_mode = "tree" } },
     cmd = "CodeDiff",
     keys = {
-      { "<leader>gv", "<Cmd>CodeDiff<CR>", desc = "Git code Diff View" },
+      { "<leader>gV", "<Cmd>CodeDiff<CR>", desc = "Git code Diff View" },
     },
   },
   {
@@ -47,18 +47,17 @@ return {
         end, "Prev Hunk")
         map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
         map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
-        map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-        map("n", "<leader>gS", gs.stage_buffer, "Stage Buffer")
-        map("n", "<leader>gu", gs.undo_stage_hunk, "Undo Stage Hunk")
-        map("n", "<leader>gU", gs.reset_buffer_index, "Undo all Stage Hunk")
-        map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<leader>gp", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<leader>ge", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>gE", function() gs.blame() end, "Blame Buffer")
-        map("n", "<leader>gi", gs.diffthis, "Diff This")
-        map("n", "<leader>g~", function() gs.diffthis("~") end, "Diff This ~")
-        map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        map({ "n", "x" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+        map({ "n", "x" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+        map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
+        map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
+        map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
+        map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+        map("n", "<leader>ghB", function() gs.blame() end, "Blame Buffer")
+        map("n", "<leader>ghd", gs.diffthis, "Diff This")
+        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
 
         map("n", "<leader>gtb", gs.toggle_current_line_blame, "blame virtual text")
         map("n", "<leader>gtd", gs.toggle_deleted, "deleted virtual text")
@@ -66,7 +65,7 @@ return {
         map("n", "<leader>gtn", gs.toggle_numhl, "line number highlight")
         map("n", "<leader>gts", gs.toggle_signs, "signs column")
         map("n", "<leader>gtw", gs.toggle_word_diff, "word diff")
-        map("n", "<leader>go", function () gs.toggle_deleted() gs.toggle_word_diff() end, "Toggle diff mode")
+        map("n", "<leader>gT", function () gs.toggle_deleted() gs.toggle_word_diff() end, "Toggle diff mode")
       end,
     },
   },

@@ -7,6 +7,10 @@ return {
         mux = { enabled = true },
         tools = {
           kimi = { cmd = { "kimi" } }
+        },
+        prompts = {
+          haunt_all = function () require("haunt.sidekick").get_locations() end,
+          haunt_buffer = function () require("haunt.sidekick").get_locations({ current_buffer = true }) end,
         }
       }
     },
